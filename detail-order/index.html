@@ -1,11 +1,14 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v1.0 (Oct 25, 2026)
+  v1.1 (Oct 26, 2026)
   The full order form for new customers. Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v1.1 (Oct 26, 2026) Prices: $25 a graphic, $40 for a Phone + Wide pair. Review screen
+                        says a new customer's first graphic is free (one per business).
+                        Phone boxes format on leaving the box (cpmg-order.js v1.1).
     v1.0 (Oct 25, 2026) First live version, built from Detail Order Preview v0.2.
                         Kept from the old Apps Script form so nothing is lost: "Phone to show on
                         the graphics" (when "Show this phone number" is off) and "Need it by".
@@ -97,7 +100,7 @@
     <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
     <button type="button" class="ghost" id="again">Start over</button>
   </div>
-  <div class="foot">CPMG Detail Order · v1.0 (Oct 25, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v1.1 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -136,8 +139,8 @@
 <script>
 /* CPMG Detail Order page script v1.0 (Oct 25, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v1.0 (Oct 25, 2026)';
-  var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, stage = 'form', sending = false;
+  var FORM_VERSION = 'detail-order v1.1 (Oct 26, 2026)';
+  var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   // What each size choice means for the order system. "use" = the contract's phone|tv|both;
   // "size" = the exact value the old form saved, so the sheet and CSV stay the same.
   var SIZE = {
@@ -149,6 +152,8 @@
   var COLMODE = { 'CPMG picks': 'cpmg', 'Pick my colors': 'pick', 'Match my logo': 'logo' };
   var PAL = [['Navy','#1f3a68'],['Royal blue','#2459c9'],['Sky','#5bb8f0'],['Teal','#11807a'],['Green','#1f7a43'],['Lime','#9bd04a'],['Gold','#e3b23c'],['Orange','#ef7d22'],['Red','#c8312f'],['Burgundy','#7a1f3d'],['Purple','#6a3fb5'],['Pink','#e86aa6'],['Brown','#6b4a2b'],['Black','#1b1b1b'],['Gray','#8a8f93'],['White','#ffffff']];
 
+  function cost(c) { return pick(c, 'size') === 'Phone + Wide' ? PAIR_PRICE : PRICE; }
+  function total() { return cards().reduce(function (t, c) { return t + cost(c); }, 0); }
   function cards() { return [].slice.call(document.querySelectorAll('[data-g]')); }
   function val(c, k) { return c.querySelector('[data-f="' + k + '"]').value; }
   function pick(c, k) { var r = c.querySelector('[data-n="' + k + '"]:checked'); return r ? r.value : ''; }
@@ -156,7 +161,7 @@
   function renum() {
     cards().forEach(function (c, i) { c.querySelector('[data-t]').textContent = 'Graphic ' + (i + 1); c.querySelector('[data-rm]').hidden = cards().length < 2; });
     $('addG').hidden = cards().length >= MAX;
-    $('go').textContent = 'Review my order · ' + cards().length + ' × $' + PRICE;
+    if (stage === 'form') $('go').textContent = 'Review my order · $' + total();
   }
   function lum(h) { var r = parseInt(h.substr(1, 2), 16) / 255, g = parseInt(h.substr(3, 2), 16) / 255, b = parseInt(h.substr(5, 2), 16) / 255; function f(x) { return x <= .03928 ? x / 12.92 : Math.pow((x + .055) / 1.055, 2.4); } return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); }
   function onCol(h) { return lum(h) > .4 ? '#111111' : '#ffffff'; }
@@ -199,6 +204,7 @@
     c.querySelector('[data-rm]').addEventListener('click', function () { c.parentNode.removeChild(c); renum(); });
     c.addEventListener('input', function (e) { var k = e.target.getAttribute('data-f'); if (k) C.showErr(c.querySelector('[data-e="' + k + '"]'), ''); });
     $('gList').appendChild(c); setupColors(c); C.syncOpts(c); renum();
+    C.each(c.querySelectorAll('[data-n="size"]'), function (r) { r.addEventListener('change', renum); });
   }
 
   ['biz', 'type', 'who', 'em', 'ph', 'fp', 'notes'].forEach(function (id) {
@@ -290,9 +296,9 @@
     if (needByText()) h += '<dt>Need it by</dt><dd>' + e(needByText()) + '</dd>';
     h += '</dl>';
     cards().forEach(function (c, i) {
-      h += '<div class="card" style="padding:12px"><b>Graphic ' + (i + 1) + ': ' + e(val(c, 'hl')) + '</b><div class="sub">' + e(pick(c, 'size')) + ' · ' + e(colText(c)) + '</div><div style="font-size:16px">' + C.lines(val(c, 'ideas')).map(e).join('<br>') + '</div><div style="font-size:16px"><i>' + e(val(c, 'cta')) + '</i></div></div>';
+      h += '<div class="card" style="padding:12px"><b>Graphic ' + (i + 1) + ': ' + e(val(c, 'hl')) + '</b><div class="sub">' + e(pick(c, 'size')) + ' · $' + cost(c) + ' · ' + e(colText(c)) + '</div><div style="font-size:16px">' + C.lines(val(c, 'ideas')).map(e).join('<br>') + '</div><div style="font-size:16px"><i>' + e(val(c, 'cta')) + '</i></div></div>';
     });
-    $('rvBody').innerHTML = h; var k = cards().length; $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + ' · $' + (k * PRICE) + ' total';
+    $('rvBody').innerHTML = h; var k = cards().length; $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + ' · $' + total() + ' total. First time ordering? Your first graphic is free (one per business).';
     $('sendErr').hidden = true;
     $('f').hidden = true; $('review').hidden = false; $('go').textContent = 'Looks right, send it'; stage = 'review'; window.scrollTo(0, 0);
   }
