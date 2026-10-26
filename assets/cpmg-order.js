@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.0 (Oct 25, 2026)
+ * v1.1 (Oct 26, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,8 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.1 (Oct 26, 2026) Phone boxes now format the number when you leave the box
+ *                       (8435550100 becomes (843) 555-0100). A leading 1 is dropped.
  *   v1.0 (Oct 25, 2026) First version.
  */
 var CPMG = (function () {
@@ -25,7 +27,7 @@ var CPMG = (function () {
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
   function digits(s) { return String(s || '').replace(/\D/g, ''); }
   function emailOk(s) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || '').trim()); }
-  function fmtPhone(s) { var d = digits(s); return d.length === 10 ? '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6) : String(s || '').trim(); }
+  function fmtPhone(s) { var d = digits(s); if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1); return d.length === 10 ? '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6) : String(s || '').trim(); }
   function showErr(el, msg) { if (!el) return; el.textContent = msg || ''; el.hidden = !msg; }
 
   /** True once the script link has been put into cpmg-order-config.js. */
@@ -205,6 +207,16 @@ var CPMG = (function () {
       btn.textContent = text || 'Send';
     }
   }
+
+  /** v1.1: format every phone box when the customer leaves it. */
+  function tidyPhone(e) {
+    var t = e && e.target;
+    if (!t || t.tagName !== 'INPUT' || t.type !== 'tel') return;
+    var f = fmtPhone(t.value);
+    if (f !== t.value) t.value = f;
+  }
+  document.addEventListener('focusout', tidyPhone, true);
+  document.addEventListener('change', tidyPhone, true);
 
   function hp() { var h = $('cpmgHp'); return h ? h.value : ''; }
 
