@@ -1,12 +1,17 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v1.2 (Oct 26, 2026)
+  v1.3 (Oct 26, 2026)
   The short form for regular customers. Look and wording match the approved
   "CPMG Quick Order" preview v0.3. Their private link ends in ?k=KEY; the page asks the
   order system who that is and shows "Welcome back". With no key (or if the lookup fails)
-  it shows name, business and email boxes so they can still order.
+  it shows a "first time? / ordered before?" box instead (v1.3).
   REVISION LOG
+    v1.3 (Oct 26, 2026) No key, or a key that isn't found: the form is hidden and a box shows two
+                        choices: "Start my first order" (goes to the Detail Order form) and
+                        "Email me my link" (the order system emails a returning customer their
+                        quick link; needs CPMG_OrderReceiver.gs v1.3). Before this, a quick order
+                        with no key was turned away for a missing phone and business type.
     v1.2 (Oct 26, 2026) Thank-you screen has a big "Done, close this page" button. Phones that
                         won't let a page close itself show how to close it instead.
     v1.1 (Oct 26, 2026) Thank-you screen: says "You're all done. You can close this page.",
@@ -45,6 +50,17 @@
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your details…</span></div>
   <div class="welcome" id="welcome" hidden><b id="wName">Welcome back</b><span id="wLine">your details are filled in</span></div>
+
+  <div class="card g" id="noKey" hidden>
+    <h3>First time ordering with us?</h3>
+    <p>Use the full order form. Your first graphic is free.</p>
+    <button type="button" class="big" id="toDetail">Start my first order</button>
+    <h3 style="margin-top:10px">Ordered before?</h3>
+    <p>Type the email you used. We'll email you your quick order link.</p>
+    <div class="field"><label for="linkEm">Your email</label><input type="email" id="linkEm" placeholder="dana@myrtlelawnpros.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="eLinkEm" hidden></p></div>
+    <button type="button" class="ghost" id="linkBtn">Email me my link</button>
+    <p class="sub" id="linkMsg" role="status" hidden></p>
+  </div>
 
   <form id="f" novalidate autocomplete="on" class="stack">
     <div class="stack" id="who" hidden>
@@ -99,16 +115,16 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v1.2 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v1.3 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
 <script src="../assets/cpmg-order.js?v=1.1"></script>
 <script>
-/* CPMG Quick Order page script v1.2 (Oct 26, 2026) */
+/* CPMG Quick Order page script v1.3 (Oct 26, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v1.2 (Oct 26, 2026)';
+  var FORM_VERSION = 'quick-order v1.3 (Oct 26, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -132,7 +148,20 @@
   } catch (e) { /* storage blocked: fine */ }
   function forgetKey() { try { window.localStorage.removeItem(KEY_STORE); } catch (e) { /* fine */ } }
 
-  function askWho() { client = null; $('welcome').hidden = true; $('who').hidden = false; }
+  // v1.3: no key (or not found) = show the "first time / ordered before" box, not the form.
+  function askWho() { client = null; $('welcome').hidden = true; $('f').hidden = true; $('sendBar').hidden = true; $('noKey').hidden = false; }
+  $('toDetail').addEventListener('click', function () { window.location.href = '../detail-order/'; });
+  $('linkEm').addEventListener('input', function () { show('eLinkEm', ''); });
+  $('linkBtn').addEventListener('click', function () {
+    var em = $('linkEm').value.trim();
+    if (!C.emailOk(em)) { show('eLinkEm', 'Add the email you used when you ordered.'); return; }
+    C.busy($('linkBtn'), true, 'Sending…'); $('linkMsg').hidden = true;
+    C.sendOrder({ action: 'sendlink', email: em, formVersion: FORM_VERSION, website: C.honeypot() }).then(function (res) {
+      C.busy($('linkBtn'), false, 'Email me my link');
+      $('linkMsg').textContent = res && res.ok ? (res.message || 'If that email is on file, your link is on its way.') : C.failText(res);
+      $('linkMsg').hidden = false;
+    });
+  });
   function welcome(c) {
     client = c;
     $('wName').textContent = 'Welcome back, ' + (c.business || c.name || 'friend');
