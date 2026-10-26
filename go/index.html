@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ClearPoint Media Group</title>
+<!--
+  CPMG click page - v1.0 (Oct 26, 2026)
+  A link in a CPMG sales email opens this page. It quietly tells the mail merge script about the click,
+  then opens the real page right away. The places it can open are fixed below (DEST), so nobody can use
+  it to send people anywhere else.
+  REVISION LOG
+    v1.0 (Oct 26, 2026) First version: form (Detail Order) link; site and fb fall back to the form until filled in.
+-->
+<style>
+body{font-family:Arial,Helvetica,sans-serif;text-align:center;padding:48px 16px;color:#1d2733;background:#f2f7f3}
+a{display:inline-block;background:#1f7a43;color:#ffffff;padding:14px 26px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:18px}
+</style>
+</head>
+<body>
+<p style="font-size:18px">Opening ClearPoint Media Group...</p>
+<p><a id="go" href="https://clearpointmediagroup.github.io/detail-order/">Tap here to continue</a></p>
+<script>
+(function () {
+  var DEST = {
+    form: 'https://clearpointmediagroup.github.io/detail-order/',
+    site: '',
+    fb: ''
+  };
+  var TRACK = 'https://script.google.com/macros/s/AKfycbwyL0lg7idT_G9KkE08PEqnvgMGeIJ1E2_2N_hsBQtBGN2joCHO1W67xIQwuVURoSunLQ/exec';
+  var q = new URLSearchParams(location.search);
+  var c = q.get('c') || 'form';
+  var dest = DEST[c] || DEST.form;
+  document.getElementById('go').href = dest;
+  var gone = false;
+  function go() { if (gone) return; gone = true; location.replace(dest); }
+  try {
+    var s = q.get('s'), t = q.get('t'), k = q.get('k');
+    if (s && t && k && window.fetch) {
+      var u = TRACK + '?b=1&c=' + encodeURIComponent(c) + '&s=' + encodeURIComponent(s) +
+              '&t=' + encodeURIComponent(t) + '&k=' + encodeURIComponent(k);
+      fetch(u, { mode: 'no-cors', credentials: 'omit', keepalive: true }).then(go, go);
+      setTimeout(go, 1500);
+      return;
+    }
+  } catch (e) { /* counting failed; still open the page */ }
+  go();
+})();
+</script>
+</body>
+</html>
