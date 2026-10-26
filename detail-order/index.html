@@ -1,11 +1,18 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v1.5 (Oct 26, 2026)
-  The full order form for new customers. Look and wording match the approved
+  v2.0 (Oct 26, 2026)
+  The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.0 (Oct 26, 2026) Saved info you can edit. Note at the top of "Your details": fill this in one time,
+                        we save it for every order after this. New optional boxes: Business address,
+                        City, State, Zip. The phone remembers the customer after their first order;
+                        next time "Your details" folds up to "Welcome back" with their saved info and
+                        an "Edit my info" button, and the free-first-graphic line is hidden. Changes
+                        save to their record (CPMG_OrderReceiver.gs v1.4). "Area you serve, or address"
+                        is now "Area you serve". Needs cpmg-order.js v1.2.
     v1.5 (Oct 26, 2026) Review screen counts pictures: Phone + Wide shows as "2 graphics (1 phone,
                         1 wide)", so the total reads "2 graphics · $40 total". Offer line now says
                         "one graphic is free".
@@ -46,6 +53,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="../assets/cpmg-order.css?v=1.0">
+<style>
+/* v2.0: saved-info box (same look on both forms) */
+.note{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:16px;margin:0}
+.wtitle{font:800 21px var(--display);display:block}
+.saved{display:flex;flex-direction:column;gap:2px;font-size:17px}
+.saved .k{color:var(--muted);font-size:14px}
+.row3{display:flex;flex-wrap:wrap;gap:12px}
+.row3>.field{flex:2 1 160px}
+.row3>.field.st{flex:0 1 80px}
+.row3>.field.zp{flex:1 1 110px}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -56,6 +74,15 @@
   <div class="stack">
     <div class="card">
       <h2>Your details</h2>
+      <div id="dSaved" class="stack" style="gap:10px" hidden>
+        <b class="wtitle" id="dWName">Welcome back!</b>
+        <p class="note">Your info is already saved. Just fill in your graphic request below.</p>
+        <div class="saved" id="dSavedLines"></div>
+        <button type="button" class="ghost" id="dEditBtn">Edit my info</button>
+        <button type="button" class="rm" id="dNotMe">Not you? Start fresh</button>
+      </div>
+      <div id="dFields" class="stack" style="gap:14px">
+      <p class="note" id="dNote">Fill this in one time. We'll save your info for every order after this. Next time, you just tell us what you want on your graphic.</p>
       <div class="field"><label for="biz">Business name</label><input type="text" id="biz" placeholder="ABC Plumbing" autocomplete="organization"><p class="err" id="e-biz" hidden></p></div>
       <div class="field"><label for="type">Type of business</label><select id="type"><option value="">Choose one</option><option>Restaurant or bar</option><option>Real estate</option><option>Plumbing</option><option>HVAC</option><option>Lawn care</option><option>Salon or spa</option><option>Other</option></select><p class="err" id="e-type" hidden></p></div>
       <div class="field"><label for="who">Your name</label><input type="text" id="who" placeholder="Jim Smith" autocomplete="name"><p class="err" id="e-who" hidden></p></div>
@@ -63,9 +90,18 @@
         <div class="field"><label for="em">Email</label><input type="email" id="em" placeholder="jim@abcplumbing.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="e-em" hidden></p></div>
         <div class="field"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="8435550100" autocomplete="tel" inputmode="tel"><p class="err" id="e-ph" hidden></p></div>
       </div>
+      <div class="field"><label for="street">Business address (optional)</label><input type="text" id="street" placeholder="123 Main St" autocomplete="street-address"></div>
+      <div class="row3">
+        <div class="field"><label for="city">City</label><input type="text" id="city" placeholder="Myrtle Beach" autocomplete="address-level2"></div>
+        <div class="field st"><label for="state">State</label><input type="text" id="state" placeholder="SC" maxlength="2" autocomplete="address-level1" autocapitalize="characters"></div>
+        <div class="field zp"><label for="zip">Zip</label><input type="text" id="zip" placeholder="29579" maxlength="10" inputmode="numeric" autocomplete="postal-code"></div>
+      </div>
+      <p class="err" id="e-addr" hidden></p>
       <label class="opt"><input type="checkbox" id="txt"> OK to text me about this order</label>
       <label class="opt"><input type="checkbox" id="show" checked> Show this phone number on my graphics</label>
       <div class="field" id="fpWrap" hidden><label for="fp">Phone to show on the graphics</label><p class="hint">Just the 10 digits. We'll format it for you.</p><input type="tel" id="fp" placeholder="8435550199" inputmode="tel"><p class="err" id="e-fp" hidden></p></div>
+      <button type="button" class="rm" id="dCancel" hidden>Never mind, keep my saved info</button>
+      </div>
     </div>
 
     <h2 style="margin-top:4px">Your graphics</h2>
@@ -82,7 +118,7 @@
           <p class="err" id="e-pic" hidden></p>
         </div>
         <div class="field"><label for="web">Website</label><input type="text" id="web" placeholder="abcplumbing.com" autocapitalize="off" spellcheck="false"></div>
-        <div class="field"><label for="area">Area you serve, or address</label><input type="text" id="area" placeholder="Carolina Forest"></div>
+        <div class="field"><label for="area">Area you serve</label><input type="text" id="area" placeholder="Carolina Forest"></div>
         <div class="field"><label for="needBy">Need it by</label>
           <div class="row2"><input type="date" id="needBy" aria-label="Date"><select id="needTime" aria-label="Time"><option value="">Any time that day</option><option>As soon as possible</option><option>Morning (by noon)</option><option>Afternoon (by 5 PM)</option><option>Evening (by 9 PM)</option></select></div>
         </div>
@@ -116,7 +152,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v1.5 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v2.0 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -151,12 +187,13 @@
 </template>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.1"></script>
+<script src="../assets/cpmg-order.js?v=1.2"></script>
 <script>
-/* CPMG Detail Order page script v1.0 (Oct 25, 2026) */
+/* CPMG Detail Order page script v2.0 (Oct 26, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v1.5 (Oct 26, 2026)';
+  var FORM_VERSION = 'detail-order v2.0 (Oct 26, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
+  var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
   // What each size choice means for the order system. "use" = the contract's phone|tv|both;
   // "size" = the exact value the old form saved, so the sheet and CSV stay the same.
   var SIZE = {
@@ -227,7 +264,45 @@
     $(id).addEventListener('input', function () { C.showErr($('e-' + id), ''); });
     $(id).addEventListener('change', function () { C.showErr($('e-' + id), ''); });
   });
+  ['state', 'zip'].forEach(function (id) { $(id).addEventListener('input', function () { C.showErr($('e-addr'), ''); }); });
   $('show').addEventListener('change', function () { $('fpWrap').hidden = this.checked; });
+
+  // ===== v2.0: saved info. The phone remembers them after their first order. =====
+  if (key) C.rememberKey(key); else key = C.savedKey();
+  function addrNow() { return { street: $('street').value.trim(), city: $('city').value.trim(), state: $('state').value.trim().toUpperCase(), zip: $('zip').value.trim() }; }
+  function fillDetails(c) {
+    $('biz').value = c.business || ''; $('type').value = C.typeFor(c.industry); $('who').value = c.name || '';
+    $('em').value = c.email || ''; $('ph').value = c.phone ? C.fmtPhone(c.phone) : '';
+    $('txt').checked = !!c.okToText; $('show').checked = c.showPhone !== false; $('fpWrap').hidden = $('show').checked;
+    $('fp').value = c.showPhone === false && c.footerPhone ? C.fmtPhone(c.footerPhone) : '';
+    $('street').value = c.street || ''; $('city').value = c.city || ''; $('state').value = c.state || ''; $('zip').value = c.zip || '';
+    $('web').value = c.website || '';
+    var a = C.addrLine(c);
+    $('area').value = c.area && c.area !== a ? c.area : '';
+    C.syncOpts(document);
+  }
+  function renderDetails() {
+    var saved = !!client && !editing;
+    $('dSaved').hidden = !saved; $('dFields').hidden = saved; $('dCancel').hidden = !client;
+    $('dNote').textContent = client ? 'Change anything that\'s wrong. We\'ll save it for every order after this.'
+      : 'Fill this in one time. We\'ll save your info for every order after this. Next time, you just tell us what you want on your graphic.';
+    if (client) {
+      $('dWName').textContent = 'Welcome back, ' + ($('biz').value.trim() || $('who').value.trim() || 'friend') + '!';
+      var rows = [['Name', $('who').value.trim()], ['Phone', C.fmtPhone($('ph').value)], ['Email', $('em').value.trim()], ['Address', C.addrLine(addrNow())]]
+        .filter(function (r) { return r[1]; });
+      $('dSavedLines').innerHTML = rows.map(function (r) { return '<div><span class="k">' + r[0] + ':</span> ' + C.esc(r[1]) + '</div>'; }).join('');
+    }
+  }
+  $('dEditBtn').addEventListener('click', function () { editing = true; renderDetails(); try { $('biz').focus(); } catch (e) { /* fine */ } });
+  $('dCancel').addEventListener('click', function () { editing = false; if (client) fillDetails(client); ['biz', 'type', 'who', 'em', 'ph', 'fp'].forEach(function (id) { C.showErr($('e-' + id), ''); }); C.showErr($('e-addr'), ''); renderDetails(); });
+  $('dNotMe').addEventListener('click', function () { C.forgetKey(); C.keyInLink(''); key = ''; client = null; editing = false; fillDetails({}); renderDetails(); });
+  if (key && C.urlReady()) {
+    C.lookupClient(key).then(function (c) {
+      if (c && (c.email || c.business)) { client = c; fillDetails(c); C.keyInLink(key); }
+      else if (c === false) { C.forgetKey(); key = ''; }
+      renderDetails();
+    });
+  }
   $('addG').addEventListener('click', addG);
   C.watchOpts(document);
 
@@ -249,6 +324,8 @@
     f($('e-em'), C.emailOk($('em').value) ? '' : 'Add a working email address.');
     f($('e-ph'), C.digits($('ph').value).length === 10 ? '' : 'Add your 10-digit phone number.');
     f($('e-fp'), $('show').checked || !$('fp').value.trim() || C.digits($('fp').value).length === 10 ? '' : 'Add a 10-digit phone number.');
+    f($('e-addr'), !C.stateOk($('state').value) ? 'Use 2 letters for the state, like SC.' : !C.zipOk($('zip').value) ? 'Use 5 numbers for the zip code.' : '');
+    if (bad && client && !editing) { editing = true; renderDetails(); }        // v2.0: show the saved info so they can fix it
     f($('e-notes'), C.words($('notes').value) > 50 ? 'Keep it to 50 words.' : '');
     if ($('e-notes').textContent) $('more').open = true;
     cards().forEach(function (c) {
@@ -283,8 +360,9 @@
     return {
       kind: 'detail',
       formVersion: FORM_VERSION,
-      clientKey: '',
-      customer: { name: $('who').value.trim(), business: $('biz').value.trim(), email: $('em').value.trim(), phone: ph, industry: $('type').value, more: more },
+      clientKey: client ? key : '',                                    // v2.0
+      customer: { name: $('who').value.trim(), business: $('biz').value.trim(), email: $('em').value.trim(), phone: ph, industry: $('type').value, more: more,
+        address: addrNow(), edited: editing },
       graphics: cards().map(function (c, i) {
         var sz = SIZE[pick(c, 'size')] || SIZE['Phone + Wide'], mode = COLMODE[pick(c, 'col')] || 'cpmg';
         var gm = { 'Where will you use it?': pick(c, 'size'), 'Size': sz.size, 'Colors': colText(c) };
@@ -307,6 +385,7 @@
 
   function showReview() {
     var e = C.esc, h = '<dl><dt>Business</dt><dd>' + e($('biz').value) + '</dd><dt>Contact</dt><dd>' + e($('who').value) + ' · ' + e(C.fmtPhone($('ph').value)) + '</dd><dt>Email</dt><dd>' + e($('em').value) + '</dd>';
+    if (C.addrLine(addrNow())) h += '<dt>Address</dt><dd>' + e(C.addrLine(addrNow())) + '</dd>';
     if (!$('show').checked && $('fp').value.trim()) h += '<dt>On graphics</dt><dd>' + e(C.fmtPhone($('fp').value)) + '</dd>';
     if (photos.count()) h += '<dt>Photos</dt><dd>' + photos.count() + '</dd>';
     if (needByText()) h += '<dt>Need it by</dt><dd>' + e(needByText()) + '</dd>';
@@ -316,6 +395,7 @@
     });
     $('rvBody').innerHTML = h; var k = cards().reduce(function (t, c) { return t + (pick(c, 'size') === 'Phone + Wide' ? 2 : 1); }, 0); $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + ' · $' + total() + ' total';
     var t = total(), after = Math.max(t - 25, 0);
+    $('firstFree').hidden = !!client;                                   // v2.0: returning customers already had theirs
     $('firstFree').innerHTML = '<b>First order with us?</b> One graphic is free: we take $25 off, so this order is <b>' + (after ? '$' + after : 'free') + '</b>. One per business.';
     $('sendErr').hidden = true;
     $('f').hidden = true; $('review').hidden = false; $('go').textContent = 'Looks right, send it'; stage = 'review'; window.scrollTo(0, 0);
@@ -328,6 +408,8 @@
     C.sendOrder(buildPayload()).then(function (r) {
       sending = false; $('back').disabled = false;
       if (r && r.ok) {
+        if (r.clientKey) { key = r.clientKey; C.rememberKey(key); C.keyInLink(key); }   // v2.0
+        if (key) { client = client || {}; editing = false; }
         $('orderCode').textContent = r.orderCode || '';
         $('orderCode').hidden = !r.orderCode; $('orderCode').previousElementSibling.hidden = !r.orderCode;
         $('doneMsg').hidden = true;
@@ -357,7 +439,7 @@
     ['needBy', 'needTime'].forEach(function (id) { if ($(id)) $(id).value = ''; });
     $('sendErr').hidden = true; $('done').hidden = true; $('closeHelp').hidden = true; $('closeBtn').disabled = false; $('closeBtn').textContent = 'Done, close this page'; $('review').hidden = true;
     $('f').hidden = false; $('bar').hidden = false; $('payPill').hidden = false;
-    stage = 'form'; C.busy($('go'), false, 'Review my order'); renum(); window.scrollTo(0, 0);
+    stage = 'form'; C.busy($('go'), false, 'Review my order'); renderDetails(); renum(); window.scrollTo(0, 0);
   });
   addG();
 })();
