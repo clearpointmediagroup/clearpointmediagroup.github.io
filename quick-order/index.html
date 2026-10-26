@@ -1,12 +1,15 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v1.0 (Oct 25, 2026)
+  v1.1 (Oct 26, 2026)
   The short form for regular customers. Look and wording match the approved
   "CPMG Quick Order" preview v0.3. Their private link ends in ?k=KEY; the page asks the
   order system who that is and shows "Welcome back". With no key (or if the lookup fails)
   it shows name, business and email boxes so they can still order.
   REVISION LOG
+    v1.1 (Oct 26, 2026) Thank-you screen: says "You're all done. You can close this page.",
+                        drops the repeated order-number line, and the button is now
+                        "Need another graphic? Order another". Phone format comes from cpmg-order.js v1.1.
     v1.0 (Oct 25, 2026) First live version, built from Quick Order preview v0.3.
                         Photo now takes up to 3 pictures, shrunk on the phone before sending.
 -->
@@ -84,22 +87,24 @@
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
     <p>Your proof arrives by email within 5 hours.</p>
+    <p class="alldone"><b>You're all done.</b> You can close this page now.</p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
     <p class="sub" id="doneMsg" hidden></p>
     <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
+    <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v1.0 (Oct 25, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v1.1 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
 <script src="../assets/cpmg-order.js?v=1.0"></script>
 <script>
-/* CPMG Quick Order page script v1.0 (Oct 25, 2026) */
+/* CPMG Quick Order page script v1.1 (Oct 26, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v1.0 (Oct 25, 2026)';
+  var FORM_VERSION = 'quick-order v1.1 (Oct 26, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -183,7 +188,7 @@
       if (res && res.ok) {
         C.busy($('sendBtn'), false, 'Send');
         $('orderCode').textContent = res.orderCode || ''; $('orderCode').hidden = $('codeLbl').hidden = !res.orderCode;
-        if (res.message) { $('doneMsg').textContent = res.message; $('doneMsg').hidden = false; } else $('doneMsg').hidden = true;
+        $('doneMsg').hidden = true;
         $('f').hidden = true; $('sendBar').hidden = true; $('ok').hidden = false; window.scrollTo(0, 0);
       } else {
         C.busy($('sendBtn'), false, 'Try sending again');
