@@ -1,11 +1,15 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v1.1 (Oct 26, 2026)
+  v1.2 (Oct 26, 2026)
   The full order form for new customers. Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v1.2 (Oct 26, 2026) Thank-you screen: says "You're all done. You can close this page.",
+                        drops the repeated order-number line, and the button is now
+                        "Need another graphic? Start a new order", which keeps
+                        their details and logo and starts fresh graphics.
     v1.1 (Oct 26, 2026) Prices: $25 a graphic, $40 for a Phone + Wide pair. Review screen
                         says a new customer's first graphic is free (one per business).
                         Phone boxes format on leaving the box (cpmg-order.js v1.1).
@@ -94,13 +98,15 @@
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
     <p>Your proof arrives by email within 5 hours.</p>
+    <p class="alldone"><b>You're all done.</b> You can close this page now.</p>
     <p class="sub">Your order number</p>
     <div class="code" id="orderCode"></div>
     <p class="sub" id="doneMsg" hidden></p>
     <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
-    <button type="button" class="ghost" id="again">Start over</button>
+    <p class="sub">Need another graphic?</p>
+    <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v1.1 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v1.2 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -139,7 +145,7 @@
 <script>
 /* CPMG Detail Order page script v1.0 (Oct 25, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v1.1 (Oct 26, 2026)';
+  var FORM_VERSION = 'detail-order v1.2 (Oct 26, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   // What each size choice means for the order system. "use" = the contract's phone|tv|both;
   // "size" = the exact value the old form saved, so the sheet and CSV stay the same.
@@ -312,7 +318,7 @@
       if (r && r.ok) {
         $('orderCode').textContent = r.orderCode || '';
         $('orderCode').hidden = !r.orderCode; $('orderCode').previousElementSibling.hidden = !r.orderCode;
-        if (r.message) { $('doneMsg').textContent = r.message; $('doneMsg').hidden = false; }
+        $('doneMsg').hidden = true;
         $('review').hidden = true; $('done').hidden = false; $('bar').hidden = true; $('payPill').hidden = true; stage = 'done'; window.scrollTo(0, 0);
       } else {
         C.busy($('go'), false, 'Try sending again');
@@ -327,7 +333,15 @@
     else if (stage === 'review') send();
   });
   $('back').addEventListener('click', function () { if (sending) return; $('review').hidden = true; $('f').hidden = false; stage = 'form'; renum(); });
-  $('again').addEventListener('click', function () { location.reload(); });
+  // v1.2: a new order keeps their name, business, contact details and logo; only the graphics start fresh.
+  $('again').addEventListener('click', function () {
+    cards().forEach(function (c) { c.parentNode.removeChild(c); });
+    n = 0; addG();
+    ['needBy', 'needTime'].forEach(function (id) { if ($(id)) $(id).value = ''; });
+    $('sendErr').hidden = true; $('done').hidden = true; $('review').hidden = true;
+    $('f').hidden = false; $('bar').hidden = false; $('payPill').hidden = false;
+    stage = 'form'; C.busy($('go'), false, 'Review my order'); renum(); window.scrollTo(0, 0);
+  });
   addG();
 })();
 </script>
