@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.1 (Oct 26, 2026)
+ * v1.2 (Oct 26, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,9 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.2 (Oct 26, 2026) Saved info on the phone: savedKey / rememberKey / forgetKey / keyInLink, so
+ *                       both forms know a returning customer. Address helpers (addrLine, stateOk,
+ *                       zipOk) and typeFor (saved business type -> the forms' list wording).
  *   v1.1 (Oct 26, 2026) Phone boxes now format the number when you leave the box
  *                       (8435550100 becomes (843) 555-0100). A leading 1 is dropped.
  *   v1.0 (Oct 25, 2026) First version.
@@ -218,12 +221,44 @@ var CPMG = (function () {
   document.addEventListener('focusout', tidyPhone, true);
   document.addEventListener('change', tidyPhone, true);
 
+
+  // ===== v1.2: saved info on this phone, address helpers =====
+  var KEY_STORE = 'cpmgQuickKey';               // same name the Quick Order used in v1.0-v1.3
+  /** The customer's key saved on this phone ('' if none or storage is blocked). */
+  function savedKey() { try { return window.localStorage.getItem(KEY_STORE) || ''; } catch (e) { return ''; } }
+  function rememberKey(k) { try { if (k) window.localStorage.setItem(KEY_STORE, k); } catch (e) { /* blocked: fine */ } }
+  function forgetKey() { try { window.localStorage.removeItem(KEY_STORE); } catch (e) { /* fine */ } }
+  /** Puts ?k=KEY in the page link (no reload), so "Add to Home screen" saves their own link. */
+  function keyInLink(k) {
+    try { window.history.replaceState(null, '', location.pathname + (k ? '?k=' + encodeURIComponent(k) : '')); } catch (e) { /* old phone */ }
+  }
+  /** "123 Main St, Myrtle Beach, SC 29579" from {street, city, state, zip}; blank parts left out. */
+  function addrLine(a) {
+    if (!a) return '';
+    var sz = [String(a.state || '').trim().toUpperCase(), String(a.zip || '').trim()].filter(Boolean).join(' ');
+    return [String(a.street || '').trim(), String(a.city || '').trim(), sz].filter(Boolean).join(', ');
+  }
+  function stateOk(s) { s = String(s || '').trim(); return !s || /^[A-Za-z]{2}$/.test(s); }
+  function zipOk(s) { s = String(s || '').trim(); return !s || /^\d{5}(-\d{4})?$/.test(s); }
+  /** Saved business type (a sheet tab name like "Restaurant") -> the forms' list wording. */
+  var TYPE_LIST = ['Restaurant or bar', 'Real estate', 'Plumbing', 'HVAC', 'Lawn care', 'Salon or spa', 'Other'];
+  function typeFor(seg) {
+    var s = String(seg || '').trim().toLowerCase();
+    if (!s) return '';
+    var map = { 'restaurant': 'Restaurant or bar', 'real estate': 'Real estate', 'lawn care': 'Lawn care' };
+    if (map[s]) return map[s];
+    for (var i = 0; i < TYPE_LIST.length; i++) if (TYPE_LIST[i].toLowerCase() === s) return TYPE_LIST[i];
+    return 'Other';
+  }
+
   function hp() { var h = $('cpmgHp'); return h ? h.value : ''; }
 
   return {
     $: $, each: each, words: words, lines: lines, esc: esc, digits: digits, emailOk: emailOk, fmtPhone: fmtPhone,
     showErr: showErr, urlReady: urlReady, syncOpts: syncOpts, watchOpts: watchOpts, param: param,
     shrinkPhoto: shrinkPhoto, photoPicker: photoPicker, sendOrder: sendOrder, lookupClient: lookupClient,
-    failText: failText, busy: busy, honeypot: hp, MAX_PHOTOS: MAX_PHOTOS
+    failText: failText, busy: busy, honeypot: hp, MAX_PHOTOS: MAX_PHOTOS,
+    savedKey: savedKey, rememberKey: rememberKey, forgetKey: forgetKey, keyInLink: keyInLink,
+    addrLine: addrLine, stateOk: stateOk, zipOk: zipOk, typeFor: typeFor, TYPE_LIST: TYPE_LIST
   };
 })();
