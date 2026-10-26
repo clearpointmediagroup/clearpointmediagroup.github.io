@@ -1,0 +1,205 @@
+<!doctype html>
+<!--
+  CPMG Quick Order — quick-order/index.html
+  v1.0 (Oct 25, 2026)
+  The short form for regular customers. Look and wording match the approved
+  "CPMG Quick Order" preview v0.3. Their private link ends in ?k=KEY; the page asks the
+  order system who that is and shows "Welcome back". With no key (or if the lookup fails)
+  it shows name, business and email boxes so they can still order.
+  REVISION LOG
+    v1.0 (Oct 25, 2026) First live version, built from Quick Order preview v0.3.
+                        Photo now takes up to 3 pictures, shrunk on the phone before sending.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0f1712">
+<meta name="color-scheme" content="dark">
+<title>CPMG Quick Order</title>
+<meta name="description" content="Quick graphic order for ClearPoint Media Group customers. Proof within 5 hours.">
+<!-- No manifest link on purpose: without one, "Add to Home screen" saves this exact link,
+     including the customer's private ?k= key. Icons below still give it the CPMG icon. -->
+<link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../assets/cpmg-icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CPMG Order">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/cpmg-order.css?v=1.0">
+</head>
+<body>
+<div class="wrap narrow">
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours</p></div></div>
+
+  <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your details…</span></div>
+  <div class="welcome" id="welcome" hidden><b id="wName">Welcome back</b><span id="wLine">your details are filled in</span></div>
+
+  <form id="f" novalidate autocomplete="on" class="stack">
+    <div class="stack" id="who" hidden>
+      <div class="field"><label for="biz">Business name</label><input type="text" id="biz" placeholder="Myrtle Lawn Pros" autocomplete="organization"><p class="err" id="eBiz" hidden></p></div>
+      <div class="field"><label for="nm">Your name</label><input type="text" id="nm" placeholder="Dana Wells" autocomplete="name"><p class="err" id="eNm" hidden></p></div>
+      <div class="field"><label for="em">Email</label><input type="email" id="em" placeholder="dana@myrtlelawnpros.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="eEm" hidden></p></div>
+    </div>
+    <div class="field">
+      <label for="hl">Headline</label>
+      <p class="hint">Up to 10 words. Example: Fall cleanup now booking</p>
+      <input type="text" id="hl" autocomplete="off">
+      <p class="err" id="eHl" hidden></p>
+    </div>
+    <div class="field">
+      <label for="ideas">Up to 3 short lines</label>
+      <p class="hint">Press Enter after each one.</p>
+      <textarea id="ideas" placeholder="Leaf removal&#10;$99 yard cleanup&#10;Free estimates"></textarea>
+      <p class="err" id="eIdeas" hidden></p>
+    </div>
+    <div class="field">
+      <label for="cta">What should people do?</label>
+      <input type="text" id="cta" placeholder="Call today" autocomplete="off">
+      <p class="err" id="eCta" hidden></p>
+    </div>
+    <fieldset class="field">
+      <legend>Where will you use it?</legend>
+      <label class="opt"><input type="radio" name="size" value="Phone" checked> Phone or Facebook</label>
+      <label class="opt"><input type="radio" name="size" value="TV"> TV screen</label>
+      <label class="opt"><input type="radio" name="size" value="Both"> Both</label>
+    </fieldset>
+    <div class="field">
+      <span class="lbl">Photo (optional)</span>
+      <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
+      <div class="thumbs" id="thumbs" hidden></div>
+      <p class="err" id="ePic" hidden></p>
+    </div>
+    <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
+    <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
+  </form>
+
+  <div id="ok" class="card g done" hidden role="status">
+    <div class="ck" aria-hidden="true">&#10003;</div>
+    <h3>Got it, thank you!</h3>
+    <p>Your proof arrives by email within 5 hours.</p>
+    <p class="sub" id="codeLbl">Your order number</p>
+    <div class="code" id="orderCode"></div>
+    <p class="sub" id="doneMsg" hidden></p>
+    <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
+    <button type="button" class="ghost" id="again">Order another</button>
+  </div>
+  <div class="foot">CPMG Quick Order · v1.0 (Oct 25, 2026) · Questions? randy.turner@cpmgdata.com</div>
+</div>
+<div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
+
+<script src="../assets/cpmg-order-config.js?v=1.0"></script>
+<script src="../assets/cpmg-order.js?v=1.0"></script>
+<script>
+/* CPMG Quick Order page script v1.0 (Oct 25, 2026) */
+(function () {
+  var FORM_VERSION = 'quick-order v1.0 (Oct 25, 2026)';
+  var C = CPMG, $ = C.$, key = C.param('k'), client = null, sending = false;
+  var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
+  var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
+  var LABEL = { Phone: 'Phone or Facebook', TV: 'TV screen', Both: 'Both' };
+
+  function show(id, msg) { C.showErr($(id), msg); }
+  ['hl', 'ideas', 'cta', 'biz', 'nm', 'em'].forEach(function (id) {
+    $(id).addEventListener('input', function () { show('e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
+  });
+  C.watchOpts(document);
+  var photos = C.photoPicker($('pic'), $('thumbs'), $('ePic'), function (list) { $('picClear').hidden = !list.length; });
+  $('picClear').addEventListener('click', function () { photos.clear(); show('ePic', ''); });
+
+  // The key stays in the link on purpose: "Add to Home screen" saves this exact link, key included.
+  // Optional backup: remember the key on this phone, so the home-screen icon still works if a phone
+  // drops the ?k= part. Wrapped in try/catch; the page works the same without it.
+  var KEY_STORE = 'cpmgQuickKey';
+  try {
+    if (key) window.localStorage.setItem(KEY_STORE, key);
+    else key = window.localStorage.getItem(KEY_STORE) || '';
+  } catch (e) { /* storage blocked: fine */ }
+  function forgetKey() { try { window.localStorage.removeItem(KEY_STORE); } catch (e) { /* fine */ } }
+
+  function askWho() { client = null; $('welcome').hidden = true; $('who').hidden = false; }
+  function welcome(c) {
+    client = c;
+    $('wName').textContent = 'Welcome back, ' + (c.business || c.name || 'friend');
+    var bits = [c.name, c.phone ? C.fmtPhone(c.phone) : ''].filter(Boolean);
+    bits.push('your details are filled in');
+    $('wLine').textContent = bits.join(' · ');
+    $('welcome').hidden = false; $('who').hidden = true;
+  }
+  if (key && C.urlReady()) {
+    $('looking').hidden = false;
+    C.lookupClient(key).then(function (c) {
+      $('looking').hidden = true;
+      if (c && (c.email || c.business)) welcome(c);
+      else { if (c === false) forgetKey(); askWho(); }
+    });
+  } else askWho();
+
+  $('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (sending) return;
+    var bad = false, first = null;
+    function f(id, msg) { show(id, msg); if (msg) { bad = true; if (!first) first = $(id); } }
+    if (!client) {
+      f('eBiz', $('biz').value.trim() ? '' : 'Add your business name.');
+      f('eNm', $('nm').value.trim() ? '' : 'Add your name.');
+      f('eEm', C.emailOk($('em').value) ? '' : 'Add a working email address.');
+    }
+    var h = $('hl').value, ls = C.lines($('ideas').value), c = $('cta').value;
+    f('eHl', !h.trim() ? 'Add a headline.' : C.words(h) > 10 ? 'Keep it to 10 words.' : '');
+    f('eIdeas', !ls.length ? 'Add at least one line.' : ls.length > 3 ? 'Keep it to 3 lines.' : ls.some(function (l) { return C.words(l) > 10; }) ? 'Keep each line to 10 words.' : '');
+    f('eCta', !c.trim() ? 'Add what people should do.' : C.words(c) > 6 ? 'Keep it to 6 words.' : '');
+    if (bad) { try { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { first.scrollIntoView(); } return; }
+
+    var r = document.querySelector('input[name="size"]:checked'), size = r ? r.value : 'Phone';
+    var payload = {
+      kind: 'quick',
+      formVersion: FORM_VERSION,
+      clientKey: client ? key : '',
+      customer: client
+        ? { name: client.name || '', business: client.business || '', email: client.email || '', phone: client.phone || '', industry: '' }
+        : { name: $('nm').value.trim(), business: $('biz').value.trim(), email: $('em').value.trim(), phone: '', industry: '' },
+      graphics: [{
+        headline: h.trim(), lines: ls, cta: c.trim(), use: USE[size] || 'phone',
+        colors: { mode: 'cpmg', main: '', second: '' },
+        notes: '',
+        more: { 'Where will you use it?': LABEL[size], 'Size': SIZE[size] },
+        photos: photos.list()
+      }],
+      website: C.honeypot()
+    };
+    if (!client && key) payload.customer.more = { 'Quick link key did not match': 'Yes' };
+
+    sending = true; $('sendErr').hidden = true;
+    C.busy($('sendBtn'), true, 'Sending…');
+    C.sendOrder(payload).then(function (res) {
+      sending = false;
+      if (res && res.ok) {
+        C.busy($('sendBtn'), false, 'Send');
+        $('orderCode').textContent = res.orderCode || ''; $('orderCode').hidden = $('codeLbl').hidden = !res.orderCode;
+        if (res.message) { $('doneMsg').textContent = res.message; $('doneMsg').hidden = false; } else $('doneMsg').hidden = true;
+        $('f').hidden = true; $('sendBar').hidden = true; $('ok').hidden = false; window.scrollTo(0, 0);
+      } else {
+        C.busy($('sendBtn'), false, 'Try sending again');
+        $('sendErrText').textContent = C.failText(res); $('sendErr').hidden = false;
+        try { $('sendErr').scrollIntoView({ block: 'center' }); } catch (e) { /* old phone */ }
+      }
+    });
+  });
+
+  $('again').addEventListener('click', function () {
+    ['hl', 'ideas', 'cta'].forEach(function (id) { $(id).value = ''; });
+    var p = document.querySelector('input[name="size"][value="Phone"]'); if (p) p.checked = true; C.syncOpts(document);
+    photos.clear(); C.busy($('sendBtn'), false, 'Send');
+    $('f').hidden = false; $('sendBar').hidden = false; $('ok').hidden = true; window.scrollTo(0, 0);
+  });
+})();
+</script>
+</body>
+</html>
