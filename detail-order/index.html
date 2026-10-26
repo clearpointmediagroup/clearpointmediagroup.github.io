@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v1.3 (Oct 26, 2026)
+  v1.4 (Oct 26, 2026)
   The full order form for new customers. Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v1.4 (Oct 26, 2026) Review screen: the total box shows only the price. The new-customer offer
+                        is its own line below it: $25 off the first order (a $40 pair is $15).
     v1.3 (Oct 26, 2026) Thank-you screen has a big "Done, close this page" button. Phones that
                         won't let a page close itself show how to close it instead.
     v1.2 (Oct 26, 2026) Thank-you screen: says "You're all done. You can close this page.",
@@ -92,6 +94,7 @@
     <h2>Check your order</h2>
     <div id="rvBody" class="stack" style="gap:12px"></div>
     <div class="total" id="tot"></div>
+    <p class="sub" id="firstFree" style="text-align:center;font-size:18px;margin:0"></p>
     <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
     <button type="button" class="ghost" id="back">Go back and edit</button>
   </div>
@@ -110,7 +113,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v1.3 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v1.4 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -149,7 +152,7 @@
 <script>
 /* CPMG Detail Order page script v1.0 (Oct 25, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v1.3 (Oct 26, 2026)';
+  var FORM_VERSION = 'detail-order v1.4 (Oct 26, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   // What each size choice means for the order system. "use" = the contract's phone|tv|both;
   // "size" = the exact value the old form saved, so the sheet and CSV stay the same.
@@ -308,7 +311,9 @@
     cards().forEach(function (c, i) {
       h += '<div class="card" style="padding:12px"><b>Graphic ' + (i + 1) + ': ' + e(val(c, 'hl')) + '</b><div class="sub">' + e(pick(c, 'size')) + ' · $' + cost(c) + ' · ' + e(colText(c)) + '</div><div style="font-size:16px">' + C.lines(val(c, 'ideas')).map(e).join('<br>') + '</div><div style="font-size:16px"><i>' + e(val(c, 'cta')) + '</i></div></div>';
     });
-    $('rvBody').innerHTML = h; var k = cards().length; $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + ' · $' + total() + ' total. First time ordering? Your first graphic is free (one per business).';
+    $('rvBody').innerHTML = h; var k = cards().length; $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + ' · $' + total() + ' total';
+    var t = total(), after = Math.max(t - 25, 0);
+    $('firstFree').innerHTML = '<b>First order with us?</b> Your first graphic is free: we take $25 off, so this order is <b>' + (after ? '$' + after : 'free') + '</b>. One per business.';
     $('sendErr').hidden = true;
     $('f').hidden = true; $('review').hidden = false; $('go').textContent = 'Looks right, send it'; stage = 'review'; window.scrollTo(0, 0);
   }
