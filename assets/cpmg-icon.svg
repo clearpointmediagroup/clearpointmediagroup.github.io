@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- CPMG home-screen icon v1.0 (Oct 25, 2026) -->
+  <rect width="512" height="512" rx="96" fill="#1f7a43"/>
+  <circle cx="256" cy="256" r="196" fill="#0f1712"/>
+  <circle cx="256" cy="256" r="196" fill="none" stroke="#5fc48c" stroke-width="18"/>
+  <text x="256" y="294" text-anchor="middle" font-family="Archivo, Arial Black, Arial, Helvetica, sans-serif" font-weight="800" font-size="108" fill="#5fc48c" letter-spacing="2">CPMG</text>
+</svg>
