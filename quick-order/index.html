@@ -1,12 +1,14 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v1.1 (Oct 26, 2026)
+  v1.2 (Oct 26, 2026)
   The short form for regular customers. Look and wording match the approved
   "CPMG Quick Order" preview v0.3. Their private link ends in ?k=KEY; the page asks the
   order system who that is and shows "Welcome back". With no key (or if the lookup fails)
   it shows name, business and email boxes so they can still order.
   REVISION LOG
+    v1.2 (Oct 26, 2026) Thank-you screen has a big "Done, close this page" button. Phones that
+                        won't let a page close itself show how to close it instead.
     v1.1 (Oct 26, 2026) Thank-you screen: says "You're all done. You can close this page.",
                         drops the repeated order-number line, and the button is now
                         "Need another graphic? Order another". Phone format comes from cpmg-order.js v1.1.
@@ -87,24 +89,26 @@
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
     <p>Your proof arrives by email within 5 hours.</p>
-    <p class="alldone"><b>You're all done.</b> You can close this page now.</p>
+    <p class="alldone"><b>You're all done.</b> Your order is saved.</p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
     <p class="sub" id="doneMsg" hidden></p>
     <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
+    <button type="button" class="big" id="closeBtn">Done, close this page</button>
+    <p class="sub" id="closeHelp" hidden>To close it, swipe this page away or tap your phone's Back button. Nothing else to do.</p>
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v1.1 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v1.2 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.0"></script>
+<script src="../assets/cpmg-order.js?v=1.1"></script>
 <script>
-/* CPMG Quick Order page script v1.1 (Oct 26, 2026) */
+/* CPMG Quick Order page script v1.2 (Oct 26, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v1.1 (Oct 26, 2026)';
+  var FORM_VERSION = 'quick-order v1.2 (Oct 26, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -198,11 +202,16 @@
     });
   });
 
+  // Done button: closes the page where the phone allows it; otherwise says how.
+  $('closeBtn').addEventListener('click', function () {
+    try { window.close(); } catch (e) { /* phone said no */ }
+    setTimeout(function () { $('closeHelp').hidden = false; $('closeBtn').textContent = 'Your order is saved'; $('closeBtn').disabled = true; }, 400);
+  });
   $('again').addEventListener('click', function () {
     ['hl', 'ideas', 'cta'].forEach(function (id) { $(id).value = ''; });
     var p = document.querySelector('input[name="size"][value="Phone"]'); if (p) p.checked = true; C.syncOpts(document);
     photos.clear(); C.busy($('sendBtn'), false, 'Send');
-    $('f').hidden = false; $('sendBar').hidden = false; $('ok').hidden = true; window.scrollTo(0, 0);
+    $('f').hidden = false; $('sendBar').hidden = false; $('ok').hidden = true; $('closeHelp').hidden = true; $('closeBtn').disabled = false; $('closeBtn').textContent = 'Done, close this page'; window.scrollTo(0, 0);
   });
 })();
 </script>
