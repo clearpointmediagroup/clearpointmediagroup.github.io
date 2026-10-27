@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.2 (Oct 26, 2026)
+ * v1.3 (Oct 27, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,9 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.3 (Oct 27, 2026) Prices: getPrices (asks the order system for every price, rush seats left today
+ *                       and the monthly plan), graphicPrice and orderTotal (promo, Phone + Wide, first
+ *                       graphic free, monthly plan $0, rush once per order). Same math as the order system.
  *   v1.2 (Oct 26, 2026) Saved info on the phone: savedKey / rememberKey / forgetKey / keyInLink, so
  *                       both forms know a returning customer. Address helpers (addrLine, stateOk,
  *                       zipOk) and typeFor (saved business type -> the forms' list wording).
@@ -251,6 +254,31 @@ var CPMG = (function () {
     return 'Other';
   }
 
+  // ===== v1.3: prices (rush, promo, monthly plan) =====
+  var PRICE_DEFAULTS = { each: 25, pair: 40, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };
+  /** Asks the order system for its prices. Always resolves; uses the defaults if it can't be reached (rushLeft null = unknown). */
+  function getPrices(key) {
+    var out = {}, k;
+    for (k in PRICE_DEFAULTS) out[k] = PRICE_DEFAULTS[k];
+    if (!urlReady()) return Promise.resolve(out);
+    var url = CPMG_SCRIPT_URL + (CPMG_SCRIPT_URL.indexOf('?') > -1 ? '&' : '?') + 'action=prices' + (key ? '&k=' + encodeURIComponent(key) : '');
+    return request('GET', url, null, LOOKUP_TIMEOUT_MS).then(function (t) {
+      var j = parse(t);
+      if (j && j.ok) { for (k in PRICE_DEFAULTS) if (j[k] !== undefined && j[k] !== null) out[k] = j[k]; }
+      return out;
+    }, function () { return out; });
+  }
+  /** One graphic: Phone + Wide pair or not, promo look or not. */
+  function graphicPrice(P, pair, promo) { return promo ? (pair ? P.promoPair : P.promo) : (pair ? P.pair : P.each); }
+  /** list = [{pair, promo}]. Returns {graphics, off, rush, total}: first graphic free for a new customer, monthly plan $0, rush once. */
+  function orderTotal(P, list, isNew, rush) {
+    var g = 0;
+    list.forEach(function (x) { g += P.monthlyPlan ? 0 : graphicPrice(P, x.pair, x.promo); });
+    var off = isNew && !P.monthlyPlan ? Math.min(g, P.firstOff) : 0;
+    var r = rush ? P.rush : 0;
+    return { graphics: g, off: off, rush: r, total: g - off + r };
+  }
+
   function hp() { var h = $('cpmgHp'); return h ? h.value : ''; }
 
   return {
@@ -259,6 +287,7 @@ var CPMG = (function () {
     shrinkPhoto: shrinkPhoto, photoPicker: photoPicker, sendOrder: sendOrder, lookupClient: lookupClient,
     failText: failText, busy: busy, honeypot: hp, MAX_PHOTOS: MAX_PHOTOS,
     savedKey: savedKey, rememberKey: rememberKey, forgetKey: forgetKey, keyInLink: keyInLink,
-    addrLine: addrLine, stateOk: stateOk, zipOk: zipOk, typeFor: typeFor, TYPE_LIST: TYPE_LIST
+    addrLine: addrLine, stateOk: stateOk, zipOk: zipOk, typeFor: typeFor, TYPE_LIST: TYPE_LIST,
+    getPrices: getPrices, graphicPrice: graphicPrice, orderTotal: orderTotal
   };
 })();
