@@ -1,13 +1,18 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v2.0 (Oct 26, 2026)
+  v2.1 (Oct 27, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v2.1 (Oct 27, 2026) Prices: "Promo look with my logo and photo" ($45, $60 for Both), a Rush box (proof
+                        within 1 hour, +$10) that hides when today's 2 rush orders are taken, and a live
+                        "Your price" total (first graphic free for new customers, monthly plan $0). The
+                        Send button shows the price. Prices come from the order system
+                        (CPMG_OrderReceiver.gs v1.8). Needs cpmg-order.js v1.3.
     v2.0 (Oct 26, 2026) Saved info you can edit. First-timers fill in their info right here (business,
                         type, name, phone, email, optional address) instead of being sent to the Detail
                         Order form, with the note "Fill this in one time...". Returning customers see
@@ -130,6 +135,13 @@
       <div class="thumbs" id="thumbs" hidden></div>
       <p class="err" id="ePic" hidden></p>
     </div>
+    <label class="opt"><input type="checkbox" id="promo"> <span id="promoTxt">Promo look with my logo and photo ($45, or $60 for Both)</span></label>
+    <div id="rushBox" class="stack" style="gap:6px">
+      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour (+$10)</span></label>
+      <p class="hint" id="rushHint">Only 2 rush orders a day. Without rush, your proof comes within 5 hours.</p>
+    </div>
+    <div class="total" id="qTot"></div>
+    <p class="sub" id="qNote" style="text-align:center;margin:0" hidden></p>
     <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
     <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
   </form>
@@ -148,21 +160,47 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v2.0 (Oct 26, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v2.1 (Oct 27, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.2"></script>
+<script src="../assets/cpmg-order.js?v=1.3"></script>
 <script>
-/* CPMG Quick Order page script v2.0 (Oct 26, 2026) */
+/* CPMG Quick Order page script v2.1 (Oct 27, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v2.0 (Oct 26, 2026)';
+  var FORM_VERSION = 'quick-order v2.1 (Oct 27, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, editing = false, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
   var LABEL = { Phone: 'Phone or Facebook', TV: 'TV screen', Both: 'Both' };
   var INFO = ['biz', 'type', 'nm', 'ph', 'em', 'street', 'city', 'state', 'zip'];
+
+  // ===== v2.1: prices (rush, promo, monthly plan) =====
+  var P = { each: 25, pair: 40, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };
+  function sizeNow() { var r = document.querySelector('input[name="size"]:checked'); return r ? r.value : 'Phone'; }
+  function rushOn() { return !$('rushOpt').hidden && $('rush').checked; }
+  function money() { return C.orderTotal(P, [{ pair: sizeNow() === 'Both', promo: $('promo').checked }], !client, rushOn()); }
+  function showTotal() {
+    if (sending) return;
+    var m = money(), price = m.total ? '$' + m.total : 'free';
+    $('qTot').textContent = 'Your price: ' + price;
+    var note = '';
+    if (P.monthlyPlan) note = 'Monthly plan: your graphic is covered' + (m.rush ? '. Rush adds $' + m.rush + '.' : '.');
+    else if (m.off) note = 'First graphic free: we take $' + m.off + ' off' + (m.rush ? '. Rush is still $' + m.rush + '.' : '.');
+    $('qNote').textContent = note; $('qNote').hidden = !note;
+    C.busy($('sendBtn'), false, 'Send · ' + price);
+  }
+  function applyPrices() {
+    $('promoTxt').textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for Both)';
+    var full = P.rushLeft === 0;
+    $('rushOpt').hidden = full; if (full) $('rush').checked = false;
+    $('rushTxt').textContent = 'Rush: proof within 1 hour (+$' + P.rush + ')';
+    $('rushHint').textContent = full ? 'Rush is full for today. Your proof still comes within 5 hours.' : 'Only ' + P.rushMax + ' rush orders a day. Without rush, your proof comes within 5 hours.';
+    C.syncOpts(document); showTotal();
+  }
+  ['promo', 'rush'].forEach(function (id) { $(id).addEventListener('change', showTotal); });
+  C.each(document.querySelectorAll('input[name="size"]'), function (r) { r.addEventListener('change', showTotal); });
 
   function show(id, msg) { C.showErr($(id), msg); }
   ['hl', 'ideas', 'cta', 'biz', 'nm', 'em', 'ph', 'type'].forEach(function (id) {
@@ -208,10 +246,11 @@
       $('savedLines').innerHTML = rows.map(function (r) { return '<div><span class="k">' + r[0] + ':</span> ' + C.esc(r[1]) + '</div>'; }).join('');
     }
   }
+  var drawInfo = render; render = function () { drawInfo(); showTotal(); };   // v2.1: price follows new/returning
   $('editBtn').addEventListener('click', function () { fill(client); editing = true; render(); try { $('biz').focus(); } catch (e) { /* fine */ } });
   $('cancelEdit').addEventListener('click', function () { editing = false; INFO.forEach(function (id) { show('e' + id.charAt(0).toUpperCase() + id.slice(1), ''); }); show('eAddr', ''); render(); });
   $('notMe').addEventListener('click', function () {
-    C.forgetKey(); C.keyInLink(''); key = ''; client = null; editing = false; fill({}); render();
+    C.forgetKey(); C.keyInLink(''); key = ''; client = null; editing = false; fill({}); P.monthlyPlan = false; render();
   });
 
   $('linkEm').addEventListener('input', function () { show('eLinkEm', ''); });
@@ -235,6 +274,7 @@
       render();
     });
   } else render();
+  C.getPrices(key).then(function (p) { P = p; applyPrices(); });   // v2.1
 
   $('f').addEventListener('submit', function (ev) {
     ev.preventDefault();
@@ -271,8 +311,10 @@
         colors: { mode: 'cpmg', main: '', second: '' },
         notes: '',
         more: { 'Where will you use it?': LABEL[size], 'Size': SIZE[size] },
-        photos: photos.list()
+        photos: photos.list(),
+        promo: $('promo').checked                                      // v2.1
       }],
+      rush: rushOn(),                                                  // v2.1
       website: C.honeypot()
     };
 
@@ -305,7 +347,8 @@
   $('again').addEventListener('click', function () {
     ['hl', 'ideas', 'cta'].forEach(function (id) { $(id).value = ''; });
     var p = document.querySelector('input[name="size"][value="Phone"]'); if (p) p.checked = true; C.syncOpts(document);
-    photos.clear(); C.busy($('sendBtn'), false, 'Send');
+    photos.clear(); $('promo').checked = false; $('rush').checked = false; C.syncOpts(document);
+    C.busy($('sendBtn'), false, 'Send'); showTotal(); C.getPrices(key).then(function (p) { P = p; applyPrices(); });   // v2.1
     $('f').hidden = false; $('sendBar').hidden = false; $('ok').hidden = true; $('closeHelp').hidden = true; $('closeBtn').disabled = false; $('closeBtn').textContent = 'Done, close this page'; window.scrollTo(0, 0);
   });
 })();
