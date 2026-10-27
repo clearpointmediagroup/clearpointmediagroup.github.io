@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v2.1 (Oct 27, 2026)
+  v2.2 (Oct 27, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.2 (Oct 27, 2026) Hours: open 9 a.m. to 9 p.m. every day. Removed "day or night". Orders after
+                        9 p.m. get their proof the next morning. Rush is 1 hour during open hours.
     v2.1 (Oct 27, 2026) Prices: each graphic has a "Promo look with my logo and photo" box ($45, $60 for
                         both sizes); a Rush box (proof within 1 hour, +$10) hides when the 2 rush
                         orders for today are taken; monthly plan customers see $0 graphics. The live
@@ -45,7 +47,7 @@
 <meta name="theme-color" content="#0f1712">
 <meta name="color-scheme" content="dark">
 <title>CPMG Detail Order</title>
-<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours, day or night.">
+<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours. Open 9 a.m. to 9 p.m.">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
 <link rel="icon" href="../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
@@ -72,7 +74,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours, day or night</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m.</p></div></div>
   <span class="pill" id="payPill">Nothing to pay until you approve your proof</span>
 
   <form id="f" novalidate autocomplete="on">
@@ -114,7 +116,7 @@
     <button type="button" class="add" id="addG">+ Add another graphic</button>
 
     <div class="card" id="rushBox">
-      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour (+$10)</span></label>
+      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$10)</span></label>
       <p class="hint" id="rushHint">Only 2 rush orders a day. Without rush, your proof comes within 5 hours.</p>
     </div>
 
@@ -151,7 +153,7 @@
   <div id="done" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Your proof arrives by email within 5 hours.</p>
+    <p>Your proof arrives by email within 5 hours. If you order after 9 p.m., your proof comes the next morning.</p>
     <p class="alldone"><b>You're all done.</b> Your order is saved.</p>
     <p class="sub">Your order number</p>
     <div class="code" id="orderCode"></div>
@@ -162,7 +164,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v2.1 (Oct 27, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v2.2 (Oct 27, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -200,9 +202,9 @@
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
 <script src="../assets/cpmg-order.js?v=1.3"></script>
 <script>
-/* CPMG Detail Order page script v2.1 (Oct 27, 2026) */
+/* CPMG Detail Order page script v2.2 (Oct 27, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v2.1 (Oct 27, 2026)';
+  var FORM_VERSION = 'detail-order v2.2 (Oct 27, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
   var P = { each: PRICE, pair: PAIR_PRICE, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };   // v2.1: the order system's prices replace these
@@ -226,7 +228,7 @@
   function applyPrices() {
     var full = P.rushLeft === 0;
     $('rushOpt').hidden = full; if (full) $('rush').checked = false;
-    $('rushTxt').textContent = 'Rush: proof within 1 hour (+$' + P.rush + ')';
+    $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$' + P.rush + ')';
     $('rushHint').textContent = full ? 'Rush is full for today. Your proof still comes within 5 hours.' : 'Only ' + P.rushMax + ' rush orders a day. Without rush, your proof comes within 5 hours.';
     cards().forEach(paintPromo); C.syncOpts(document); renum();
   }
