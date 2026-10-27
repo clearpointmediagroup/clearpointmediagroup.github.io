@@ -1,0 +1,361 @@
+<!-- CPMG Dashboard (GitHub) v2.0 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
+     Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
+     Revision log:
+     v2.0 (Oct 27, 2026) Moved to GitHub so it opens on any phone, laptop or kiosk with no Google sign-in.
+       Sign-in screen (tap your name, type the PIN), "Remember this phone", Log out button.
+     Built from CPMG_DashboardPage.html v1.2 (everything else unchanged). -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>CPMG Order Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#0f1712;--surface:#17221c;--box:#173404;--fg:#c9e6b0;--strong:#dff0c8;--muted:#9fc47c;--line:#2f4a24;
+  --green:#97c459;--amber:#fac775;--amber-bg:#412402;--red:#f4a6a6;--red-bg:#4a1717;
+  --display:"Archivo",Arial,sans-serif;--body:"Source Sans 3","Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:20px;line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto;padding:18px 16px 60px}
+h1{font-family:var(--display);font-size:32px;margin:0;color:var(--strong)}
+h2{font-family:var(--display);font-size:24px;margin:0;color:var(--strong)}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sub{font-size:16px;color:var(--muted)}
+button{font:700 20px var(--body);border-radius:999px;border:0;padding:14px 22px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.btn{background:var(--green);color:var(--bg)}
+.btn2{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btnwarn{background:var(--amber-bg);color:var(--amber);border:2px solid var(--amber)}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.stage{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;width:100%;color:var(--fg);font:inherit}
+.stage.mine{border:3px solid var(--amber)}
+.count{font:700 44px var(--display);color:var(--strong);min-width:64px;text-align:center}
+.stage .lbl{font:700 24px var(--display);color:var(--strong)}
+.stage .nt{font-size:17px;color:var(--muted)}
+.tag{display:inline-block;font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--amber);border:1.5px solid var(--amber);border-radius:999px;padding:0 9px;margin-top:4px}
+.list{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.job{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:16px;cursor:pointer;text-align:left;width:100%;color:var(--fg);font:inherit}
+.job.kicked{background:var(--red-bg);border-color:var(--red)}
+.job b{font:700 22px var(--display);color:var(--strong);display:block}
+.job .m{font-size:17px;color:var(--muted)}
+.job .k{font-size:17px;color:var(--red);font-weight:700}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted)}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+.imgs{display:flex;flex-direction:column;gap:14px}
+.imgs figure{margin:0;background:#000;border-radius:12px;padding:10px;text-align:center}
+.imgs img{max-width:100%;max-height:70vh;border-radius:8px}
+.imgs figcaption{font-size:15px;color:var(--muted);margin-top:6px;word-break:break-all}
+dl{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;margin:0}
+dt{font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+dd{margin:0;white-space:pre-line;word-break:break-word}
+.notes{white-space:pre-line;font-size:17px}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.warn{background:var(--amber-bg);border:2px solid var(--amber);color:var(--amber);border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:600}
+.err{background:var(--red-bg);border:2px solid var(--red);color:var(--red);border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:600}
+textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;border:2px solid var(--green);background:var(--bg);color:var(--strong);margin-top:8px}
+.full{position:fixed;inset:0;background:#000;z-index:10;display:flex;flex-direction:column}
+.full img{flex:1;min-height:0;width:100%;object-fit:contain}
+.full .bar{display:flex;justify-content:center;gap:12px;padding:12px;background:#000}
+.hide{display:none!important}
+.signin{max-width:440px;margin:8vh auto 0;display:flex;flex-direction:column;gap:16px}
+.whos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.whoBtn{font-size:22px;padding:16px}
+.whoBtn.on{background:var(--green);color:var(--bg)}
+#pin{font:700 28px var(--body);letter-spacing:.3em;padding:12px 14px;border-radius:12px;border:2px solid var(--green);background:var(--surface);color:var(--strong);width:100%;box-sizing:border-box}
+.rem{display:flex;gap:10px;align-items:center;font-size:18px;color:var(--muted)}
+.rem input{width:22px;height:22px}
+.tan{background:#3a2a10;border:1.5px solid var(--amber);border-radius:8px;padding:6px 10px;color:var(--amber);font-weight:700;word-break:break-all}
+/* v1.1 LIVE bar + version line */
+.livebar{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin-bottom:14px}
+.live{display:flex;align-items:center;gap:12px;font:700 22px var(--display);color:var(--green)}
+.dot{width:20px;height:20px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);flex:none;animation:blink 1.6s ease-in-out infinite}
+.live.stale{color:var(--amber)}
+.live.stale .dot{background:var(--amber);box-shadow:0 0 10px var(--amber);animation:none}
+.livebar.stale{background:var(--amber-bg);border-color:var(--amber)}
+.ver{font-size:16px;font-weight:600;color:var(--muted);overflow-wrap:anywhere}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.stage{min-width:0}
+.stage .lbl,.stage .nt{overflow-wrap:anywhere}
+/* v1.1 sideways view (laptop / TV): six boxes in one row, big type */
+@media (min-width:900px) and (orientation:landscape){
+  .wrap{max-width:none;padding:18px 2vw 40px}
+  h1{font-size:clamp(32px,2.6vw,60px)}
+  .sub{font-size:clamp(16px,1.2vw,28px)}
+  .live{font-size:clamp(22px,1.8vw,42px)}
+  .dot{width:clamp(20px,1.6vw,38px);height:clamp(20px,1.6vw,38px)}
+  .ver{font-size:clamp(16px,1.1vw,26px)}
+  .stages{grid-template-columns:repeat(6,minmax(0,1fr));gap:1.2vw}
+  .stage{flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:.6vw;padding:1.4vw 0.8vw}
+  .count{font-size:clamp(48px,6vw,140px);min-width:0;line-height:1}
+  .stage .lbl{font-size:clamp(20px,1.8vw,42px);line-height:1.15}
+  .stage .nt{font-size:clamp(15px,1.15vw,26px)}
+  .tag{font-size:clamp(14px,1vw,22px)}
+}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{padding-top:8px}h1{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap signin hide" id="signin">
+  <h1>CPMG Order Dashboard</h1>
+  <div class="sub">Tap your name, then type the PIN.</div>
+  <div class="whos"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
+  <label for="pin" class="sub">PIN</label>
+  <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="10">
+  <label class="rem"><input type="checkbox" id="remember"> Remember me on this phone (only on your own phone)</label>
+  <button type="button" class="btn" id="signinBtn" style="font-size:22px;padding:14px">Sign in</button>
+  <div id="signinMsg"></div>
+</div>
+<div class="wrap hide" id="dash">
+  <div class="livebar" id="livebar">
+    <div class="live" id="live"><span class="dot" aria-hidden="true"></span><span id="liveText" aria-live="polite">Connecting…</span></div>
+    <div class="ver" id="ver"></div>
+  </div>
+  <div class="top">
+    <div><h1>CPMG Order Dashboard</h1><div class="sub" id="sub">Loading…</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn2" id="refresh" type="button">Refresh</button><button class="btn2" id="logout" type="button">Log out</button></div>
+  </div>
+  <div id="msg"></div>
+  <div id="vStages"><div class="stages" id="stages"></div></div>
+  <div id="vList" class="hide">
+    <button class="btn2" type="button" data-go="stages">← All stages</button>
+    <h2 id="listTitle" style="margin-top:14px"></h2>
+    <div class="list" id="list"></div>
+  </div>
+  <div id="vJob" class="hide">
+    <button class="btn2" type="button" id="backList">← Back to the list</button>
+    <div id="job"></div>
+  </div>
+</div>
+<div class="full hide" id="full">
+  <img id="fullImg" alt="">
+  <div class="bar"><button class="btn" type="button" id="fullBack">Back to the form</button></div>
+</div>
+<script>
+var KEY = '';
+var API = 'https://script.google.com/macros/s/AKfycbxvlHJmEaoJpsfmAF2DDmIUPtOTUUirZJSpbF8ye92LOxWwoUJC8jZaGUAPeawv-dIh/exec';
+var PASS = null, WHO = '';
+try { PASS = localStorage.getItem('cpmgPass') || sessionStorage.getItem('cpmgPass'); } catch (e) {}
+function savePass(p, remember) { try { (remember ? localStorage : sessionStorage).setItem('cpmgPass', p); } catch (e) {} }
+function clearPass() { try { localStorage.removeItem('cpmgPass'); sessionStorage.removeItem('cpmgPass'); } catch (e) {} PASS = null; }
+function post(body, ok, fail) {
+  fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+    .then(function (r) { return r.json(); }).then(ok).catch(fail);
+}
+var D = null, curStage = null, curJob = null;
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { var d = document.createElement('div'); d.textContent = String(s == null ? '' : s); return d.innerHTML; }
+function show(v) { ['vStages', 'vList', 'vJob'].forEach(function (x) { $(x).classList.toggle('hide', x !== v); }); window.scrollTo(0, 0); }
+function msg(html, cls) { $('msg').innerHTML = html ? '<div class="' + (cls || 'warn') + '">' + html + '</div>' : ''; }
+function call(fn, args, ok) {
+  post({ api: 'dash', fn: fn, pass: PASS, args: args.slice(1) },
+    function (res) { if (res && res.signin) { signedOut(res.error); return; } ok(res); },
+    function (e) { msg('Something went wrong: ' + esc(e && e.message), 'err'); });
+}
+var MINE = { randy: 'randy', cindy: 'cindy' };
+var PAGE_VERSION = 'v2.0 (Oct 27, 2026)';
+var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
+var lastOk = 0;                         // time (ms) of the last good refresh
+function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
+function drawVersion(serverVer) {
+  $('ver').textContent = 'Dashboard ' + PAGE_VERSION + (serverVer ? ' · server ' + serverVer : '');
+}
+function drawLive() {
+  var stale = !lastOk || (Date.now() - lastOk) > STALE_MS;
+  $('live').classList.toggle('stale', stale);
+  $('livebar').classList.toggle('stale', stale);
+  var t = !lastOk ? (stale && Date.now() - pageStart > STALE_MS ? 'Not updating, check connection' : 'Connecting…')
+    : (stale ? 'Not updating, check connection · last ' + clock(new Date(lastOk)) : 'LIVE · updated ' + clock(new Date(lastOk)));
+  if ($('liveText').textContent !== t) $('liveText').textContent = t;
+}
+var pageStart = Date.now();
+drawVersion('');
+
+function gotDashboard(res, then) {
+    if (!res || !res.ok) { msg(esc(res ? res.error : 'No answer.'), 'err'); drawLive(); return; }
+    D = res;
+    lastOk = Date.now(); drawLive(); drawVersion(res.version);
+    $('sub').textContent = 'Hi ' + res.name + ' · updated ' + res.at;
+    drawStages();
+    if (curStage && !$('vList').classList.contains('hide')) drawList(curStage);
+    if (then) then();
+}
+function load(then) {
+  call('getDashboard', [KEY], function (res) { gotDashboard(res, then); });
+}
+// Quiet refresh for the 60-second timer: no error pop-up, the LIVE light shows trouble instead.
+// Only redraws the list if it is the screen showing, so an open order or full screen is never disturbed.
+function poll() {
+  if (!PASS) return;
+  post({ api: 'dash', fn: 'getDashboard', pass: PASS, args: [] }, function (res) {
+      if (res && res.signin) { signedOut(res.error); return; }
+      if (!res || !res.ok) { Logger_(res); drawLive(); return; }
+      var listOpen = !$('vList').classList.contains('hide');
+      D = res; lastOk = Date.now(); drawLive(); drawVersion(res.version);
+      $('sub').textContent = 'Hi ' + res.name + ' · updated ' + res.at;
+      drawStages();
+      if (curStage && listOpen) { var y = window.scrollY; drawList(curStage); window.scrollTo(0, y); }
+    }, function (e) { Logger_(e); drawLive(); });
+}
+function Logger_(e) { try { console.warn('Dashboard refresh failed:', e && (e.message || e.error) || e); } catch (x) {} }
+function drawStages() {
+  $('stages').innerHTML = D.stages.map(function (s, i) {
+    var mine = s.key === MINE[D.who];
+    return '<button type="button" class="stage' + (mine ? ' mine' : '') + '" data-stage="' + s.key + '">' +
+      '<span class="count">' + s.count + '</span><span><span class="lbl">' + (i + 1) + '. ' + esc(s.label) + '</span><br>' +
+      '<span class="nt">' + esc(s.note) + '</span>' + (mine ? '<br><span class="tag">Your queue</span>' : '') + '</span></button>';
+  }).join('');
+}
+function drawList(stage) {
+  curStage = stage;
+  var s = D.stages.filter(function (x) { return x.key === stage; })[0];
+  $('listTitle').textContent = s.label + ' (' + s.count + ')';
+  var jobs = D.jobs.filter(function (j) { return j.stage === stage; });
+  $('list').innerHTML = jobs.length ? jobs.map(function (j, i) {
+    return '<button type="button" class="job' + (j.kicked ? ' kicked' : '') + '" data-job="' + i + '"><b>' + esc(j.business) + '</b>' +
+      '<div>' + esc(j.headline) + '</div>' +
+      '<div class="m">' + esc(j.id) + ' · ' + esc(j.size) + ' · came in ' + esc(j.received) + (j.needBy ? ' · need by ' + esc(j.needBy) : '') + '</div>' +
+      (j.kicked ? '<div class="k">' + esc(j.lastNote) + '</div>' : (j.lastNote ? '<div class="m">' + esc(j.lastNote) + '</div>' : '')) +
+      (j.checks ? '<div class="k">Check: ' + esc(j.checks) + '</div>' : '') + '</button>';
+  }).join('') : '<div class="empty">Nothing here right now.</div>';
+  $('list').dataset.stage = stage;
+  show('vList');
+}
+function openJob(tab, id) {
+  msg('');
+  $('job').innerHTML = '<div class="card">Opening the order…</div>';
+  show('vJob');
+  call('getJob', [KEY, tab, id], function (res) {
+    if (!res || !res.ok) { $('job').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    curJob = res.job; drawJob();
+  });
+}
+function row(label, val) { return val ? '<dt>' + esc(label) + '</dt><dd>' + esc(val) + '</dd>' : ''; }
+function drawJob() {
+  var j = curJob, h = '';
+  h += '<div class="card"><h2>' + esc(j.business) + '</h2><div class="sub">' + esc(j.id) + ' · ' + esc(j.status) + '</div></div>';
+  if (j.images.length) {
+    h += '<div class="card imgs">' + j.images.map(function (im, i) {
+      return '<figure>' + (im.data ? '<img src="' + im.data + '" alt="Proof ' + (i + 1) + '">' : '<p>Too big to show here. <a href="' + esc(im.link) + '" target="_blank" style="color:var(--amber)">Open it in Drive</a></p>') +
+        '<figcaption>' + esc(im.name) + '</figcaption>' +
+        (im.data ? '<button class="btn" type="button" data-full="' + i + '" style="margin-top:10px">Full screen</button>' : '') + '</figure>';
+    }).join('') + '</div>';
+  } else {
+    h += '<div class="warn">No _PROOF image in the order folder yet.' + (j.stage === 'new' || j.stage === 'processing' ? ' It moves to Randy\'s review by itself once the proof is saved there.' : '') + '</div>';
+  }
+  if (j.checks) h += '<div class="warn">Check before you approve: ' + esc(j.checks) + '</div>';
+  h += '<div class="card"><dl>' + row('Headline', j.headline) + row('Ideas', j.ideas) + row('Call to action', j.cta) +
+    row('Phone on graphic', j.footerPhone) + row('Website', j.website) + row('Area', j.area) + row('Size', j.size) +
+    row('Colors', j.colors) + row('Notes', j.notes) + row('Need by', j.needBy) + row('Came in', j.received) +
+    row('Contact', j.contact + ' · ' + j.phone + ' · ' + j.email) + row('Proof sent', j.proofSent) + row('Delivered', j.delivered) + '</dl>' +
+    '<div class="acts"><a class="btn2" style="text-decoration:none;padding:12px 18px;border-radius:999px;font-weight:700" href="' + esc(j.folder) + '" target="_blank">Open order folder</a></div></div>';
+  if (j.reviewNotes) h += '<div class="card"><h2>History</h2><div class="notes" style="margin-top:8px">' + esc(j.reviewNotes) + '</div></div>';
+  h += '<div class="card" id="acts">' + actionsFor(j) + '</div>';
+  $('job').innerHTML = h;
+}
+function actionsFor(j) {
+  var me = D.who, s = j.stage;
+  if (me === 'cindy' && s !== 'cindy') return '<div class="sub">Only jobs in Cindy\'s review can be moved from your link.</div>';
+  if (s === 'new') return '<h2>Next</h2><p>Mark it as being made in Gemini + Claude.</p><div class="acts"><button class="btn" type="button" data-act="start">Start processing</button></div>';
+  if (s === 'processing') return '<h2>Next</h2><p>Being made. It moves to Randy\'s review by itself once the new _PROOF image is saved in the order folder.</p>';
+  if (s === 'randy' || s === 'cindy') return '<h2>Your call</h2><div class="acts"><button class="btn" type="button" data-act="forward">' +
+    (s === 'randy' ? 'Send forward to Cindy' : 'Send forward: ready to send') + '</button>' +
+    '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox();
+  if (s === 'ready') return '<h2>Release</h2><p>Takes one more look before anything is emailed.</p><div class="acts"><button class="btn" type="button" data-act="preview" data-kind="proof">Release to customer</button>' +
+    '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox() + '<div id="look"></div>';
+  if (s === 'sent' && j.status === 'Proof Sent') return '<h2>After they pay</h2><p>Sends the clean _FINAL graphic. Takes one more look first.</p><div class="acts"><button class="btn" type="button" data-act="preview" data-kind="final">Send final graphic</button></div><div id="look"></div>';
+  return '<div class="sub">Done. Nothing more to do here.</div>';
+}
+function kickBox() {
+  return '<div id="kick" class="hide" style="margin-top:14px"><label for="kickNote"><b>What needs fixing?</b></label>' +
+    '<textarea id="kickNote" rows="3" placeholder="Example: phone number wrong, should be (843) 555-0123"></textarea>' +
+    '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Kick it back</button><button class="btn2" type="button" data-act="kickcancel">Never mind</button></div></div>';
+}
+function move(action, note) {
+  call('moveJob', [KEY, curJob.tab, curJob.id, action, note || ''], function (res) {
+    if (!res || !res.ok) { msg(esc(res ? res.error : 'No answer.'), 'err'); window.scrollTo(0, 0); return; }
+    msg('Done. ' + esc(curJob.business) + ' is now: ' + esc(res.status) + '.', 'warn');
+    load(function () { drawList(curStage || 'new'); });
+  });
+}
+function preview(kind) {
+  $('look').innerHTML = '<div class="card">Checking…</div>';
+  call('getSendPreview', [KEY, curJob.tab, curJob.id, kind], function (res) {
+    if (!res || !res.ok) { $('look').innerHTML = '<div class="err">' + esc(res ? (res.error || res.message) : 'No answer.') + '</div>'; return; }
+    var p = res.preview;
+    var h = '<div class="warn" style="color:var(--fg)"><h2 style="color:var(--amber)">One more look</h2>' +
+      '<p>' + (kind === 'proof' ? 'Email the proof to' : 'Has ' + esc(p.business) + ' paid? If yes, email the final to') + ' <b>' + esc(p.contact) + '</b>:</p>' +
+      '<div class="tan">' + esc(p.to) + '</div><p>Attaching:</p>' + p.images.map(function (n) { return '<div class="tan" style="margin-top:6px">' + esc(n) + '</div>'; }).join('');
+    if (kind === 'proof') {
+      h += p.free ? '<p><b>Free order:</b> no pay link needed. The email just asks them to reply "approved".</p>'   // v1.2
+        : p.payLink ? '<p>Pay link:</p><div class="tan">' + esc(p.payLink) + '</div>'
+        : '<p><b>No pay link yet.</b> Paste the QuickBooks pay link:</p><input id="payLink" type="url" placeholder="https://">';
+      if (p.total) h += '<p>Total: ' + esc(p.total) + '</p>';
+      if (p.oddPhones.length) h += '<p>Phone check: ' + esc(p.oddPhones.join(', ')) + ' isn\'t local, so the email asks them to confirm it.</p>';
+    }
+    if (p.waiting.length) h += '<p>Not ready yet, sent later: ' + esc(p.waiting.join(', ')) + '</p>';
+    h += '<div class="acts"><button class="btn" type="button" data-act="send" data-kind="' + kind + '">Yes, send it</button><button class="btn2" type="button" data-act="lookcancel">Not yet</button></div></div>';
+    $('look').innerHTML = h;
+  });
+}
+function send(kind) {
+  var pl = $('payLink') ? $('payLink').value.trim() : '';
+  if ($('payLink') && !/^https?:\/\/\S+$/.test(pl)) { $('look').insertAdjacentHTML('beforeend', '<div class="err">Paste the full pay link (it starts with https://) first.</div>'); return; }
+  $('look').innerHTML = '<div class="card">Sending…</div>';
+  call('sendFromDashboard', [KEY, curJob.tab, curJob.id, kind, pl], function (res) {
+    if (!res || !res.ok) { $('look').innerHTML = '<div class="err">' + esc(res ? (res.message || res.error) : 'No answer.') + '</div>'; return; }
+    msg(esc(res.message), 'warn');
+    load(function () { drawList('sent'); });
+  });
+}
+document.addEventListener('click', function (ev) {
+  var t = ev.target.closest('button,[data-full]'); if (!t) return;
+  if (t.id === 'refresh') { msg(''); load(); return; }
+  if (t.id === 'backList') { drawList(curStage || 'new'); return; }
+  if (t.id === 'fullBack') { $('full').classList.add('hide'); return; }
+  if (t.dataset.go === 'stages') { curStage = null; show('vStages'); return; }
+  if (t.dataset.stage) { msg(''); drawList(t.dataset.stage); return; }
+  if (t.dataset.job) { var j = D.jobs.filter(function (x) { return x.stage === curStage; })[+t.dataset.job]; if (j) openJob(j.tab, j.id); return; }
+  if (t.dataset.full) { $('fullImg').src = curJob.images[+t.dataset.full].data; $('full').classList.remove('hide'); return; }
+  var a = t.dataset.act; if (!a) return;
+  if (a === 'start' || a === 'forward') { t.disabled = true; move(a); }
+  else if (a === 'kickopen') { $('kick').classList.remove('hide'); $('kickNote').focus(); }
+  else if (a === 'kickcancel') { $('kick').classList.add('hide'); }
+  else if (a === 'kickback') { var n = $('kickNote').value.trim(); if (!n) { $('kickNote').placeholder = 'Type what needs fixing first'; $('kickNote').focus(); return; } t.disabled = true; move('kickback', n); }
+  else if (a === 'preview') { preview(t.dataset.kind); }
+  else if (a === 'lookcancel') { $('look').innerHTML = ''; }
+  else if (a === 'send') { t.disabled = true; send(t.dataset.kind); }
+});
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('full').classList.add('hide'); });
+function showSignin(text) {
+  $('dash').classList.add('hide'); $('signin').classList.remove('hide');
+  $('signinMsg').innerHTML = text ? '<div class="warn">' + esc(text) + '</div>' : '';
+}
+function signedOut(text) { clearPass(); showSignin(text || 'Please sign in again.'); }
+function startDash() { $('signin').classList.add('hide'); $('dash').classList.remove('hide'); load(); }
+function doSignin() {
+  var pin = $('pin').value.trim();
+  if (!WHO) { $('signinMsg').innerHTML = '<div class="err">Tap your name first.</div>'; return; }
+  if (!pin) { $('signinMsg').innerHTML = '<div class="err">Type the PIN first.</div>'; $('pin').focus(); return; }
+  var remember = $('remember').checked;
+  $('signinBtn').disabled = true; $('signinMsg').innerHTML = '<div class="warn">Signing in…</div>';
+  post({ api: 'dash', fn: 'login', who: WHO, pin: pin, remember: remember }, function (res) {
+    $('signinBtn').disabled = false; $('pin').value = '';
+    if (!res || !res.ok) { $('signinMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    PASS = res.pass; savePass(PASS, remember); startDash();
+  }, function (e) { $('signinBtn').disabled = false; $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+}
+document.addEventListener('click', function (ev) {
+  var t = ev.target.closest('button'); if (!t) return;
+  if (t.dataset.who) { WHO = t.dataset.who; document.querySelectorAll('.whoBtn').forEach(function (b) { b.classList.toggle('on', b === t); }); $('pin').focus(); return; }
+  if (t.id === 'signinBtn') { doSignin(); return; }
+  if (t.id === 'logout') { post({ api: 'dash', fn: 'logout', pass: PASS }, function () {}, function () {}); signedOut('You are logged out.'); return; }
+});
+$('pin').addEventListener('keydown', function (e) { if (e.key === 'Enter') doSignin(); });
+if (PASS) startDash(); else showSignin('');
+setInterval(poll, 60000);                 // refresh every 60 seconds on every screen
+setInterval(drawLive, 15000);             // re-check freshness so the light turns amber on time
+</script>
+</body>
+</html>
