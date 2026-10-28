@@ -1,11 +1,14 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v3.0 (Oct 28, 2026)
+  v3.1 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v3.1 (Oct 28, 2026) New clients see "Your first graphic is free. After that, graphics are $25 each."
+                        at the top of the form (hidden for returning and monthly-plan clients).
+                        Help helper v1.4: first tip moves on after 2 seconds.
     v3.0 (Oct 28, 2026) Hours now say Eastern time (9 a.m. to 9 p.m. Eastern) everywhere on the form,
                         so clients in other time zones know when we are open.
     v2.9 (Oct 28, 2026) Clearer free-first-graphic note on the review screen: "Your first graphic is on us",
@@ -91,6 +94,7 @@
 <body>
 <div class="wrap">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
+  <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
   <span class="pill" id="payPill">Nothing to pay until you approve your proof</span>
 
   <form id="f" novalidate autocomplete="on">
@@ -241,7 +245,14 @@
   function money() { return C.orderTotal(P, cards().map(function (c) { return { pair: pick(c, 'size') === 'Phone + Wide', promo: promoOn(c) }; }), !client, rushOn()); }
   function total() { var m = money(); return m.graphics + m.rush; }
   function paintPromo(c) { var t = c.querySelector('[data-promotxt]'); if (t) t.textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for both sizes)'; }
+  var freeChecked = !key;   // v3.1: true once we know if this is a returning client
+  function freeTop() {      // v3.1: free-first-graphic note at the top, new clients only
+    var b = $('freeTop'); if (!b) return;
+    b.hidden = !freeChecked || !!client || !!P.monthlyPlan;
+    $('freeTopMore').textContent = 'After that, graphics are $' + P.each + ' each.';
+  }
   function applyPrices() {
+    freeTop();
     var full = P.rushLeft === 0;
     $('rushOpt').hidden = full; if (full) $('rush').checked = false;
     $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. Eastern (+$' + P.rush + ')';
@@ -324,6 +335,7 @@
     C.syncOpts(document);
   }
   function renderDetails() {
+    freeTop();
     var saved = !!client && !editing;
     $('dSaved').hidden = !saved; $('dFields').hidden = saved; $('dCancel').hidden = !client;
     $('dNote').textContent = client ? 'Change anything that\'s wrong. We\'ll save it for every order after this.'
@@ -342,9 +354,10 @@
     C.lookupClient(key).then(function (c) {
       if (c && (c.email || c.business)) { client = c; fillDetails(c); C.keyInLink(key); }
       else if (c === false) { C.forgetKey(); key = ''; }
-      renderDetails();
+      freeChecked = true; renderDetails();
     });
   }
+  freeTop();
   C.getPrices(key).then(function (p) { P = p; applyPrices(); });   // v2.1
   $('rush').addEventListener('change', renum);
   $('addG').addEventListener('click', addG);
@@ -522,6 +535,6 @@
   ];
 })();
 </script>
-<script src="../assets/cpmg-order-helper.js?v=1.3"></script>
+<script src="../assets/cpmg-order-helper.js?v=1.4"></script>
 </body>
 </html>

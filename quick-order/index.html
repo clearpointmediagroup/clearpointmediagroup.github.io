@@ -1,13 +1,16 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v2.7 (Oct 28, 2026)
+  v2.8 (Oct 28, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v2.8 (Oct 28, 2026) New clients see "Your first graphic is free. After that, graphics are $25 each."
+                        at the top of the form (hidden for returning and monthly-plan clients).
+                        Help helper v1.4: first tip moves on after 2 seconds.
     v2.7 (Oct 28, 2026) Hours now say Eastern time (9 a.m. to 9 p.m. Eastern) everywhere on the form,
                         so clients in other time zones know when we are open.
     v2.6 (Oct 28, 2026) Clearer free-first-graphic note: "Your first graphic is on us", then says later
@@ -75,6 +78,7 @@
 <body>
 <div class="wrap narrow">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
+  <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
 
@@ -202,7 +206,14 @@
     $('qNote').textContent = note; $('qNote').hidden = !note;
     C.busy($('sendBtn'), false, 'Send · ' + price);
   }
+  var freeChecked = !key;   // v2.8: true once we know if this is a returning client
+  function freeTop() {      // v2.8: free-first-graphic note at the top, new clients only
+    var b = $('freeTop'); if (!b) return;
+    b.hidden = !freeChecked || !!client || !!P.monthlyPlan;
+    $('freeTopMore').textContent = 'After that, graphics are $' + P.each + ' each.';
+  }
   function applyPrices() {
+    freeTop();
     $('promoTxt').textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for Both)';
     var full = P.rushLeft === 0;
     $('rushOpt').hidden = full; if (full) $('rush').checked = false;
@@ -240,6 +251,7 @@
   }
   /** Shows the info box the right way: folded "Welcome back", or open boxes. */
   function render() {
+    freeTop();
     $('info').hidden = false;
     var saved = !!client && !editing;
     $('infoSaved').hidden = !saved; $('infoEdit').hidden = saved;
@@ -282,7 +294,7 @@
       $('looking').hidden = true;
       if (c && (c.email || c.business)) { client = c; C.keyInLink(key); }
       else { if (c === false) { C.forgetKey(); key = ''; } }
-      render();
+      freeChecked = true; render();
     });
   } else render();
   C.getPrices(key).then(function (p) { P = p; applyPrices(); });   // v2.1
@@ -384,6 +396,6 @@
   ];
 })();
 </script>
-<script src="../assets/cpmg-order-helper.js?v=1.3"></script>
+<script src="../assets/cpmg-order-helper.js?v=1.4"></script>
 </body>
 </html>

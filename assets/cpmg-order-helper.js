@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: "How to order" help bubble — cpmg-order-helper.js
- * v1.3 (Oct 28, 2026)
+ * v1.4 (Oct 28, 2026)
  * A green "How to order" button near the top of an order form. Tapping it opens a small
  * green helper (a smiling cartoon that waves) at the top of the screen. It walks through
  * the form one short tip at a time, scrolls to each part, and lights it up with a green ring.
@@ -10,6 +10,8 @@
  *   Before loading this file, the page sets window.CPMG_HELP = [ { t:'Big line', s:'Small line',
  *   el: function(){ return element or null } }, ... ]. Then: <script src="../assets/cpmg-order-helper.js?v=1.0"></script>
  * REVISION LOG
+ *   v1.4 (Oct 28, 2026) The first tip ("Hi!") moves on after 2 seconds, so people quickly see the helper
+ *                       walk down the form. The other tips still wait 7 seconds each.
  *   v1.3 (Oct 28, 2026) Smaller help box (smaller face, words and buttons) so it takes less of the screen.
  *                       Each part now scrolls to sit just under the help box, never hidden behind it.
  *                       Brought back the row of slide dots (one per tip) instead of "Tip 3 of 11".
@@ -24,7 +26,7 @@
 (function () {
   var STEPS = window.CPMG_HELP || [];
   if (!STEPS.length) return;
-  var WAIT = 7000;
+  var WAIT = 7000, FIRST_WAIT = 2000;   // v1.4: first tip moves on fast
 
   var css = '' +
     '.hlp-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;font:800 21px var(--display);background:var(--amber);color:var(--amberbg);border:0;border-radius:14px;padding:14px 16px;cursor:pointer;min-height:60px}' +
@@ -105,7 +107,7 @@
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
     }
     clearTimeout(timer);
-    if (auto && i < list.length - 1) timer = setTimeout(function () { i++; show(); }, WAIT);
+    if (auto && i < list.length - 1) timer = setTimeout(function () { i++; show(); }, i === 0 ? FIRST_WAIT : WAIT);
   }
   function open() {
     list = STEPS.filter(function (s) { return !s.opt || target(s); });
