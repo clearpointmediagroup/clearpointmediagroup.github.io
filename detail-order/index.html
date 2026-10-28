@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v4.1 (Oct 28, 2026)
+  v4.2 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v4.2 (Oct 28, 2026) Test link (?new=1) now stays a brand-new client after a test order, with an orange
+                        TEST MODE bar (cpmg-order.js v1.6). Help tips 6 seconds each (cpmg-order-helper.js v2.3).
     v4.1 (Oct 28, 2026) Free first graphic fixed: the bottom button and the review total now take the free
                         graphic off for a new client ("Review my order · first one free", "$0 total"), and
                         the price updates once the form knows if the client is new or returning. Uses cpmg-order.js v1.5
@@ -198,7 +200,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v4.0 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v4.2 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -234,11 +236,11 @@
 </template>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.5"></script>
+<script src="../assets/cpmg-order.js?v=1.6"></script>
 <script>
 /* CPMG Detail Order page script v2.7 (Oct 28, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v4.1 (Oct 28, 2026)';
+  var FORM_VERSION = 'detail-order v4.2 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
   var P = { each: PRICE, pair: PAIR_PRICE, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };   // v2.1: the order system's prices replace these
@@ -551,6 +553,6 @@
   ];
 })();
 </script>
-<script src="../assets/cpmg-order-helper.js?v=2.2"></script>
+<script src="../assets/cpmg-order-helper.js?v=2.3"></script>
 </body>
 </html>

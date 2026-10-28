@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.5 (Oct 28, 2026)
+ * v1.6 (Oct 28, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,9 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.6 (Oct 28, 2026) Test mode (?new=1) stays a brand-new client every time: the phone never saves
+ *                       the client code and the address keeps ?new=1 after a test order. An orange
+ *                       "TEST MODE" bar at the top shows it is on.
  *   v1.5 (Oct 28, 2026) lookupClient: a client record marked "(retired" counts as not found, so the
  *                       phone forgets it and the form starts as a brand-new client (free first graphic).
  *   v1.4 (Oct 28, 2026) busy(): the button shows the green sending bar (fill + sweeping light,
@@ -235,11 +238,24 @@ var CPMG = (function () {
   var KEY_STORE = 'cpmgQuickKey';               // same name the Quick Order used in v1.0-v1.3
   /** The customer's key saved on this phone ('' if none or storage is blocked). */
   function savedKey() { try { return window.localStorage.getItem(KEY_STORE) || ''; } catch (e) { return ''; } }
-  function rememberKey(k) { try { if (k) window.localStorage.setItem(KEY_STORE, k); } catch (e) { /* blocked: fine */ } }
+  var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // v1.6: Randy's test link, always a new client
+  function rememberKey(k) { if (TEST_NEW) return; try { if (k) window.localStorage.setItem(KEY_STORE, k); } catch (e) { /* blocked: fine */ } }
   function forgetKey() { try { window.localStorage.removeItem(KEY_STORE); } catch (e) { /* fine */ } }
   /** Puts ?k=KEY in the page link (no reload), so "Add to Home screen" saves their own link. */
   function keyInLink(k) {
+    if (TEST_NEW) return;   // v1.6: keep ?new=1 so a refresh is still a brand-new client
     try { window.history.replaceState(null, '', location.pathname + (k ? '?k=' + encodeURIComponent(k) : '')); } catch (e) { /* old phone */ }
+  }
+  // v1.6: orange bar at the top so Randy can see the test link is on
+  if (TEST_NEW) {
+    var showTest = function () {
+      if (document.getElementById('cpmgTestBar')) return;
+      var d = document.createElement('div'); d.id = 'cpmgTestBar';
+      d.setAttribute('style', 'background:#ef7d22;color:#111;font:700 17px/1.3 system-ui,sans-serif;text-align:center;padding:10px 12px');
+      d.textContent = 'TEST MODE: you are a brand-new client every time';
+      document.body.insertBefore(d, document.body.firstChild);
+    };
+    if (document.body) showTest(); else document.addEventListener('DOMContentLoaded', showTest);
   }
   /** "123 Main St, Myrtle Beach, SC 29579" from {street, city, state, zip}; blank parts left out. */
   function addrLine(a) {
