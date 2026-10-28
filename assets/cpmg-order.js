@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.4 (Oct 28, 2026)
+ * v1.5 (Oct 28, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,8 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.5 (Oct 28, 2026) lookupClient: a client record marked "(retired" counts as not found, so the
+ *                       phone forgets it and the form starts as a brand-new client (free first graphic).
  *   v1.4 (Oct 28, 2026) busy(): the button shows the green sending bar (fill + sweeping light,
  *                       styles in cpmg-order.css v1.1) instead of the small spinner.
  *   v1.3 (Oct 27, 2026) Prices: getPrices (asks the order system for every price, rush seats left today
@@ -189,7 +191,7 @@ var CPMG = (function () {
     var url = CPMG_SCRIPT_URL + (CPMG_SCRIPT_URL.indexOf('?') > -1 ? '&' : '?') + 'action=client&k=' + encodeURIComponent(key);
     return request('GET', url, null, LOOKUP_TIMEOUT_MS).then(function (t) {
       var j = parse(t);
-      if (j && j.ok) return j;
+      if (j && j.ok) return /\(retired/i.test(String(j.business || '')) ? false : j;   // v1.4: retired test record = start fresh
       return j && j.error && j.error !== 'bad-reply' ? false : null;
     }, function () { return null; });
   }

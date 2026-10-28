@@ -1,11 +1,15 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v4.0 (Oct 28, 2026)
+  v4.1 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v4.1 (Oct 28, 2026) Free first graphic fixed: the bottom button and the review total now take the free
+                        graphic off for a new client ("Review my order · first one free", "$0 total"), and
+                        the price updates once the form knows if the client is new or returning. Uses cpmg-order.js v1.5
+                        (an old retired test client on the phone is forgotten).
     v4.0 (Oct 28, 2026) Help tips 5 seconds each (cpmg-order-helper.js v2.2).
     v3.9 (Oct 28, 2026) Help tips 7 seconds each (cpmg-order-helper.js v2.1).
     v3.8 (Oct 28, 2026) Help tips 8 seconds each (cpmg-order-helper.js v2.0).
@@ -230,11 +234,11 @@
 </template>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.4"></script>
+<script src="../assets/cpmg-order.js?v=1.5"></script>
 <script>
 /* CPMG Detail Order page script v2.7 (Oct 28, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v4.0 (Oct 28, 2026)';
+  var FORM_VERSION = 'detail-order v4.1 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
   var P = { each: PRICE, pair: PAIR_PRICE, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };   // v2.1: the order system's prices replace these
@@ -253,7 +257,8 @@
   function cost(c) { return P.monthlyPlan ? 0 : C.graphicPrice(P, pick(c, 'size') === 'Phone + Wide', promoOn(c)); }
   function rushOn() { return !$('rushOpt').hidden && $('rush').checked; }
   function money() { return C.orderTotal(P, cards().map(function (c) { return { pair: pick(c, 'size') === 'Phone + Wide', promo: promoOn(c) }; }), !client, rushOn()); }
-  function total() { var m = money(); return m.graphics + m.rush; }
+  function total() { return money().total; }   // v4.1: takes the free first graphic off
+  function priceText() { var t = total(); return t ? '$' + t : (P.monthlyPlan ? 'on your plan' : 'first one free'); }   // v4.1
   function paintPromo(c) { var t = c.querySelector('[data-promotxt]'); if (t) t.textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for both sizes)'; }
   var freeChecked = !key;   // v3.1: true once we know if this is a returning client
   function freeTop() {      // v3.1: free-first-graphic note at the top, new clients only
@@ -276,7 +281,7 @@
   function renum() {
     cards().forEach(function (c, i) { c.querySelector('[data-t]').textContent = 'Graphic ' + (i + 1); c.querySelector('[data-rm]').hidden = cards().length < 2; });
     $('addG').hidden = cards().length >= MAX;
-    if (stage === 'form') $('go').textContent = 'Review my order · $' + total();
+    if (stage === 'form') $('go').textContent = 'Review my order · ' + priceText();   // v4.1
   }
   function lum(h) { var r = parseInt(h.substr(1, 2), 16) / 255, g = parseInt(h.substr(3, 2), 16) / 255, b = parseInt(h.substr(5, 2), 16) / 255; function f(x) { return x <= .03928 ? x / 12.92 : Math.pow((x + .055) / 1.055, 2.4); } return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); }
   function onCol(h) { return lum(h) > .4 ? '#111111' : '#ffffff'; }
@@ -346,7 +351,7 @@
     C.syncOpts(document);
   }
   function renderDetails() {
-    freeTop();
+    freeTop(); renum();   // v4.1: price follows new/returning
     var saved = !!client && !editing;
     $('dSaved').hidden = !saved; $('dFields').hidden = saved; $('dCancel').hidden = !client;
     $('dNote').textContent = client ? 'Change anything that\'s wrong. We\'ll save it for every order after this.'
@@ -464,7 +469,7 @@
     cards().forEach(function (c, i) {
       h += '<div class="card" style="padding:12px"><b>Graphic ' + (i + 1) + ': ' + e(val(c, 'hl')) + '</b><div class="sub">' + (pick(c, 'size') === 'Phone + Wide' ? '2 graphics (1 phone, 1 wide)' : e(pick(c, 'size'))) + (promoOn(c) ? ' · Promo look' : '') + ' · $' + cost(c) + ' · ' + e(colText(c)) + '</div><div style="font-size:16px">' + C.lines(val(c, 'ideas')).map(e).join('<br>') + '</div><div style="font-size:16px"><i>' + e(val(c, 'cta')) + '</i></div></div>';
     });
-    $('rvBody').innerHTML = h; var k = cards().reduce(function (t, c) { return t + (pick(c, 'size') === 'Phone + Wide' ? 2 : 1); }, 0); $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + (rushOn() ? ' + rush' : '') + ' · $' + total() + ' total';
+    $('rvBody').innerHTML = h; var k = cards().reduce(function (t, c) { return t + (pick(c, 'size') === 'Phone + Wide' ? 2 : 1); }, 0); $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + (rushOn() ? ' + rush' : '') + ' · ' + (total() || P.monthlyPlan ? '$' + total() + ' total' : 'first one free');   // v4.1
     var mo = money(), after = mo.total;                                   // v2.1
     if (P.monthlyPlan) {
       $('firstFree').hidden = false;
