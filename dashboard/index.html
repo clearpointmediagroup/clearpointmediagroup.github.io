@@ -1,6 +1,8 @@
-<!-- CPMG Dashboard (GitHub) v2.5 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.6 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.6 (Oct 28, 2026) Loading bar: a green bar with a sweeping light shows while the dashboard loads,
+       refreshes or signs in, so you can see it working.
      v2.5 (Oct 27, 2026) Review order: Cindy checks first, Randy reviews last (goes with CPMG_Dashboard.gs v1.1).
      v2.4 (Oct 27, 2026) Page heading now "CPMG Dashboard" (dropped "Order"); version line updated.
      v2.3 (Oct 27, 2026) Phone app name is now "CPMG Dashboard" (own manifest.webmanifest); tab title "CPMG Dashboard".
@@ -110,6 +112,14 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
   .tag{font-size:clamp(14px,1vw,22px)}
 }
 @media (max-width:520px){dl{grid-template-columns:1fr}dt{padding-top:8px}h1{font-size:28px}}
+/* v2.6 loading bar: green track, fill grows left to right, light sweeps across */
+.ldbar{position:relative;height:14px;border-radius:999px;background:var(--box);border:1.5px solid var(--green);overflow:hidden;margin:6px 0 14px}
+.ldbar .lf{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--green);opacity:.55;animation:ldfill 12s cubic-bezier(.08,.6,.25,1) forwards}
+.ldbar .ls{position:absolute;top:0;bottom:0;left:-40%;width:40%;background:linear-gradient(90deg,rgba(223,240,200,0),rgba(223,240,200,.9),rgba(223,240,200,0));animation:ldshine 1.3s linear infinite}
+.ldtext{font:700 18px var(--body);color:var(--green);margin-top:6px}
+@keyframes ldfill{0%{width:0}100%{width:94%}}
+@keyframes ldshine{0%{left:-40%}100%{left:100%}}
+@media (prefers-reduced-motion:reduce){.ldbar .ls{animation-duration:3s}}
 </style>
 </head>
 <body>
@@ -121,6 +131,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
   <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="10">
   <label class="rem"><input type="checkbox" id="remember"> Remember me on this phone (only on your own phone)</label>
   <button type="button" class="btn" id="signinBtn" style="font-size:22px;padding:14px">Sign in</button>
+  <div id="signinLoad" class="hide"><div class="ldtext">Signing in…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
   <div id="signinMsg"></div>
 </div>
 <div class="wrap hide" id="dash">
@@ -132,6 +143,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
     <div><h1>CPMG Dashboard</h1><div class="sub" id="sub">Loading…</div></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn2" id="refresh" type="button">Refresh</button><button class="btn2" id="logout" type="button">Log out</button></div>
   </div>
+  <div id="loading" class="hide"><div class="ldtext" id="ldText">Loading your orders…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
   <div id="msg"></div>
   <div id="vStages"><div class="stages" id="stages"></div><h2 style="margin-top:28px">My pages</h2><div id="links"></div></div>
   <div id="vList" class="hide">
@@ -164,13 +176,13 @@ var $ = function (id) { return document.getElementById(id); };
 function esc(s) { var d = document.createElement('div'); d.textContent = String(s == null ? '' : s); return d.innerHTML; }
 function show(v) { ['vStages', 'vList', 'vJob'].forEach(function (x) { $(x).classList.toggle('hide', x !== v); }); window.scrollTo(0, 0); }
 function msg(html, cls) { $('msg').innerHTML = html ? '<div class="' + (cls || 'warn') + '">' + html + '</div>' : ''; }
-function call(fn, args, ok) {
+function call(fn, args, ok, failed) {
   post({ api: 'dash', fn: fn, pass: PASS, args: args.slice(1) },
-    function (res) { if (res && res.signin) { signedOut(res.error); return; } ok(res); },
-    function (e) { msg('Something went wrong: ' + esc(e && e.message), 'err'); });
+    function (res) { if (res && res.signin) { if (failed) failed(); signedOut(res.error); return; } ok(res); },
+    function (e) { if (failed) failed(); msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.5 (Oct 27, 2026)';
+var PAGE_VERSION = 'v2.6 (Oct 28, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -197,8 +209,15 @@ function gotDashboard(res, then) {
     if (curStage && !$('vList').classList.contains('hide')) drawList(curStage);
     if (then) then();
 }
+function loading(on, text) {
+  var b = $('loading'); if (!b) return;
+  if (on) { $('ldText').textContent = text || 'Loading your orders…'; b.classList.remove('hide');
+    var bar = b.querySelector('.ldbar'), c = bar.cloneNode(true); bar.parentNode.replaceChild(c, bar); }
+  else b.classList.add('hide');
+}
 function load(then) {
-  call('getDashboard', [KEY], function (res) { gotDashboard(res, then); });
+  loading(true);
+  call('getDashboard', [KEY], function (res) { loading(false); gotDashboard(res, then); }, function () { loading(false); });
 }
 // Quiet refresh for the 60-second timer: no error pop-up, the LIVE light shows trouble instead.
 // Only redraws the list if it is the screen showing, so an open order or full screen is never disturbed.
@@ -381,12 +400,13 @@ function doSignin() {
   if (!WHO) { $('signinMsg').innerHTML = '<div class="err">Tap your name first.</div>'; return; }
   if (!pin) { $('signinMsg').innerHTML = '<div class="err">Type the PIN first.</div>'; $('pin').focus(); return; }
   var remember = $('remember').checked;
-  $('signinBtn').disabled = true; $('signinMsg').innerHTML = '<div class="warn">Signing in…</div>';
+  $('signinBtn').disabled = true; $('signinMsg').innerHTML = ''; $('signinLoad').classList.remove('hide');
   post({ api: 'dash', fn: 'login', who: WHO, pin: pin, remember: remember }, function (res) {
+    $('signinLoad').classList.add('hide');
     $('signinBtn').disabled = false; $('pin').value = '';
     if (!res || !res.ok) { $('signinMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
     PASS = res.pass; savePass(PASS, remember); startDash();
-  }, function (e) { $('signinBtn').disabled = false; $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+  }, function (e) { $('signinLoad').classList.add('hide'); $('signinBtn').disabled = false; $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
 }
 document.addEventListener('click', function (ev) {
   var t = ev.target.closest('button'); if (!t) return;

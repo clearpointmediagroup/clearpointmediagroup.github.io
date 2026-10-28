@@ -1,11 +1,12 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v2.3 (Oct 27, 2026)
+  v2.4 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.4 (Oct 28, 2026) Send buttons show the green sending bar with a sweeping light (cpmg-order.js v1.4, cpmg-order.css v1.1).
     v2.3 (Oct 27, 2026) Thank-you screen: a rush order now says the proof comes within 1 hour
                         (9 a.m. to 9 p.m.) instead of 5 hours. Found in the 25-order test.
     v2.2 (Oct 27, 2026) Hours: open 9 a.m. to 9 p.m. every day. Removed "day or night". Orders after
@@ -61,7 +62,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="../assets/cpmg-order.css?v=1.0">
+<link rel="stylesheet" href="../assets/cpmg-order.css?v=1.1">
 <style>
 /* v2.0: saved-info box (same look on both forms) */
 .note{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:16px;margin:0}
@@ -202,7 +203,7 @@
 </template>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.3"></script>
+<script src="../assets/cpmg-order.js?v=1.4"></script>
 <script>
 /* CPMG Detail Order page script v2.3 (Oct 27, 2026) */
 (function () {
@@ -494,6 +495,7 @@
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.4 (Oct 28, 2026) Send buttons show the green sending bar with a sweeping light (cpmg-order.js v1.4, cpmg-order.css v1.1).
     v2.2 (Oct 27, 2026) Hours: open 9 a.m. to 9 p.m. every day. Removed "day or night". Orders after
                         9 p.m. get their proof the next morning. Rush is 1 hour during open hours.
     v2.1 (Oct 27, 2026) Prices: each graphic has a "Promo look with my logo and photo" box ($45, $60 for
@@ -547,7 +549,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="../assets/cpmg-order.css?v=1.0">
+<link rel="stylesheet" href="../assets/cpmg-order.css?v=1.1">
 <style>
 /* v2.0: saved-info box (same look on both forms) */
 .note{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:16px;margin:0}
@@ -688,7 +690,7 @@
 </template>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.3"></script>
+<script src="../assets/cpmg-order.js?v=1.4"></script>
 <script>
 /* CPMG Detail Order page script v2.2 (Oct 27, 2026) */
 (function () {

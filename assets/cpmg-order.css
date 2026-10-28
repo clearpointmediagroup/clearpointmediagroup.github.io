@@ -1,8 +1,10 @@
 /*
  * CPMG order forms: shared look — cpmg-order.css
- * v1.0 (Oct 25, 2026)
+ * v1.1 (Oct 28, 2026)
  * Same dark CPMG green look as the approved previews (Quick Order v0.3, Detail Order v0.2).
  * REVISION LOG
+ *   v1.1 (Oct 28, 2026) Sending bar: while a button is sending, a green fill grows from left to
+ *                       right and a band of light sweeps across it, so customers can see it working.
  *   v1.0 (Oct 25, 2026) First version, copied from the two previews into one file.
  *                       Adds the sending spinner, error box, photo thumbnails and an
  *                       .on class so tap choices light up on older phones too.
@@ -93,3 +95,12 @@ button:focus-visible,summary:focus-visible,.photo label.btn:focus-within{outline
 .samp .sh{font:800 24px var(--display);line-height:1.15;overflow-wrap:anywhere;word-wrap:break-word;max-width:100%}
 .samp .sc{font:800 16px var(--display);border-radius:999px;padding:6px 14px}
 @media (prefers-reduced-motion:reduce){.samp{transition:none}.spin{animation-duration:2.4s}}
+
+/* v1.1 sending bar: fill grows left to right, a band of light sweeps across */
+.btn-sending{position:relative;overflow:hidden;isolation:isolate}
+.btn-sending .sfill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,255,255,.22);z-index:-1;animation:cpmgfill 14s cubic-bezier(.08,.6,.25,1) forwards}
+.btn-sending .sshine{position:absolute;top:0;bottom:0;left:-45%;width:45%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.6),rgba(255,255,255,0));z-index:-1;animation:cpmgshine 1.4s linear infinite}
+.btn-sending .slbl{position:relative}
+@keyframes cpmgfill{0%{width:0}100%{width:94%}}
+@keyframes cpmgshine{0%{left:-45%}100%{left:100%}}
+@media (prefers-reduced-motion:reduce){.btn-sending .sshine{animation-duration:3s}.btn-sending .sfill{animation-duration:20s}}

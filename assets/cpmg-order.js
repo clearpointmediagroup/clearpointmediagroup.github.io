@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.3 (Oct 27, 2026)
+ * v1.4 (Oct 28, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,8 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.4 (Oct 28, 2026) busy(): the button shows the green sending bar (fill + sweeping light,
+ *                       styles in cpmg-order.css v1.1) instead of the small spinner.
  *   v1.3 (Oct 27, 2026) Prices: getPrices (asks the order system for every price, rush seats left today
  *                       and the monthly plan), graphicPrice and orderTotal (promo, Phone + Wide, first
  *                       graphic free, monthly plan $0, rush once per order). Same math as the order system.
@@ -206,9 +208,11 @@ var CPMG = (function () {
     if (on) {
       btn.disabled = true;
       btn.setAttribute('aria-busy', 'true');
-      btn.innerHTML = '<span class="spin" aria-hidden="true"></span><span>' + esc(text || 'Sending…') + '</span>';
+      btn.classList.add('btn-sending');
+      btn.innerHTML = '<span class="sfill" aria-hidden="true"></span><span class="sshine" aria-hidden="true"></span><span class="slbl">' + esc(text || 'Sending…') + '</span>';
     } else {
       btn.disabled = false;
+      btn.classList.remove('btn-sending');
       btn.removeAttribute('aria-busy');
       btn.textContent = text || 'Send';
     }
