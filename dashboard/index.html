@@ -1,6 +1,9 @@
-<!-- CPMG Dashboard (GitHub) v3.1 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v3.2 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v3.2 (Oct 28, 2026) My pages moved back up (under Clients); live number boxes moved below it. Phone held upright
+       opens with everything showing; TV view only when sideways or on the TV (button still switches). Business Plan
+       link added under Running the business. On-screen version fixed (it still said v2.7).
      v3.1 (Oct 28, 2026) Live number boxes under the order boxes: Orders, Claude jobs, Sales emails, Prospects,
        Social, System. All read fresh from your Google Sheets every 20 seconds (CPMG_DashboardMetrics.gs v1.0).
        "My pages" relabeled: those are Claude pages, not live numbers.
@@ -210,7 +213,7 @@ body.tv .mgrid,body.tv #pagesHead,body.tv #pagesNote,body.tv #links{display:none
   </div>
   <div id="loading" class="hide"><div class="ldtext" id="ldText">Loading your orders…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
   <div id="msg"></div>
-  <div id="vStages"><div class="stages" id="stages"></div><div class="mgrid" id="metrics"></div><div class="cl" id="clients"><button type="button" class="clHead" id="clToggle" aria-expanded="false"><span>Clients <span class="cc" id="clCount"></span></span><span class="ca" id="clArrow">Tap to open ▸</span></button><div id="clBody" class="hide"></div></div><h2 id="pagesHead" style="margin-top:28px">My pages</h2><div class="sub" id="pagesNote" style="margin-bottom:8px">These open in the Claude app and change only when Claude updates them. The live numbers are the boxes above.</div><div id="links"></div></div>
+  <div id="vStages"><div class="stages" id="stages"></div><div class="cl" id="clients"><button type="button" class="clHead" id="clToggle" aria-expanded="false"><span>Clients <span class="cc" id="clCount"></span></span><span class="ca" id="clArrow">Tap to open ▸</span></button><div id="clBody" class="hide"></div></div><h2 id="pagesHead" style="margin-top:28px">My pages</h2><div class="sub" id="pagesNote" style="margin-bottom:8px">These open in the Claude app and change only when Claude updates them. The live numbers are the boxes above.</div><div id="links"></div><div class="mgrid" id="metrics"></div></div>
   <div id="vList" class="hide">
     <button class="btn2" type="button" data-go="stages">← All stages</button>
     <h2 id="listTitle" style="margin-top:14px"></h2>
@@ -241,8 +244,12 @@ var $ = function (id) { return document.getElementById(id); };
 function esc(s) { var d = document.createElement('div'); d.textContent = String(s == null ? '' : s); return d.innerHTML; }
 function show(v) { ['vStages', 'vList', 'vJob'].forEach(function (x) { $(x).classList.toggle('hide', x !== v); }); tvSet(v === 'vStages'); window.scrollTo(0, 0); }
 // v2.7 TV view: on when the order boxes are showing, unless "Show menus" was tapped
-var tvOff = false; try { tvOff = sessionStorage.getItem('cpmgTvOff') === '1'; } catch (e) {}
-function tvSet(onStages) { document.body.classList.toggle('tv', !!onStages && !tvOff); $('tvBtn').textContent = tvOff ? 'TV view' : 'Show menus'; }
+// v3.2: TV view is automatic only when the screen is sideways (TV, laptop, phone turned). Upright phone shows everything.
+var tvMode = 'auto'; try { tvMode = sessionStorage.getItem('cpmgTvMode') || 'auto'; } catch (e) {}
+var tvStages = false;
+function tvWide() { return window.innerWidth > window.innerHeight; }
+function tvSet(onStages) { tvStages = !!onStages; var on = tvStages && (tvMode === 'on' || (tvMode === 'auto' && tvWide())); document.body.classList.toggle('tv', on); $('tvBtn').textContent = on ? 'Show menus' : 'TV view'; }
+window.addEventListener('resize', function () { if (!$('dash').classList.contains('hide')) tvSet(tvStages); });
 function msg(html, cls) { $('msg').innerHTML = html ? '<div class="' + (cls || 'warn') + '">' + html + '</div>' : ''; }
 function call(fn, args, ok, failed) {
   post({ api: 'dash', fn: fn, pass: PASS, args: args.slice(1) },
@@ -250,7 +257,7 @@ function call(fn, args, ok, failed) {
     function (e) { if (failed) failed(); msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.7 (Oct 28, 2026)';
+var PAGE_VERSION = 'v3.2 (Oct 28, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -362,7 +369,7 @@ var LINKS = [
   { g: 'Order forms', who: 'randy', t: 'Quick Order', d: 'Short form for regulars', u: 'https://clearpointmediagroup.github.io/quick-order/' },
   { g: 'Running the business', who: 'randy', t: 'Day-One Report', d: 'What is left, what Claude is doing', u: 'https://claude.ai/artifact/TYtE5vofRJiXDB2A1YkJhQ' },
   { g: 'Running the business', who: 'randy', t: 'Start Here', d: 'Home page for all your CPMG pages', u: 'https://claude.ai/artifact/QJGzsEKxJnhWcZTtToTYRJ' },
-  { g: 'Running the business', who: 'randy', t: 'Project Plan', d: 'Every step in order', u: 'https://claude.ai/artifact/Fto9eDjTrA5tZLhLwMUkZx' },
+  { g: 'Running the business', who: 'randy', t: 'Project Plan', d: 'Every step in order', u: 'https://claude.ai/artifact/Fto9eDjTrA5tZLhLwMUkZx' }, { g: 'Running the business', who: 'randy', t: 'Business Plan', d: 'Your plan, prices and hours', u: 'https://claude.ai/artifact/5YbkLDZxMayXBajjxWGn41' },
   { g: 'Running the business', who: 'randy', t: 'Work Log', d: 'Every change Claude made', u: 'https://claude.ai/artifact/Fd2eL621Tmsy7g739WL6xK' },
   { g: 'Running the business', who: 'randy', t: 'Order Workflow', d: 'How an order moves, step by step', u: 'https://claude.ai/artifact/EX51PPUTgKbFQQWtHEu5G5' },
   { g: 'Running the business', who: 'randy', t: 'Scripts', d: 'All the live code', u: 'https://claude.ai/artifact/3zroVtEXaG3vMDduG3z47s' },
@@ -493,7 +500,7 @@ function send(kind) {
 document.addEventListener('click', function (ev) {
   var t = ev.target.closest('button,[data-full]'); if (!t) return;
   if (t.id === 'refresh') { msg(''); load(); if (clOpen) loadClients(); return; }
-  if (t.id === 'tvBtn') { tvOff = !tvOff; try { sessionStorage.setItem('cpmgTvOff', tvOff ? '1' : '0'); } catch (e) {} tvSet(!$('vStages').classList.contains('hide')); return; }
+  if (t.id === 'tvBtn') { tvMode = document.body.classList.contains('tv') ? 'off' : 'on'; try { sessionStorage.setItem('cpmgTvMode', tvMode); } catch (e) {} tvSet(!$('vStages').classList.contains('hide')); return; }
   if (t.id === 'clToggle') { clOpen = !clOpen; $('clBody').classList.toggle('hide', !clOpen); t.setAttribute('aria-expanded', clOpen); $('clArrow').textContent = clOpen ? 'Tap to fold up ▾' : 'Tap to open ▸'; if (clOpen && !CL) loadClients(); return; }
   if (t.hasAttribute('data-clf')) { clF = t.getAttribute('data-clf'); drawClients(); return; }
   if (t.dataset.clsave) { saveClientCard(t); return; }
