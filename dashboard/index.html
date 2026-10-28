@@ -1,6 +1,7 @@
-<!-- CPMG Dashboard (GitHub) v2.4 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.5 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.5 (Oct 27, 2026) Review order: Cindy checks first, Randy reviews last (goes with CPMG_Dashboard.gs v1.1).
      v2.4 (Oct 27, 2026) Page heading now "CPMG Dashboard" (dropped "Order"); version line updated.
      v2.3 (Oct 27, 2026) Phone app name is now "CPMG Dashboard" (own manifest.webmanifest); tab title "CPMG Dashboard".
      v2.2 (Oct 27, 2026) Project Plan link points to the rebuilt Project Plan.
@@ -169,7 +170,7 @@ function call(fn, args, ok) {
     function (e) { msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.4 (Oct 27, 2026)';
+var PAGE_VERSION = 'v2.5 (Oct 27, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -283,7 +284,7 @@ function drawJob() {
         (im.data ? '<button class="btn" type="button" data-full="' + i + '" style="margin-top:10px">Full screen</button>' : '') + '</figure>';
     }).join('') + '</div>';
   } else {
-    h += '<div class="warn">No _PROOF image in the order folder yet.' + (j.stage === 'new' || j.stage === 'processing' ? ' It moves to Randy\'s review by itself once the proof is saved there.' : '') + '</div>';
+    h += '<div class="warn">No _PROOF image in the order folder yet.' + (j.stage === 'new' || j.stage === 'processing' ? ' It moves to Cindy\'s review by itself once the proof is saved there.' : '') + '</div>';
   }
   if (j.checks) h += '<div class="warn">Check before you approve: ' + esc(j.checks) + '</div>';
   h += '<div class="card"><dl>' + row('Headline', j.headline) + row('Ideas', j.ideas) + row('Call to action', j.cta) +
@@ -299,9 +300,9 @@ function actionsFor(j) {
   var me = D.who, s = j.stage;
   if (me === 'cindy' && s !== 'cindy') return '<div class="sub">Only jobs in Cindy\'s review can be moved from your link.</div>';
   if (s === 'new') return '<h2>Next</h2><p>Mark it as being made in Gemini + Claude.</p><div class="acts"><button class="btn" type="button" data-act="start">Start processing</button></div>';
-  if (s === 'processing') return '<h2>Next</h2><p>Being made. It moves to Randy\'s review by itself once the new _PROOF image is saved in the order folder.</p>';
+  if (s === 'processing') return '<h2>Next</h2><p>Being made. It moves to Cindy\'s review by itself once the new _PROOF image is saved in the order folder.</p>';
   if (s === 'randy' || s === 'cindy') return '<h2>Your call</h2><div class="acts"><button class="btn" type="button" data-act="forward">' +
-    (s === 'randy' ? 'Send forward to Cindy' : 'Send forward: ready to send') + '</button>' +
+    (s === 'cindy' ? 'Send forward to Randy' : 'Send forward: ready to send') + '</button>' +
     '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox();
   if (s === 'ready') return '<h2>Release</h2><p>Takes one more look before anything is emailed.</p><div class="acts"><button class="btn" type="button" data-act="preview" data-kind="proof">Release to customer</button>' +
     '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox() + '<div id="look"></div>';
