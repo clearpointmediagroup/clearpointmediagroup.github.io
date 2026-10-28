@@ -1,6 +1,7 @@
-<!-- CPMG Dashboard (GitHub) v2.3 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.4 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.4 (Oct 27, 2026) Page heading now "CPMG Dashboard" (dropped "Order"); version line updated.
      v2.3 (Oct 27, 2026) Phone app name is now "CPMG Dashboard" (own manifest.webmanifest); tab title "CPMG Dashboard".
      v2.2 (Oct 27, 2026) Project Plan link points to the rebuilt Project Plan.
      v2.1 (Oct 27, 2026) "My pages" menu under the stage boxes: prospects, social, Facebook for both;
@@ -112,7 +113,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 </head>
 <body>
 <div class="wrap signin hide" id="signin">
-  <h1>CPMG Order Dashboard</h1>
+  <h1>CPMG Dashboard</h1>
   <div class="sub">Tap your name, then type the PIN.</div>
   <div class="whos"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
   <label for="pin" class="sub">PIN</label>
@@ -127,7 +128,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
     <div class="ver" id="ver"></div>
   </div>
   <div class="top">
-    <div><h1>CPMG Order Dashboard</h1><div class="sub" id="sub">Loading…</div></div>
+    <div><h1>CPMG Dashboard</h1><div class="sub" id="sub">Loading…</div></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn2" id="refresh" type="button">Refresh</button><button class="btn2" id="logout" type="button">Log out</button></div>
   </div>
   <div id="msg"></div>
@@ -168,7 +169,7 @@ function call(fn, args, ok) {
     function (e) { msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.2 (Oct 27, 2026)';
+var PAGE_VERSION = 'v2.4 (Oct 27, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
