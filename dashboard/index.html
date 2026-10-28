@@ -1,6 +1,9 @@
-<!-- CPMG Dashboard (GitHub) v3.0 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v3.1 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v3.1 (Oct 28, 2026) Live number boxes under the order boxes: Orders, Claude jobs, Sales emails, Prospects,
+       Social, System. All read fresh from your Google Sheets every 20 seconds (CPMG_DashboardMetrics.gs v1.0).
+       "My pages" relabeled: those are Claude pages, not live numbers.
      v3.0 (Oct 28, 2026) Sign-in screen shows only the CPMG logo and the PIN box (no names). After a right PIN,
        it asks "Who's using this?" (Randy or Cindy). Names never show to anyone without the PIN.
      v2.9 (Oct 28, 2026) Eye: press and hold to see the PIN (let go to hide), or tap to switch. Numbers refresh every 20 seconds (was 60).
@@ -87,6 +90,20 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 .signin{max-width:440px;margin:8vh auto 0;display:flex;flex-direction:column;gap:16px}
 .signLogo{width:120px;height:120px;border-radius:24px;margin:0 auto;display:block}
 .signin h1{text-align:center}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:22px}
+.mbox{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.mbox h3{margin:0;font:700 22px var(--display);color:var(--strong)}
+.mnums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mn{background:var(--bg);border-radius:10px;padding:8px 10px;min-width:0}
+.mn b{display:block;font:700 30px var(--display);color:var(--strong);font-variant-numeric:tabular-nums;line-height:1.1}
+.mn span{font-size:16px;color:var(--muted)}
+.mn.warn b{color:var(--amber)}
+.mline{font-size:17px;color:var(--muted);overflow-wrap:anywhere}
+.mline b{color:var(--fg)}
+.mbox details summary{cursor:pointer;color:var(--green);font-weight:700;font-size:17px}
+.mbox ul{margin:8px 0 0;padding-left:20px;font-size:17px;color:var(--fg)}
+.mbox .merr{color:var(--amber);font-size:17px}
+body.tv .mgrid,body.tv #pagesHead,body.tv #pagesNote,body.tv #links{display:none}
 .whos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .whoBtn{font-size:22px;padding:16px}
 .whoBtn.on{background:var(--green);color:var(--bg)}
@@ -193,7 +210,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
   </div>
   <div id="loading" class="hide"><div class="ldtext" id="ldText">Loading your orders…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
   <div id="msg"></div>
-  <div id="vStages"><div class="stages" id="stages"></div><div class="cl" id="clients"><button type="button" class="clHead" id="clToggle" aria-expanded="false"><span>Clients <span class="cc" id="clCount"></span></span><span class="ca" id="clArrow">Tap to open ▸</span></button><div id="clBody" class="hide"></div></div><h2 id="pagesHead" style="margin-top:28px">My pages</h2><div id="links"></div></div>
+  <div id="vStages"><div class="stages" id="stages"></div><div class="mgrid" id="metrics"></div><div class="cl" id="clients"><button type="button" class="clHead" id="clToggle" aria-expanded="false"><span>Clients <span class="cc" id="clCount"></span></span><span class="ca" id="clArrow">Tap to open ▸</span></button><div id="clBody" class="hide"></div></div><h2 id="pagesHead" style="margin-top:28px">My pages</h2><div class="sub" id="pagesNote" style="margin-bottom:8px">These open in the Claude app and change only when Claude updates them. The live numbers are the boxes above.</div><div id="links"></div></div>
   <div id="vList" class="hide">
     <button class="btn2" type="button" data-go="stages">← All stages</button>
     <h2 id="listTitle" style="margin-top:14px"></h2>
@@ -539,6 +556,58 @@ document.addEventListener('click', function (ev) {
   if (t.id === 'logout') { post({ api: 'dash', fn: 'logout', pass: PASS }, function () {}, function () {}); signedOut('You are logged out.'); return; }
 });
 $('pin').addEventListener('keydown', function (e) { if (e.key === 'Enter') doSignin(); });
+// v3.1 Live number boxes (getMetrics). Read fresh from the sheets every 20 seconds.
+var M = null;
+function mN(v, label, warn) { return '<div class="mn' + (warn ? ' warn' : '') + '"><b>' + esc(v) + '</b><span>' + esc(label) + '</span></div>'; }
+function mMoney(n) { return '$' + (Number(n) || 0).toLocaleString(); }
+function mErr(p) { return p && p.ok === false ? '<div class="merr">⚠ ' + esc(p.error || 'Could not read this.') + '</div>' : ''; }
+function mList(obj) { var k = Object.keys(obj || {}); return k.length ? '<ul>' + k.map(function (x) { return '<li>' + esc(x) + ': <b>' + esc(obj[x]) + '</b></li>'; }).join('') + '</ul>' : '<div class="mline">None yet.</div>'; }
+function drawMetrics() {
+  var el = $('metrics'); if (!el || !M) return;
+  var o = M.orders || {}, p = M.prospects || {}, s = M.sales || {}, so = M.social || {}, j = (M.project || {}).items || {}, sy = M.system || {};
+  var h = '';
+  h += '<div class="mbox"><h3>📦 Orders</h3>' + (o.ok === false ? mErr(o) :
+    '<div class="mnums">' + mN(o.today, 'today') + mN(o.week, 'this week') + mN(o.open, 'open · ' + mMoney(o.openValue)) +
+    mN(o.late, 'late (over 5 hrs)', o.late > 0) + mN(o.delivered, 'sent · ' + mMoney(o.deliveredValue)) + mN(o.total, 'in all') + '</div>' +
+    '<div class="mline">Last order: <b>' + esc(o.lastOrder) + '</b>' + (o.test ? ' · ' + esc(o.test) + ' are TEST orders' : '') + '</div>' +
+    '<details><summary>By business type</summary>' + mList(o.byType) + '</details>') + '</div>';
+  h += '<div class="mbox"><h3>🤖 Claude jobs</h3>' + (M.project && M.project.ok === false ? mErr(M.project) :
+    '<div class="mnums">' + mN(j['Your turn'] || 0, 'your turn', Number(j['Your turn']) > 0) + mN(j['Running'] || 0, 'running') +
+    mN(j['Waiting to start'] || 0, 'waiting to start') + mN(j['Done'] || 0, 'done') + '</div>' +
+    '<div class="mline">Working on now: <b>' + esc(j['Working on now'] || 'nothing') + '</b></div>' +
+    (j['Your turn list'] ? '<details><summary>What is your turn</summary><ul>' + String(j['Your turn list']).split(' • ').map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></details>' : '') +
+    '<div class="mline">Claude last changed this: <b>' + esc(j['Last updated'] || 'not yet') + '</b></div>') + '</div>';
+  h += '<div class="mbox"><h3>✉️ Sales emails</h3>' + (s.ok === false ? mErr(s) :
+    '<div class="mnums">' + mN(s.sentToday, 'sent today') + mN(s.sentWeek, 'sent this week') + mN(s.opened, 'opened') +
+    mN(s.replied, 'replied') + mN(s.bounced, 'bounced', s.bounced > 0) + mN(s.unsubscribed, 'unsubscribed') + '</div>' +
+    '<div class="mline"><b>' + esc(s.notYetEmailed) + '</b> ready to email · <b>' + esc(s.sent) + '</b> sent in all · last sent <b>' + esc(s.lastSent) + '</b></div>') + '</div>';
+  h += '<div class="mbox"><h3>🎯 Prospects</h3>' + (p.ok === false ? mErr(p) :
+    '<div class="mnums">' + mN(p.total, 'in all') + mN(p.withEmail, 'have an email') + mN(p.followDue, 'follow-ups due', p.followDue > 0) +
+    mN(Object.keys(p.salesStatus || {}).reduce(function (a, k) { return a + p.salesStatus[k]; }, 0), 'contacted (sales status)') + '</div>' +
+    '<details><summary>By list</summary><ul>' + (p.tabs || []).map(function (x) { return '<li>' + esc(x.name) + ': <b>' + esc(x.count) + '</b>' + (x.emailed ? ' (' + esc(x.emailed) + ' emailed)' : '') + '</li>'; }).join('') + '</ul></details>' +
+    '<details><summary>Sales status</summary>' + mList(p.salesStatus) + '</details>') + '</div>';
+  h += '<div class="mbox"><h3>📣 Social</h3>' + (so.ok === false ? mErr(so) :
+    '<div class="mnums">' + mN(so.places, 'places to post') + mN(so.postsWeek, 'posts this week') + mN(so.posts, 'posts in all') + mN(so.leads, 'leads') + '</div>' +
+    '<div class="mline">Last post: <b>' + esc(so.lastPost) + '</b></div>' +
+    '<details><summary>By status</summary>' + mList(so.status) + '</details>') + '</div>';
+  h += '<div class="mbox"><h3>🛠 System</h3>' + (sy.ok === false ? mErr(sy) :
+    '<div class="mnums">' + mN(sy.answering ? 'OK' : 'DOWN', 'order system', !sy.answering) + mN(sy.emailQuota == null ? '?' : sy.emailQuota, 'emails it can send today', sy.emailQuota != null && sy.emailQuota < 50) +
+    mN(sy.timers == null ? '?' : sy.timers, 'timers running') + mN(M.asOf || '', 'numbers checked') + '</div>' +
+    '<details><summary>Timers</summary><ul>' + (sy.timerNames || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></details>' +
+    '<div class="mline">Numbers script ' + esc(M.version || '') + '</div>') + '</div>';
+  el.innerHTML = h;
+  el.querySelectorAll('details').forEach(function (d, i) { if (window.__mOpen && window.__mOpen[i]) d.open = true; d.addEventListener('toggle', function () { window.__mOpen = window.__mOpen || {}; window.__mOpen[i] = d.open; }); });
+}
+function loadMetrics() {
+  if (!PASS) return;
+  post({ api: 'dash', fn: 'getMetrics', pass: PASS, args: [] }, function (res) {
+    if (res && res.signin) return;
+    if (!res || !res.ok) { if ($('metrics') && !M) $('metrics').innerHTML = '<div class="mbox"><div class="merr">⚠ Could not read the live numbers. Trying again in 20 seconds.</div></div>'; return; }
+    M = res; drawMetrics();
+  }, function () {});
+}
+var startDash0 = startDash; startDash = function () { startDash0(); if ($('metrics') && !M) $('metrics').innerHTML = '<div class="mbox"><div class="mline">Loading the live numbers…</div></div>'; loadMetrics(); };
+var poll0 = poll; poll = function () { poll0(); loadMetrics(); };
 if (PASS) startDash(); else showSignin('');
 setInterval(poll, 20000);                 // refresh every 20 seconds on every screen
 setInterval(drawLive, 15000);             // re-check freshness so the light turns amber on time
