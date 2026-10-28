@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v2.8 (Oct 28, 2026)
+  v2.9 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.9 (Oct 28, 2026) Clearer free-first-graphic note on the review screen: "Your first graphic is on us",
+                        then says later graphics are the regular price each.
     v2.8 (Oct 28, 2026) Each graphic now starts on "Phone or Facebook story" ($25), not "both phone and
                         wide" ($40). Help tip for picture size changed to match.
     v2.7 (Oct 28, 2026) Smaller help box; each part lines up just under it; slide dots back (cpmg-order-helper.js v1.3).
@@ -443,7 +445,7 @@
       $('firstFree').innerHTML = '<b>Monthly plan:</b> your graphics are covered' + (mo.rush ? ', so you pay just the <b>$' + mo.rush + '</b> rush fee.' : ', so this order is <b>$0</b>.');
     } else {
       $('firstFree').hidden = !!client;                                 // v2.0: returning customers already had theirs
-      $('firstFree').innerHTML = '<b>First order with us?</b> One graphic is free: we take $' + mo.off + ' off, so this order is <b>' + (after ? '$' + after : 'free') + '</b>. One per business.';
+      $('firstFree').innerHTML = '<b>Your first graphic is on us.</b> We take $' + mo.off + ' off, so this order is <b>' + (after ? '$' + after : 'free') + '</b>. After this, graphics are $' + mo.off + ' each. One free graphic per business.';
     }
     $('sendErr').hidden = true;
     $('f').hidden = true; $('review').hidden = false; $('go').textContent = 'Looks right, send it'; stage = 'review'; window.scrollTo(0, 0);

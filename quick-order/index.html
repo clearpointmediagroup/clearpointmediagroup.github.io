@@ -1,13 +1,15 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v2.5 (Oct 28, 2026)
+  v2.6 (Oct 28, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v2.6 (Oct 28, 2026) Clearer free-first-graphic note: "Your first graphic is on us", then says later
+                        graphics are the regular price each.
     v2.5 (Oct 28, 2026) Smaller help box; each part lines up just under it; slide dots back (cpmg-order-helper.js v1.3).
     v2.4 (Oct 28, 2026) Big orange "Need help? Tap here" button under the top line. A friendly green helper
                         walks through the form in short tips and lights up each part (silent). Uses
@@ -194,7 +196,7 @@
     $('qTot').textContent = 'Your price: ' + price;
     var note = '';
     if (P.monthlyPlan) note = 'Monthly plan: your graphic is covered' + (m.rush ? '. Rush adds $' + m.rush + '.' : '.');
-    else if (m.off) note = 'First graphic free: we take $' + m.off + ' off' + (m.rush ? '. Rush is still $' + m.rush + '.' : '.');
+    else if (m.off) note = 'Your first graphic is on us ($' + m.off + ' off). After this, graphics are $' + m.off + ' each.' + (m.rush ? ' Rush is still $' + m.rush + '.' : '');
     $('qNote').textContent = note; $('qNote').hidden = !note;
     C.busy($('sendBtn'), false, 'Send · ' + price);
   }
@@ -243,7 +245,7 @@
     $('before').hidden = !!client;
     $('infoNote').textContent = client
       ? 'Change anything that\'s wrong. We\'ll save it for every order after this.'
-      : 'Fill this in one time. We\'ll save it for every order after this. Next time, you just fill in your graphic request. Your first graphic is free.';
+      : 'Fill this in one time. We\'ll save it for every order after this. Next time, you just fill in your graphic request. Your first graphic is on us.';
     if (client) {
       $('wName').textContent = 'Welcome back, ' + (client.business || client.name || 'friend') + '!';
       var rows = [
