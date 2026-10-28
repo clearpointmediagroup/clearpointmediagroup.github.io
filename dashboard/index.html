@@ -1,6 +1,9 @@
-<!-- CPMG Dashboard (GitHub) v3.3 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v3.4 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v3.4 (Oct 28, 2026) Prospects: Website / Facebook / Instagram buttons on every prospect and record (from the columns,
+       or from "FB:" / "IG:" in Notes). Prospects box starts by location: Houston and Myrtle Beach area. Inside a list,
+       an Area picker narrows it (Heights, Pearland, Garden City Beach...). Goes with CPMG_DashboardMetrics.gs v1.2.
      v3.3 (Oct 28, 2026) Drill-downs on the live number boxes: tap a number -> its list -> tap a row -> the full record.
        Orders open the same order record as the 6 order boxes. Prospects and Social show every column of the sheet row,
        with tap-to-call, email and web links. Read only (CPMG_DashboardApi.gs v1.3, CPMG_DashboardMetrics.gs v1.1).
@@ -123,6 +126,9 @@ button.mn:active,.mi:active{transform:scale(.98)}
 .rec dl{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
 .rec dt{color:var(--muted);font-size:15px;margin-top:10px}
 .rec dd{margin:0;font-size:19px;color:var(--fg);overflow-wrap:anywhere;white-space:pre-wrap}
+.lb{display:inline-block;padding:7px 14px;border-radius:999px;border:2px solid var(--green);color:var(--green)!important;font-weight:700;text-decoration:none!important;font-size:16px}
+.lbs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+#areaPick{font:18px var(--body);padding:10px 12px;border-radius:10px;border:2px solid var(--green);background:var(--box);color:var(--strong);width:100%;margin-top:10px}
 .whos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .whoBtn{font-size:22px;padding:16px}
 .whoBtn.on{background:var(--green);color:var(--bg)}
@@ -283,7 +289,7 @@ function call(fn, args, ok, failed) {
     function (e) { if (failed) failed(); msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v3.3 (Oct 28, 2026)';
+var PAGE_VERSION = 'v3.4 (Oct 28, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -598,6 +604,19 @@ function mList(obj) { var k = Object.keys(obj || {}); return k.length ? '<ul>' +
 // v3.3: every number with a › can be tapped -> list -> full record
 function mT(v, label, warn, kind, key, title) { return '<button type="button" class="mn' + (warn ? ' warn' : '') + '" data-mk="' + esc(kind) + '" data-mkey="' + esc(key) + '" data-mt="' + esc(title) + '"><b>' + esc(v) + '</b><span>' + esc(label) + '</span></button>'; }
 function mR(text, n, kind, key, title) { return '<button type="button" class="mrow" data-mk="' + esc(kind) + '" data-mkey="' + esc(key) + '" data-mt="' + esc(title) + '"><span>' + esc(text) + '</span><span><b>' + esc(n) + '</b> ›</span></button>'; }
+// v3.4 locations: a list belongs to Houston when its name says Houston; everything else is the Myrtle Beach area
+function mLoc(name) { return /houston/i.test(name) ? 'Houston' : 'Myrtle Beach area'; }
+function mLocRows(tabs) {
+  var by = {}; tabs.forEach(function (x) { var l = mLoc(x.name); by[l] = (by[l] || 0) + x.count; });
+  return ['Myrtle Beach area', 'Houston'].filter(function (l) { return by[l] !== undefined; }).map(function (l) { return mR(l, by[l], 'local', 'loc:' + l, l + ' prospects'); }).join('');
+}
+function mLinks(L) {
+  if (!L) return '';
+  var h = (L.web ? '<a class="lb" href="' + esc(L.web) + '" target="_blank" rel="noopener">Website</a>' : '') +
+    (L.fb ? '<a class="lb" href="' + esc(L.fb) + '" target="_blank" rel="noopener">Facebook</a>' : '') +
+    (L.ig ? '<a class="lb" href="' + esc(L.ig) + '" target="_blank" rel="noopener">Instagram</a>' : '');
+  return h ? '<div class="lbs">' + h + '</div>' : '';
+}
 function drawMetrics() {
   var el = $('metrics'); if (!el || !M) return;
   var o = M.orders || {}, p = M.prospects || {}, s = M.sales || {}, so = M.social || {}, j = (M.project || {}).items || {}, sy = M.system || {};
@@ -621,7 +640,7 @@ function drawMetrics() {
   h += '<div class="mbox"><h3>🎯 Prospects</h3>' + (p.ok === false ? mErr(p) :
     '<div class="mnums">' + mT(p.total, 'in all', false, 'local', 'plists', 'Prospect lists') + mT(p.withEmail, 'have an email', false, 'sales', 'ready', 'Ready to email') +
     mN(p.followDue, 'follow-ups due', p.followDue > 0) + mN(Object.keys(p.salesStatus || {}).reduce(function (a, k) { return a + p.salesStatus[k]; }, 0), 'contacted (sales status)') + '</div>' +
-    (p.tabs || []).map(function (x) { return mR(x.name, x.count, 'plist', x.name, x.name); }).join('')) + '</div>';
+    mLocRows(p.tabs || [])) + '</div>';
   h += '<div class="mbox"><h3>📣 Social</h3>' + (so.ok === false ? mErr(so) :
     '<div class="mnums">' + mT(so.places, 'places to post', false, 'social', 'all', 'Places to post') + mN(so.postsWeek, 'posts this week') + mN(so.posts, 'posts in all') + mN(so.leads, 'leads') + '</div>' +
     Object.keys(so.status || {}).map(function (k) { return mR(k, so.status[k], 'social', k, 'Social: ' + k); }).join('') +
@@ -633,7 +652,13 @@ function drawMetrics() {
   el.innerHTML = h;
 }
 // v3.3 drill-down screens
-var MORE = null, MORE_BACK = false, MORE_ASK = null;
+var MORE = null, MORE_BACK = false, MORE_ASK = null, MORE_ALL = [];
+document.addEventListener('change', function (ev) {
+  if (ev.target.id !== 'areaPick') return;
+  var a = ev.target.value, items = a ? MORE_ALL.filter(function (x) { return x.area === a; }) : MORE_ALL;
+  $('moreList').innerHTML = moreItems(items);
+  $('moreSub').textContent = items.length + (a ? ' in ' + a : ' in all') + ' \u00b7 tap one to open it';
+});
 function moreShow(title, sub, html) { $('moreTitle').textContent = title; $('moreSub').textContent = sub || ''; $('more').innerHTML = html; show('vMore'); }
 function linkify(v) {
   var s = String(v);
@@ -647,7 +672,7 @@ function moreItems(items) {
   return items.length ? items.map(function (x, i) {
     return '<div class="mi" role="button" tabindex="0" data-mi="' + i + '"><b>' + esc(x.title || '(no name)') + '</b>' +
       (x.line ? '<div>' + esc(x.line) + '</div>' : '') + (x.sub ? '<div class="m">' + esc(x.sub) + '</div>' : '') +
-      ((x.phone || x.email) ? '<div class="acts">' + (x.phone ? linkify(x.phone) : '') + (x.email ? linkify(x.email) : '') + '</div>' : '') + '</div>';
+      ((x.phone || x.email) ? '<div class="acts">' + (x.phone ? linkify(x.phone) : '') + (x.email ? linkify(x.email) : '') + '</div>' : '') + mLinks(x.links) + '</div>';
   }).join('') : '<div class="card">Nothing here right now.</div>';
 }
 function openMore(kind, key, title) {
@@ -657,7 +682,8 @@ function openMore(kind, key, title) {
     if (key === 'yourturn') list = j['Your turn list'] ? String(j['Your turn list']).split(' \u2022 ') : [];
     if (key === 'waiting') list = j['Waiting to start list'] ? String(j['Waiting to start list']).split(' \u2022 ') : [];
     if (key === 'timers') list = (M && M.system && M.system.timerNames) || [];
-    if (key === 'plists') { var tabs = (M && M.prospects && M.prospects.tabs) || []; moreShow(title, 'Tap a list to see its prospects.', tabs.map(function (x) { return mR(x.name, x.count, 'plist', x.name, x.name); }).join('')); MORE = null; return; }
+    if (key.indexOf('loc:') === 0) { var loc = key.slice(4), lt = ((M && M.prospects && M.prospects.tabs) || []).filter(function (x) { return mLoc(x.name) === loc; }); moreShow(title, 'Tap a list to see its prospects.', lt.map(function (x) { return mR(x.name, x.count, 'plist', x.name, x.name); }).join('')); MORE = null; return; }
+    if (key === 'plists') { var tabs = (M && M.prospects && M.prospects.tabs) || []; moreShow(title, 'Pick a location.', mLocRows(tabs)); MORE = null; return; }
     moreShow(title, list.length + ' item' + (list.length === 1 ? '' : 's'), list.length ? list.map(function (x) { return '<div class="card">' + esc(x) + '</div>'; }).join('') : '<div class="card">Nothing here right now.</div>');
     MORE = null; return;
   }
@@ -668,7 +694,11 @@ function openMore(kind, key, title) {
     if (res && res.signin) { signedOut(res.error); return; }
     if (!res || !res.ok) { $('moreSub').textContent = ''; $('more').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
     $('moreSub').textContent = res.total + ' in all' + (res.total > res.items.length ? ' \u00b7 showing the first ' + res.items.length : '') + ' \u00b7 tap one to open it';
-    $('more').innerHTML = moreItems(res.items);
+    MORE_ALL = res.items;
+    var areas = {}; res.items.forEach(function (x) { if (x.area) areas[x.area] = (areas[x.area] || 0) + 1; });
+    var ak = Object.keys(areas).sort();
+    var pick = (kind === 'plist' && ak.length > 1) ? '<select id="areaPick" aria-label="Area"><option value="">All areas (' + res.items.length + ')</option>' + ak.map(function (a) { return '<option value="' + esc(a) + '">' + esc(a) + ' (' + areas[a] + ')</option>'; }).join('') + '</select>' : '';
+    $('more').innerHTML = pick + '<div class="list" id="moreList">' + moreItems(res.items) + '</div>';
   }, function () { $('more').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
 }
 function openRec(x) {
@@ -677,7 +707,7 @@ function openRec(x) {
   post({ api: 'dash', fn: 'getRecord', pass: PASS, args: [x.src, x.tab, x.row] }, function (res) {
     if (res && res.signin) { signedOut(res.error); return; }
     if (!res || !res.ok) { $('rec').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
-    $('rec').innerHTML = '<div class="card"><h2>' + esc(x.title) + '</h2><div class="sub">' + esc(x.tab) + ' \u00b7 row ' + esc(res.row) + '</div><dl>' +
+    $('rec').innerHTML = '<div class="card"><h2>' + esc(x.title) + '</h2><div class="sub">' + esc(x.tab) + ' \u00b7 row ' + esc(res.row) + '</div>' + mLinks(res.links) + '<dl>' +
       res.fields.map(function (f) { return '<dt>' + esc(f[0]) + '</dt><dd>' + linkify(f[1]) + '</dd>'; }).join('') + '</dl></div>';
   }, function () { $('rec').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
 }
