@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v2.7 (Oct 28, 2026)
+  v2.8 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.8 (Oct 28, 2026) Each graphic now starts on "Phone or Facebook story" ($25), not "both phone and
+                        wide" ($40). Help tip for picture size changed to match.
     v2.7 (Oct 28, 2026) Smaller help box; each part lines up just under it; slide dots back (cpmg-order-helper.js v1.3).
     v2.6 (Oct 28, 2026) Help button covers more of the form: 11 tips (adds picture size, promo look, what
                         people should do, colors, rush, and opens More options). Uses cpmg-order-helper.js v1.2.
@@ -182,10 +184,10 @@
   <div class="card g" data-g>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3 data-t>Graphic 1</h3><button type="button" class="rm" data-rm hidden>Remove</button></div>
     <fieldset><legend>Where will you use it?</legend>
-      <label class="opt"><input type="radio" data-n="size" value="Phone or Facebook story"> Phone or Facebook story</label>
+      <label class="opt"><input type="radio" data-n="size" value="Phone or Facebook story" checked> Phone or Facebook story</label>
       <label class="opt"><input type="radio" data-n="size" value="Website or TV screen"> Website or TV screen</label>
       <label class="opt"><input type="radio" data-n="size" value="Facebook or Instagram post"> Facebook or Instagram post</label>
-      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide" checked> Not sure? Give me both phone and wide (2 graphics, $40)</label>
+      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> Not sure? Give me both phone and wide (2 graphics, $40)</label>
     </fieldset>
     <label class="opt"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
     <div class="field"><label>What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
@@ -504,7 +506,7 @@
     { t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
       s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
       el: function () { return saved() ? document.getElementById('dSaved') : document.getElementById('dFields'); } },
-    { t: 'Where will people see it?', s: 'Not sure? Leave it on both phone and wide.', el: function () { return fs('size'); } },
+    { t: 'Where will people see it?', s: 'Most people pick Phone ($25). Want a TV size too? Pick both ($40).', el: function () { return fs('size'); } },
     { t: 'Want your logo and photo on it?', s: 'Check Promo look. It costs a little more.', el: function () { var x = g('[data-n="promo"]'); return x ? x.closest('label') : null; } },
     { t: "What's it about? A few words.", s: 'Like: Freeze warning this weekend. This becomes the headline.', el: function () { return fld('hl'); } },
     { t: 'Your ideas, one per line.', s: 'Short is best. The graphic does the talking.', el: function () { return fld('ideas'); } },
