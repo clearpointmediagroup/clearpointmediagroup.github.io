@@ -1,3 +1,13 @@
-# CPMG order forms robots.txt v1.0 (Oct 25, 2026): keep every page out of search engines.
+# CPMG robots.txt v1.1 (Oct 28, 2026): keep every page out of search engines,
+# but let Facebook/Messenger read the sample poster pages so pasted links show the poster.
+# REVISION LOG: v1.1 (Oct 28, 2026) allow Facebook's link-preview reader into /samples/. v1.0 (Oct 25, 2026) block everything.
+User-agent: facebookexternalhit
+Allow: /samples/
+Disallow: /
+
+User-agent: Facebot
+Allow: /samples/
+Disallow: /
+
 User-agent: *
 Disallow: /
