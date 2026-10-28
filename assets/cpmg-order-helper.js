@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: "How to order" help bubble — cpmg-order-helper.js
- * v1.0 (Oct 28, 2026)
+ * v1.1 (Oct 28, 2026)
  * A green "How to order" button near the top of an order form. Tapping it opens a small
  * green helper (a smiling cartoon that waves) at the top of the screen. It walks through
  * the form one short tip at a time, scrolls to each part, and lights it up with a green ring.
@@ -10,6 +10,8 @@
  *   Before loading this file, the page sets window.CPMG_HELP = [ { t:'Big line', s:'Small line',
  *   el: function(){ return element or null } }, ... ]. Then: <script src="../assets/cpmg-order-helper.js?v=1.0"></script>
  * REVISION LOG
+ *   v1.1 (Oct 28, 2026) Bigger, easier-to-see button: full-width orange box right under the top line,
+ *                       "Need help? Tap here", with a gentle glow 3 times so it catches the eye.
  *   v1.0 (Oct 28, 2026) First version, for the Detail Order form (approved preview in chat).
  */
 (function () {
@@ -18,8 +20,8 @@
   var WAIT = 6000;
 
   var css = '' +
-    '.hlp-btn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font:700 17px var(--body);background:var(--deep);color:var(--green);border:2px solid var(--green);border-radius:999px;padding:8px 16px;cursor:pointer;min-height:44px}' +
-    '.hlp-btn .q{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--ink);font:800 15px var(--display)}' +
+    '.hlp-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;font:800 21px var(--display);background:var(--amber);color:var(--amberbg);border:0;border-radius:14px;padding:14px 16px;cursor:pointer;min-height:60px}' +
+    '.hlp-btn .q{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--amberbg);color:var(--amber);font:800 22px var(--display);flex:none}' +
     '.hlp{position:fixed;left:0;right:0;top:0;z-index:50;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top,0px))}' +
     '.hlp-in{max-width:520px;margin:0 auto;background:var(--deep);border:2px solid var(--green);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}' +
     '.hlp-row{display:flex;gap:12px;align-items:center}' +
@@ -36,7 +38,9 @@
     '.hlp-bob{animation:hlpBob 2s ease-in-out infinite}' +
     '.hlp-arm{transform-origin:58px 50px;animation:hlpWave 1s ease-in-out infinite}' +
     '.cpmg-hl{animation:hlpPulse 1.2s ease-in-out infinite}' +
+    '.hlp-btn{animation:hlpGlow 1.6s ease-in-out 3}' +
     '.hlp-in{animation:hlpIn .25s ease-out}}' +
+    '@keyframes hlpGlow{0%,100%{box-shadow:0 0 0 0 rgba(250,199,117,0)}50%{box-shadow:0 0 0 8px rgba(250,199,117,.35)}}' +
     '@keyframes hlpBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}' +
     '@keyframes hlpWave{0%,100%{transform:rotate(0)}50%{transform:rotate(-25deg)}}' +
     '@keyframes hlpPulse{0%,100%{outline-offset:4px}50%{outline-offset:9px}}' +
@@ -52,7 +56,7 @@
 
   var btn = document.createElement('button');
   btn.type = 'button'; btn.className = 'hlp-btn'; btn.id = 'hlpBtn';
-  btn.innerHTML = '<span class="q" aria-hidden="true">?</span> How to order';
+  btn.innerHTML = '<span class="q" aria-hidden="true">?</span> Need help? Tap here';
   var anchor = document.getElementById('payPill') || document.querySelector('.top');
   if (!anchor) return;
   anchor.parentNode.insertBefore(btn, anchor.nextSibling);
