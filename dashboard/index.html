@@ -1,6 +1,7 @@
-<!-- CPMG Dashboard (GitHub) v2.1 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.2 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.2 (Oct 27, 2026) Project Plan link points to the rebuilt Project Plan.
      v2.1 (Oct 27, 2026) "My pages" menu under the stage boxes: prospects, social, Facebook for both;
        order forms and admin pages for Randy only.
      v2.0 (Oct 27, 2026) Moved to GitHub so it opens on any phone, laptop or kiosk with no Google sign-in.
@@ -162,7 +163,7 @@ function call(fn, args, ok) {
     function (e) { msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.1 (Oct 27, 2026)';
+var PAGE_VERSION = 'v2.2 (Oct 27, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -215,7 +216,7 @@ var LINKS = [
   { g: 'Order forms', who: 'randy', t: 'Quick Order', d: 'Short form for regulars', u: 'https://clearpointmediagroup.github.io/quick-order/' },
   { g: 'Running the business', who: 'randy', t: 'Day-One Report', d: 'What is left, what Claude is doing', u: 'https://claude.ai/artifact/TYtE5vofRJiXDB2A1YkJhQ' },
   { g: 'Running the business', who: 'randy', t: 'Start Here', d: 'Home page for all your CPMG pages', u: 'https://claude.ai/artifact/QJGzsEKxJnhWcZTtToTYRJ' },
-  { g: 'Running the business', who: 'randy', t: 'Project Plan', d: 'Every step in order', u: 'https://claude.ai/artifact/2kbD7Ny9d4XK5nTGqB839P' },
+  { g: 'Running the business', who: 'randy', t: 'Project Plan', d: 'Every step in order', u: 'https://claude.ai/artifact/Fto9eDjTrA5tZLhLwMUkZx' },
   { g: 'Running the business', who: 'randy', t: 'Work Log', d: 'Every change Claude made', u: 'https://claude.ai/artifact/Fd2eL621Tmsy7g739WL6xK' },
   { g: 'Running the business', who: 'randy', t: 'Order Workflow', d: 'How an order moves, step by step', u: 'https://claude.ai/artifact/EX51PPUTgKbFQQWtHEu5G5' },
   { g: 'Running the business', who: 'randy', t: 'Scripts', d: 'All the live code', u: 'https://claude.ai/artifact/3zroVtEXaG3vMDduG3z47s' },
