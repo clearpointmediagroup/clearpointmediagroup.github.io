@@ -1,6 +1,7 @@
-<!-- CPMG Dashboard (GitHub) v2.8 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.9 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.9 (Oct 28, 2026) Eye: press and hold to see the PIN (let go to hide), or tap to switch. Numbers refresh every 20 seconds (was 60).
      v2.8 (Oct 28, 2026) Eye button on the PIN box: tap it to see the PIN you typed, tap again to hide it.
      v2.7 (Oct 28, 2026) Clients box (folded up, tap to open) under the order boxes: health groups, To do today,
        tap to call, follow-up date, notes, Contacted today (goes with CPMG_DashboardApi.gs v1.1).
@@ -170,7 +171,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
   <div class="whos"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
   <label for="pin" class="sub">PIN</label>
   <div class="pinwrap"><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="10"><button type="button" class="eyeBtn" id="eyeBtn" aria-label="Show PIN" title="Show PIN"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line id="eyeSlash" x1="3" y1="3" x2="21" y2="21"/></svg></button></div>
-  <script>(function(){var b=document.getElementById('eyeBtn'),p=document.getElementById('pin'),s=document.getElementById('eyeSlash');b.addEventListener('click',function(){var show=p.type==='password';p.type=show?'text':'password';s.style.display=show?'none':'';b.setAttribute('aria-label',show?'Hide PIN':'Show PIN');b.title=show?'Hide PIN':'Show PIN';try{p.focus();}catch(e){}});})();</script>
+  <script>(function(){var b=document.getElementById('eyeBtn'),p=document.getElementById('pin'),s=document.getElementById('eyeSlash'),held=false,timer=null,longPress=false;function set(show){p.type=show?'text':'password';s.style.display=show?'none':'';b.setAttribute('aria-label',show?'Hide PIN':'Show PIN');b.title=show?'Hide PIN':'Show PIN';}b.addEventListener('pointerdown',function(ev){ev.preventDefault();longPress=false;timer=setTimeout(function(){longPress=true;held=true;set(true);},250);});function up(){clearTimeout(timer);if(held){held=false;set(false);}}b.addEventListener('pointerup',up);b.addEventListener('pointerleave',up);b.addEventListener('pointercancel',up);b.addEventListener('contextmenu',function(ev){ev.preventDefault();});b.addEventListener('click',function(){if(longPress){longPress=false;return;}set(p.type==='password');});})();</script>
   <label class="rem"><input type="checkbox" id="remember"> Remember me on this phone (only on your own phone)</label>
   <button type="button" class="btn" id="signinBtn" style="font-size:22px;padding:14px">Sign in</button>
   <div id="signinLoad" class="hide"><div class="ldtext">Signing in…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
@@ -517,7 +518,7 @@ document.addEventListener('click', function (ev) {
 });
 $('pin').addEventListener('keydown', function (e) { if (e.key === 'Enter') doSignin(); });
 if (PASS) startDash(); else showSignin('');
-setInterval(poll, 60000);                 // refresh every 60 seconds on every screen
+setInterval(poll, 20000);                 // refresh every 20 seconds on every screen
 setInterval(drawLive, 15000);             // re-check freshness so the light turns amber on time
 </script>
 </body>
