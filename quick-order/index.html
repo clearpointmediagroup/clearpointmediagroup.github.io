@@ -1,13 +1,15 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v2.9 (Oct 28, 2026)
+  v3.0 (Oct 28, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v3.0 (Oct 28, 2026) Send button says "Send · first one free" for a new client (was "Send · free"),
+                        or "Send · on your plan" for a monthly plan client.
     v2.9 (Oct 28, 2026) Help tips move faster (4 seconds each) with a bar that fills up (cpmg-order-helper.js v1.5).
     v2.8 (Oct 28, 2026) New clients see "Your first graphic is free. After that, graphics are $25 each."
                         at the top of the form (hidden for returning and monthly-plan clients).
@@ -176,7 +178,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v2.9 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v3.0 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
@@ -185,7 +187,7 @@
 <script>
 /* CPMG Quick Order page script v2.2 (Oct 27, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v2.9 (Oct 28, 2026)';
+  var FORM_VERSION = 'quick-order v3.0 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, editing = false, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -199,7 +201,7 @@
   function money() { return C.orderTotal(P, [{ pair: sizeNow() === 'Both', promo: $('promo').checked }], !client, rushOn()); }
   function showTotal() {
     if (sending) return;
-    var m = money(), price = m.total ? '$' + m.total : 'free';
+    var m = money(), price = m.total ? '$' + m.total : (P.monthlyPlan ? 'on your plan' : 'first one free');   // v3.0
     $('qTot').textContent = 'Your price: ' + price;
     var note = '';
     if (P.monthlyPlan) note = 'Monthly plan: your graphic is covered' + (m.rush ? '. Rush adds $' + m.rush + '.' : '.');
