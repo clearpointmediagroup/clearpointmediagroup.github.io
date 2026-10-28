@@ -1,6 +1,8 @@
-<!-- CPMG Dashboard (GitHub) v2.9 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v3.0 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v3.0 (Oct 28, 2026) Sign-in screen shows only the CPMG logo and the PIN box (no names). After a right PIN,
+       it asks "Who's using this?" (Randy or Cindy). Names never show to anyone without the PIN.
      v2.9 (Oct 28, 2026) Eye: press and hold to see the PIN (let go to hide), or tap to switch. Numbers refresh every 20 seconds (was 60).
      v2.8 (Oct 28, 2026) Eye button on the PIN box: tap it to see the PIN you typed, tap again to hide it.
      v2.7 (Oct 28, 2026) Clients box (folded up, tap to open) under the order boxes: health groups, To do today,
@@ -83,6 +85,8 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 .lk span{font-size:16px;color:var(--muted)}
 .lgrp{font:700 15px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--green);margin-top:22px}
 .signin{max-width:440px;margin:8vh auto 0;display:flex;flex-direction:column;gap:16px}
+.signLogo{width:120px;height:120px;border-radius:24px;margin:0 auto;display:block}
+.signin h1{text-align:center}
 .whos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .whoBtn{font-size:22px;padding:16px}
 .whoBtn.on{background:var(--green);color:var(--bg)}
@@ -166,11 +170,12 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 </head>
 <body>
 <div class="wrap signin hide" id="signin">
+  <img class="signLogo" src="../assets/cpmg-icon-192.png" alt="CPMG">
   <h1>CPMG Dashboard</h1>
-  <div class="sub">Tap your name, then type the PIN.</div>
-  <div class="whos"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
-  <label for="pin" class="sub">PIN</label>
-  <div class="pinwrap"><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="10"><button type="button" class="eyeBtn" id="eyeBtn" aria-label="Show PIN" title="Show PIN"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line id="eyeSlash" x1="3" y1="3" x2="21" y2="21"/></svg></button></div>
+  <div class="sub" id="signSub">Type the PIN to sign in.</div>
+  <div class="whos hide" id="whoStep"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
+  <label for="pin" class="sub" id="pinLbl">PIN</label>
+  <div class="pinwrap" id="pinWrap"><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="10"><button type="button" class="eyeBtn" id="eyeBtn" aria-label="Show PIN" title="Show PIN"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line id="eyeSlash" x1="3" y1="3" x2="21" y2="21"/></svg></button></div>
   <script>(function(){var b=document.getElementById('eyeBtn'),p=document.getElementById('pin'),s=document.getElementById('eyeSlash'),held=false,timer=null,longPress=false;function set(show){p.type=show?'text':'password';s.style.display=show?'none':'';b.setAttribute('aria-label',show?'Hide PIN':'Show PIN');b.title=show?'Hide PIN':'Show PIN';}b.addEventListener('pointerdown',function(ev){ev.preventDefault();longPress=false;timer=setTimeout(function(){longPress=true;held=true;set(true);},250);});function up(){clearTimeout(timer);if(held){held=false;set(false);}}b.addEventListener('pointerup',up);b.addEventListener('pointerleave',up);b.addEventListener('pointercancel',up);b.addEventListener('contextmenu',function(ev){ev.preventDefault();});b.addEventListener('click',function(){if(longPress){longPress=false;return;}set(p.type==='password');});})();</script>
   <label class="rem"><input type="checkbox" id="remember"> Remember me on this phone (only on your own phone)</label>
   <button type="button" class="btn" id="signinBtn" style="font-size:22px;padding:14px">Sign in</button>
@@ -206,7 +211,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 <script>
 var KEY = '';
 var API = 'https://script.google.com/macros/s/AKfycbxvlHJmEaoJpsfmAF2DDmIUPtOTUUirZJSpbF8ye92LOxWwoUJC8jZaGUAPeawv-dIh/exec';
-var PASS = null, WHO = '';
+var PASS = null, WHO = '', HELD_PIN = '', HELD_REM = false, HELD_PASS = '';
 try { PASS = localStorage.getItem('cpmgPass') || sessionStorage.getItem('cpmgPass'); } catch (e) {}
 function savePass(p, remember) { try { (remember ? localStorage : sessionStorage).setItem('cpmgPass', p); } catch (e) {} }
 function clearPass() { try { localStorage.removeItem('cpmgPass'); sessionStorage.removeItem('cpmgPass'); } catch (e) {} PASS = null; }
@@ -497,22 +502,39 @@ function showSignin(text) {
 }
 function signedOut(text) { clearPass(); linksDrawn = ''; CL = null; document.body.classList.remove('tv'); showSignin(text || 'Please sign in again.'); }
 function startDash() { $('signin').classList.add('hide'); $('dash').classList.remove('hide'); tvSet(true); load(); }
+function pinStepShow(on) {
+  ['pinLbl', 'pinWrap', 'signinBtn'].forEach(function (x) { $(x).classList.toggle('hide', !on); });
+  document.querySelector('.rem').classList.toggle('hide', !on);
+  $('whoStep').classList.toggle('hide', on);
+  $('signSub').textContent = on ? 'Type the PIN to sign in.' : "Who's using this?";
+}
 function doSignin() {
   var pin = $('pin').value.trim();
-  if (!WHO) { $('signinMsg').innerHTML = '<div class="err">Tap your name first.</div>'; return; }
   if (!pin) { $('signinMsg').innerHTML = '<div class="err">Type the PIN first.</div>'; $('pin').focus(); return; }
   var remember = $('remember').checked;
   $('signinBtn').disabled = true; $('signinMsg').innerHTML = ''; $('signinLoad').classList.remove('hide');
-  post({ api: 'dash', fn: 'login', who: WHO, pin: pin, remember: remember }, function (res) {
+  // v3.0: check the PIN first (as Randy); names only show after a right PIN
+  post({ api: 'dash', fn: 'login', who: 'randy', pin: pin, remember: remember }, function (res) {
     $('signinLoad').classList.add('hide');
     $('signinBtn').disabled = false; $('pin').value = '';
     if (!res || !res.ok) { $('signinMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
-    PASS = res.pass; savePass(PASS, remember); startDash();
+    HELD_PIN = pin; HELD_REM = remember; HELD_PASS = res.pass; pinStepShow(false);
   }, function (e) { $('signinLoad').classList.add('hide'); $('signinBtn').disabled = false; $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+}
+function pickWho(who) {
+  if (!HELD_PASS) { pinStepShow(true); return; }
+  if (who === 'randy') { PASS = HELD_PASS; savePass(PASS, HELD_REM); HELD_PIN = ''; HELD_PASS = ''; pinStepShow(true); startDash(); return; }
+  $('signinLoad').classList.remove('hide'); $('signinMsg').innerHTML = '';
+  post({ api: 'dash', fn: 'logout', pass: HELD_PASS }, function () {}, function () {});
+  post({ api: 'dash', fn: 'login', who: who, pin: HELD_PIN, remember: HELD_REM }, function (res) {
+    $('signinLoad').classList.add('hide'); HELD_PIN = ''; HELD_PASS = '';
+    if (!res || !res.ok) { pinStepShow(true); $('signinMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    PASS = res.pass; savePass(PASS, HELD_REM); pinStepShow(true); startDash();
+  }, function () { $('signinLoad').classList.add('hide'); pinStepShow(true); $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
 }
 document.addEventListener('click', function (ev) {
   var t = ev.target.closest('button'); if (!t) return;
-  if (t.dataset.who) { WHO = t.dataset.who; document.querySelectorAll('.whoBtn').forEach(function (b) { b.classList.toggle('on', b === t); }); $('pin').focus(); return; }
+  if (t.dataset.who) { WHO = t.dataset.who; pickWho(WHO); return; }
   if (t.id === 'signinBtn') { doSignin(); return; }
   if (t.id === 'logout') { post({ api: 'dash', fn: 'logout', pass: PASS }, function () {}, function () {}); signedOut('You are logged out.'); return; }
 });
