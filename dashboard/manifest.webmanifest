@@ -1,0 +1,35 @@
+{
+  "name": "CPMG Dashboard",
+  "short_name": "CPMG Dashboard",
+  "description": "CPMG order dashboard for Randy and Cindy. v1.0 (Oct 27, 2026)",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1712",
+  "theme_color": "#0f1712",
+  "icons": [
+    {
+      "src": "../assets/cpmg-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/cpmg-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/cpmg-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "../assets/cpmg-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
