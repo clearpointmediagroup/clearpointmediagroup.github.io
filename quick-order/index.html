@@ -1,13 +1,16 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v2.3 (Oct 28, 2026)
+  v2.4 (Oct 28, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v2.4 (Oct 28, 2026) Big orange "Need help? Tap here" button under the top line. A friendly green helper
+                        walks through the form in short tips and lights up each part (silent). Uses
+                        cpmg-order-helper.js v1.2. Footer and form version brought up to date.
     v2.3 (Oct 28, 2026) Send buttons show the green sending bar with a sweeping light (cpmg-order.js v1.4, cpmg-order.css v1.1).
     v2.2 (Oct 27, 2026) Hours: open 9 a.m. to 9 p.m. every day. Orders after 9 p.m. get their proof
                         the next morning. Rush is 1 hour during open hours.
@@ -163,7 +166,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v2.2 (Oct 27, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v2.4 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
@@ -172,7 +175,7 @@
 <script>
 /* CPMG Quick Order page script v2.2 (Oct 27, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v2.2 (Oct 27, 2026)';
+  var FORM_VERSION = 'quick-order v2.4 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, editing = false, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -356,5 +359,26 @@
   });
 })();
 </script>
+<script>
+/* v2.4: tips for the "Need help? Tap here" button (cpmg-order-helper.js) */
+(function () {
+  function f(id) { var x = document.getElementById(id); return x ? x.closest('.field') : null; }
+  function saved() { var x = document.getElementById('infoSaved'); return x && !x.hidden; }
+  window.CPMG_HELP = [
+    { t: 'Hi! This takes about 1 minute.', s: "I'll show you each part. Tap Next anytime." },
+    { opt: true, t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
+      s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
+      el: function () { return document.getElementById('info'); } },
+    { t: 'Headline: a few words.', s: "Like: Tonight's special.", el: function () { return f('hl'); } },
+    { t: 'Up to 3 short lines.', s: 'Press Enter after each one. Short is best.', el: function () { return f('ideas'); } },
+    { t: 'What should people do?', s: 'Like: Come in tonight.', el: function () { return f('cta'); } },
+    { t: 'Where will people see it?', s: 'Phone, TV screen, or both.', el: function () { var x = document.querySelector('input[name="size"]'); return x ? x.closest('fieldset') : null; } },
+    { t: 'Have a photo? Add it.', s: 'No photo? That\'s fine. Skip it.', el: function () { return f('pic'); } },
+    { opt: true, t: 'In a hurry? Check Rush.', s: 'Your proof in 1 hour for $10 more.', el: function () { var r = document.getElementById('rushBox'); return r && !r.hidden ? r : null; } },
+    { t: 'Tap Send. That\'s it.', s: 'You see a proof first. You pay only after you OK it.', el: function () { return document.getElementById('sendBtn'); } }
+  ];
+})();
+</script>
+<script src="../assets/cpmg-order-helper.js?v=1.2"></script>
 </body>
 </html>

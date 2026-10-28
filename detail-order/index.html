@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v2.5 (Oct 28, 2026)
+  v2.6 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v2.6 (Oct 28, 2026) Help button covers more of the form: 11 tips (adds picture size, promo look, what
+                        people should do, colors, rush, and opens More options). Uses cpmg-order-helper.js v1.2.
     v2.5 (Oct 28, 2026) "How to order" help bubble under the top line: a friendly green helper walks
                         through the form in 6 short tips, lighting up each part (silent, no sound).
                         Uses cpmg-order-helper.js v1.1 (big orange button). Also removed an old leftover copy of this
@@ -171,7 +173,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v2.5 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v2.6 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -209,9 +211,9 @@
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
 <script src="../assets/cpmg-order.js?v=1.4"></script>
 <script>
-/* CPMG Detail Order page script v2.5 (Oct 28, 2026) */
+/* CPMG Detail Order page script v2.6 (Oct 28, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v2.5 (Oct 28, 2026)';
+  var FORM_VERSION = 'detail-order v2.6 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
   var P = { each: PRICE, pair: PAIR_PRICE, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };   // v2.1: the order system's prices replace these
@@ -490,22 +492,29 @@
 })();
 </script>
 <script>
-/* v2.5: tips for the "How to order" help bubble (cpmg-order-helper.js) */
-window.CPMG_HELP = [
-  { t: 'Hi! Ordering takes about 2 minutes.', s: "I'll show you each part. Tap Next anytime." },
-  { t: function () { return document.getElementById('dSaved').hidden ? 'Your info goes here, one time.' : 'Your saved info is here.'; },
-    s: function () { return document.getElementById('dSaved').hidden ? 'We save it. Next time it fills in for you.' : 'Need a change? Tap Edit my info.'; },
-    el: function () { var d = document.getElementById('dSaved'); return d.hidden ? document.getElementById('dFields') : d; } },
-  { t: "What's it about? A few words.", s: 'Like: Freeze warning this weekend. This becomes the headline.',
-    el: function () { var x = document.querySelector('#gList [data-f="hl"]'); return x ? x.closest('.field') : null; } },
-  { t: 'Your ideas, one per line.', s: 'Short is best. The graphic does the talking.',
-    el: function () { var x = document.querySelector('#gList [data-f="ideas"]'); return x ? x.closest('.field') : null; } },
-  { t: 'Got a logo or photo? It goes here.', s: 'Tap More options. No photo? Skip it.',
-    el: function () { return document.getElementById('more'); } },
-  { t: 'Tap Review my order.', s: 'Check it, then send. You see a proof first. You pay only after you OK it.',
-    el: function () { return document.getElementById('go'); } }
-];
+/* v2.6: tips for the "Need help? Tap here" button (cpmg-order-helper.js) */
+(function () {
+  function g(sel) { return document.querySelector('#gList [data-g] ' + sel); }
+  function fld(f) { var x = g('[data-f="' + f + '"]'); return x ? x.closest('.field') : null; }
+  function fs(n) { var x = g('[data-n="' + n + '"]'); return x ? x.closest('fieldset') : null; }
+  function saved() { return !document.getElementById('dSaved').hidden; }
+  window.CPMG_HELP = [
+    { t: 'Hi! Ordering takes about 2 minutes.', s: "I'll show you each part. Tap Next anytime." },
+    { t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
+      s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
+      el: function () { return saved() ? document.getElementById('dSaved') : document.getElementById('dFields'); } },
+    { t: 'Where will people see it?', s: 'Not sure? Leave it on both phone and wide.', el: function () { return fs('size'); } },
+    { t: 'Want your logo and photo on it?', s: 'Check Promo look. It costs a little more.', el: function () { var x = g('[data-n="promo"]'); return x ? x.closest('label') : null; } },
+    { t: "What's it about? A few words.", s: 'Like: Freeze warning this weekend. This becomes the headline.', el: function () { return fld('hl'); } },
+    { t: 'Your ideas, one per line.', s: 'Short is best. The graphic does the talking.', el: function () { return fld('ideas'); } },
+    { t: 'What should people do?', s: 'Like: Call today, or Stop by Friday.', el: function () { return fld('cta'); } },
+    { t: 'Colors: we can pick for you.', s: 'Or pick your own, or match your logo.', el: function () { return fs('col'); } },
+    { opt: true, t: 'In a hurry? Check Rush.', s: 'Your proof in 1 hour for $10 more.', el: function () { var r = document.getElementById('rushBox'); return r && !r.hidden ? r : null; } },
+    { t: 'Logo, photo, and due date go in here.', s: "We opened it for you. All of it is optional.", el: function () { var m = document.getElementById('more'); m.open = true; return m; } },
+    { t: 'Tap Review my order.', s: 'Check it, then send. You see a proof first. You pay only after you OK it.', el: function () { return document.getElementById('go'); } }
+  ];
+})();
 </script>
-<script src="../assets/cpmg-order-helper.js?v=1.1"></script>
+<script src="../assets/cpmg-order-helper.js?v=1.2"></script>
 </body>
 </html>

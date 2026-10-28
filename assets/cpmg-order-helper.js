@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: "How to order" help bubble — cpmg-order-helper.js
- * v1.1 (Oct 28, 2026)
+ * v1.2 (Oct 28, 2026)
  * A green "How to order" button near the top of an order form. Tapping it opens a small
  * green helper (a smiling cartoon that waves) at the top of the screen. It walks through
  * the form one short tip at a time, scrolls to each part, and lights it up with a green ring.
@@ -10,6 +10,10 @@
  *   Before loading this file, the page sets window.CPMG_HELP = [ { t:'Big line', s:'Small line',
  *   el: function(){ return element or null } }, ... ]. Then: <script src="../assets/cpmg-order-helper.js?v=1.0"></script>
  * REVISION LOG
+ *   v1.2 (Oct 28, 2026) Shows "Tip 3 of 11" instead of dots. Stops moving on by itself once the client
+ *                       taps Next or Back, so slow readers aren't rushed. A tip marked opt:true is skipped
+ *                       when its part isn't on the screen (e.g. Rush when today's rush spots are taken).
+ *                       Moves on by itself every 7 seconds (was 6).
  *   v1.1 (Oct 28, 2026) Bigger, easier-to-see button: full-width orange box right under the top line,
  *                       "Need help? Tap here", with a gentle glow 3 times so it catches the eye.
  *   v1.0 (Oct 28, 2026) First version, for the Detail Order form (approved preview in chat).
@@ -17,7 +21,7 @@
 (function () {
   var STEPS = window.CPMG_HELP || [];
   if (!STEPS.length) return;
-  var WAIT = 6000;
+  var WAIT = 7000;
 
   var css = '' +
     '.hlp-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;font:800 21px var(--display);background:var(--amber);color:var(--amberbg);border:0;border-radius:14px;padding:14px 16px;cursor:pointer;min-height:60px}' +
@@ -29,7 +33,7 @@
     '.hlp-t{font:800 19px var(--display);color:var(--fg);line-height:1.25}' +
     '.hlp-s{font-size:16px;color:var(--muted);line-height:1.4;margin-top:2px}' +
     '.hlp-ft{display:flex;align-items:center;justify-content:space-between;gap:8px}' +
-    '.hlp-dots{font-size:14px;color:var(--green);letter-spacing:3px}' +
+    '.hlp-dots{font-size:15px;font-weight:700;color:var(--green)}' +
     '.hlp-ft button{font:700 16px var(--body);background:transparent;color:var(--green);border:2px solid var(--green);border-radius:10px;padding:6px 14px;min-height:40px;cursor:pointer}' +
     '.hlp-ft .nx{background:var(--green);color:var(--ink)}' +
     '.hlp-x{background:transparent;border:0;color:var(--muted);font-size:26px;line-height:1;padding:0 4px;cursor:pointer;align-self:flex-start}' +
@@ -70,33 +74,36 @@
     '<button type="button" id="hlpB">Back</button> <button type="button" class="nx" id="hlpN">Next</button></span></div></div>';
   document.body.appendChild(box);
 
-  var i = 0, timer = null, lit = null;
+  var i = 0, timer = null, lit = null, auto = true, list = STEPS;
   function $(id) { return document.getElementById(id); }
   function unlight() { if (lit) { lit.classList.remove('cpmg-hl'); lit = null; } }
+  function target(s) { var el = null; try { el = s.el ? s.el() : null; } catch (e) { el = null; } return el && el.offsetParent !== null ? el : null; }
   function show() {
-    var s = STEPS[i];
+    var s = list[i];
     $('hlpT').textContent = typeof s.t === 'function' ? s.t() : s.t;
     $('hlpS').textContent = typeof s.s === 'function' ? s.s() : s.s;
-    $('hlpD').textContent = STEPS.map(function (_, k) { return k === i ? '●' : '○'; }).join(' ');
+    $('hlpD').textContent = 'Tip ' + (i + 1) + ' of ' + list.length;
     $('hlpB').style.visibility = i === 0 ? 'hidden' : 'visible';
-    $('hlpN').textContent = i === STEPS.length - 1 ? 'Got it' : 'Next';
+    $('hlpN').textContent = i === list.length - 1 ? 'Got it' : 'Next';
     unlight();
-    var el = null;
-    try { el = s.el ? s.el() : null; } catch (e) { el = null; }
-    if (el && el.offsetParent !== null) {
+    var el = target(s);
+    if (el) {
       lit = el; el.classList.add('cpmg-hl');
       try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { el.scrollIntoView(); }
     } else if (i === 0) {
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
     }
     clearTimeout(timer);
-    if (i < STEPS.length - 1) timer = setTimeout(function () { i++; show(); }, WAIT);
+    if (auto && i < list.length - 1) timer = setTimeout(function () { i++; show(); }, WAIT);
   }
-  function open() { i = 0; box.hidden = false; show(); }
+  function open() {
+    list = STEPS.filter(function (s) { return !s.opt || target(s); });
+    i = 0; auto = true; box.hidden = false; show();
+  }
   function close() { clearTimeout(timer); unlight(); box.hidden = true; btn.focus(); }
   btn.addEventListener('click', function () { box.hidden ? open() : close(); });
   $('hlpX').addEventListener('click', close);
-  $('hlpN').addEventListener('click', function () { if (i === STEPS.length - 1) close(); else { i++; show(); } });
-  $('hlpB').addEventListener('click', function () { if (i > 0) { i--; show(); } });
+  $('hlpN').addEventListener('click', function () { auto = false; if (i === list.length - 1) close(); else { i++; show(); } });
+  $('hlpB').addEventListener('click', function () { auto = false; if (i > 0) { i--; show(); } });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) close(); });
 })();
