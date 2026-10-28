@@ -1,11 +1,13 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v2.9 (Oct 28, 2026)
+  v3.0 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v3.0 (Oct 28, 2026) Hours now say Eastern time (9 a.m. to 9 p.m. Eastern) everywhere on the form,
+                        so clients in other time zones know when we are open.
     v2.9 (Oct 28, 2026) Clearer free-first-graphic note on the review screen: "Your first graphic is on us",
                         then says later graphics are the regular price each.
     v2.8 (Oct 28, 2026) Each graphic now starts on "Phone or Facebook story" ($25), not "both phone and
@@ -61,7 +63,7 @@
 <meta name="theme-color" content="#0f1712">
 <meta name="color-scheme" content="dark">
 <title>CPMG Detail Order</title>
-<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours. Open 9 a.m. to 9 p.m.">
+<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours. Open 9 a.m. to 9 p.m. Eastern">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
 <link rel="icon" href="../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
@@ -88,7 +90,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m.</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
   <span class="pill" id="payPill">Nothing to pay until you approve your proof</span>
 
   <form id="f" novalidate autocomplete="on">
@@ -130,7 +132,7 @@
     <button type="button" class="add" id="addG">+ Add another graphic</button>
 
     <div class="card" id="rushBox">
-      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$10)</span></label>
+      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. Eastern (+$10)</span></label>
       <p class="hint" id="rushHint">Only 2 rush orders a day. Without rush, your proof comes within 5 hours.</p>
     </div>
 
@@ -167,7 +169,7 @@
   <div id="done" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p id="doneWhen">Your proof arrives by email within 5 hours. If you order after 9 p.m., your proof comes the next morning.</p>
+    <p id="doneWhen">Your proof arrives by email within 5 hours. If you order after 9 p.m. Eastern, your proof comes the next morning.</p>
     <p class="alldone"><b>You're all done.</b> Your order is saved.</p>
     <p class="sub">Your order number</p>
     <div class="code" id="orderCode"></div>
@@ -242,7 +244,7 @@
   function applyPrices() {
     var full = P.rushLeft === 0;
     $('rushOpt').hidden = full; if (full) $('rush').checked = false;
-    $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$' + P.rush + ')';
+    $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. Eastern (+$' + P.rush + ')';
     $('rushHint').textContent = full ? 'Rush is full for today. Your proof still comes within 5 hours.' : 'Only ' + P.rushMax + ' rush orders a day. Without rush, your proof comes within 5 hours.';
     cards().forEach(paintPromo); C.syncOpts(document); renum();
   }
@@ -463,7 +465,7 @@
         $('orderCode').textContent = r.orderCode || '';
         $('orderCode').hidden = !r.orderCode; $('orderCode').previousElementSibling.hidden = !r.orderCode;
         $('doneMsg').hidden = true;
-        $('doneWhen').textContent = rushOn() ? 'Rush order: your proof arrives by email within 1 hour (9 a.m. to 9 p.m.).' : 'Your proof arrives by email within 5 hours. If you order after 9 p.m., your proof comes the next morning.';   // v2.3
+        $('doneWhen').textContent = rushOn() ? 'Rush order: your proof arrives by email within 1 hour (9 a.m. to 9 p.m. Eastern).' : 'Your proof arrives by email within 5 hours. If you order after 9 p.m. Eastern, your proof comes the next morning.';   // v2.3
         $('review').hidden = true; $('done').hidden = false; $('bar').hidden = true; $('payPill').hidden = true; stage = 'done'; window.scrollTo(0, 0);
       } else {
         C.busy($('go'), false, 'Try sending again');

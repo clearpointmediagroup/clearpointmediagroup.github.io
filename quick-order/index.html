@@ -1,13 +1,15 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v2.6 (Oct 28, 2026)
+  v2.7 (Oct 28, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v2.7 (Oct 28, 2026) Hours now say Eastern time (9 a.m. to 9 p.m. Eastern) everywhere on the form,
+                        so clients in other time zones know when we are open.
     v2.6 (Oct 28, 2026) Clearer free-first-graphic note: "Your first graphic is on us", then says later
                         graphics are the regular price each.
     v2.5 (Oct 28, 2026) Smaller help box; each part lines up just under it; slide dots back (cpmg-order-helper.js v1.3).
@@ -43,7 +45,7 @@
 <meta name="theme-color" content="#0f1712">
 <meta name="color-scheme" content="dark">
 <title>CPMG Quick Order</title>
-<meta name="description" content="Quick graphic order for ClearPoint Media Group customers. Proof within 5 hours. Open 9 a.m. to 9 p.m.">
+<meta name="description" content="Quick graphic order for ClearPoint Media Group customers. Proof within 5 hours. Open 9 a.m. to 9 p.m. Eastern">
 <!-- No manifest link on purpose: without one, "Add to Home screen" saves this exact link,
      including the customer's private ?k= key. Icons below still give it the CPMG icon. -->
 <link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
@@ -72,7 +74,7 @@
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m.</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
 
@@ -146,7 +148,7 @@
     </div>
     <label class="opt"><input type="checkbox" id="promo"> <span id="promoTxt">Promo look with my logo and photo ($45, or $60 for Both)</span></label>
     <div id="rushBox" class="stack" style="gap:6px">
-      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$10)</span></label>
+      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. Eastern (+$10)</span></label>
       <p class="hint" id="rushHint">Only 2 rush orders a day. Without rush, your proof comes within 5 hours.</p>
     </div>
     <div class="total" id="qTot"></div>
@@ -158,7 +160,7 @@
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Your proof arrives by email within 5 hours. If you order after 9 p.m., your proof comes the next morning.</p>
+    <p>Your proof arrives by email within 5 hours. If you order after 9 p.m. Eastern, your proof comes the next morning.</p>
     <p class="alldone"><b>You're all done.</b> Your order is saved.</p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
@@ -204,7 +206,7 @@
     $('promoTxt').textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for Both)';
     var full = P.rushLeft === 0;
     $('rushOpt').hidden = full; if (full) $('rush').checked = false;
-    $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$' + P.rush + ')';
+    $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. Eastern (+$' + P.rush + ')';
     $('rushHint').textContent = full ? 'Rush is full for today. Your proof still comes within 5 hours.' : 'Only ' + P.rushMax + ' rush orders a day. Without rush, your proof comes within 5 hours.';
     C.syncOpts(document); showTotal();
   }
