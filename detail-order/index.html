@@ -1,11 +1,12 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v3.1 (Oct 28, 2026)
+  v3.2 (Oct 28, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v3.2 (Oct 28, 2026) Help tips move faster (4 seconds each) with a bar that fills up (cpmg-order-helper.js v1.5).
     v3.1 (Oct 28, 2026) New clients see "Your first graphic is free. After that, graphics are $25 each."
                         at the top of the form (hidden for returning and monthly-plan clients).
                         Help helper v1.4: first tip moves on after 2 seconds.
@@ -184,7 +185,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v2.7 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v3.2 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -224,7 +225,7 @@
 <script>
 /* CPMG Detail Order page script v2.7 (Oct 28, 2026) */
 (function () {
-  var FORM_VERSION = 'detail-order v2.7 (Oct 28, 2026)';
+  var FORM_VERSION = 'detail-order v3.2 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
   var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
   var P = { each: PRICE, pair: PAIR_PRICE, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };   // v2.1: the order system's prices replace these
@@ -535,6 +536,6 @@
   ];
 })();
 </script>
-<script src="../assets/cpmg-order-helper.js?v=1.4"></script>
+<script src="../assets/cpmg-order-helper.js?v=1.5"></script>
 </body>
 </html>

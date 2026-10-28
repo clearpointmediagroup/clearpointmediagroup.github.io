@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: "How to order" help bubble — cpmg-order-helper.js
- * v1.4 (Oct 28, 2026)
+ * v1.5 (Oct 28, 2026)
  * A green "How to order" button near the top of an order form. Tapping it opens a small
  * green helper (a smiling cartoon that waves) at the top of the screen. It walks through
  * the form one short tip at a time, scrolls to each part, and lights it up with a green ring.
@@ -10,6 +10,9 @@
  *   Before loading this file, the page sets window.CPMG_HELP = [ { t:'Big line', s:'Small line',
  *   el: function(){ return element or null } }, ... ]. Then: <script src="../assets/cpmg-order-helper.js?v=1.0"></script>
  * REVISION LOG
+ *   v1.5 (Oct 28, 2026) Faster: each tip moves on after 4 seconds (was 7). A thin green bar fills up under
+ *                       each tip, so people can see it's about to move on. The bar goes away once they tap
+ *                       Next or Back (then they move at their own pace).
  *   v1.4 (Oct 28, 2026) The first tip ("Hi!") moves on after 2 seconds, so people quickly see the helper
  *                       walk down the form. The other tips still wait 7 seconds each.
  *   v1.3 (Oct 28, 2026) Smaller help box (smaller face, words and buttons) so it takes less of the screen.
@@ -26,7 +29,7 @@
 (function () {
   var STEPS = window.CPMG_HELP || [];
   if (!STEPS.length) return;
-  var WAIT = 7000, FIRST_WAIT = 2000;   // v1.4: first tip moves on fast
+  var WAIT = 4000, FIRST_WAIT = 2000;   // v1.4: first tip moves on fast
 
   var css = '' +
     '.hlp-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;font:800 21px var(--display);background:var(--amber);color:var(--amberbg);border:0;border-radius:14px;padding:14px 16px;cursor:pointer;min-height:60px}' +
@@ -41,6 +44,8 @@
     '.hlp-dots{font-size:12px;color:var(--green);letter-spacing:2px}' +
     '.hlp-ft button{font:700 15px var(--body);background:transparent;color:var(--green);border:2px solid var(--green);border-radius:10px;padding:3px 12px;min-height:34px;cursor:pointer}' +
     '.hlp-ft .nx{background:var(--green);color:var(--ink)}' +
+    '.hlp-bar{height:5px;border-radius:3px;background:var(--line);overflow:hidden}' +
+    '.hlp-bar i{display:block;height:100%;width:0;background:var(--green)}' +
     '.hlp-x{background:transparent;border:0;color:var(--muted);font-size:24px;line-height:1;padding:0 4px;min-width:32px;min-height:32px;cursor:pointer;align-self:flex-start}' +
     '.cpmg-hl{outline:3px solid var(--green)!important;outline-offset:4px;border-radius:12px}' +
     '@media (prefers-reduced-motion:no-preference){' +
@@ -75,6 +80,7 @@
   box.innerHTML = '<div class="hlp-in"><div class="hlp-row">' + face +
     '<div class="hlp-txt" aria-live="polite"><div class="hlp-t" id="hlpT"></div><div class="hlp-s" id="hlpS"></div></div>' +
     '<button type="button" class="hlp-x" id="hlpX" aria-label="Close help">&times;</button></div>' +
+    '<div class="hlp-bar" id="hlpBar" aria-hidden="true"><i id="hlpP"></i></div>' +
     '<div class="hlp-ft"><span class="hlp-dots" id="hlpD"></span><span>' +
     '<button type="button" id="hlpB">Back</button> <button type="button" class="nx" id="hlpN">Next</button></span></div></div>';
   document.body.appendChild(box);
@@ -107,7 +113,13 @@
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
     }
     clearTimeout(timer);
-    if (auto && i < list.length - 1) timer = setTimeout(function () { i++; show(); }, i === 0 ? FIRST_WAIT : WAIT);
+    var ms = i === 0 ? FIRST_WAIT : WAIT, going = auto && i < list.length - 1, bar = $('hlpP');
+    $('hlpBar').style.visibility = going ? 'visible' : 'hidden';
+    bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
+    if (going) {
+      bar.style.transition = 'width ' + ms + 'ms linear'; bar.style.width = '100%';
+      timer = setTimeout(function () { i++; show(); }, ms);
+    }
   }
   function open() {
     list = STEPS.filter(function (s) { return !s.opt || target(s); });
