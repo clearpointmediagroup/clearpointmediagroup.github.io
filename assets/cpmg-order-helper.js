@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: "How to order" help bubble — cpmg-order-helper.js
- * v2.1 (Oct 28, 2026)
+ * v2.2 (Oct 28, 2026)
  * A green "How to order" button near the top of an order form. Tapping it opens a small
  * green helper (a smiling cartoon that waves) at the top of the screen. It walks through
  * the form one short tip at a time, scrolls to each part, and lights it up with a green ring.
@@ -10,6 +10,7 @@
  *   Before loading this file, the page sets window.CPMG_HELP = [ { t:'Big line', s:'Small line',
  *   el: function(){ return element or null } }, ... ]. Then: <script src="../assets/cpmg-order-helper.js?v=1.0"></script>
  * REVISION LOG
+ *   v2.2 (Oct 28, 2026) 5 seconds a tip (was 7). First tip stays 3 seconds.
  *   v2.1 (Oct 28, 2026) 7 seconds a tip (was 8). First tip stays 3 seconds.
  *   v2.0 (Oct 28, 2026) 8 seconds a tip (was 10). First tip stays 3 seconds.
  *   v1.9 (Oct 28, 2026) The "Hi!" tip drops down to the first section after 3 seconds; every tip after that
@@ -37,7 +38,7 @@
 (function () {
   var STEPS = window.CPMG_HELP || [];
   if (!STEPS.length) return;
-  var WAIT = 7000, FIRST_WAIT = 3000;   // v1.4: first tip moves on fast
+  var WAIT = 5000, FIRST_WAIT = 3000;   // v1.4: first tip moves on fast
 
   var css = '' +
     '.hlp-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;font:800 21px var(--display);background:var(--amber);color:var(--amberbg);border:0;border-radius:14px;padding:14px 16px;cursor:pointer;min-height:60px}' +
