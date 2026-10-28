@@ -1,6 +1,10 @@
-<!-- CPMG Dashboard (GitHub) v2.6 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.7 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.7 (Oct 28, 2026) Clients box (folded up, tap to open) under the order boxes: health groups, To do today,
+       tap to call, follow-up date, notes, Contacted today (goes with CPMG_DashboardApi.gs v1.1).
+       TV view: phone or screen sideways shows only the six order boxes, big, plus a thin LIVE line.
+       "Show menus" brings the rest back.
      v2.6 (Oct 28, 2026) Loading bar: a green bar with a sweeping light shows while the dashboard loads,
        refreshes or signs in, so you can see it working.
      v2.5 (Oct 27, 2026) Review order: Cindy checks first, Randy reviews last (goes with CPMG_Dashboard.gs v1.1).
@@ -120,6 +124,38 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 @keyframes ldfill{0%{width:0}100%{width:94%}}
 @keyframes ldshine{0%{left:-40%}100%{left:100%}}
 @media (prefers-reduced-motion:reduce){.ldbar .ls{animation-duration:3s}}
+/* v2.7 Clients box (folded up) */
+.cl{margin-top:22px}
+.clHead{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--box);border:2px solid var(--green);border-radius:14px;padding:16px 18px;color:var(--strong);font:700 24px var(--display);cursor:pointer;text-align:left}
+.clHead .cc{font:600 17px var(--body);color:var(--muted)}
+.clHead .ca{font:700 17px var(--body);color:var(--green);white-space:nowrap}
+.clTiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.clTile{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.clTile b{display:block;font:700 30px var(--display);color:var(--strong)}
+.clTile span{font-size:16px;color:var(--muted)}
+.clTile.on{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber) inset}
+.clCard{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px}
+.clCard summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.clCard summary::-webkit-details-marker{display:none}
+.clCard summary b{font:700 21px var(--display);color:var(--strong);overflow-wrap:anywhere}
+.clCard a{color:var(--amber)}
+.chip{font-size:14px;font-weight:700;border-radius:999px;padding:2px 10px;border:1.5px solid currentColor;white-space:nowrap}
+.h-new{color:#8fbbe8}.h-active{color:var(--green)}.h-check{color:var(--amber)}.h-slip{color:var(--red)}.h-lost{color:var(--muted)}
+/* v2.7 TV view: sideways = only the six order boxes */
+#tvBtn{display:none;font-size:16px;padding:6px 14px}
+@media (orientation:landscape) and (min-width:640px){
+  #tvBtn{display:inline-block}
+  body.tv .top,body.tv #msg,body.tv #pagesHead,body.tv #links,body.tv #clients,body.tv #loading,body.tv .ver{display:none!important}
+  body.tv .wrap{max-width:none;padding:1.2vh 1.5vw}
+  body.tv .livebar{padding:.5vh 1.2vw;margin-bottom:1.2vh}
+  body.tv .live{font-size:min(3.2vh,2vw)}
+  body.tv .stages{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;height:calc(100vh - 11vh);gap:1.4vw}
+  body.tv .stage{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:1vh;padding:1vh 1vw}
+  body.tv .count{font-size:min(16vh,10vw);line-height:1;min-width:0}
+  body.tv .stage .lbl{font-size:min(5.5vh,3.2vw);line-height:1.15}
+  body.tv .stage .nt{display:none}
+  body.tv .tag{font-size:min(2.8vh,1.7vw)}
+}
 </style>
 </head>
 <body>
@@ -137,7 +173,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 <div class="wrap hide" id="dash">
   <div class="livebar" id="livebar">
     <div class="live" id="live"><span class="dot" aria-hidden="true"></span><span id="liveText" aria-live="polite">Connecting…</span></div>
-    <div class="ver" id="ver"></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div class="ver" id="ver"></div><button type="button" class="btn2" id="tvBtn">Show menus</button></div>
   </div>
   <div class="top">
     <div><h1>CPMG Dashboard</h1><div class="sub" id="sub">Loading…</div></div>
@@ -145,7 +181,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
   </div>
   <div id="loading" class="hide"><div class="ldtext" id="ldText">Loading your orders…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
   <div id="msg"></div>
-  <div id="vStages"><div class="stages" id="stages"></div><h2 style="margin-top:28px">My pages</h2><div id="links"></div></div>
+  <div id="vStages"><div class="stages" id="stages"></div><div class="cl" id="clients"><button type="button" class="clHead" id="clToggle" aria-expanded="false"><span>Clients <span class="cc" id="clCount"></span></span><span class="ca" id="clArrow">Tap to open ▸</span></button><div id="clBody" class="hide"></div></div><h2 id="pagesHead" style="margin-top:28px">My pages</h2><div id="links"></div></div>
   <div id="vList" class="hide">
     <button class="btn2" type="button" data-go="stages">← All stages</button>
     <h2 id="listTitle" style="margin-top:14px"></h2>
@@ -174,7 +210,10 @@ function post(body, ok, fail) {
 var D = null, curStage = null, curJob = null;
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) { var d = document.createElement('div'); d.textContent = String(s == null ? '' : s); return d.innerHTML; }
-function show(v) { ['vStages', 'vList', 'vJob'].forEach(function (x) { $(x).classList.toggle('hide', x !== v); }); window.scrollTo(0, 0); }
+function show(v) { ['vStages', 'vList', 'vJob'].forEach(function (x) { $(x).classList.toggle('hide', x !== v); }); tvSet(v === 'vStages'); window.scrollTo(0, 0); }
+// v2.7 TV view: on when the order boxes are showing, unless "Show menus" was tapped
+var tvOff = false; try { tvOff = sessionStorage.getItem('cpmgTvOff') === '1'; } catch (e) {}
+function tvSet(onStages) { document.body.classList.toggle('tv', !!onStages && !tvOff); $('tvBtn').textContent = tvOff ? 'TV view' : 'Show menus'; }
 function msg(html, cls) { $('msg').innerHTML = html ? '<div class="' + (cls || 'warn') + '">' + html + '</div>' : ''; }
 function call(fn, args, ok, failed) {
   post({ api: 'dash', fn: fn, pass: PASS, args: args.slice(1) },
@@ -182,7 +221,7 @@ function call(fn, args, ok, failed) {
     function (e) { if (failed) failed(); msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.6 (Oct 28, 2026)';
+var PAGE_VERSION = 'v2.7 (Oct 28, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -234,6 +273,58 @@ function poll() {
     }, function (e) { Logger_(e); drawLive(); });
 }
 function Logger_(e) { try { console.warn('Dashboard refresh failed:', e && (e.message || e.error) || e); } catch (x) {} }
+// v2.7 Clients box
+var CL = null, clOpen = false, clF = '';
+function clYmd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+function clDays(s) { if (!s) return 9999; var p = s.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]), t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((t - d) / 864e5); }
+function clHealth(c) { var d = clDays(c.last); if (d <= 30) return (c.orders <= 1 && clDays(c.first) <= 30) ? 'new' : 'active'; if (d <= 60) return 'check'; if (d <= 90) return 'slip'; return 'lost'; }
+function clTodo(c) { if (c.followUp) return c.followUp <= clYmd(new Date()); var h = clHealth(c); return (h === 'check' || h === 'slip') && (!c.lastContact || clDays(c.lastContact) > 14); }
+var CLH = { 'new': 'New', active: 'Active', check: 'Check in', slip: 'Slipping', lost: 'Lost' };
+function loadClients() {
+  $('clBody').innerHTML = '<div class="ldtext">Loading clients…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div>';
+  call('getClients', [KEY], function (res) {
+    if (!res || !res.ok) { $('clBody').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    CL = res.clients; drawClients();
+  }, function () { $('clBody').innerHTML = '<div class="err">Could not load clients. Tap Clients to try again.</div>'; CL = null; });
+}
+function drawClients() {
+  var n = { todo: 0, 'new': 0, active: 0, check: 0, slip: 0, lost: 0 };
+  CL.forEach(function (c) { n[clHealth(c)]++; if (clTodo(c)) n.todo++; });
+  $('clCount').textContent = '(' + CL.length + (n.todo ? ' · ' + n.todo + ' to do today' : '') + ')';
+  var tiles = [['todo', 'To do today'], ['', 'Everyone'], ['new', 'New'], ['active', 'Active'], ['check', 'Check in'], ['slip', 'Slipping'], ['lost', 'Lost']];
+  var h = '<div class="clTiles">' + tiles.map(function (t) {
+    return '<button type="button" class="clTile' + (clF === t[0] ? ' on' : '') + '" data-clf="' + t[0] + '"><b>' + (t[0] === '' ? CL.length : n[t[0]]) + '</b><span>' + t[1] + '</span></button>';
+  }).join('') + '</div>';
+  var list = CL.filter(function (c) { return !clF || (clF === 'todo' ? clTodo(c) : clHealth(c) === clF); });
+  h += list.length ? list.map(function (c) {
+    var hk = clHealth(c), tel = String(c.phone).replace(/[^0-9+]/g, '');
+    return '<details class="clCard" data-code="' + esc(c.code) + '"><summary><b>' + esc(c.business) + '</b><span class="chip h-' + hk + '">' + (clTodo(c) ? 'To do · ' : '') + CLH[hk] + '</span></summary>' +
+      '<dl style="margin-top:10px">' + row('Contact', c.contact) +
+      (c.phone ? '<dt>Phone</dt><dd><a href="tel:' + esc(tel) + '">' + esc(c.phone) + '</a></dd>' : '') +
+      (c.email ? '<dt>Email</dt><dd><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></dd>' : '') +
+      row('Type', c.type) + row('Area', c.area) + row('Orders', String(c.orders)) + row('Last order', c.last) +
+      row('Monthly plan', c.plan ? 'Yes' : '') + row('Last contact', c.lastContact) + '</dl>' +
+      '<label class="sub" style="display:block;margin-top:10px">Follow-up date<input type="date" class="clFu" value="' + esc(c.followUp) + '"></label>' +
+      '<label class="sub" style="display:block;margin-top:8px">Notes<textarea class="clNotes" rows="3">' + esc(c.notes) + '</textarea></label>' +
+      '<div class="acts"><button type="button" class="btn" data-clsave="save">Save</button><button type="button" class="btn2" data-clsave="contacted">Contacted today</button></div><div class="clMsg"></div></details>';
+  }).join('') : '<div class="empty" style="margin-top:10px">Nobody here right now.</div>';
+  $('clBody').innerHTML = h;
+}
+function saveClientCard(btn) {
+  var card = btn.closest('.clCard'), code = card.dataset.code, contacted = btn.dataset.clsave === 'contacted';
+  var fu = card.querySelector('.clFu').value;
+  if (contacted) { var d = new Date(); d.setDate(d.getDate() + 30); fu = clYmd(d); }   // next check-in 30 days out
+  btn.disabled = true; card.querySelector('.clMsg').innerHTML = '<div class="sub" style="margin-top:8px">Saving…</div>';
+  call('saveClient', [KEY, code, { followUp: fu, notes: card.querySelector('.clNotes').value, contacted: contacted }], function (res) {
+    btn.disabled = false;
+    if (!res || !res.ok) { card.querySelector('.clMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    var c = CL.filter(function (x) { return x.code === code; })[0];
+    if (c) { c.followUp = res.client.followUp; c.notes = res.client.notes; if (res.client.lastContact) c.lastContact = res.client.lastContact; }
+    drawClients();
+    var again = document.querySelector('.clCard[data-code="' + CSS.escape(code) + '"]');
+    if (again) { again.open = true; again.querySelector('.clMsg').innerHTML = '<div class="warn">Saved.</div>'; }
+  }, function () { btn.disabled = false; });
+}
 var LINKS = [
   { g: 'Sales', who: 'both', t: 'Prospects', d: 'Restaurants, bars and other places to call or visit', u: 'https://claude.ai/artifact/AdpWkKeiWVfcBixu2nTxD9' },
   { g: 'Sales', who: 'both', t: 'Social prospects', d: 'Facebook groups and pages where we post', u: 'https://claude.ai/artifact/LBvZw6mcHGGDYRcg8sLy3N' },
@@ -372,7 +463,11 @@ function send(kind) {
 }
 document.addEventListener('click', function (ev) {
   var t = ev.target.closest('button,[data-full]'); if (!t) return;
-  if (t.id === 'refresh') { msg(''); load(); return; }
+  if (t.id === 'refresh') { msg(''); load(); if (clOpen) loadClients(); return; }
+  if (t.id === 'tvBtn') { tvOff = !tvOff; try { sessionStorage.setItem('cpmgTvOff', tvOff ? '1' : '0'); } catch (e) {} tvSet(!$('vStages').classList.contains('hide')); return; }
+  if (t.id === 'clToggle') { clOpen = !clOpen; $('clBody').classList.toggle('hide', !clOpen); t.setAttribute('aria-expanded', clOpen); $('clArrow').textContent = clOpen ? 'Tap to fold up ▾' : 'Tap to open ▸'; if (clOpen && !CL) loadClients(); return; }
+  if (t.hasAttribute('data-clf')) { clF = t.getAttribute('data-clf'); drawClients(); return; }
+  if (t.dataset.clsave) { saveClientCard(t); return; }
   if (t.id === 'backList') { drawList(curStage || 'new'); return; }
   if (t.id === 'fullBack') { $('full').classList.add('hide'); return; }
   if (t.dataset.go === 'stages') { curStage = null; show('vStages'); return; }
@@ -393,8 +488,8 @@ function showSignin(text) {
   $('dash').classList.add('hide'); $('signin').classList.remove('hide');
   $('signinMsg').innerHTML = text ? '<div class="warn">' + esc(text) + '</div>' : '';
 }
-function signedOut(text) { clearPass(); linksDrawn = ''; showSignin(text || 'Please sign in again.'); }
-function startDash() { $('signin').classList.add('hide'); $('dash').classList.remove('hide'); load(); }
+function signedOut(text) { clearPass(); linksDrawn = ''; CL = null; document.body.classList.remove('tv'); showSignin(text || 'Please sign in again.'); }
+function startDash() { $('signin').classList.add('hide'); $('dash').classList.remove('hide'); tvSet(true); load(); }
 function doSignin() {
   var pin = $('pin').value.trim();
   if (!WHO) { $('signinMsg').innerHTML = '<div class="err">Tap your name first.</div>'; return; }
