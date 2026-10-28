@@ -1,6 +1,494 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
+  v2.3 (Oct 27, 2026)
+  The full order form (more details and choices, e.g. real estate). Look and wording match the approved
+  "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
+  (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
+  REVISION LOG
+    v2.3 (Oct 27, 2026) Thank-you screen: a rush order now says the proof comes within 1 hour
+                        (9 a.m. to 9 p.m.) instead of 5 hours. Found in the 25-order test.
+    v2.2 (Oct 27, 2026) Hours: open 9 a.m. to 9 p.m. every day. Removed "day or night". Orders after
+                        9 p.m. get their proof the next morning. Rush is 1 hour during open hours.
+    v2.1 (Oct 27, 2026) Prices: each graphic has a "Promo look with my logo and photo" box ($45, $60 for
+                        both sizes); a Rush box (proof within 1 hour, +$10) hides when the 2 rush
+                        orders for today are taken; monthly plan customers see $0 graphics. The live
+                        total and the review screen add it all up. Prices come from the order system
+                        (CPMG_OrderReceiver.gs v1.8). Needs cpmg-order.js v1.3.
+    v2.0 (Oct 26, 2026) Saved info you can edit. Note at the top of "Your details": fill this in one time,
+                        we save it for every order after this. New optional boxes: Business address,
+                        City, State, Zip. The phone remembers the customer after their first order;
+                        next time "Your details" folds up to "Welcome back" with their saved info and
+                        an "Edit my info" button, and the free-first-graphic line is hidden. Changes
+                        save to their record (CPMG_OrderReceiver.gs v1.4). "Area you serve, or address"
+                        is now "Area you serve". Needs cpmg-order.js v1.2.
+    v1.5 (Oct 26, 2026) Review screen counts pictures: Phone + Wide shows as "2 graphics (1 phone,
+                        1 wide)", so the total reads "2 graphics · $40 total". Offer line now says
+                        "one graphic is free".
+    v1.4 (Oct 26, 2026) Review screen: the total box shows only the price. The new-customer offer
+                        is its own line below it: $25 off the first order (a $40 pair is $15).
+    v1.3 (Oct 26, 2026) Thank-you screen has a big "Done, close this page" button. Phones that
+                        won't let a page close itself show how to close it instead.
+    v1.2 (Oct 26, 2026) Thank-you screen: says "You're all done. You can close this page.",
+                        drops the repeated order-number line, and the button is now
+                        "Need another graphic? Start a new order", which keeps
+                        their details and logo and starts fresh graphics.
+    v1.1 (Oct 26, 2026) Prices: $25 a graphic, $40 for a Phone + Wide pair. Review screen
+                        says a new customer's first graphic is free (one per business).
+                        Phone boxes format on leaving the box (cpmg-order.js v1.1).
+    v1.0 (Oct 25, 2026) First live version, built from Detail Order Preview v0.2.
+                        Kept from the old Apps Script form so nothing is lost: "Phone to show on
+                        the graphics" (when "Show this phone number" is off) and "Need it by".
+                        Logo or photo now takes up to 3 pictures, shrunk on the phone before sending.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f1712">
+<meta name="color-scheme" content="dark">
+<title>CPMG Detail Order</title>
+<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours. Open 9 a.m. to 9 p.m.">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../assets/cpmg-icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CPMG Order">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/cpmg-order.css?v=1.0">
+<style>
+/* v2.0: saved-info box (same look on both forms) */
+.note{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:16px;margin:0}
+.wtitle{font:800 21px var(--display);display:block}
+.saved{display:flex;flex-direction:column;gap:2px;font-size:17px}
+.saved .k{color:var(--muted);font-size:14px}
+.row3{display:flex;flex-wrap:wrap;gap:12px}
+.row3>.field{flex:2 1 160px}
+.row3>.field.st{flex:0 1 80px}
+.row3>.field.zp{flex:1 1 110px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m.</p></div></div>
+  <span class="pill" id="payPill">Nothing to pay until you approve your proof</span>
+
+  <form id="f" novalidate autocomplete="on">
+  <div class="stack">
+    <div class="card">
+      <h2>Your details</h2>
+      <div id="dSaved" class="stack" style="gap:10px" hidden>
+        <b class="wtitle" id="dWName">Welcome back!</b>
+        <p class="note">Your info is already saved. Just fill in your graphic request below.</p>
+        <div class="saved" id="dSavedLines"></div>
+        <button type="button" class="ghost" id="dEditBtn">Edit my info</button>
+        <button type="button" class="rm" id="dNotMe">Not you? Start fresh</button>
+      </div>
+      <div id="dFields" class="stack" style="gap:14px">
+      <p class="note" id="dNote">Fill this in one time. We'll save your info for every order after this. Next time, you just tell us what you want on your graphic.</p>
+      <div class="field"><label for="biz">Business name</label><input type="text" id="biz" placeholder="ABC Plumbing" autocomplete="organization"><p class="err" id="e-biz" hidden></p></div>
+      <div class="field"><label for="type">Type of business</label><select id="type"><option value="">Choose one</option><option>Restaurant or bar</option><option>Real estate</option><option>Plumbing</option><option>HVAC</option><option>Lawn care</option><option>Salon or spa</option><option>Other</option></select><p class="err" id="e-type" hidden></p></div>
+      <div class="field"><label for="who">Your name</label><input type="text" id="who" placeholder="Jim Smith" autocomplete="name"><p class="err" id="e-who" hidden></p></div>
+      <div class="row2">
+        <div class="field"><label for="em">Email</label><input type="email" id="em" placeholder="jim@abcplumbing.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="e-em" hidden></p></div>
+        <div class="field"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="8435550100" autocomplete="tel" inputmode="tel"><p class="err" id="e-ph" hidden></p></div>
+      </div>
+      <div class="field"><label for="street">Business address (optional)</label><input type="text" id="street" placeholder="123 Main St" autocomplete="street-address"></div>
+      <div class="row3">
+        <div class="field"><label for="city">City</label><input type="text" id="city" placeholder="Myrtle Beach" autocomplete="address-level2"></div>
+        <div class="field st"><label for="state">State</label><input type="text" id="state" placeholder="SC" maxlength="2" autocomplete="address-level1" autocapitalize="characters"></div>
+        <div class="field zp"><label for="zip">Zip</label><input type="text" id="zip" placeholder="29579" maxlength="10" inputmode="numeric" autocomplete="postal-code"></div>
+      </div>
+      <p class="err" id="e-addr" hidden></p>
+      <label class="opt"><input type="checkbox" id="txt"> OK to text me about this order</label>
+      <label class="opt"><input type="checkbox" id="show" checked> Show this phone number on my graphics</label>
+      <div class="field" id="fpWrap" hidden><label for="fp">Phone to show on the graphics</label><p class="hint">Just the 10 digits. We'll format it for you.</p><input type="tel" id="fp" placeholder="8435550199" inputmode="tel"><p class="err" id="e-fp" hidden></p></div>
+      <button type="button" class="rm" id="dCancel" hidden>Never mind, keep my saved info</button>
+      </div>
+    </div>
+
+    <h2 style="margin-top:4px">Your graphics</h2>
+    <div id="gList" class="stack"></div>
+    <button type="button" class="add" id="addG">+ Add another graphic</button>
+
+    <div class="card" id="rushBox">
+      <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$10)</span></label>
+      <p class="hint" id="rushHint">Only 2 rush orders a day. Without rush, your proof comes within 5 hours.</p>
+    </div>
+
+    <details class="more" id="more">
+      <summary>More options (optional)</summary>
+      <div class="inner">
+        <div class="field"><span class="lbl">Logo or photo</span>
+          <p class="hint">Up to 3 pictures. Phone photos are fine; we shrink big ones for you. Used on all your graphics.</p>
+          <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
+          <div class="thumbs" id="thumbs" hidden></div>
+          <p class="err" id="e-pic" hidden></p>
+        </div>
+        <div class="field"><label for="web">Website</label><input type="text" id="web" placeholder="abcplumbing.com" autocapitalize="off" spellcheck="false"></div>
+        <div class="field"><label for="area">Area you serve</label><input type="text" id="area" placeholder="Carolina Forest"></div>
+        <div class="field"><label for="needBy">Need it by</label>
+          <div class="row2"><input type="date" id="needBy" aria-label="Date"><select id="needTime" aria-label="Time"><option value="">Any time that day</option><option>As soon as possible</option><option>Morning (by noon)</option><option>Afternoon (by 5 PM)</option><option>Evening (by 9 PM)</option></select></div>
+        </div>
+        <div class="field"><label for="notes">Anything you'd like us to know?</label><p class="hint">For example: "We're closed Mondays." Just for us; it won't be printed on your graphic.</p><textarea id="notes" style="min-height:80px" placeholder="We're closed Mondays"></textarea><p class="err" id="e-notes" hidden></p></div>
+      </div>
+    </details>
+    <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
+  </div>
+  </form>
+
+  <div id="review" class="card g rv" hidden>
+    <h2>Check your order</h2>
+    <div id="rvBody" class="stack" style="gap:12px"></div>
+    <div class="total" id="tot"></div>
+    <p class="sub" id="firstFree" style="text-align:center;font-size:18px;margin:0"></p>
+    <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
+    <button type="button" class="ghost" id="back">Go back and edit</button>
+  </div>
+
+  <div id="done" class="card g done" hidden role="status">
+    <div class="ck" aria-hidden="true">&#10003;</div>
+    <h3>Got it, thank you!</h3>
+    <p id="doneWhen">Your proof arrives by email within 5 hours. If you order after 9 p.m., your proof comes the next morning.</p>
+    <p class="alldone"><b>You're all done.</b> Your order is saved.</p>
+    <p class="sub">Your order number</p>
+    <div class="code" id="orderCode"></div>
+    <p class="sub" id="doneMsg" hidden></p>
+    <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
+    <button type="button" class="big" id="closeBtn">Done, close this page</button>
+    <p class="sub" id="closeHelp" hidden>To close it, swipe this page away or tap your phone's Back button. Nothing else to do.</p>
+    <p class="sub">Need another graphic?</p>
+    <button type="button" class="ghost" id="again">Start a new order</button>
+  </div>
+  <div class="foot">CPMG Detail Order · v2.3 (Oct 27, 2026) · Questions? randy.turner@cpmgdata.com</div>
+</div>
+<div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
+
+<template id="gTpl">
+  <div class="card g" data-g>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3 data-t>Graphic 1</h3><button type="button" class="rm" data-rm hidden>Remove</button></div>
+    <fieldset><legend>Where will you use it?</legend>
+      <label class="opt"><input type="radio" data-n="size" value="Phone or Facebook story"> Phone or Facebook story</label>
+      <label class="opt"><input type="radio" data-n="size" value="Website or TV screen"> Website or TV screen</label>
+      <label class="opt"><input type="radio" data-n="size" value="Facebook or Instagram post"> Facebook or Instagram post</label>
+      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide" checked> Not sure? Give me both phone and wide (2 graphics, $40)</label>
+    </fieldset>
+    <label class="opt"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
+    <div class="field"><label>What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
+    <div class="field"><label>Your ideas</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="Pipe insulation&#10;$89 this month only"></textarea><p class="err" data-e="ideas" hidden></p></div>
+    <div class="field"><label>What should people do?</label><input type="text" data-f="cta" placeholder="Call today"><p class="err" data-e="cta" hidden></p></div>
+    <fieldset><legend>Colors</legend>
+      <label class="opt"><input type="radio" data-n="col" value="CPMG picks" checked> Your choice (CPMG picks)</label>
+      <label class="opt"><input type="radio" data-n="col" value="Pick my colors"> I'll pick my colors</label>
+      <label class="opt"><input type="radio" data-n="col" value="Match my logo"> Match my logo</label>
+    </fieldset>
+    <div data-pal hidden style="display:flex;flex-direction:column;gap:8px">
+      <p class="hint" data-palhint>Tap your main color.</p>
+      <div class="dots" data-dots></div>
+    </div>
+    <div class="samp" data-samp aria-label="Sample of your colors">
+      <div class="sk">Sample</div>
+      <div class="sh" data-sh>Your headline here</div>
+      <div class="sc" data-sc>Call today</div>
+    </div>
+    <p class="hint" data-sampnote>CPMG picks colors that fit your business. This is just an example.</p>
+  </div>
+</template>
+
+<script src="../assets/cpmg-order-config.js?v=1.0"></script>
+<script src="../assets/cpmg-order.js?v=1.3"></script>
+<script>
+/* CPMG Detail Order page script v2.3 (Oct 27, 2026) */
+(function () {
+  var FORM_VERSION = 'detail-order v2.3 (Oct 27, 2026)';
+  var C = CPMG, $ = C.$, n = 0, MAX = 5, PRICE = 25, PAIR_PRICE = 40, stage = 'form', sending = false;
+  var key = C.param('k'), client = null, editing = false;     // v2.0: saved info
+  var P = { each: PRICE, pair: PAIR_PRICE, promo: 45, promoPair: 60, rush: 10, rushMax: 2, rushLeft: null, firstOff: 25, monthlyPlan: false };   // v2.1: the order system's prices replace these
+  // What each size choice means for the order system. "use" = the contract's phone|tv|both;
+  // "size" = the exact value the old form saved, so the sheet and CSV stay the same.
+  var SIZE = {
+    'Phone or Facebook story':    { use: 'phone', size: 'Phone (portrait)' },
+    'Website or TV screen':       { use: 'tv',    size: 'Wide (TV or website)' },
+    'Facebook or Instagram post': { use: 'phone', size: 'Square (website or social)' },
+    'Phone + Wide':               { use: 'both',  size: 'Phone + Wide' }
+  };
+  var COLMODE = { 'CPMG picks': 'cpmg', 'Pick my colors': 'pick', 'Match my logo': 'logo' };
+  var PAL = [['Navy','#1f3a68'],['Royal blue','#2459c9'],['Sky','#5bb8f0'],['Teal','#11807a'],['Green','#1f7a43'],['Lime','#9bd04a'],['Gold','#e3b23c'],['Orange','#ef7d22'],['Red','#c8312f'],['Burgundy','#7a1f3d'],['Purple','#6a3fb5'],['Pink','#e86aa6'],['Brown','#6b4a2b'],['Black','#1b1b1b'],['Gray','#8a8f93'],['White','#ffffff']];
+
+  function promoOn(c) { var b = c.querySelector('[data-n="promo"]'); return !!(b && b.checked); }
+  function cost(c) { return P.monthlyPlan ? 0 : C.graphicPrice(P, pick(c, 'size') === 'Phone + Wide', promoOn(c)); }
+  function rushOn() { return !$('rushOpt').hidden && $('rush').checked; }
+  function money() { return C.orderTotal(P, cards().map(function (c) { return { pair: pick(c, 'size') === 'Phone + Wide', promo: promoOn(c) }; }), !client, rushOn()); }
+  function total() { var m = money(); return m.graphics + m.rush; }
+  function paintPromo(c) { var t = c.querySelector('[data-promotxt]'); if (t) t.textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for both sizes)'; }
+  function applyPrices() {
+    var full = P.rushLeft === 0;
+    $('rushOpt').hidden = full; if (full) $('rush').checked = false;
+    $('rushTxt').textContent = 'Rush: proof within 1 hour, 9 a.m.–9 p.m. (+$' + P.rush + ')';
+    $('rushHint').textContent = full ? 'Rush is full for today. Your proof still comes within 5 hours.' : 'Only ' + P.rushMax + ' rush orders a day. Without rush, your proof comes within 5 hours.';
+    cards().forEach(paintPromo); C.syncOpts(document); renum();
+  }
+  function cards() { return [].slice.call(document.querySelectorAll('[data-g]')); }
+  function val(c, k) { return c.querySelector('[data-f="' + k + '"]').value; }
+  function pick(c, k) { var r = c.querySelector('[data-n="' + k + '"]:checked'); return r ? r.value : ''; }
+  function colName(h) { for (var i = 0; i < PAL.length; i++) if (PAL[i][1] === h) return PAL[i][0]; return h; }
+  function renum() {
+    cards().forEach(function (c, i) { c.querySelector('[data-t]').textContent = 'Graphic ' + (i + 1); c.querySelector('[data-rm]').hidden = cards().length < 2; });
+    $('addG').hidden = cards().length >= MAX;
+    if (stage === 'form') $('go').textContent = 'Review my order · $' + total();
+  }
+  function lum(h) { var r = parseInt(h.substr(1, 2), 16) / 255, g = parseInt(h.substr(3, 2), 16) / 255, b = parseInt(h.substr(5, 2), 16) / 255; function f(x) { return x <= .03928 ? x / 12.92 : Math.pow((x + .055) / 1.055, 2.4); } return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); }
+  function onCol(h) { return lum(h) > .4 ? '#111111' : '#ffffff'; }
+
+  function setupColors(c) {
+    c.cols = []; var dots = c.querySelector('[data-dots]');
+    PAL.forEach(function (p) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'dot'; b.style.background = p[1];
+      b.setAttribute('data-hex', p[1]); b.setAttribute('aria-label', p[0]); b.setAttribute('aria-pressed', 'false'); b.title = p[0];
+      b.addEventListener('click', function () { var i = c.cols.indexOf(p[1]); if (i >= 0) c.cols.splice(i, 1); else { if (c.cols.length >= 2) c.cols.shift(); c.cols.push(p[1]); } paint(c); });
+      dots.appendChild(b);
+    });
+    C.each(c.querySelectorAll('[data-n="col"]'), function (r) { r.addEventListener('change', function () { paint(c); }); });
+    c.querySelector('[data-f="hl"]').addEventListener('input', function () { paint(c); });
+    c.querySelector('[data-f="cta"]').addEventListener('input', function () { paint(c); });
+    paint(c);
+  }
+  function paint(c) {
+    var mode = pick(c, 'col'), s = c.querySelector('[data-samp]'), sh = c.querySelector('[data-sh]'), sc = c.querySelector('[data-sc]'), note = c.querySelector('[data-sampnote]');
+    c.querySelector('[data-pal]').hidden = mode !== 'Pick my colors';
+    sh.textContent = val(c, 'hl').trim() || 'Your headline here'; sc.textContent = val(c, 'cta').trim() || 'Call today';
+    var main = '#1f7a43', acc = '#e3b23c';
+    if (mode === 'Pick my colors') {
+      main = c.cols[0] || '#1f3a68'; acc = c.cols[1] || onCol(main);
+      c.querySelector('[data-palhint]').textContent = c.cols.length === 0 ? 'Tap your main color.' : c.cols.length === 1 ? 'Now tap a second color (optional).' : 'Your 2 colors. Tap one again to change it.';
+      note.textContent = c.cols.length ? 'This is how your colors will look together.' : 'Pick a color to see a sample.';
+    } else if (mode === 'Match my logo') { main = '#2a3a31'; acc = '#5fc48c'; note.textContent = 'Add your logo under More options. We\'ll match its colors.'; }
+    else note.textContent = 'CPMG picks colors that fit your business. This is just an example.';
+    C.each(c.querySelectorAll('.dot'), function (d) {
+      var at = c.cols.indexOf(d.getAttribute('data-hex')), t = d.querySelector('span');
+      d.setAttribute('aria-pressed', String(at >= 0)); if (t) d.removeChild(t);
+      if (at >= 0) { var k = document.createElement('span'); k.textContent = at + 1; d.appendChild(k); }
+    });
+    s.style.background = main; s.style.color = onCol(main); sc.style.background = acc; sc.style.color = onCol(acc);
+  }
+  function addG() {
+    n++;
+    var c = document.importNode($('gTpl').content, true).querySelector('[data-g]');
+    C.each(c.querySelectorAll('[data-n]'), function (r) { r.name = r.getAttribute('data-n') + '-' + n; });
+    c.querySelector('[data-rm]').addEventListener('click', function () { c.parentNode.removeChild(c); renum(); });
+    c.addEventListener('input', function (e) { var k = e.target.getAttribute('data-f'); if (k) C.showErr(c.querySelector('[data-e="' + k + '"]'), ''); });
+    $('gList').appendChild(c); setupColors(c); C.syncOpts(c); renum();
+    C.each(c.querySelectorAll('[data-n="size"]'), function (r) { r.addEventListener('change', renum); });
+    var pb = c.querySelector('[data-n="promo"]'); if (pb) pb.addEventListener('change', renum); paintPromo(c);   // v2.1
+  }
+
+  ['biz', 'type', 'who', 'em', 'ph', 'fp', 'notes'].forEach(function (id) {
+    $(id).addEventListener('input', function () { C.showErr($('e-' + id), ''); });
+    $(id).addEventListener('change', function () { C.showErr($('e-' + id), ''); });
+  });
+  ['state', 'zip'].forEach(function (id) { $(id).addEventListener('input', function () { C.showErr($('e-addr'), ''); }); });
+  $('show').addEventListener('change', function () { $('fpWrap').hidden = this.checked; });
+
+  // ===== v2.0: saved info. The phone remembers them after their first order. =====
+  if (key) C.rememberKey(key); else key = C.savedKey();
+  function addrNow() { return { street: $('street').value.trim(), city: $('city').value.trim(), state: $('state').value.trim().toUpperCase(), zip: $('zip').value.trim() }; }
+  function fillDetails(c) {
+    $('biz').value = c.business || ''; $('type').value = C.typeFor(c.industry); $('who').value = c.name || '';
+    $('em').value = c.email || ''; $('ph').value = c.phone ? C.fmtPhone(c.phone) : '';
+    $('txt').checked = !!c.okToText; $('show').checked = c.showPhone !== false; $('fpWrap').hidden = $('show').checked;
+    $('fp').value = c.showPhone === false && c.footerPhone ? C.fmtPhone(c.footerPhone) : '';
+    $('street').value = c.street || ''; $('city').value = c.city || ''; $('state').value = c.state || ''; $('zip').value = c.zip || '';
+    $('web').value = c.website || '';
+    var a = C.addrLine(c);
+    $('area').value = c.area && c.area !== a ? c.area : '';
+    C.syncOpts(document);
+  }
+  function renderDetails() {
+    var saved = !!client && !editing;
+    $('dSaved').hidden = !saved; $('dFields').hidden = saved; $('dCancel').hidden = !client;
+    $('dNote').textContent = client ? 'Change anything that\'s wrong. We\'ll save it for every order after this.'
+      : 'Fill this in one time. We\'ll save your info for every order after this. Next time, you just tell us what you want on your graphic.';
+    if (client) {
+      $('dWName').textContent = 'Welcome back, ' + ($('biz').value.trim() || $('who').value.trim() || 'friend') + '!';
+      var rows = [['Name', $('who').value.trim()], ['Phone', C.fmtPhone($('ph').value)], ['Email', $('em').value.trim()], ['Address', C.addrLine(addrNow())]]
+        .filter(function (r) { return r[1]; });
+      $('dSavedLines').innerHTML = rows.map(function (r) { return '<div><span class="k">' + r[0] + ':</span> ' + C.esc(r[1]) + '</div>'; }).join('');
+    }
+  }
+  $('dEditBtn').addEventListener('click', function () { editing = true; renderDetails(); try { $('biz').focus(); } catch (e) { /* fine */ } });
+  $('dCancel').addEventListener('click', function () { editing = false; if (client) fillDetails(client); ['biz', 'type', 'who', 'em', 'ph', 'fp'].forEach(function (id) { C.showErr($('e-' + id), ''); }); C.showErr($('e-addr'), ''); renderDetails(); });
+  $('dNotMe').addEventListener('click', function () { C.forgetKey(); C.keyInLink(''); key = ''; client = null; editing = false; fillDetails({}); renderDetails(); P.monthlyPlan = false; renum(); });
+  if (key && C.urlReady()) {
+    C.lookupClient(key).then(function (c) {
+      if (c && (c.email || c.business)) { client = c; fillDetails(c); C.keyInLink(key); }
+      else if (c === false) { C.forgetKey(); key = ''; }
+      renderDetails();
+    });
+  }
+  C.getPrices(key).then(function (p) { P = p; applyPrices(); });   // v2.1
+  $('rush').addEventListener('change', renum);
+  $('addG').addEventListener('click', addG);
+  C.watchOpts(document);
+
+  var photos = C.photoPicker($('pic'), $('thumbs'), $('e-pic'), function (list) { $('picClear').hidden = !list.length; });
+  $('picClear').addEventListener('click', function () { photos.clear(); C.showErr($('e-pic'), ''); });
+
+  // A link like .../detail-order/?type=Plumbing picks the business type for them (no personal data).
+  (function () {
+    var t = C.param('type').toLowerCase(); if (!t) return;
+    C.each($('type').options, function (o) { if (o.value && o.value.toLowerCase().indexOf(t) === 0) $('type').value = o.value; });
+  })();
+
+  function check() {
+    var bad = false, first = null;
+    function f(el, msg) { C.showErr(el, msg); if (msg) { bad = true; if (!first) first = el; } }
+    f($('e-biz'), $('biz').value.trim() ? '' : 'Add your business name.');
+    f($('e-type'), $('type').value ? '' : 'Choose your type of business.');
+    f($('e-who'), $('who').value.trim() ? '' : 'Add your name.');
+    f($('e-em'), C.emailOk($('em').value) ? '' : 'Add a working email address.');
+    f($('e-ph'), C.digits($('ph').value).length === 10 ? '' : 'Add your 10-digit phone number.');
+    f($('e-fp'), $('show').checked || !$('fp').value.trim() || C.digits($('fp').value).length === 10 ? '' : 'Add a 10-digit phone number.');
+    f($('e-addr'), !C.stateOk($('state').value) ? 'Use 2 letters for the state, like SC.' : !C.zipOk($('zip').value) ? 'Use 5 numbers for the zip code.' : '');
+    if (bad && client && !editing) { editing = true; renderDetails(); }        // v2.0: show the saved info so they can fix it
+    f($('e-notes'), C.words($('notes').value) > 50 ? 'Keep it to 50 words.' : '');
+    if ($('e-notes').textContent) $('more').open = true;
+    cards().forEach(function (c) {
+      var h = val(c, 'hl'), ls = C.lines(val(c, 'ideas')), t = val(c, 'cta');
+      f(c.querySelector('[data-e="hl"]'), !h.trim() ? 'Add a few words for the headline.' : C.words(h) > 10 ? 'Keep it to 10 words.' : '');
+      f(c.querySelector('[data-e="ideas"]'), !ls.length ? 'Add at least one idea.' : ls.length > 5 ? 'Keep it to 5 lines.' : ls.some(function (l) { return C.words(l) > 10; }) ? 'Keep each line to 10 words.' : '');
+      f(c.querySelector('[data-e="cta"]'), !t.trim() ? 'Add what people should do.' : C.words(t) > 6 ? 'Keep it to 6 words.' : '');
+    });
+    if (first) { try { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { first.scrollIntoView(); } }
+    return !bad;
+  }
+  function colText(c) { return pick(c, 'col') === 'Pick my colors' && c.cols.length ? c.cols.map(colName).join(' and ') : pick(c, 'col'); }
+  function needByText() {
+    var d = $('needBy').value, t = $('needTime').value, out = '';
+    if (d) { var p = d.split('-'); var dt = new Date(+p[0], +p[1] - 1, +p[2]); out = isNaN(dt) ? d : dt.toDateString(); }
+    if (t) out = out ? out + ', ' + t : t;
+    return out;
+  }
+
+  function buildPayload() {
+    var showPhone = $('show').checked, ph = C.fmtPhone($('ph').value);
+    var footer = showPhone ? ph : C.fmtPhone($('fp').value);
+    var more = {
+      'OK to text': $('txt').checked ? 'Yes' : 'No',
+      'Show phone on graphics': showPhone ? 'Yes' : 'No',
+      'Phone on graphics': footer,
+      'Website': $('web').value.trim(),
+      'Area you serve, or address': $('area').value.trim(),
+      'Need it by': needByText()
+    };
+    var shared = photos.list(), notes = $('notes').value.trim();
+    return {
+      kind: 'detail',
+      formVersion: FORM_VERSION,
+      clientKey: client ? key : '',                                    // v2.0
+      customer: { name: $('who').value.trim(), business: $('biz').value.trim(), email: $('em').value.trim(), phone: ph, industry: $('type').value, more: more,
+        address: addrNow(), edited: editing },
+      graphics: cards().map(function (c, i) {
+        var sz = SIZE[pick(c, 'size')] || SIZE['Phone + Wide'], mode = COLMODE[pick(c, 'col')] || 'cpmg';
+        var gm = { 'Where will you use it?': pick(c, 'size'), 'Size': sz.size, 'Colors': colText(c) };
+        if (mode === 'pick') gm['Color codes'] = c.cols.map(function (h) { return colName(h) + ' ' + h; }).join(', ');
+        if (i > 0 && shared.length) gm['Photos'] = 'Use the photos sent with Graphic 1';
+        return {
+          headline: val(c, 'hl').trim(),
+          lines: C.lines(val(c, 'ideas')),
+          cta: val(c, 'cta').trim(),
+          use: sz.use,
+          colors: { mode: mode, main: mode === 'pick' && c.cols[0] ? colName(c.cols[0]) : '', second: mode === 'pick' && c.cols[1] ? colName(c.cols[1]) : '' },
+          notes: notes,
+          more: gm,
+          photos: i === 0 ? shared : [],
+          promo: promoOn(c)                                              // v2.1
+        };
+      }),
+      rush: rushOn(),                                                    // v2.1
+      website: C.honeypot()
+    };
+  }
+
+  function showReview() {
+    var e = C.esc, h = '<dl><dt>Business</dt><dd>' + e($('biz').value) + '</dd><dt>Contact</dt><dd>' + e($('who').value) + ' · ' + e(C.fmtPhone($('ph').value)) + '</dd><dt>Email</dt><dd>' + e($('em').value) + '</dd>';
+    if (C.addrLine(addrNow())) h += '<dt>Address</dt><dd>' + e(C.addrLine(addrNow())) + '</dd>';
+    if (!$('show').checked && $('fp').value.trim()) h += '<dt>On graphics</dt><dd>' + e(C.fmtPhone($('fp').value)) + '</dd>';
+    if (photos.count()) h += '<dt>Photos</dt><dd>' + photos.count() + '</dd>';
+    if (needByText()) h += '<dt>Need it by</dt><dd>' + e(needByText()) + '</dd>';
+    if (rushOn()) h += '<dt>Rush</dt><dd>Proof within 1 hour (+$' + P.rush + ')</dd>';   // v2.1
+    h += '</dl>';
+    cards().forEach(function (c, i) {
+      h += '<div class="card" style="padding:12px"><b>Graphic ' + (i + 1) + ': ' + e(val(c, 'hl')) + '</b><div class="sub">' + (pick(c, 'size') === 'Phone + Wide' ? '2 graphics (1 phone, 1 wide)' : e(pick(c, 'size'))) + (promoOn(c) ? ' · Promo look' : '') + ' · $' + cost(c) + ' · ' + e(colText(c)) + '</div><div style="font-size:16px">' + C.lines(val(c, 'ideas')).map(e).join('<br>') + '</div><div style="font-size:16px"><i>' + e(val(c, 'cta')) + '</i></div></div>';
+    });
+    $('rvBody').innerHTML = h; var k = cards().reduce(function (t, c) { return t + (pick(c, 'size') === 'Phone + Wide' ? 2 : 1); }, 0); $('tot').textContent = k + ' graphic' + (k > 1 ? 's' : '') + (rushOn() ? ' + rush' : '') + ' · $' + total() + ' total';
+    var mo = money(), after = mo.total;                                   // v2.1
+    if (P.monthlyPlan) {
+      $('firstFree').hidden = false;
+      $('firstFree').innerHTML = '<b>Monthly plan:</b> your graphics are covered' + (mo.rush ? ', so you pay just the <b>$' + mo.rush + '</b> rush fee.' : ', so this order is <b>$0</b>.');
+    } else {
+      $('firstFree').hidden = !!client;                                 // v2.0: returning customers already had theirs
+      $('firstFree').innerHTML = '<b>First order with us?</b> One graphic is free: we take $' + mo.off + ' off, so this order is <b>' + (after ? '$' + after : 'free') + '</b>. One per business.';
+    }
+    $('sendErr').hidden = true;
+    $('f').hidden = true; $('review').hidden = false; $('go').textContent = 'Looks right, send it'; stage = 'review'; window.scrollTo(0, 0);
+  }
+
+  function send() {
+    if (sending) return;
+    sending = true; $('back').disabled = true; $('sendErr').hidden = true;
+    C.busy($('go'), true, 'Sending your order…');
+    C.sendOrder(buildPayload()).then(function (r) {
+      sending = false; $('back').disabled = false;
+      if (r && r.ok) {
+        if (r.clientKey) { key = r.clientKey; C.rememberKey(key); C.keyInLink(key); }   // v2.0
+        if (key) { client = client || {}; editing = false; }
+        $('orderCode').textContent = r.orderCode || '';
+        $('orderCode').hidden = !r.orderCode; $('orderCode').previousElementSibling.hidden = !r.orderCode;
+        $('doneMsg').hidden = true;
+        $('doneWhen').textContent = rushOn() ? 'Rush order: your proof arrives by email within 1 hour (9 a.m. to 9 p.m.).' : 'Your proof arrives by email within 5 hours. If you order after 9 p.m., your proof comes the next morning.';   // v2.3
+        $('review').hidden = true; $('done').hidden = false; $('bar').hidden = true; $('payPill').hidden = true; stage = 'done'; window.scrollTo(0, 0);
+      } else {
+        C.busy($('go'), false, 'Try sending again');
+        $('sendErrText').textContent = C.failText(r); $('sendErr').hidden = false;
+        try { $('sendErr').scrollIntoView({ block: 'center' }); } catch (e) { /* old phone */ }
+      }
+    });
+  }
+
+  $('go').addEventListener('click', function () {
+    if (stage === 'form') { if (check()) showReview(); }
+    else if (stage === 'review') send();
+  });
+  $('back').addEventListener('click', function () { if (sending) return; $('review').hidden = true; $('f').hidden = false; stage = 'form'; renum(); });
+  // Done button: closes the page where the phone allows it; otherwise says how.
+  $('closeBtn').addEventListener('click', function () {
+    try { window.close(); } catch (e) { /* phone said no */ }
+    setTimeout(function () { $('closeHelp').hidden = false; $('closeBtn').textContent = 'Your order is saved'; $('closeBtn').disabled = true; }, 400);
+  });
+  // v1.2: a new order keeps their name, business, contact details and logo; only the graphics start fresh.
+  $('again').addEventListener('click', function () {
+    cards().forEach(function (c) { c.parentNode.removeChild(c); });
+    n = 0; addG();
+    ['needBy', 'needTime'].forEach(function (id) { if ($(id)) $(id).value = ''; });
+    $('sendErr').hidden = true; $('done').hidden = true; $('closeHelp').hidden = true; $('closeBtn').disabled = false; $('closeBtn').textContent = 'Done, close this page'; $('review').hidden = true;
+    $('f').hidden = false; $('bar').hidden = false; $('payPill').hidden = false;
+    $('rush').checked = false; C.getPrices(key).then(function (p) { P = p; applyPrices(); });   // v2.1: rush seats may have changed
+    stage = 'form'; C.busy($('go'), false, 'Review my order'); renderDetails(); renum(); window.scrollTo(0, 0);
+  });
+  addG();
+})();
+</script>
+</body>
+</html>
+<!doctype html>
+<!--
+  CPMG Detail Order — detail-order/index.html
   v2.2 (Oct 27, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
