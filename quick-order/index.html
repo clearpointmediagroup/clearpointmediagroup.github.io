@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v3.3 (Oct 28, 2026)
+  v3.4 (Oct 28, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v3.4 (Oct 28, 2026) Help: first tip drops to the first section in 3 seconds, then 10 seconds a tip (cpmg-order-helper.js v1.9).
     v3.3 (Oct 28, 2026) Help tips 12 seconds each (cpmg-order-helper.js v1.8).
     v3.2 (Oct 28, 2026) Help tips slowed to 10 seconds each (cpmg-order-helper.js v1.7).
     v3.1 (Oct 28, 2026) Help tips slowed to 6 seconds each (cpmg-order-helper.js v1.6).
@@ -181,7 +182,7 @@
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v3.3 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v3.4 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
@@ -190,7 +191,7 @@
 <script>
 /* CPMG Quick Order page script v2.2 (Oct 27, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v3.3 (Oct 28, 2026)';
+  var FORM_VERSION = 'quick-order v3.4 (Oct 28, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, editing = false, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -402,6 +403,6 @@
   ];
 })();
 </script>
-<script src="../assets/cpmg-order-helper.js?v=1.8"></script>
+<script src="../assets/cpmg-order-helper.js?v=1.9"></script>
 </body>
 </html>
