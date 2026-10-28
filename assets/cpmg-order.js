@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.6 (Oct 28, 2026)
+ * v1.7 (Oct 28, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,8 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.7 (Oct 28, 2026) Test mode: orange bar removed. The name says it instead: "New_Detail Order" or
+ *                       "New_Quick Order" at the top of the form and on the browser tab.
  *   v1.6 (Oct 28, 2026) Test mode (?new=1) stays a brand-new client every time: the phone never saves
  *                       the client code and the address keeps ?new=1 after a test order. An orange
  *                       "TEST MODE" bar at the top shows it is on.
@@ -246,16 +248,16 @@ var CPMG = (function () {
     if (TEST_NEW) return;   // v1.6: keep ?new=1 so a refresh is still a brand-new client
     try { window.history.replaceState(null, '', location.pathname + (k ? '?k=' + encodeURIComponent(k) : '')); } catch (e) { /* old phone */ }
   }
-  // v1.6: orange bar at the top so Randy can see the test link is on
+  // v1.7: test mode shows in the name: "New_Detail Order" / "New_Quick Order" (no banner)
   if (TEST_NEW) {
     var showTest = function () {
-      if (document.getElementById('cpmgTestBar')) return;
-      var d = document.createElement('div'); d.id = 'cpmgTestBar';
-      d.setAttribute('style', 'background:#ef7d22;color:#111;font:700 17px/1.3 system-ui,sans-serif;text-align:center;padding:10px 12px');
-      d.textContent = 'TEST MODE: you are a brand-new client every time';
-      document.body.insertBefore(d, document.body.firstChild);
+      var m = /(Detail|Quick) Order/.exec(document.title || '');
+      if (!m) return;
+      var name = 'New_' + m[1] + ' Order';
+      document.title = 'CPMG ' + name;
+      var h = document.querySelector('h1'); if (h) h.textContent = name;
     };
-    if (document.body) showTest(); else document.addEventListener('DOMContentLoaded', showTest);
+    if (document.readyState !== 'loading') showTest(); else document.addEventListener('DOMContentLoaded', showTest);
   }
   /** "123 Main St, Myrtle Beach, SC 29579" from {street, city, state, zip}; blank parts left out. */
   function addrLine(a) {
