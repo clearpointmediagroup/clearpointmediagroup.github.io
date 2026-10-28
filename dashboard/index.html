@@ -1,6 +1,8 @@
-<!-- CPMG Dashboard (GitHub) v2.0 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v2.1 (Oct 27, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v2.1 (Oct 27, 2026) "My pages" menu under the stage boxes: prospects, social, Facebook for both;
+       order forms and admin pages for Randy only.
      v2.0 (Oct 27, 2026) Moved to GitHub so it opens on any phone, laptop or kiosk with no Google sign-in.
        Sign-in screen (tap your name, type the PIN), "Remember this phone", Log out button.
      Built from CPMG_DashboardPage.html v1.2 (everything else unchanged). -->
@@ -58,6 +60,12 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 .full img{flex:1;min-height:0;width:100%;object-fit:contain}
 .full .bar{display:flex;justify-content:center;gap:12px;padding:12px;background:#000}
 .hide{display:none!important}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.lk{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--fg);text-decoration:none}
+.lk:hover{border-color:var(--green)}
+.lk b{font:700 21px var(--display);color:var(--strong)}
+.lk span{font-size:16px;color:var(--muted)}
+.lgrp{font:700 15px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--green);margin-top:22px}
 .signin{max-width:440px;margin:8vh auto 0;display:flex;flex-direction:column;gap:16px}
 .whos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .whoBtn{font-size:22px;padding:16px}
@@ -117,7 +125,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn2" id="refresh" type="button">Refresh</button><button class="btn2" id="logout" type="button">Log out</button></div>
   </div>
   <div id="msg"></div>
-  <div id="vStages"><div class="stages" id="stages"></div></div>
+  <div id="vStages"><div class="stages" id="stages"></div><h2 style="margin-top:28px">My pages</h2><div id="links"></div></div>
   <div id="vList" class="hide">
     <button class="btn2" type="button" data-go="stages">← All stages</button>
     <h2 id="listTitle" style="margin-top:14px"></h2>
@@ -154,7 +162,7 @@ function call(fn, args, ok) {
     function (e) { msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v2.0 (Oct 27, 2026)';
+var PAGE_VERSION = 'v2.1 (Oct 27, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -199,7 +207,33 @@ function poll() {
     }, function (e) { Logger_(e); drawLive(); });
 }
 function Logger_(e) { try { console.warn('Dashboard refresh failed:', e && (e.message || e.error) || e); } catch (x) {} }
+var LINKS = [
+  { g: 'Sales', who: 'both', t: 'Prospects', d: 'Restaurants, bars and other places to call or visit', u: 'https://claude.ai/artifact/AdpWkKeiWVfcBixu2nTxD9' },
+  { g: 'Sales', who: 'both', t: 'Social prospects', d: 'Facebook groups and pages where we post', u: 'https://claude.ai/artifact/LBvZw6mcHGGDYRcg8sLy3N' },
+  { g: 'Sales', who: 'both', t: 'CPMG on Facebook', d: 'Our business page and sample graphics', u: 'https://www.facebook.com/profile.php?id=61595065748576' },
+  { g: 'Order forms', who: 'randy', t: 'Detail Order', d: 'Full form for new customers', u: 'https://clearpointmediagroup.github.io/detail-order/' },
+  { g: 'Order forms', who: 'randy', t: 'Quick Order', d: 'Short form for regulars', u: 'https://clearpointmediagroup.github.io/quick-order/' },
+  { g: 'Running the business', who: 'randy', t: 'Day-One Report', d: 'What is left, what Claude is doing', u: 'https://claude.ai/artifact/TYtE5vofRJiXDB2A1YkJhQ' },
+  { g: 'Running the business', who: 'randy', t: 'Start Here', d: 'Home page for all your CPMG pages', u: 'https://claude.ai/artifact/QJGzsEKxJnhWcZTtToTYRJ' },
+  { g: 'Running the business', who: 'randy', t: 'Project Plan', d: 'Every step in order', u: 'https://claude.ai/artifact/2kbD7Ny9d4XK5nTGqB839P' },
+  { g: 'Running the business', who: 'randy', t: 'Work Log', d: 'Every change Claude made', u: 'https://claude.ai/artifact/Fd2eL621Tmsy7g739WL6xK' },
+  { g: 'Running the business', who: 'randy', t: 'Order Workflow', d: 'How an order moves, step by step', u: 'https://claude.ai/artifact/EX51PPUTgKbFQQWtHEu5G5' },
+  { g: 'Running the business', who: 'randy', t: 'Scripts', d: 'All the live code', u: 'https://claude.ai/artifact/3zroVtEXaG3vMDduG3z47s' },
+  { g: 'Running the business', who: 'randy', t: 'Setup Guides', d: 'Phone number, bank account, QuickBooks', u: 'https://claude.ai/artifact/WGzzDh2k628ZzHov5ehZuL' }
+];
+var linksDrawn = '';
+function drawLinks() {
+  if (!D || linksDrawn === D.who) return;
+  linksDrawn = D.who;
+  var mine = LINKS.filter(function (l) { return l.who === 'both' || l.who === D.who; }), h = '', grp = '';
+  mine.forEach(function (l) {
+    if (l.g !== grp) { if (grp) h += '</div>'; grp = l.g; h += '<div class="lgrp">' + esc(grp) + '</div><div class="links">'; }
+    h += '<a class="lk" href="' + l.u + '" target="_blank" rel="noopener"><b>' + esc(l.t) + '</b><span>' + esc(l.d) + '</span></a>';
+  });
+  $('links').innerHTML = h + (grp ? '</div>' : '');
+}
 function drawStages() {
+  drawLinks();
   $('stages').innerHTML = D.stages.map(function (s, i) {
     var mine = s.key === MINE[D.who];
     return '<button type="button" class="stage' + (mine ? ' mine' : '') + '" data-stage="' + s.key + '">' +
@@ -332,7 +366,7 @@ function showSignin(text) {
   $('dash').classList.add('hide'); $('signin').classList.remove('hide');
   $('signinMsg').innerHTML = text ? '<div class="warn">' + esc(text) + '</div>' : '';
 }
-function signedOut(text) { clearPass(); showSignin(text || 'Please sign in again.'); }
+function signedOut(text) { clearPass(); linksDrawn = ''; showSignin(text || 'Please sign in again.'); }
 function startDash() { $('signin').classList.add('hide'); $('dash').classList.remove('hide'); load(); }
 function doSignin() {
   var pin = $('pin').value.trim();
