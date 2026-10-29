@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Order (one simple form) — test/order/index.html
-  v1.2-TEST (Oct 29, 2026)
+  v1.3-TEST (Oct 29, 2026)
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
   Sends the same "quick" order the order system already takes, so the script does not change.
@@ -10,6 +10,7 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    v1.3-TEST (Oct 29, 2026) CC-027: test link (?new=1) always starts as a brand-new client.
     v1.2-TEST (Oct 29, 2026) CC-027: question 4 follows the graphic's format: Title, Heading (optional), Body,
                              Call to action, each in its own box. Gray examples change to match the picture
                              tapped in question 3. Sent as headline = Title, lines = Heading + Body lines,
@@ -152,10 +153,11 @@ textarea#bdy{min-height:96px;font-size:18px}
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.2-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.3-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
-  var key = C.param('k') || C.savedKey(), client = null, sending = false;
+  var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
+  var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
 
   C.watchOpts(document);
   var photos = C.photoPicker($('pic'), $('thumbs'), $('ePic'), function (list) { $('picClear').hidden = !list.length; });

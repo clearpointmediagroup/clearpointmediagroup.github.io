@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.1-TEST (Oct 29, 2026)
+  v1.2-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.2-TEST (Oct 29, 2026) CC-027: test link (?new=1) always starts as a brand-new client (it was filling in
+                             an old test client's info).
     RE v1.1-TEST (Oct 29, 2026) CC-027: new Brokerage box under Business name (real estate ads must show it).
                              Filled in from the client's saved record when it has one, and remembered on the
                              phone, so they type it once. Sent as Brokerage.
@@ -163,10 +165,11 @@ textarea#bdy{min-height:96px;font-size:18px}
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.1-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.2-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
-  var key = C.param('k') || C.savedKey(), client = null, sending = false;
+  var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
+  var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
 
   C.watchOpts(document);
   var photos = C.photoPicker($('pic'), $('thumbs'), $('ePic'), function (list) { $('picClear').hidden = !list.length; });
@@ -180,7 +183,7 @@ textarea#bdy{min-height:96px;font-size:18px}
     $('welcome').hidden = false;
   }
   var BROK_STORE = 'cpmgBrokerage';
-  try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
+  if (!TEST_NEW) try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
   if (key) {
     $('looking').hidden = false;
     C.lookupClient(key).then(function (c) {
