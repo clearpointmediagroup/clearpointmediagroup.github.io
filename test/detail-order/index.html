@@ -3,6 +3,7 @@
 <!-- TEST v3.1 (Oct 29, 2026) CC-016: loads cpmg-order-helper-test.js v3.1 (new helper buddy). -->
 <!-- TEST v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top (open for first-timers, folded for returning clients). Helper walk-through and corner buddy removed. -->
 <!-- TEST v5.1 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
+<!-- TEST v5.3 (Oct 29, 2026) CC-025: examples by business type, new types, brokerage box, photo and due date up front. -->
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
@@ -11,6 +12,9 @@
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.3 (Oct 29, 2026) CC-025: examples match the business type (cpmg-order-examples.js v1.0, tips v1.1);
+                        no plumbing examples by default; 5 new business types; optional Brokerage name for real
+                        estate; photo says what to send; photo and Need it by moved onto the main form; old version number taken off the bottom.
     v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
                         and why we ask for each part. Open for first-timers, folded up for returning clients.
                         Removed the whole helper (orange help button, walk-through and corner buddy) for a clean top.
@@ -168,11 +172,12 @@ details.how .inner{font-size:17px;line-height:1.45}
       </div>
       <div id="dFields" class="stack" style="gap:14px">
       <p class="note" id="dNote">Fill this in one time. We'll save your info for every order after this. Next time, you just tell us what you want on your graphic.</p>
-      <div class="field"><label for="biz">Business name</label><input type="text" id="biz" placeholder="ABC Plumbing" autocomplete="organization"><p class="err" id="e-biz" hidden></p></div>
-      <div class="field"><label for="type">Type of business</label><select id="type"><option value="">Choose one</option><option>Restaurant or bar</option><option>Real estate</option><option>Plumbing</option><option>HVAC</option><option>Lawn care</option><option>Salon or spa</option><option>Other</option></select><p class="err" id="e-type" hidden></p></div>
-      <div class="field"><label for="who">Your name</label><input type="text" id="who" placeholder="Jim Smith" autocomplete="name"><p class="err" id="e-who" hidden></p></div>
+      <div class="field"><label for="biz">Business name</label><input type="text" id="biz" placeholder="Your Business Name" autocomplete="organization"><p class="err" id="e-biz" hidden></p></div>
+      <div class="field" id="brokWrap" hidden><label for="brok">Brokerage name (optional)</label><input type="text" id="brok" placeholder="Coastal Realty Group" autocomplete="off"></div>
+      <div class="field"><label for="type">Type of business</label><select id="type"><option value="">Choose one</option><option>Restaurant or bar</option><option>Real estate</option><option>Accountant or tax</option><option>Law office</option><option>Medical or dental</option><option>Plumbing</option><option>HVAC</option><option>Lawn care</option><option>Contractor or builder</option><option>Salon or spa</option><option>Retail store</option><option>Other</option></select><p class="err" id="e-type" hidden></p></div>
+      <div class="field"><label for="who">Your name</label><input type="text" id="who" placeholder="Jordan Smith" autocomplete="name"><p class="err" id="e-who" hidden></p></div>
       <div class="row2">
-        <div class="field"><label for="em">Email</label><input type="email" id="em" placeholder="jim@abcplumbing.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="e-em" hidden></p></div>
+        <div class="field"><label for="em">Email</label><input type="email" id="em" placeholder="you@yourbusiness.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="e-em" hidden></p></div>
         <div class="field"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="8435550100" autocomplete="tel" inputmode="tel"><p class="err" id="e-ph" hidden></p></div>
       </div>
       <div class="field"><label for="street">Business address (optional)</label><input type="text" id="street" placeholder="123 Main St" autocomplete="street-address"></div>
@@ -193,6 +198,18 @@ details.how .inner{font-size:17px;line-height:1.45}
     <div id="gList" class="stack"></div>
     <button type="button" class="add" id="addG">+ Add another graphic</button>
 
+    <div class="card stack" id="picNeed" style="gap:14px">
+        <div class="field"><span class="lbl" data-q="pic">Photo or logo (optional)</span>
+          <p class="hint">Your house or listing, your food, your team or your logo. Up to 3 pictures. Phone photos are fine.</p>
+          <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
+          <div class="thumbs" id="thumbs" hidden></div>
+          <p class="err" id="e-pic" hidden></p>
+        </div>
+        <div class="field"><label for="needBy">Need it by (optional)</label>
+          <div class="row2"><input type="date" id="needBy" aria-label="Date"><select id="needTime" aria-label="Time"><option value="">Any time that day</option><option>As soon as possible</option><option>Morning (by noon)</option><option>Afternoon (by 5 PM)</option><option>Evening (by 9 PM)</option></select></div>
+        </div>
+    </div>
+
     <div class="card" id="rushBox">
       <label class="opt" id="rushOpt"><input type="checkbox" id="rush"> <span id="rushTxt">Rush: proof within 1 hour, 9 a.m.–9 p.m. Eastern (+$10)</span></label>
       <p class="hint" id="rushHint">Only 2 rush orders a day. Without rush, your proof comes within 5 hours.</p>
@@ -201,17 +218,8 @@ details.how .inner{font-size:17px;line-height:1.45}
     <details class="more" id="more">
       <summary>More options (optional)</summary>
       <div class="inner">
-        <div class="field"><span class="lbl" data-q="pic">Logo or photo</span>
-          <p class="hint">Up to 3 pictures. Phone photos are fine; we shrink big ones for you. Used on all your graphics.</p>
-          <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
-          <div class="thumbs" id="thumbs" hidden></div>
-          <p class="err" id="e-pic" hidden></p>
-        </div>
-        <div class="field"><label for="web">Website</label><input type="text" id="web" placeholder="abcplumbing.com" autocapitalize="off" spellcheck="false"></div>
+        <div class="field"><label for="web">Website</label><input type="text" id="web" placeholder="yourbusiness.com" autocapitalize="off" spellcheck="false"></div>
         <div class="field"><label for="area">Area you serve</label><input type="text" id="area" placeholder="Carolina Forest"></div>
-        <div class="field"><label for="needBy">Need it by</label>
-          <div class="row2"><input type="date" id="needBy" aria-label="Date"><select id="needTime" aria-label="Time"><option value="">Any time that day</option><option>As soon as possible</option><option>Morning (by noon)</option><option>Afternoon (by 5 PM)</option><option>Evening (by 9 PM)</option></select></div>
-        </div>
         <div class="field"><label for="notes">Anything you'd like us to know?</label><p class="hint">For example: "We're closed Mondays." Just for us; it won't be printed on your graphic.</p><textarea id="notes" style="min-height:80px" placeholder="We're closed Mondays"></textarea><p class="err" id="e-notes" hidden></p></div>
       </div>
     </details>
@@ -242,7 +250,7 @@ details.how .inner{font-size:17px;line-height:1.45}
     <p class="sub">Need another graphic?</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v4.8 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detailed Order · Questions? randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -256,9 +264,9 @@ details.how .inner{font-size:17px;line-height:1.45}
       <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>Not sure? You get 2 graphics: one for phones, one for TVs</small></span></label>
     </fieldset>
     <label class="opt" data-q="promo"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
-    <div class="field"><label data-q="hl">What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
-    <div class="field"><label data-q="ideas">What should it say?</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="Pipe insulation&#10;$89 this month only"></textarea><p class="err" data-e="ideas" hidden></p></div>
-    <div class="field"><label data-q="cta">What should people do next?</label><input type="text" data-f="cta" placeholder="Call us today"><p class="err" data-e="cta" hidden></p></div>
+    <div class="field"><label data-q="hl">What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Big sale this weekend"><p class="err" data-e="hl" hidden></p></div>
+    <div class="field"><label data-q="ideas">What should it say?</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="20% off everything&#10;Friday through Sunday only"></textarea><p class="err" data-e="ideas" hidden></p></div>
+    <div class="field"><label data-q="cta">What should people do next?</label><input type="text" data-f="cta" placeholder="Stop by today"><p class="err" data-e="cta" hidden></p></div>
     <fieldset><legend data-q="col">Colors</legend>
       <label class="opt"><input type="radio" data-n="col" value="CPMG picks" checked> Your choice (CPMG picks)</label>
       <label class="opt"><input type="radio" data-n="col" value="Pick my colors"> I'll pick my colors</label>
@@ -278,7 +286,7 @@ details.how .inner{font-size:17px;line-height:1.45}
 </template>
 
 <script src="../cpmg-order-config-test.js?v=1.0"></script>
-<script src="../../assets/cpmg-order.js?v=1.7"></script>
+<script src="../cpmg-order-test.js?v=1.8"></script>
 <script>
 /* CPMG Detail Order page script v2.7 (Oct 28, 2026) */
 (function () {
@@ -478,6 +486,7 @@ details.how .inner{font-size:17px;line-height:1.45}
       'Area you serve, or address': $('area').value.trim(),
       'Need it by': needByText()
     };
+    if ($('type').value === 'Real estate' && $('brok') && $('brok').value.trim()) more['Brokerage'] = $('brok').value.trim();   // CC-025
     var shared = photos.list(), notes = $('notes').value.trim();
     return {
       kind: 'detail',
@@ -589,7 +598,8 @@ details.how .inner{font-size:17px;line-height:1.45}
 <script>
 /* CC-023 v1.0 (Oct 29, 2026): the words in each green "?" bubble. */
 window.CPMG_TIPS = [
-  { sel: 'label[for="biz"]', tip: 'The name people know you by. It can go on your graphic.<br><b>Example:</b> ABC Plumbing' },
+  { sel: 'label[for="brok"]', tip: 'Real estate ads usually must show your brokerage. We put it on your graphic.<br><b>Example:</b> {brok}' },
+  { sel: 'label[for="biz"]', tip: 'The name people know you by. It can go on your graphic.<br><b>Example:</b> {biz}' },
   { sel: 'label[for="type"]', tip: 'Helps us pick a look that fits your kind of business. Not listed? Pick <b>Other</b>.' },
   { sel: 'label[for="who"]', tip: 'So we know who to talk to about your order. It does not go on the graphic.' },
   { sel: 'label[for="em"]', tip: 'Your proof (a preview of your graphic) comes to this email. You look it over and OK it.' },
@@ -597,18 +607,19 @@ window.CPMG_TIPS = [
   { sel: 'label[for="street"]', tip: 'Optional. Fill it in if you want your address on your graphics. We save it for next time.' },
   { sel: 'label[for="fp"]', tip: 'The number your customers should call. It is printed on your graphic. Just the 10 digits.' },
   { sel: '[data-q="size"]', tip: 'Pick the shape that fits where people will see it.<br><b>Tall</b> fills a phone screen. <b>Wide</b> fills a TV or computer screen. <b>Square</b> is a regular Facebook or Instagram post.<br>Not sure? Pick <b>Both</b> and get one tall and one wide.' },
-  { sel: '[data-q="promo"]', tip: 'A fancier design built around <b>your logo and a photo you send</b>. $45 for one size, or $60 for tall and wide. Add your logo or photo under <b>More options</b>.' },
-  { sel: '[data-q="hl"]', tip: 'The big words at the top of your graphic. Keep it to a few words.<br><b>Example:</b> Freeze warning this weekend' },
-  { sel: '[data-q="ideas"]', tip: 'The main points you want people to read, one per line (up to 5). Short is best.<br><b>Example:</b><br>Pipe insulation<br>$89 this month only' },
-  { sel: '[data-q="cta"]', tip: 'The one thing you want people to do after they see it.<br><b>Examples:</b> Call us today · Stop by Friday · Book online' },
+  { sel: '[data-q="promo"]', tip: 'A fancier design built around <b>your logo and a photo you send</b>. $45 for one size, or $60 for tall and wide. Add your logo or photo in the <b>Photo or logo</b> box below.' },
+  { sel: '[data-q="hl"]', tip: 'The big words at the top of your graphic. Keep it to a few words.<br><b>Example:</b> {hl}' },
+  { sel: '[data-q="ideas"]', tip: 'The main points you want people to read, one per line (up to 5). Short is best.<br><b>Example:</b><br>{ideas}' },
+  { sel: '[data-q="cta"]', tip: 'The one thing you want people to do after they see it.<br><b>Example:</b> {cta}' },
   { sel: '[data-q="col"]', tip: '<b>Your choice:</b> we pick colors that fit your business.<br><b>I\'ll pick:</b> you tap your main color.<br><b>Match my logo:</b> we use the colors in your logo.' },
   { sel: '#rushOpt', tip: 'Need it fast? Your proof comes within <b>1 hour</b> for $10 more. Only 2 rush orders a day. Without rush, it comes within 5 hours.' },
-  { sel: '[data-q="pic"]', tip: 'Send your logo or a photo to use on your graphics. Phone pictures are fine.' },
-  { sel: 'label[for="web"]', tip: 'Optional. Your website, if you want it on your graphic.<br><b>Example:</b> abcplumbing.com' },
-  { sel: 'label[for="area"]', tip: 'Optional. The towns or neighborhoods you cover.<br><b>Example:</b> Carolina Forest' },
+  { sel: '[data-q="pic"]', tip: 'Send a photo to use on your graphics: your house or listing, your food, your team, your place or your logo. Phone pictures are fine.' },
+  { sel: 'label[for="web"]', tip: 'Optional. Your website, if you want it on your graphic.<br><b>Example:</b> {web}' },
+  { sel: 'label[for="area"]', tip: 'Optional. The towns or neighborhoods you cover.<br><b>Example:</b> {area}' },
   { sel: 'label[for="needBy"]', tip: 'Optional. The day and time you need your graphic. Leave it empty if there is no rush.' }
 ];
 </script>
-<script src="../cpmg-order-tips-test.js?v=1.0"></script>
+<script src="../cpmg-order-examples-test.js?v=1.0"></script>
+<script src="../cpmg-order-tips-test.js?v=1.1"></script>
 </body>
 </html>

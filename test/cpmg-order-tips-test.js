@@ -1,14 +1,17 @@
 /*
  * CPMG order forms: "?" help bubbles — cpmg-order-tips.js
- * v1.0 (Oct 29, 2026)
+ * v1.1 (Oct 29, 2026)
  * Puts a small round green "?" next to a question. Tap it and a short plain-words bubble opens right
  * under the question (what it means + an example). Tap again to close. Works on graphic cards that are
  * added later (Detailed Order "+ Add another graphic") too.
  * HOW A PAGE USES IT
  *   Before loading this file, the page sets window.CPMG_TIPS = [ { sel: 'label[for="biz"]', tip: 'Words' }, ... ].
  *   sel = the question's label, legend or checkbox line. tip = the bubble text (may use <b> and <br>).
- *   Then: <script src="../assets/cpmg-order-tips.js?v=1.0"></script>
+ *   Then: <script src="../assets/cpmg-order-tips.js?v=1.1"></script>
+ *   v1.1: tip text may use {biz} {hl} {ideas} {cta} {web} {area} {brok}; they are filled from
+ *   cpmg-order-examples.js and change when the client picks a business type.
  * REVISION LOG
+ *   v1.1 (Oct 29, 2026) CC-025: bubble examples match the client's business type.
  *   v1.0 (Oct 29, 2026) CC-023: first version, for Quick Order and Detailed Order.
  */
 (function () {
@@ -32,6 +35,20 @@
     '.szt{display:flex;flex-direction:column;gap:2px}.szt small{font-weight:500;font-size:15px;color:var(--muted);line-height:1.35}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
+  function esc(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function fillTip(t) {
+    var x = (window.CPMG_EX && window.CPMG_EX.now) ? window.CPMG_EX.now() : null;
+    if (!x) return t;
+    return t.replace(/\{(\w+)\}/g, function (m, k) {
+      if (k === 'ideas') return (x.ideas || []).map(esc).join('<br>');
+      return x[k] != null ? esc(x[k]) : m;
+    });
+  }
+  document.addEventListener('cpmg-examples', function () {
+    var l = document.querySelectorAll('.qtip');
+    for (var i = 0; i < l.length; i++) if (l[i]._tpl) l[i].innerHTML = fillTip(l[i]._tpl);
+  });
+
   function build(el, tip) {
     if (el.getAttribute('data-tipdone')) return;
     el.setAttribute('data-tipdone', '1');
@@ -39,7 +56,7 @@
     b.type = 'button'; b.className = 'qb'; b.textContent = '?';
     b.setAttribute('aria-label', 'What does this mean?'); b.setAttribute('aria-expanded', 'false');
     var bub = document.createElement('p');
-    bub.className = 'qtip'; bub.hidden = true; bub.innerHTML = tip;
+    bub.className = 'qtip'; bub.hidden = true; bub._tpl = tip; bub.innerHTML = fillTip(tip);
     if (el.tagName === 'LEGEND') {
       var row = document.createElement('span'); row.className = 'qrow';
       while (el.firstChild) row.appendChild(el.firstChild);
