@@ -1,15 +1,19 @@
 <!doctype html>
 <!--
   CPMG Order (one simple form) — test/order/index.html
-  v1.1-TEST (Oct 29, 2026)
+  v1.2-TEST (Oct 29, 2026)
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
   Sends the same "quick" order the order system already takes, so the script does not change.
     Q1 Business name   Q2 Your name, email, phone   Q3 What kind of graphic (6 picture buttons)
-    Q4 What should it say (one box)   Q5 Photo (optional)   Q6 Phone or TV (2 taps)
+    Q4 What should it say: Title, Heading, Body, Call to action (4 boxes)   Q5 Photo (optional)   Q6 Phone or TV (2 taps)
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    v1.2-TEST (Oct 29, 2026) CC-027: question 4 follows the graphic's format: Title, Heading (optional), Body,
+                             Call to action, each in its own box. Gray examples change to match the picture
+                             tapped in question 3. Sent as headline = Title, lines = Heading + Body lines,
+                             cta = Call to action.
     v1.1-TEST (Oct 29, 2026) CC-027: question 3 is now "What kind of graphic? Tap one picture." with 6 big
                              picture buttons (food or drink special, live music or band, event, sale or coupon,
                              open house, something else). Nothing is picked until they tap; the picked one turns
@@ -47,7 +51,8 @@
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .welcome2{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:17px;margin:0}
-textarea#say{min-height:110px;font-size:18px}
+textarea#bdy{min-height:96px;font-size:18px}
+.sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
 </style>
 </head>
 <body>
@@ -92,10 +97,23 @@ textarea#say{min-height:110px;font-size:18px}
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">4</span><label for="say">What should it say?</label></p>
-      <p class="hint">A few words is plenty. Put each idea on its own line.</p>
-      <textarea id="say" placeholder="Fish fry Friday&#10;$12.99&#10;5 to 9 p.m."></textarea>
-      <p class="err" id="eSay" hidden></p>
+      <p class="ql"><span class="qn">4</span>What should it say?</p>
+      <p class="hint">Fill in the 4 parts of your graphic. A few words each.</p>
+      <label class="sl" for="ttl">Title</label>
+      <p class="hint">The big words at the top.</p>
+      <input type="text" id="ttl" autocomplete="off">
+      <p class="err" id="eTtl" hidden></p>
+      <label class="sl" for="hdg">Heading (if you want)</label>
+      <p class="hint">A smaller line under the title.</p>
+      <input type="text" id="hdg" autocomplete="off">
+      <label class="sl" for="bdy">Body</label>
+      <p class="hint">The details: day, time, price. One per line.</p>
+      <textarea id="bdy"></textarea>
+      <p class="err" id="eBdy" hidden></p>
+      <label class="sl" for="cta">Call to action</label>
+      <p class="hint">What should people do?</p>
+      <input type="text" id="cta" autocomplete="off">
+      <p class="err" id="eCta" hidden></p>
     </div>
 
     <div class="field">
@@ -134,7 +152,7 @@ textarea#say{min-height:110px;font-size:18px}
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.1-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.2-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
   var key = C.param('k') || C.savedKey(), client = null, sending = false;
@@ -159,7 +177,7 @@ textarea#say{min-height:110px;font-size:18px}
   }
 
   function err(id, msg) { C.showErr($(id), msg); return !!msg; }
-  ['biz', 'nm', 'em', 'ph', 'say'].forEach(function (id) {
+  ['biz', 'nm', 'em', 'ph', 'ttl', 'bdy', 'cta'].forEach(function (id) {
     $(id).addEventListener('input', function () { err('e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
   });
 
@@ -167,13 +185,15 @@ textarea#say{min-height:110px;font-size:18px}
     ev.preventDefault();
     if (sending) return;
     var biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
-    var say = C.lines($('say').value);
+    var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = C.lines($('bdy').value), cta = $('cta').value.trim();
     var bad = [];
     if (err('eBiz', biz ? '' : 'Type your business name.')) bad.push('biz');
     if (err('eNm', nm ? '' : 'Type your name.')) bad.push('nm');
     if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
     if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
-    if (err('eSay', say.length ? '' : 'Type a few words for your graphic.')) bad.push('say');
+    if (err('eTtl', ttl ? '' : 'Type a title, like the gray example.')) bad.push('ttl');
+    if (err('eBdy', bdy.length ? '' : 'Type the details, like the gray example.')) bad.push('bdy');
+    if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
     if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
@@ -186,10 +206,10 @@ textarea#say{min-height:110px;font-size:18px}
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, email: em, phone: ph, industry: client ? '' : '', edited: !!client && changed },
       graphics: [{
-        headline: say[0], lines: say.slice(1, 4), cta: '', use: USE[size] || 'phone',
+        headline: ttl, lines: (hdg ? [hdg] : []).concat(bdy).slice(0, 3), cta: cta, use: USE[size] || 'phone',
         colors: { mode: 'cpmg', main: '', second: '' },
-        notes: say.slice(4).join('\n'),
-        more: { "What it's for": what, 'Where will you use it?': size, 'Size': SIZE[size] },
+        notes: (hdg ? [hdg] : []).concat(bdy).slice(3).join('\n'),
+        more: { 'Kind of graphic': what, 'Heading': hdg, 'Where will you use it?': size, 'Size': SIZE[size] },
         photos: photos.list(),
         promo: false
       }],
@@ -216,10 +236,22 @@ textarea#say{min-height:110px;font-size:18px}
     });
   });
 
-  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') err('eWhat', ''); });
+  // v1.2: gray examples match the picture tapped in question 3
+  var EX = {
+    '': ['Fish Fry Friday', 'All you can eat', '$12.99 a plate\n5 to 9 p.m.', 'Come hungry'],
+    'Food or drink special': ['Fish Fry Friday', 'All you can eat', '$12.99 a plate\n5 to 9 p.m.', 'Come hungry'],
+    'Live music or band': ['Live Music Tonight', 'The Tidewater Band', '8 to 11 p.m.\nNo cover charge', 'Grab a table early'],
+    'Event': ['Fall Festival', 'Fun for the whole family', 'Saturday, Nov. 7\n10 a.m. to 4 p.m.', 'Bring the kids'],
+    'Sale or coupon': ['Big Fall Sale', '20% off everything', 'Friday to Sunday only', 'Shop today'],
+    'Open house': ['Open House', '123 Ocean Blvd.', '3 beds, 2 baths, $425,000\nSunday 1 to 4 p.m.', 'Stop by and take a look'],
+    'Something else': ['Your big words', 'A smaller line', 'The details: day, time, price', 'Call or stop by today']
+  };
+  function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; $('bdy').placeholder = e[2]; $('cta').placeholder = e[3]; }
+  examples('');
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
 
   $('again').addEventListener('click', function () {
-    $('say').value = ''; photos.clear();
+    $('ttl').value = $('hdg').value = $('bdy').value = $('cta').value = ''; photos.clear();
     if (client) fill(client);
     $('ok').hidden = true; $('f').hidden = false; $('sendBar').hidden = false; window.scrollTo(0, 0);
   });
