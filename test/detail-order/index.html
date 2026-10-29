@@ -1,6 +1,7 @@
 <!-- TEST COPY (CC-007) v1.0-TEST (Oct 28, 2026): copy of the live page pointed at the CPMG Orders TEST script, with an orange TEST banner. Not for clients. -->
 <!-- TEST (Oct 29, 2026) CC-017: top line says which form this is. -->
 <!-- TEST v3.1 (Oct 29, 2026) CC-016: loads cpmg-order-helper-test.js v3.1 (new helper buddy). -->
+<!-- TEST v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top (open for first-timers, folded for returning clients). -->
 <!-- TEST v5.1 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
 <!doctype html>
 <!--
@@ -10,6 +11,8 @@
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
+                        and why we ask for each part. Open for first-timers, folded up for returning clients.
     v5.1 (Oct 29, 2026) CC-023: a green "?" next to every question opens a plain-words bubble with an example
                         (cpmg-order-tips.js v1.0). Clearer words: "Your ideas" is now "What should it say?",
                         "What should people do?" is now "What should people do next?". Size choices show a shape picture,
@@ -122,11 +125,32 @@
 .row3>.field.st{flex:0 1 80px}
 .row3>.field.zp{flex:1 1 110px}
 </style>
+<style>/* CC-024: "How this works" box */
+details.how{border-color:var(--green)}
+details.how .inner{font-size:17px;line-height:1.45}
+.howsteps{list-style:none;counter-reset:hs;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.howsteps li{counter-increment:hs;display:flex;gap:10px;align-items:flex-start}
+.howsteps li::before{content:counter(hs);flex:none;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--ink);font:900 17px var(--display);display:flex;align-items:center;justify-content:center;margin-top:-2px}
+</style>
 </head>
 <body>
 <div style="position:sticky;top:0;z-index:9999;background:#9a3412;color:#fff;font:700 20px/1.3 system-ui,sans-serif;text-align:center;padding:10px 8px;letter-spacing:.04em">TEST COPY — NOT LIVE · no real clients, no real money</div>
 <div class="wrap">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Detailed Order</h1><p class="kind" style="margin:2px 0 4px;font-weight:800;font-size:17px;color:var(--green)">Long form, more choices</p><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
+  <details class="more how" id="howBox" open style="margin-top:12px">
+    <summary onclick="this.parentNode.setAttribute('data-touched','1')">New here? How this works</summary>
+    <div class="inner" style="gap:10px">
+      <p style="margin:0">This form is how you order a graphic from ClearPoint Media Group: a ready-to-post picture for a sale, special, event or announcement.</p>
+      <ol class="howsteps">
+        <li><span><b>Tell us what you want.</b> Fill in this form. It takes 1 to 2 minutes.</span></li>
+        <li><span><b>We make it.</b> We email you a proof (a preview with a faint watermark) within 5 hours, 9 a.m. to 9 p.m.</span></li>
+        <li><span><b>You look it over.</b> OK it, or ask for changes (2 free).</span></li>
+        <li><span><b>Pay only after you OK it,</b> with a secure Square link. Your first graphic is free.</span></li>
+        <li><span><b>Post it.</b> You get the finished graphic for your phone, Facebook, Instagram or TV.</span></li>
+      </ol>
+      <p style="margin:0"><b style="color:var(--green)">Why we ask:</b> Your business info is asked one time, so we never ask again. The graphic part tells us what goes on your picture. Stuck? Tap any green <b>?</b></p>
+    </div>
+  </details>
   <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
   <span class="pill" id="payPill">Nothing to pay until you approve your proof</span>
 
@@ -280,9 +304,14 @@
   function priceText() { var t = total(); return t ? '$' + t : (P.monthlyPlan ? 'on your plan' : 'first one free'); }   // v4.1
   function paintPromo(c) { var t = c.querySelector('[data-promotxt]'); if (t) t.textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for both sizes)'; }
   var freeChecked = !key;   // v3.1: true once we know if this is a returning client
+  function howBox() {        // CC-024: "How this works" opens for first-timers, folds up for returning clients
+    var h = $('howBox'); if (!h || h.getAttribute('data-touched')) return;
+    h.open = !client;
+  }
   function freeTop() {      // v3.1: free-first-graphic note at the top, new clients only
     var b = $('freeTop'); if (!b) return;
     b.hidden = !freeChecked || !!client || !!P.monthlyPlan;
+    howBox();
     $('freeTopMore').textContent = 'After that, graphics are $' + P.each + ' each.';
   }
   function applyPrices() {
