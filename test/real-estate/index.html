@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.20-TEST (Oct 29, 2026)
+  v2.21-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.21-TEST (Oct 29, 2026) CC-030: example pops up big on top of the page when a look is tapped (Randy: it was hidden
+                             below the buttons). "Use this look" keeps it; "Pick a different look" goes back to You pick for me.
     RE v2.20-TEST (Oct 29, 2026) CC-030: example picture loads right away when a look is tapped (lazy loading removed).
     RE v2.19-TEST (Oct 29, 2026) CC-030: tapping a look shows an example picture under the buttons (6 pictures made in
                              the CPMG Gem v4.0, Randy approved), with "Example: ... look. Yours uses your own words and photos."
@@ -128,9 +130,14 @@
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 #lookTaps .opt:last-child:nth-child(odd){grid-column:1 / -1}
-.lookex{margin:12px auto 0;max-width:240px;text-align:center}
-.lookex img{display:block;width:100%;height:auto;border-radius:14px;border:2px solid var(--green)}
-.lookex figcaption{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.35}
+.lookpop{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px}
+.lookpop[hidden]{display:none}
+.lookcard{background:var(--card);border:2px solid var(--green);border-radius:16px;padding:14px;width:100%;max-width:380px;max-height:100%;overflow:auto;text-align:center}
+.lookcap{font:800 22px var(--display);color:var(--green);margin:0 0 10px}
+.lookcard img{display:block;width:auto;max-width:100%;max-height:58vh;height:auto;margin:0 auto;border-radius:12px}
+.looknote{font-size:15px;color:var(--muted);margin:8px 0 12px}
+.lookcard .big{width:100%}
+.lookcard .ghost{width:100%;margin-top:8px}
 .xcard{position:relative;display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line, #2c3d33);border-radius:12px;padding:12px 14px;margin:0 0 10px;background:var(--card);cursor:pointer}
 .xcard input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .xcard .ti{font-size:30px;color:var(--green);margin-top:2px;flex:none}
@@ -210,10 +217,6 @@
         <label class="opt"><input type="radio" name="look" value="Holiday"><span class="pic" aria-hidden="true"><i class="ti ti-gift"></i></span><span>Holiday</span><span class="szn">Tell us which one</span></label>
         <label class="opt"><input type="radio" name="look" value="You pick for me" checked><span class="pic" aria-hidden="true"><i class="ti ti-wand"></i></span><span>You pick for me</span><span class="szn">We pick the look</span></label>
       </div>
-      <figure class="lookex" id="lookEx" hidden>
-        <img id="lookImg" alt="" width="360" height="645" decoding="async">
-        <figcaption id="lookCap"></figcaption>
-      </figure>
       <div id="holidayBox" hidden style="margin-top:10px">
         <label class="sl" for="holiday" style="margin-top:0">Which holiday?</label>
         <input type="text" id="holiday" placeholder="Thanksgiving" autocomplete="off">
@@ -303,6 +306,16 @@
     <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
   </form>
 
+  <div class="lookpop" id="lookPop" hidden role="dialog" aria-modal="true" aria-labelledby="lookCap">
+    <div class="lookcard">
+      <p class="lookcap" id="lookCap"></p>
+      <img id="lookImg" alt="" width="360" height="645" decoding="async">
+      <p class="looknote">Example only. Yours uses your own words and photos.</p>
+      <button type="button" class="big" id="lookOk">Use this look</button>
+      <button type="button" class="ghost" id="lookNo">Pick a different look</button>
+    </div>
+  </div>
+
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
@@ -320,7 +333,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.20-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.21-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -444,12 +457,32 @@
   }
   // v2.19: example picture for the look they tap (pictures made in the CPMG Gem, Oct 29, 2026)
   var LOOK_IMG = { 'Professional': 'professional', 'Casual': 'casual', 'Luxury': 'luxury', 'Pool and summer': 'pool-summer', '3D poster': '3d-poster', 'Holiday': 'holiday' };
+  // v2.21: the example pops up big on top of the page; "Use this look" keeps it, "Pick a different look" un-picks it
+  var lastFocus = null;
   function showLook(v) {
     var f = LOOK_IMG[v];
-    $('lookEx').hidden = !f;
-    if (f) { $('lookImg').src = 'looks/' + f + '.jpg?v=1'; $('lookImg').alt = 'Example of the ' + v + ' look'; $('lookCap').textContent = 'Example: ' + v + ' look. Yours uses your own words and photos.'; }
+    if (!f) return;
+    $('lookImg').src = 'looks/' + f + '.jpg?v=1'; $('lookImg').alt = 'Example of the ' + v + ' look';
+    $('lookCap').textContent = v;
+    lastFocus = document.activeElement;
+    $('lookPop').hidden = false; document.body.style.overflow = 'hidden';
+    try { $('lookOk').focus(); } catch (e) { /* ok */ }
   }
-  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; showLook(e.target.value); } });
+  function closeLook(keep) {
+    $('lookPop').hidden = true; document.body.style.overflow = '';
+    if (!keep) {
+      var d = document.querySelector('input[name="look"][value="You pick for me"]');
+      if (d) { d.checked = true; d.dispatchEvent(new Event('change', { bubbles: true })); }
+      $('holidayBox').hidden = true;
+    }
+    try { (lastFocus || $('lookTaps')).focus(); } catch (e) { /* ok */ }
+    if (keep && !$('holidayBox').hidden) { try { $('holiday').focus(); } catch (e) { /* ok */ } }
+  }
+  $('lookOk').addEventListener('click', function () { closeLook(true); });
+  $('lookNo').addEventListener('click', function () { closeLook(false); });
+  $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(true); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(true); });
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
   function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
