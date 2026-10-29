@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.1-TEST (Oct 29, 2026)
+  v2.2-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.2-TEST (Oct 29, 2026) CC-028: sends all 5 body lines (nothing to notes), 'Where shown' (Phone, Big-screen TV,
+                             Social media, Website), Social media as use 'social' (Size 'Social post (4:5)'). Needs
+                             CPMG_OrderSystem.gs v4.7-TEST + CPMG_OrderReceiver.gs v2.1-TEST (TEST deployment version 2).
     RE v2.1-TEST (Oct 29, 2026) CC-027: question 4 gets a 4th button, Social media (Facebook, Instagram), sent as a
                              4:5 social post (1080 x 1350). Buttons back to 2 across: Phone, Big-screen TV, Social media, Website.
     RE v2.0-TEST (Oct 29, 2026) CC-027: photo question has 2 buttons: "Take a picture" opens the phone camera
@@ -200,9 +203,10 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.1-TEST (Oct 29, 2026)';
-  var USE = { Phone: 'phone', TV: 'tv', Social: 'phone', Website: 'tv' };
-  var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social media post (4:5, 1080 x 1350)', Website: 'Website (16:9 wide)' };
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.2-TEST (Oct 29, 2026)';
+  var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
+  var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
+  var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
   var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
 
@@ -274,10 +278,10 @@
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed },
       graphics: [{
-        headline: ttl, lines: bdy.slice(0, 3), cta: cta, use: USE[size] || 'phone',
+        headline: ttl, lines: bdy, cta: cta, use: USE[size] || 'phone',
         colors: { mode: 'cpmg', main: '', second: '' },
-        notes: bdy.slice(3).join('\n'),
-        more: { 'Form': 'Real estate', 'Brokerage': brok, 'Kind of graphic': what, 'Heading': hdg, 'Where will you use it?': size, 'Size': SIZE[size] },
+        notes: '',
+        more: { 'Form': 'Real estate', 'Brokerage': brok, 'Kind of graphic': what, 'Heading': hdg, 'Where shown': SHOWN[size] || size, 'Size': SIZE[size] },
         photos: photos.list(),
         promo: false
       }],
