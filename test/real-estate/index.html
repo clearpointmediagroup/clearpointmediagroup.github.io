@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.21-TEST (Oct 29, 2026)
+  v2.22-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,7 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.22-TEST (Oct 29, 2026) CC-030: Send my order bar hidden while the look pop-up is open.
     RE v2.21-TEST (Oct 29, 2026) CC-030: example pops up big on top of the page when a look is tapped (Randy: it was hidden
                              below the buttons). "Use this look" keeps it; "Pick a different look" goes back to You pick for me.
     RE v2.20-TEST (Oct 29, 2026) CC-030: example picture loads right away when a look is tapped (lazy loading removed).
@@ -130,7 +131,7 @@
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 #lookTaps .opt:last-child:nth-child(odd){grid-column:1 / -1}
-.lookpop{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px}
+.lookpop{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px}
 .lookpop[hidden]{display:none}
 .lookcard{background:var(--card);border:2px solid var(--green);border-radius:16px;padding:14px;width:100%;max-width:380px;max-height:100%;overflow:auto;text-align:center}
 .lookcap{font:800 22px var(--display);color:var(--green);margin:0 0 10px}
@@ -333,7 +334,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.21-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.22-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -465,11 +466,11 @@
     $('lookImg').src = 'looks/' + f + '.jpg?v=1'; $('lookImg').alt = 'Example of the ' + v + ' look';
     $('lookCap').textContent = v;
     lastFocus = document.activeElement;
-    $('lookPop').hidden = false; document.body.style.overflow = 'hidden';
+    $('lookPop').hidden = false; document.body.style.overflow = 'hidden'; $('sendBar').style.visibility = 'hidden';
     try { $('lookOk').focus(); } catch (e) { /* ok */ }
   }
   function closeLook(keep) {
-    $('lookPop').hidden = true; document.body.style.overflow = '';
+    $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = '';
     if (!keep) {
       var d = document.querySelector('input[name="look"][value="You pick for me"]');
       if (d) { d.checked = true; d.dispatchEvent(new Event('change', { bubbles: true })); }
