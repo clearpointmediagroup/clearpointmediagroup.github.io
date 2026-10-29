@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.19-TEST (Oct 29, 2026)
+  v2.20-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,7 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.20-TEST (Oct 29, 2026) CC-030: example picture loads right away when a look is tapped (lazy loading removed).
     RE v2.19-TEST (Oct 29, 2026) CC-030: tapping a look shows an example picture under the buttons (6 pictures made in
                              the CPMG Gem v4.0, Randy approved), with "Example: ... look. Yours uses your own words and photos."
                              You pick for me shows none. Pictures in test/real-estate/looks/.
@@ -210,7 +211,7 @@
         <label class="opt"><input type="radio" name="look" value="You pick for me" checked><span class="pic" aria-hidden="true"><i class="ti ti-wand"></i></span><span>You pick for me</span><span class="szn">We pick the look</span></label>
       </div>
       <figure class="lookex" id="lookEx" hidden>
-        <img id="lookImg" alt="" width="360" height="645" loading="lazy">
+        <img id="lookImg" alt="" width="360" height="645" decoding="async">
         <figcaption id="lookCap"></figcaption>
       </figure>
       <div id="holidayBox" hidden style="margin-top:10px">
@@ -319,7 +320,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.19-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.20-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
