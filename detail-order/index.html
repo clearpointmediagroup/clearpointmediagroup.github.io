@@ -1,11 +1,12 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v5.2 (Oct 29, 2026)
+  v5.3 (Oct 29, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.3 (Oct 29, 2026) CC-026: took the "?" off every question and line, and removed the green "?" circles.
     v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
                         and why we ask for each part. Open for first-timers, folded up for returning clients.
                         Removed the whole helper (orange help button, walk-through and corner buddy) for a clean top.
@@ -135,7 +136,7 @@ details.how .inner{font-size:17px;line-height:1.45}
 <div class="wrap">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Detailed Order</h1><p class="kind" style="margin:2px 0 4px;font-weight:800;font-size:17px;color:var(--green)">Long form, more choices</p><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
   <details class="more how" id="howBox" open style="margin-top:12px">
-    <summary onclick="this.parentNode.setAttribute('data-touched','1')">New here? How this works</summary>
+    <summary onclick="this.parentNode.setAttribute('data-touched','1')">How this works</summary>
     <div class="inner" style="gap:10px">
       <p style="margin:0">This form is how you order a graphic from ClearPoint Media Group: a ready-to-post picture for a sale, special, event or announcement.</p>
       <ol class="howsteps">
@@ -145,7 +146,7 @@ details.how .inner{font-size:17px;line-height:1.45}
         <li><span><b>Pay only after you OK it,</b> with a secure Square link. Your first graphic is free.</span></li>
         <li><span><b>Post it.</b> You get the finished graphic for your phone, Facebook, Instagram or TV.</span></li>
       </ol>
-      <p style="margin:0"><b style="color:var(--green)">Why we ask:</b> Your business info is asked one time, so we never ask again. The graphic part tells us what goes on your picture. Stuck? Tap any green <b>?</b></p>
+      <p style="margin:0"><b style="color:var(--green)">Why we ask:</b> Your business info is asked one time, so we never ask again. The graphic part tells us what goes on your picture.</p>
     </div>
   </details>
   <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
@@ -160,7 +161,7 @@ details.how .inner{font-size:17px;line-height:1.45}
         <p class="note">Your info is already saved. Just fill in your graphic request below.</p>
         <div class="saved" id="dSavedLines"></div>
         <button type="button" class="ghost" id="dEditBtn">Edit my info</button>
-        <button type="button" class="rm" id="dNotMe">Not you? Start fresh</button>
+        <button type="button" class="rm" id="dNotMe">Not you · Start fresh</button>
       </div>
       <div id="dFields" class="stack" style="gap:14px">
       <p class="note" id="dNote">Fill this in one time. We'll save your info for every order after this. Next time, you just tell us what you want on your graphic.</p>
@@ -208,7 +209,7 @@ details.how .inner{font-size:17px;line-height:1.45}
         <div class="field"><label for="needBy">Need it by</label>
           <div class="row2"><input type="date" id="needBy" aria-label="Date"><select id="needTime" aria-label="Time"><option value="">Any time that day</option><option>As soon as possible</option><option>Morning (by noon)</option><option>Afternoon (by 5 PM)</option><option>Evening (by 9 PM)</option></select></div>
         </div>
-        <div class="field"><label for="notes">Anything you'd like us to know?</label><p class="hint">For example: "We're closed Mondays." Just for us; it won't be printed on your graphic.</p><textarea id="notes" style="min-height:80px" placeholder="We're closed Mondays"></textarea><p class="err" id="e-notes" hidden></p></div>
+        <div class="field"><label for="notes">Anything you'd like us to know</label><p class="hint">For example: "We're closed Mondays." Just for us; it won't be printed on your graphic.</p><textarea id="notes" style="min-height:80px" placeholder="We're closed Mondays"></textarea><p class="err" id="e-notes" hidden></p></div>
       </div>
     </details>
     <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
@@ -235,26 +236,26 @@ details.how .inner{font-size:17px;line-height:1.45}
     <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
     <button type="button" class="big" id="closeBtn">Done, close this page</button>
     <p class="sub" id="closeHelp" hidden>To close it, swipe this page away or tap your phone's Back button. Nothing else to do.</p>
-    <p class="sub">Need another graphic?</p>
+    <p class="sub">Need another graphic</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v4.8 (Oct 28, 2026) · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v4.8 (Oct 28, 2026) · Questions: randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
 <template id="gTpl">
   <div class="card g" data-g>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3 data-t>Graphic 1</h3><button type="button" class="rm" data-rm hidden>Remove</button></div>
-    <fieldset><legend data-q="size">Where will you use it?</legend>
+    <fieldset><legend data-q="size">Where will you use it</legend>
       <label class="opt"><input type="radio" data-n="size" value="Phone or Facebook story" checked> <span class="shp tall" aria-hidden="true"></span><span class="szt"><b>Tall: for phones ($25)</b><small>Phone screens, Facebook and Instagram stories · 9:16 · 1080 × 1920</small></span></label>
       <label class="opt"><input type="radio" data-n="size" value="Website or TV screen"> <span class="shp wide" aria-hidden="true"></span><span class="szt"><b>Wide: TV, monitor or website ($25)</b><small>TVs in your store, computer screens, websites · 16:9 · 1920 × 1080</small></span></label>
       <label class="opt"><input type="radio" data-n="size" value="Facebook or Instagram post"> <span class="shp sq" aria-hidden="true"></span><span class="szt"><b>Square: Facebook or Instagram post ($25)</b><small>Regular posts people scroll past · 1:1 · 1080 × 1080</small></span></label>
-      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>Not sure? You get 2 graphics: one for phones, one for TVs</small></span></label>
+      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>You get 2 graphics: one for phones, one for TVs</small></span></label>
     </fieldset>
     <label class="opt" data-q="promo"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
-    <div class="field"><label data-q="hl">What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
-    <div class="field"><label data-q="ideas">What should it say?</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="Pipe insulation&#10;$89 this month only"></textarea><p class="err" data-e="ideas" hidden></p></div>
-    <div class="field"><label data-q="cta">What should people do next?</label><input type="text" data-f="cta" placeholder="Call us today"><p class="err" data-e="cta" hidden></p></div>
+    <div class="field"><label data-q="hl">What's this one about</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
+    <div class="field"><label data-q="ideas">What should it say</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="Pipe insulation&#10;$89 this month only"></textarea><p class="err" data-e="ideas" hidden></p></div>
+    <div class="field"><label data-q="cta">What should people do next</label><input type="text" data-f="cta" placeholder="Call us today"><p class="err" data-e="cta" hidden></p></div>
     <fieldset><legend data-q="col">Colors</legend>
       <label class="opt"><input type="radio" data-n="col" value="CPMG picks" checked> Your choice (CPMG picks)</label>
       <label class="opt"><input type="radio" data-n="col" value="Pick my colors"> I'll pick my colors</label>
@@ -605,6 +606,5 @@ window.CPMG_TIPS = [
   { sel: 'label[for="needBy"]', tip: 'Optional. The day and time you need your graphic. Leave it empty if there is no rush.' }
 ];
 </script>
-<script src="../assets/cpmg-order-tips.js?v=1.0"></script>
 </body>
 </html>
