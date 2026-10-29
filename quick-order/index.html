@@ -1,13 +1,16 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v4.9 (Oct 29, 2026)
+  v5.0 (Oct 29, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v5.0 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
+                        and why we ask for each part. Open for first-timers, folded up for returning clients.
+                        Removed the whole helper (orange help button, walk-through and corner buddy) for a clean top.
     v4.9 (Oct 29, 2026) CC-023: a green "?" next to every question opens a plain-words bubble with an example
                         (cpmg-order-tips.js v1.0). Clearer words: "Up to 3 short lines" is now "Extra lines to show (up to 3)",
                         "What should people do?" is now "What should people do next?". Size choices show a shape picture,
@@ -104,10 +107,31 @@
 .row3>.field.zp{flex:1 1 110px}
 .tiny{font-size:14px}
 </style>
+<style>/* CC-024: "How this works" box */
+details.how{border-color:var(--green)}
+details.how .inner{font-size:17px;line-height:1.45}
+.howsteps{list-style:none;counter-reset:hs;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.howsteps li{counter-increment:hs;display:flex;gap:10px;align-items:flex-start}
+.howsteps li::before{content:counter(hs);flex:none;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--ink);font:900 17px var(--display);display:flex;align-items:center;justify-content:center;margin-top:-2px}
+</style>
 </head>
 <body>
 <div class="wrap narrow">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Quick Order</h1><p class="kind" style="margin:2px 0 4px;font-weight:800;font-size:17px;color:var(--green)">Short form, about 1 minute</p><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
+  <details class="more how" id="howBox" open style="margin-top:12px">
+    <summary onclick="this.parentNode.setAttribute('data-touched','1')">New here? How this works</summary>
+    <div class="inner" style="gap:10px">
+      <p style="margin:0">This form is how you order a graphic from ClearPoint Media Group: a ready-to-post picture for a sale, special, event or announcement.</p>
+      <ol class="howsteps">
+        <li><span><b>Tell us what you want.</b> Fill in this form. It takes 1 to 2 minutes.</span></li>
+        <li><span><b>We make it.</b> We email you a proof (a preview with a faint watermark) within 5 hours, 9 a.m. to 9 p.m.</span></li>
+        <li><span><b>You look it over.</b> OK it, or ask for changes (2 free).</span></li>
+        <li><span><b>Pay only after you OK it,</b> with a secure Square link. Your first graphic is free.</span></li>
+        <li><span><b>Post it.</b> You get the finished graphic for your phone, Facebook, Instagram or TV.</span></li>
+      </ol>
+      <p style="margin:0"><b style="color:var(--green)">Why we ask:</b> Your business info is asked one time, so we never ask again. The graphic part tells us what goes on your picture. Stuck? Tap any green <b>?</b></p>
+    </div>
+  </details>
   <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -214,7 +238,7 @@
 <script>
 /* CPMG Quick Order page script v2.2 (Oct 27, 2026) */
 (function () {
-  var FORM_VERSION = 'quick-order v4.9 (Oct 29, 2026)';
+  var FORM_VERSION = 'quick-order v5.0 (Oct 29, 2026)';
   var C = CPMG, $ = C.$, key = C.param('k'), client = null, editing = false, sending = false;
   var USE = { Phone: 'phone', TV: 'tv', Both: 'both' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)', Both: 'Phone + Wide' };
@@ -237,9 +261,14 @@
     C.busy($('sendBtn'), false, 'Send · ' + price);
   }
   var freeChecked = !key;   // v2.8: true once we know if this is a returning client
+  function howBox() {        // CC-024: "How this works" opens for first-timers, folds up for returning clients
+    var h = $('howBox'); if (!h || h.getAttribute('data-touched')) return;
+    h.open = !client;
+  }
   function freeTop() {      // v2.8: free-first-graphic note at the top, new clients only
     var b = $('freeTop'); if (!b) return;
     b.hidden = !freeChecked || !!client || !!P.monthlyPlan;
+    howBox();
     $('freeTopMore').textContent = 'After that, graphics are $' + P.each + ' each.';
   }
   function applyPrices() {
@@ -412,19 +441,7 @@
 (function () {
   function f(id) { var x = document.getElementById(id); return x ? x.closest('.field') : null; }
   function saved() { var x = document.getElementById('infoSaved'); return x && !x.hidden; }
-  window.CPMG_HELP = [
-    { t: 'Hi! This takes about 1 minute.', s: "I'll show you each part. Tap any green ? for more help." },
-    { opt: true, t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
-      s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
-      el: function () { return document.getElementById('info'); } },
-    { t: 'Headline: a few words.', s: "Like: Tonight's special.", el: function () { return f('hl'); } },
-    { t: 'Extra lines to show, up to 3.', s: 'Press Enter after each one. Short is best.', el: function () { return f('ideas'); } },
-    { t: 'What should people do next?', s: 'Like: Come in tonight.', el: function () { return f('cta'); } },
-    { t: 'Where will people see it?', s: 'Tall is for phones, Wide is for TVs, or get both.', el: function () { var x = document.querySelector('input[name="size"]'); return x ? x.closest('fieldset') : null; } },
-    { t: 'Have a photo? Add it.', s: 'No photo? That\'s fine. Skip it.', el: function () { return f('pic'); } },
-    { opt: true, t: 'In a hurry? Check Rush.', s: 'Your proof in 1 hour for $10 more.', el: function () { var r = document.getElementById('rushBox'); return r && !r.hidden ? r : null; } },
-    { t: 'Tap Send. That\'s it.', s: 'You see a proof first. You pay only after you OK it.', el: function () { return document.getElementById('sendBtn'); } }
-  ];
+  /* CC-024: the help walk-through and corner buddy were removed (cpmg-order-helper.js no longer loaded). */
 })();
 </script>
 <script>
@@ -446,6 +463,5 @@ window.CPMG_TIPS = [
 ];
 </script>
 <script src="../assets/cpmg-order-tips.js?v=1.0"></script>
-<script src="../assets/cpmg-order-helper.js?v=3.1"></script>
 </body>
 </html>
