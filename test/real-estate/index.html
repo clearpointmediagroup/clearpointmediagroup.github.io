@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.9-TEST (Oct 29, 2026)
+  v2.10-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.10-TEST (Oct 29, 2026) CC-027: price line says "First graphic FREE for new clients" (a returning client
+                             without their saved link still pays full price; the order system checks).
     RE v2.9-TEST (Oct 29, 2026) CC-027: new question 5 "Make it special": Rush (+$10, proof within 1 hour) and Promo look
                              ($45, $60 pair) as one-tap choices; price line adds them. Questions now 1-8.
     RE v2.8-TEST (Oct 29, 2026) CC-027: price line shows "First graphic FREE −$25 · You pay $X" for new clients
@@ -246,7 +248,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.9-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.10-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -390,7 +392,7 @@
     // checks for real (one free graphic per business) and takes the same $25 off line 1.
     if (!client) {
       var off = Math.min(25, total);
-      parts.push('First graphic FREE −$' + off);
+      parts.push('First graphic FREE for new clients −$' + off);
       if (rush) parts.push('Rush +$10');
       $('priceLine').textContent = parts.join(' · ') + ' · You pay $' + (total - off + rush);
     } else {
