@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.4-TEST (Oct 29, 2026)
+  v2.5-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,7 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.5-TEST (Oct 29, 2026) CC-027: Need it by has a time box next to the day; sent as "Fri, Nov 7, 2026, 2:00 PM".
     RE v2.4-TEST (Oct 29, 2026) CC-027: (1) photos: up to 3, the house, headshot and logo; (2) Where: tap more than one,
                              today's prices (Phone + TV/Website = one $40 pair, Social +$25), price line shows the total;
                              (3) Need it by date; (4) Bottom of graphic: Show my phone (on), Website or Facebook page.
@@ -95,6 +96,8 @@
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .price{font-size:18px;font-weight:700;color:var(--green);margin:10px 0 0}
+.dt{display:flex;gap:8px}
+.dt input{flex:1;min-width:0}
 .chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:6px 0 0}
 .chk input{width:24px;height:24px;flex:none;accent-color:var(--green)}
 .intro{background:var(--deep);border:2px solid var(--green);border-radius:12px;padding:12px 14px;margin:0 0 16px}
@@ -183,8 +186,8 @@
     <div class="field">
       <p class="ql"><span class="qn">5</span>A few extras (if you want)</p>
       <label class="sl" for="need">Need it by</label>
-      <p class="hint">Like the day before your open house.</p>
-      <input type="date" id="need">
+      <p class="hint">The day and time you need it, like the day before your open house.</p>
+      <div class="dt"><input type="date" id="need" aria-label="Need it by: day"><input type="time" id="needT" aria-label="Need it by: time" step="900"></div>
       <label class="sl">Bottom of your graphic</label>
       <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
       <input type="text" id="site" placeholder="Website or Facebook page (if you want)" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
@@ -232,7 +235,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.4-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.5-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -307,7 +310,7 @@
       formVersion: FORM_VERSION,
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
-        more: { 'Need it by': $('need').value, showPhone: $('showPh').checked, website: $('site').value.trim() } },
+        more: { 'Need it by': needBy(), showPhone: $('showPh').checked, website: $('site').value.trim() } },
       graphics: graphicsFor(picked, { ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
       rush: false,
       website: C.honeypot()
@@ -349,6 +352,13 @@
 
   // v2.4: more than one place. Phone + (TV or Website) = one $40 pair; TV and Website share one wide graphic;
   // Social media is its own $25 graphic. Prices stay the order system's (first one free is taken off there).
+  // v2.5: need-by day + time, sent as "Fri, Nov 7, 2026, 2:00 PM" (either part may be blank)
+  function needBy() {
+    var d = $('need').value, t = $('needT').value, out = [];
+    if (d) { var p = d.split('-'); out.push(new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })); }
+    if (t) { var h = +t.split(':')[0], m = t.split(':')[1]; out.push((h % 12 || 12) + ':' + m + (h < 12 ? ' AM' : ' PM')); }
+    return out.join(', ');
+  }
   function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
