@@ -15,7 +15,8 @@
  *                       eyes, rosy cheeks, smile, a leaf on top). He lives in the bottom-right corner, hops,
  *                       waves and wiggles his leaf, with a "Hi! Need help? Tap me!" bubble; tapping him opens
  *                       the help. The same buddy (smaller) shows in the help box. Extra space at the bottom of
- *                       the page, and he sits just above the Send bar, so he never covers it. Moves even with "reduce motion" on.
+ *                       the page, and he sits just above the Send bar, so he never covers it. He steps aside while
+ *                       someone types in a box; his bubble shows 8 seconds, then pops back for 6 seconds every 40. Moves even with "reduce motion" on.
  *   v3.0 (Oct 29, 2026) CC-012: the helper always waves (bigger wave, with a hand) and the part of the form
  *                       it's talking about gets a pulsing green glow. No longer switched off by a device's
  *                       "reduce motion" setting, which is why it stood still on some phones and laptops.
@@ -148,6 +149,13 @@
     pal.style.bottom = 'calc(' + (h + 10) + 'px + env(safe-area-inset-bottom,0px))';
   }
   lift(); window.addEventListener('resize', lift); setInterval(lift, 2000);
+  // Stay out of the way: step aside while someone is typing, and the bubble shows 8s, then every 40s for 6s.
+  var typing = false, bub = pal.querySelector('.bdy-bub');
+  document.addEventListener('focusin', function (e) { if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) { typing = true; pal.style.visibility = 'hidden'; } });
+  document.addEventListener('focusout', function () { typing = false; setTimeout(function () { if (!typing) pal.style.visibility = ''; }, 150); });
+  function bubble(on) { bub.style.display = on ? '' : 'none'; }
+  setTimeout(function () { bubble(false); }, 8000);
+  setInterval(function () { bubble(true); setTimeout(function () { bubble(false); }, 6000); }, 40000);
 
   var i = 0, timer = null, lit = null, auto = true, list = STEPS;
   function $(id) { return document.getElementById(id); }
