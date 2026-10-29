@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.0-TEST (Oct 29, 2026)
+  v2.1-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.1-TEST (Oct 29, 2026) CC-027: question 4 gets a 4th button, Social media (Facebook, Instagram), sent as a
+                             4:5 social post (1080 x 1350). Buttons back to 2 across: Phone, Big-screen TV, Social media, Website.
     RE v2.0-TEST (Oct 29, 2026) CC-027: photo question has 2 buttons: "Take a picture" opens the phone camera
                              (capture), "Upload a picture" opens their photos. Many Android phones skipped the
                              camera on the old single button. Both feed the same photo list.
@@ -148,9 +150,10 @@
 
     <fieldset class="field">
       <legend class="ql"><span class="qn">4</span>Where will you show it?</legend>
-      <div class="taps three">
+      <div class="taps">
         <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
         <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
+        <label class="opt"><input type="radio" name="size" value="Social"><span class="pic" aria-hidden="true"><i class="ti ti-share"></i></span><span>Social media</span><span class="szn">Facebook, Instagram</span></label>
         <label class="opt"><input type="radio" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
       </div>
     </fieldset>
@@ -197,9 +200,9 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.0-TEST (Oct 29, 2026)';
-  var USE = { Phone: 'phone', TV: 'tv', Website: 'tv' };
-  var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Website: 'Website (16:9 wide)' };
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.1-TEST (Oct 29, 2026)';
+  var USE = { Phone: 'phone', TV: 'tv', Social: 'phone', Website: 'tv' };
+  var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social media post (4:5, 1080 x 1350)', Website: 'Website (16:9 wide)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
   var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
 
