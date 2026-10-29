@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.3-TEST (Oct 29, 2026)
+  v2.4-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.4-TEST (Oct 29, 2026) CC-027: (1) photos: up to 3, the house, headshot and logo; (2) Where: tap more than one,
+                             today's prices (Phone + TV/Website = one $40 pair, Social +$25), price line shows the total;
+                             (3) Need it by date; (4) Bottom of graphic: Show my phone (on), Website or Facebook page.
     RE v2.3-TEST (Oct 29, 2026) CC-027: short "How this works" intro box under the title (Randy approved the wording):
                              what the form does, the parts to fill in, proof in 5 hours, pay once approved, $25, first free.
     RE v2.2-TEST (Oct 29, 2026) CC-028: sends all 5 body lines (nothing to notes), 'Where shown' (Phone, Big-screen TV,
@@ -91,6 +94,9 @@
 .taps .opt.on{border:3px solid var(--green);background:var(--deep)}
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.price{font-size:18px;font-weight:700;color:var(--green);margin:10px 0 0}
+.chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:6px 0 0}
+.chk input{width:24px;height:24px;flex:none;accent-color:var(--green)}
 .intro{background:var(--deep);border:2px solid var(--green);border-radius:12px;padding:12px 14px;margin:0 0 16px}
 .intro p{margin:0;font-size:17px;line-height:1.55}
 .intro .ih{font:800 19px var(--display);color:var(--green);margin:0 0 6px}
@@ -107,7 +113,7 @@
 
   <div class="intro">
     <p class="ih">How this works</p>
-    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add a photo if you want. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a proof within 5 hours (9 a.m. to 9 p.m.). Look it over, ask for changes, and pay once you approve it. $25 each, and your first one is free.</p>
+    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a proof within 5 hours (9 a.m. to 9 p.m.). Look it over, ask for changes, and pay once you approve it. $25 each, and your first one is free.</p>
   </div>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -154,8 +160,8 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">3</span>Add a photo (if you want)</p>
-      <p class="hint">Take a new picture, or upload one you already have.</p>
+      <p class="ql"><span class="qn">3</span>Add photos (if you want)</p>
+      <p class="hint">Up to 3: the house, your headshot, and your logo. Take a new picture, or upload ones you already have.</p>
       <div class="photo"><label class="btn" for="cam"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="cam" accept="image/*" capture="environment"></label><label class="btn" for="pic"><i class="ti ti-photo" aria-hidden="true"></i> Upload a picture<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
       <div class="thumbs" id="thumbs" hidden></div>
       <p class="err" id="ePic" hidden></p>
@@ -163,16 +169,29 @@
 
     <fieldset class="field">
       <legend class="ql"><span class="qn">4</span>Where will you show it?</legend>
-      <div class="taps">
-        <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
-        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
-        <label class="opt"><input type="radio" name="size" value="Social"><span class="pic" aria-hidden="true"><i class="ti ti-share"></i></span><span>Social media</span><span class="szn">Facebook, Instagram</span></label>
-        <label class="opt"><input type="radio" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
+      <p class="hint">Tap all that you want.</p>
+      <div class="taps" id="sizeTaps" tabindex="-1">
+        <label class="opt"><input type="checkbox" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Social"><span class="pic" aria-hidden="true"><i class="ti ti-share"></i></span><span>Social media</span><span class="szn">Facebook, Instagram</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
       </div>
+      <p class="err" id="eSize" hidden></p>
+      <p class="price" id="priceLine" aria-live="polite"></p>
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">5</span><label for="biz">Business name</label></p>
+      <p class="ql"><span class="qn">5</span>A few extras (if you want)</p>
+      <label class="sl" for="need">Need it by</label>
+      <p class="hint">Like the day before your open house.</p>
+      <input type="date" id="need">
+      <label class="sl">Bottom of your graphic</label>
+      <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
+      <input type="text" id="site" placeholder="Website or Facebook page (if you want)" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">6</span><label for="biz">Business name</label></p>
       <input type="text" id="biz" placeholder="Smith Home Team" autocomplete="organization">
       <p class="err" id="eBiz" hidden></p>
       <label class="sl" for="brok">Brokerage</label>
@@ -182,7 +201,7 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">6</span>Your name, email, phone</p>
+      <p class="ql"><span class="qn">7</span>Your name, email, phone</p>
       <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
       <p class="err" id="eNm" hidden></p>
       <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
@@ -213,7 +232,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.3-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.4-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -276,25 +295,20 @@
     if (err('eTtl', ttl ? '' : 'Type a title, like the gray example.')) bad.push('ttl');
     if (err('eBdy', bdy.length ? '' : 'Type at least one line, like the gray examples.')) bad.push('b1');
     if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
+    if (err('eSize', places().length ? '' : 'Tap at least one place.')) bad.unshift('sizeTaps');
     if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
     var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
-    var s = document.querySelector('input[name="size"]:checked'), size = s ? s.value : 'Phone';
+    var picked = places();
     var changed = !client || client.business !== biz || client.name !== nm || client.email !== em || C.digits(client.phone) !== C.digits(ph);
     var payload = {
       kind: 'quick',
       formVersion: FORM_VERSION,
       clientKey: client ? key : '',
-      customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed },
-      graphics: [{
-        headline: ttl, lines: bdy, cta: cta, use: USE[size] || 'phone',
-        colors: { mode: 'cpmg', main: '', second: '' },
-        notes: '',
-        more: { 'Form': 'Real estate', 'Brokerage': brok, 'Kind of graphic': what, 'Heading': hdg, 'Where shown': SHOWN[size] || size, 'Size': SIZE[size] },
-        photos: photos.list(),
-        promo: false
-      }],
+      customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
+        more: { 'Need it by': $('need').value, showPhone: $('showPh').checked, website: $('site').value.trim() } },
+      graphics: graphicsFor(picked, { ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
       rush: false,
       website: C.honeypot()
     };
@@ -331,6 +345,33 @@
   };
   function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; }
   examples('');
+  setTimeout(function () { try { showPrice(); } catch (e) { /* ok */ } }, 0);
+
+  // v2.4: more than one place. Phone + (TV or Website) = one $40 pair; TV and Website share one wide graphic;
+  // Social media is its own $25 graphic. Prices stay the order system's (first one free is taken off there).
+  function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
+  function groups(p) {
+    var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
+    var wideName = wide.map(function (v) { return SHOWN[v]; }).join(' + ');
+    if (tall && wide.length) out.push({ use: 'both', shown: 'Phone + ' + wideName, size: 'Phone + Wide', price: 40 });
+    else if (tall) out.push({ use: 'phone', shown: 'Phone', size: SIZE.Phone, price: 25 });
+    else if (wide.length) out.push({ use: 'tv', shown: wideName, size: 'Wide 16:9', price: 25 });
+    if (p.indexOf('Social') > -1) out.push({ use: 'social', shown: 'Social media', size: SIZE.Social, price: 25 });
+    return out;
+  }
+  function graphicsFor(p, t) {
+    var list = photos.list();
+    return groups(p).map(function (g) {
+      return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
+        more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size },
+        photos: list, promo: false };
+    });
+  }
+  function showPrice() {
+    var g = groups(places()), total = g.reduce(function (n, x) { return n + x.price; }, 0);
+    $('priceLine').textContent = !g.length ? '' : (g.length > 1 || g[0].price === 40 ? g.map(function (x) { return x.shown + ' $' + x.price; }).join(' · ') + ' · Total $' + total : 'Price: $' + total);
+  }
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'size') { err('eSize', ''); showPrice(); } });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
 
   $('again').addEventListener('click', function () {
