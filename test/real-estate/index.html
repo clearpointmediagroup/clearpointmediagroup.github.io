@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.16-TEST (Oct 29, 2026)
+  v2.17-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,7 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.17-TEST (Oct 29, 2026) CC-027: Pick a look adds "3D poster" (Bold, professional 3D). 7 looks.
     RE v2.16-TEST (Oct 29, 2026) CC-027: new question 2 "Pick a look": Professional, Casual, Luxury, Pool and summer,
                              Holiday (opens "Which holiday?"), You pick for me (picked to start). Sent as Look (goes to Notes and the
                              Gemini file). Questions now 1-8.
@@ -196,6 +197,7 @@
         <label class="opt"><input type="radio" name="look" value="Casual"><span class="pic" aria-hidden="true"><i class="ti ti-mood-smile"></i></span><span>Casual</span><span class="szn">Warm and friendly</span></label>
         <label class="opt"><input type="radio" name="look" value="Luxury"><span class="pic" aria-hidden="true"><i class="ti ti-diamond"></i></span><span>Luxury</span><span class="szn">High-end homes</span></label>
         <label class="opt"><input type="radio" name="look" value="Pool and summer"><span class="pic" aria-hidden="true"><i class="ti ti-sun"></i></span><span>Pool and summer</span><span class="szn">Bright and sunny</span></label>
+        <label class="opt"><input type="radio" name="look" value="3D poster"><span class="pic" aria-hidden="true"><i class="ti ti-cube"></i></span><span>3D poster</span><span class="szn">Bold, professional 3D</span></label>
         <label class="opt"><input type="radio" name="look" value="Holiday"><span class="pic" aria-hidden="true"><i class="ti ti-gift"></i></span><span>Holiday</span><span class="szn">Tell us which one</span></label>
         <label class="opt"><input type="radio" name="look" value="You pick for me" checked><span class="pic" aria-hidden="true"><i class="ti ti-wand"></i></span><span>You pick for me</span><span class="szn">We pick the look</span></label>
       </div>
@@ -305,7 +307,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.16-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.17-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
