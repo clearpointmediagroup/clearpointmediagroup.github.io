@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.14-TEST (Oct 29, 2026)
+  v2.15-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.15-TEST (Oct 29, 2026) CC-027: website box hint shortened so it isn't cut off on a phone; "if you want" moved
+                             to a small line above the box.
     RE v2.14-TEST (Oct 29, 2026) CC-027: regroup (Randy approved): "Bottom of the graphic" (show phone, website) is a
                              green box inside question 2; the rush note is inside the Rush box; the price is its own "Your price"
                              box, one line per item and You pay at the bottom. Questions now 1-7.
@@ -208,7 +210,8 @@
       <div class="gbox">
         <p class="gt">Bottom of the graphic</p>
         <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
-        <input type="text" id="site" placeholder="Website or Facebook page (if you want)" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
+        <p class="hint" style="margin:8px 0 0">Add your website or Facebook page if you want it on there.</p>
+        <input type="text" id="site" placeholder="Website or Facebook page" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
       </div>
     </div>
 
@@ -282,7 +285,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.14-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.15-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
