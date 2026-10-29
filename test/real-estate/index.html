@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.2-TEST (Oct 29, 2026)
+  v1.3-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.3-TEST (Oct 29, 2026) CC-027: Body is 5 short line boxes, each with its own gray example that
+                             matches the picture tapped (price, day, size, what's special). Sent as lines = first 3
+                             body lines, the rest in notes; Heading is sent in its own Heading spot.
     RE v1.2-TEST (Oct 29, 2026) CC-027: test link (?new=1) always starts as a brand-new client (it was filling in
                              an old test client's info).
     RE v1.1-TEST (Oct 29, 2026) CC-027: new Brokerage box under Business name (real estate ads must show it).
@@ -60,7 +63,9 @@
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .welcome2{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:17px;margin:0}
-textarea#bdy{min-height:96px;font-size:18px}
+.bl{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.bl b{flex:none;width:22px;text-align:right;color:var(--muted);font-size:16px}
+.bl input{flex:1;min-width:0}
 .sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
 </style>
 </head>
@@ -119,9 +124,13 @@ textarea#bdy{min-height:96px;font-size:18px}
       <label class="sl" for="hdg">Heading (if you want)</label>
       <p class="hint">A smaller line under the title.</p>
       <input type="text" id="hdg" autocomplete="off">
-      <label class="sl" for="bdy">Body</label>
-      <p class="hint">The details: day, time, price. One per line.</p>
-      <textarea id="bdy"></textarea>
+      <label class="sl" for="b1">Body</label>
+      <p class="hint">Up to 5 short lines. A few words each, like a price, a day, or what's special.</p>
+      <div class="bl"><b>1</b><input type="text" id="b1" autocomplete="off" aria-label="Body line 1"></div>
+      <div class="bl"><b>2</b><input type="text" id="b2" autocomplete="off" aria-label="Body line 2"></div>
+      <div class="bl"><b>3</b><input type="text" id="b3" autocomplete="off" aria-label="Body line 3"></div>
+      <div class="bl"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Body line 4"></div>
+      <div class="bl"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Body line 5"></div>
       <p class="err" id="eBdy" hidden></p>
       <label class="sl" for="cta">Call to action</label>
       <p class="hint">What should people do?</p>
@@ -165,7 +174,7 @@ textarea#bdy{min-height:96px;font-size:18px}
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.2-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.3-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
@@ -194,15 +203,15 @@ textarea#bdy{min-height:96px;font-size:18px}
   }
 
   function err(id, msg) { C.showErr($(id), msg); return !!msg; }
-  ['biz', 'brok', 'nm', 'em', 'ph', 'ttl', 'bdy', 'cta'].forEach(function (id) {
-    $(id).addEventListener('input', function () { err('e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
+  ['biz', 'brok', 'nm', 'em', 'ph', 'ttl', 'b1', 'b2', 'b3', 'b4', 'b5', 'cta'].forEach(function (id) {
+    $(id).addEventListener('input', function () { err(/^b\d$/.test(id) ? 'eBdy' : 'e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
   });
 
   $('f').addEventListener('submit', function (ev) {
     ev.preventDefault();
     if (sending) return;
     var brok = $('brok').value.trim(), biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
-    var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = C.lines($('bdy').value), cta = $('cta').value.trim();
+    var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = ['b1', 'b2', 'b3', 'b4', 'b5'].map(function (id) { return $(id).value.trim(); }).filter(Boolean), cta = $('cta').value.trim();
     var bad = [];
     if (err('eBiz', biz ? '' : 'Type your business name.')) bad.push('biz');
     if (err('eBrok', brok ? '' : 'Type your brokerage name.')) bad.push('brok');
@@ -210,7 +219,7 @@ textarea#bdy{min-height:96px;font-size:18px}
     if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
     if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
     if (err('eTtl', ttl ? '' : 'Type a title, like the gray example.')) bad.push('ttl');
-    if (err('eBdy', bdy.length ? '' : 'Type the details, like the gray example.')) bad.push('bdy');
+    if (err('eBdy', bdy.length ? '' : 'Type at least one line, like the gray examples.')) bad.push('b1');
     if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
     if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
@@ -224,9 +233,9 @@ textarea#bdy{min-height:96px;font-size:18px}
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed },
       graphics: [{
-        headline: ttl, lines: (hdg ? [hdg] : []).concat(bdy).slice(0, 3), cta: cta, use: USE[size] || 'phone',
+        headline: ttl, lines: bdy.slice(0, 3), cta: cta, use: USE[size] || 'phone',
         colors: { mode: 'cpmg', main: '', second: '' },
-        notes: (hdg ? [hdg] : []).concat(bdy).slice(3).join('\n'),
+        notes: bdy.slice(3).join('\n'),
         more: { 'Form': 'Real estate', 'Brokerage': brok, 'Kind of graphic': what, 'Heading': hdg, 'Where will you use it?': size, 'Size': SIZE[size] },
         photos: photos.list(),
         promo: false
@@ -257,20 +266,20 @@ textarea#bdy{min-height:96px;font-size:18px}
 
   // v1.2: gray examples match the picture tapped in question 3
   var EX = {
-    '': ['Just Listed', '123 Ocean Blvd., Myrtle Beach', '3 beds, 2 baths\n$425,000', 'Call me for a showing'],
-    'Just listed': ['Just Listed', '123 Ocean Blvd., Myrtle Beach', '3 beds, 2 baths\n$425,000', 'Call me for a showing'],
-    'Open house': ['Open House', '123 Ocean Blvd.', 'Sunday 1 to 4 p.m.\n3 beds, 2 baths, $425,000', 'Stop by and take a look'],
-    'Just sold': ['Just Sold', '123 Ocean Blvd.', 'Sold in 9 days\nOver asking price', 'Thinking of selling? Call me'],
-    'Price drop': ['New Price', '123 Ocean Blvd.', 'Now $399,000\nWas $425,000', 'Book a showing today'],
-    'Coming soon': ['Coming Soon', 'Carolina Forest', '4 beds, 3 baths\nOn the market Nov. 15', 'Call me for a sneak peek'],
-    'Something else': ['Happy Thanksgiving', 'From my family to yours', 'Thank you for a great year', 'Call me anytime']
+    '': ['Just Listed', '123 Ocean Blvd., Myrtle Beach', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', '5 minutes to the beach'], 'Call me for a showing'],
+    'Just listed': ['Just Listed', '123 Ocean Blvd., Myrtle Beach', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', '5 minutes to the beach'], 'Call me for a showing'],
+    'Open house': ['Open House', '123 Ocean Blvd.', ['Sunday 1 to 4 p.m.', '3 beds, 2 baths', '$425,000', 'Brand-new kitchen', 'Snacks and drinks'], 'Stop by and take a look'],
+    'Just sold': ['Just Sold', '123 Ocean Blvd.', ['Sold in 9 days', 'Over asking price', '3 beds, 2 baths', 'Multiple offers', 'Happy new owners'], 'Thinking of selling? Call me'],
+    'Price drop': ['New Price', '123 Ocean Blvd.', ['Now $399,000', 'Was $425,000', '3 beds, 2 baths', 'Move-in ready', 'Going fast'], 'Book a showing today'],
+    'Coming soon': ['Coming Soon', 'Carolina Forest', ['4 beds, 3 baths', 'On the market Nov. 15', 'About $500,000', 'Big corner lot', 'Ask for a sneak peek'], 'Call me for a sneak peek'],
+    'Something else': ['Happy Thanksgiving', 'From my family to yours', ['Wishing you the best', 'Thank you for your trust', 'Free home value check', 'Serving Myrtle Beach', 'Ready when you are'], 'Call me anytime']
   };
-  function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; $('bdy').placeholder = e[2]; $('cta').placeholder = e[3]; }
+  function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; }
   examples('');
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
 
   $('again').addEventListener('click', function () {
-    $('ttl').value = $('hdg').value = $('bdy').value = $('cta').value = ''; photos.clear();
+    $('ttl').value = $('hdg').value = $('cta').value = ''; ['b1', 'b2', 'b3', 'b4', 'b5'].forEach(function (id) { $(id).value = ''; }); photos.clear();
     if (client) fill(client);
     $('ok').hidden = true; $('f').hidden = false; $('sendBar').hidden = false; window.scrollTo(0, 0);
   });
