@@ -5,6 +5,7 @@
 <!-- TEST v5.1 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
 <!-- TEST v5.3 (Oct 29, 2026) CC-025: examples by business type, new types, brokerage box, photo and due date up front. -->
 <!doctype html>
+<!-- TEST v5.3 (Oct 29, 2026) CC-026: removed the green "?" circles and the "Stuck? Tap any green ?" line (tips script no longer loaded). -->
 <!--
   CPMG Detail Order — detail-order/index.html
   v4.8 (Oct 28, 2026)
@@ -153,7 +154,7 @@ details.how .inner{font-size:17px;line-height:1.45}
         <li><span><b>Pay only after you OK it,</b> with a secure Square link. Your first graphic is free.</span></li>
         <li><span><b>Post it.</b> You get the finished graphic for your phone, Facebook, Instagram or TV.</span></li>
       </ol>
-      <p style="margin:0"><b style="color:var(--green)">Why we ask:</b> Your business info is asked one time, so we never ask again. The graphic part tells us what goes on your picture. Stuck? Tap any green <b>?</b></p>
+      <p style="margin:0"><b style="color:var(--green)">Why we ask:</b> Your business info is asked one time, so we never ask again. The graphic part tells us what goes on your picture.</p>
     </div>
   </details>
   <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
@@ -621,6 +622,5 @@ window.CPMG_TIPS = [
 ];
 </script>
 <script src="../cpmg-order-examples-test.js?v=1.0"></script>
-<script src="../cpmg-order-tips-test.js?v=1.1"></script>
 </body>
 </html>
