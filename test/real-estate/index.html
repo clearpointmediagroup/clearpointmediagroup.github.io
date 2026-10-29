@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.9-TEST (Oct 29, 2026)
+  v2.0-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.0-TEST (Oct 29, 2026) CC-027: photo question has 2 buttons: "Take a picture" opens the phone camera
+                             (capture), "Upload a picture" opens their photos. Many Android phones skipped the
+                             camera on the old single button. Both feed the same photo list.
     RE v1.9-TEST (Oct 29, 2026) CC-027: red TEST COPY banner taken off the top (Randy's request). Still sends
                              only to the CPMG Orders TEST script.
     RE v1.8-TEST (Oct 29, 2026) CC-027: Business name and Brokerage examples changed from Coastal Homes Team /
@@ -137,7 +140,8 @@
 
     <div class="field">
       <p class="ql"><span class="qn">3</span>Add a photo (if you want)</p>
-      <div class="photo"><label class="btn" for="pic"><i class="ti ti-camera" aria-hidden="true"></i> Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
+      <p class="hint">Take a new picture, or upload one you already have.</p>
+      <div class="photo"><label class="btn" for="cam"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="cam" accept="image/*" capture="environment"></label><label class="btn" for="pic"><i class="ti ti-photo" aria-hidden="true"></i> Upload a picture<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
       <div class="thumbs" id="thumbs" hidden></div>
       <p class="err" id="ePic" hidden></p>
     </div>
@@ -193,7 +197,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.9-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.0-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Website: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Website: 'Website (16:9 wide)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
@@ -201,6 +205,21 @@
 
   C.watchOpts(document);
   var photos = C.photoPicker($('pic'), $('thumbs'), $('ePic'), function (list) { $('picClear').hidden = !list.length; });
+  // v2.0: "Take a picture" opens the camera; the picture is handed to the same photo list as "Upload a picture"
+  $('cam').addEventListener('change', function () {
+    var cam = $('cam');
+    if (!cam.files || !cam.files.length) return;
+    try {
+      var dt = new DataTransfer();
+      [].forEach.call(cam.files, function (f) { dt.items.add(f); });
+      $('pic').files = dt.files;
+      $('pic').dispatchEvent(new Event('change'));
+    } catch (e) {
+      try { console.log('CPMG camera hand-off failed: ' + e); } catch (x) {}
+      var m = $('ePic'); m.textContent = 'That picture could not be added. Please tap "Upload a picture" and pick it from your photos.'; m.hidden = false;
+    }
+    cam.value = '';
+  });
   $('picClear').addEventListener('click', function () { photos.clear(); });
 
   function fill(c) {
