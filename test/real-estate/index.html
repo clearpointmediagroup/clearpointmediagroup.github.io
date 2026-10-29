@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.22-TEST (Oct 29, 2026)
+  v2.23-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.23-TEST (Oct 29, 2026) CC-027: Promo look ($45) taken off (Randy: confusing next to Pick a look; every look is $25).
+                             Question 6 is now "Need it faster? (if you want)" with only the Rush box (+$10).
     RE v2.22-TEST (Oct 29, 2026) CC-030: Send my order bar hidden while the look pop-up is open.
     RE v2.21-TEST (Oct 29, 2026) CC-030: example pops up big on top of the page when a look is tapped (Randy: it was hidden
                              below the buttons). "Use this look" keeps it; "Pick a different look" goes back to You pick for me.
@@ -275,10 +277,9 @@
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">6</span>Want it faster or fancier?</p>
-      <p class="hint">Tap a box to add it. Tap again to take it off. Both are optional.</p>
+      <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
+      <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
       <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
-      <label class="opt xcard"><input type="checkbox" id="promo"><i class="ti ti-sparkles" aria-hidden="true"></i><span class="xt"><span class="xn">Promo look</span><span class="xd">A fancier, magazine-style design.</span><span class="xp">$45 instead of $25</span><span class="xd">Phone + TV pair: $60 instead of $40</span></span></label>
       <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div></div>
     </div>
 
@@ -334,7 +335,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.22-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.23-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -410,7 +411,7 @@
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
         more: { showPhone: $('showPh').checked, website: $('site').value.trim() } },
-      graphics: graphicsFor(picked, { look: lookText(), promo: $('promo').checked, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
+      graphics: graphicsFor(picked, { look: lookText(), promo: false, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
       rush: $('rush').checked,
       website: C.honeypot()
     };
@@ -488,7 +489,7 @@
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
     var wideName = wide.map(function (v) { return SHOWN[v]; }).join(' + ');
-    var pr = $('promo') && $('promo').checked, one = pr ? 45 : 25, pair = pr ? 60 : 40;
+    var one = 25, pair = 40;   // v2.23: Promo look taken off; every look is $25 ($40 pair)
     if (tall && wide.length) out.push({ use: 'both', shown: 'Phone + ' + wideName, size: 'Phone + Wide', price: pair });
     else if (tall) out.push({ use: 'phone', shown: 'Phone', size: SIZE.Phone, price: one });
     else if (wide.length) out.push({ use: 'tv', shown: wideName, size: 'Wide 16:9', price: one });
@@ -508,7 +509,7 @@
     if (!g.length) { $('priceBox').hidden = true; return; }
     $('priceBox').hidden = false;
     var total = g.reduce(function (n, x) { return n + x.price; }, 0);
-    g.forEach(function (x) { rows.push([x.shown + ($('promo').checked ? ' (Promo look)' : ''), '$' + x.price]); });
+    g.forEach(function (x) { rows.push([x.shown, '$' + x.price]); });
     if (rush) rows.push(['Rush', '+$10']);
     // v2.8: new clients (no saved record on this phone) see the free first graphic taken off. The order system
     // checks for real (one free graphic per business) and takes the same $25 off line 1.
@@ -522,7 +523,7 @@
       d.appendChild(a); d.appendChild(b); box.appendChild(d);
     });
   }
-  document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'size' || e.target.id === 'rush' || e.target.id === 'promo')) { err('eSize', ''); showPrice(); } });
+  document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'size' || e.target.id === 'rush')) { err('eSize', ''); showPrice(); } });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
 
   $('again').addEventListener('click', function () {
