@@ -5,6 +5,7 @@
 <!-- TEST v4.9 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
 <!-- TEST v5.1 (Oct 29, 2026) CC-025: examples by business type, new types, brokerage box, photo and due date up front. -->
 <!doctype html>
+<!-- TEST v5.2 (Oct 29, 2026) CC-026: took the "?" off the end of every question and line on the form. -->
 <!-- TEST v5.1 (Oct 29, 2026) CC-026: removed the green "?" circles and the "Stuck? Tap any green ?" line (tips script no longer loaded). -->
 <!--
   CPMG Quick Order — quick-order/index.html
@@ -128,7 +129,7 @@ details.how .inner{font-size:17px;line-height:1.45}
 <div class="wrap narrow">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Quick Order</h1><p class="kind" style="margin:2px 0 4px;font-weight:800;font-size:17px;color:var(--green)">Short form, about 1 minute</p><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
   <details class="more how" id="howBox" open style="margin-top:12px">
-    <summary onclick="this.parentNode.setAttribute('data-touched','1')">New here? How this works</summary>
+    <summary onclick="this.parentNode.setAttribute('data-touched','1')">How this works</summary>
     <div class="inner" style="gap:10px">
       <p style="margin:0">This form is how you order a graphic from ClearPoint Media Group: a ready-to-post picture for a sale, special, event or announcement.</p>
       <ol class="howsteps">
@@ -152,7 +153,7 @@ details.how .inner{font-size:17px;line-height:1.45}
         <p class="note">Your info is already saved. Just fill in your graphic request below.</p>
         <div class="saved" id="savedLines"></div>
         <button type="button" class="ghost" id="editBtn">Edit my info</button>
-        <button type="button" class="rm" id="notMe">Not you? Start fresh</button>
+        <button type="button" class="rm" id="notMe">Not you · Start fresh</button>
       </div>
       <div id="infoEdit" class="stack" style="gap:14px" hidden>
         <h2>Your info</h2>
@@ -175,7 +176,7 @@ details.how .inner{font-size:17px;line-height:1.45}
     </div>
 
     <details class="more" id="before" hidden>
-      <summary>Ordered before? Get your link</summary>
+      <summary>Ordered before · Get your link</summary>
       <div class="inner">
         <p class="hint">Type the email you used. We'll email you your quick order link with your info already in it.</p>
         <div class="field"><label for="linkEm">Your email</label><input type="email" id="linkEm" placeholder="you@yourbusiness.com" autocomplete="email" autocapitalize="off" spellcheck="false"><p class="err" id="eLinkEm" hidden></p></div>
@@ -198,15 +199,15 @@ details.how .inner{font-size:17px;line-height:1.45}
       <p class="err" id="eIdeas" hidden></p>
     </div>
     <div class="field">
-      <label for="cta">What should people do next?</label>
+      <label for="cta">What should people do next</label>
       <input type="text" id="cta" placeholder="Stop by today" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
     </div>
     <fieldset class="field">
-      <legend data-q="size">Where will you use it?</legend>
+      <legend data-q="size">Where will you use it</legend>
       <label class="opt"><input type="radio" name="size" value="Phone" checked> <span class="shp tall" aria-hidden="true"></span><span class="szt"><b>Tall: for phones ($25)</b><small>Phone screens, Facebook and Instagram · 9:16 · 1080 × 1920</small></span></label>
       <label class="opt"><input type="radio" name="size" value="TV"> <span class="shp wide" aria-hidden="true"></span><span class="szt"><b>Wide: TV, monitor or website ($25)</b><small>TVs in your store, computer screens, websites · 16:9 · 1920 × 1080</small></span></label>
-      <label class="opt"><input type="radio" name="size" value="Both"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>Not sure? You get 2 graphics: one for phones, one for TVs</small></span></label>
+      <label class="opt"><input type="radio" name="size" value="Both"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>You get 2 graphics: one for phones, one for TVs</small></span></label>
     </fieldset>
     <div class="field">
       <span class="lbl" data-q="pic">Photo or logo (optional)</span>
@@ -236,10 +237,10 @@ details.how .inner{font-size:17px;line-height:1.45}
     <div class="tip"><b>Order again in seconds:</b> save this page to your phone's home screen. Your info is saved, so next time you just fill in your graphic. Android: tap &#8942; then <b>Add to Home screen</b>. iPhone: tap the Share button (square with an arrow) then <b>Add to Home Screen</b>.</div>
     <button type="button" class="big" id="closeBtn">Done, close this page</button>
     <p class="sub" id="closeHelp" hidden>To close it, swipe this page away or tap your phone's Back button. Nothing else to do.</p>
-    <p class="sub">Need another graphic?</p>
+    <p class="sub">Need another graphic</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · Questions? randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · Questions: randy.turner@cpmgdata.com</div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
