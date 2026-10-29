@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.6-TEST (Oct 29, 2026)
+  v1.7-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.7-TEST (Oct 29, 2026) CC-027: Big-screen TV button uses our own modern picture (Randy picked C): a wide,
+                             thin flat screen on the wall, drawn in green, in place of the stock monitor icon.
     RE v1.6-TEST (Oct 29, 2026) CC-027: Myrtle Beach wording taken out of the examples (123 Oak Street, 456 Maple Lane,
                              Serving our neighborhood). Question 4 has 3 buttons: Phone (tall), Big-screen TV (wide 16:9,
                              flat-screen picture), Website (wide 16:9). Website is sent as a wide graphic like the TV.
@@ -67,6 +69,7 @@
 .taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .taps .opt{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;text-align:center;font-size:18px;font-weight:600;min-height:96px;padding:12px 8px;border-width:2px}
 .taps .pic{font-size:34px;line-height:1;color:var(--green)}
+.taps .tvpic{width:1.15em;height:1.15em;display:block}
 .taps.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .taps.three .opt{font-size:16px;padding:10px 4px}
 .taps .szn{font-size:14px;font-weight:400;color:var(--muted)}
@@ -140,7 +143,7 @@
       <legend class="ql"><span class="qn">4</span>Where will you show it?</legend>
       <div class="taps three">
         <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
-        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><i class="ti ti-device-desktop"></i></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
+        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
         <label class="opt"><input type="radio" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
       </div>
     </fieldset>
@@ -187,7 +190,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.6-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.7-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Website: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Website: 'Website (16:9 wide)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
