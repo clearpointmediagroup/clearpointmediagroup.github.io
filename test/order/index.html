@@ -1,15 +1,19 @@
 <!doctype html>
 <!--
   CPMG Order (one simple form) — test/order/index.html
-  v1.0-TEST (Oct 29, 2026)
+  v1.1-TEST (Oct 29, 2026)
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
   Sends the same "quick" order the order system already takes, so the script does not change.
-    Q1 Business name   Q2 Your name, email, phone   Q3 What's it for (4 taps)
+    Q1 Business name   Q2 Your name, email, phone   Q3 What kind of graphic (6 picture buttons)
     Q4 What should it say (one box)   Q5 Photo (optional)   Q6 Phone or TV (2 taps)
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    v1.1-TEST (Oct 29, 2026) CC-027: question 3 is now "What kind of graphic? Tap one picture." with 6 big
+                             picture buttons (food or drink special, live music or band, event, sale or coupon,
+                             open house, something else). Nothing is picked until they tap; the picked one turns
+                             green and says "Picked". Phone and TV buttons got pictures too.
     v1.0-TEST (Oct 29, 2026) First version (change card for the one simple form).
 -->
 <html lang="en">
@@ -37,7 +41,10 @@
 .ql{display:flex;align-items:center;font-size:20px;font-weight:700;margin:0 0 8px}
 .ql label{font:inherit;color:inherit;margin:0;padding:0}
 .taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.taps .opt{position:relative;justify-content:center;text-align:center;font-size:18px;min-height:56px;padding:10px 8px}
+.taps .opt{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;text-align:center;font-size:18px;font-weight:600;min-height:96px;padding:12px 8px;border-width:2px}
+.taps .pic{font-size:34px;line-height:1}
+.taps .opt.on{border:3px solid var(--green);background:var(--deep)}
+.taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .welcome2{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:17px;margin:0}
 textarea#say{min-height:110px;font-size:18px}
@@ -71,13 +78,17 @@ textarea#say{min-height:110px;font-size:18px}
     </div>
 
     <fieldset class="field">
-      <legend class="ql"><span class="qn">3</span>What's it for?</legend>
-      <div class="taps">
-        <label class="opt"><input type="radio" name="what" value="Special or menu" checked><span>Special or menu</span></label>
-        <label class="opt"><input type="radio" name="what" value="Event or band"><span>Event or band</span></label>
-        <label class="opt"><input type="radio" name="what" value="Sale or deal"><span>Sale or deal</span></label>
-        <label class="opt"><input type="radio" name="what" value="Something else"><span>Something else</span></label>
+      <legend class="ql"><span class="qn">3</span>What kind of graphic?</legend>
+      <p class="hint">Tap one picture.</p>
+      <div class="taps" id="whatTaps" tabindex="-1">
+        <label class="opt"><input type="radio" name="what" value="Food or drink special"><span class="pic" aria-hidden="true">&#127828;</span><span>Food or drink special</span></label>
+        <label class="opt"><input type="radio" name="what" value="Live music or band"><span class="pic" aria-hidden="true">&#127928;</span><span>Live music or band</span></label>
+        <label class="opt"><input type="radio" name="what" value="Event"><span class="pic" aria-hidden="true">&#128197;</span><span>Event</span></label>
+        <label class="opt"><input type="radio" name="what" value="Sale or coupon"><span class="pic" aria-hidden="true">&#127991;&#65039;</span><span>Sale or coupon</span></label>
+        <label class="opt"><input type="radio" name="what" value="Open house"><span class="pic" aria-hidden="true">&#127969;</span><span>Open house</span></label>
+        <label class="opt"><input type="radio" name="what" value="Something else"><span class="pic" aria-hidden="true">&#10067;</span><span>Something else</span></label>
       </div>
+      <p class="err" id="eWhat" hidden></p>
     </fieldset>
 
     <div class="field">
@@ -97,8 +108,8 @@ textarea#say{min-height:110px;font-size:18px}
     <fieldset class="field">
       <legend class="ql"><span class="qn">6</span>Where will you show it?</legend>
       <div class="taps">
-        <label class="opt"><input type="radio" name="size" value="Phone" checked><span>Phone</span></label>
-        <label class="opt"><input type="radio" name="size" value="TV"><span>TV</span></label>
+        <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true">&#128241;</span><span>Phone</span></label>
+        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true">&#128250;</span><span>TV</span></label>
       </div>
     </fieldset>
 
@@ -123,7 +134,7 @@ textarea#say{min-height:110px;font-size:18px}
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.0-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.1-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
   var key = C.param('k') || C.savedKey(), client = null, sending = false;
@@ -163,6 +174,7 @@ textarea#say{min-height:110px;font-size:18px}
     if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
     if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
     if (err('eSay', say.length ? '' : 'Type a few words for your graphic.')) bad.push('say');
+    if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
     var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
@@ -203,6 +215,8 @@ textarea#say{min-height:110px;font-size:18px}
       }
     });
   });
+
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') err('eWhat', ''); });
 
   $('again').addEventListener('click', function () {
     $('say').value = ''; photos.clear();
