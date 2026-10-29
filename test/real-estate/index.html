@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.13-TEST (Oct 29, 2026)
+  v2.14-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.14-TEST (Oct 29, 2026) CC-027: regroup (Randy approved): "Bottom of the graphic" (show phone, website) is a
+                             green box inside question 2; the rush note is inside the Rush box; the price is its own "Your price"
+                             box, one line per item and You pay at the bottom. Questions now 1-7.
     RE v2.13-TEST (Oct 29, 2026) CC-027: question 5 redone (Randy found it confusing): "Want it faster or fancier?"
                              with 2 big tap boxes (Rush: proof in 1 hour, Adds $10; Promo look: $45 instead of $25, pair $60
                              instead of $40), picked box gets a green border and "Picked"; price line moved under these boxes.
@@ -122,6 +125,12 @@
 .xcard .xp{font-size:18px;font-weight:700;color:var(--green);margin-top:2px}
 .xcard.on{border:3px solid var(--green);background:var(--deep)}
 .xcard.on .xn::after{content:'  \2713 Picked';font-size:15px;font-weight:600;color:var(--green)}
+.gbox{border:2px solid var(--green);border-radius:12px;padding:12px 14px;margin:14px 0 0;background:var(--deep)}
+.gbox .gt{font-size:18px;font-weight:700;color:var(--green);margin:0 0 4px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:17px;padding:4px 0}
+.prow span:last-child{flex:none;font-weight:700}
+.ptot{border-top:1px solid var(--green);margin-top:6px;padding-top:8px;font-size:19px;font-weight:800;color:var(--green)}
+.xcard .xs{font-size:14px;color:var(--muted);margin-top:4px}
 .price{font-size:18px;font-weight:700;color:var(--green);margin:10px 0 0}
 .chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:8px 0 0;line-height:1.35}
 .chk b{color:var(--green)}
@@ -196,6 +205,11 @@
       <p class="hint">What should people do?</p>
       <input type="text" id="cta" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
+      <div class="gbox">
+        <p class="gt">Bottom of the graphic</p>
+        <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
+        <input type="text" id="site" placeholder="Website or Facebook page (if you want)" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
+      </div>
     </div>
 
     <div class="field">
@@ -221,20 +235,13 @@
     <div class="field">
       <p class="ql"><span class="qn">5</span>Want it faster or fancier?</p>
       <p class="hint">Tap a box to add it. Tap again to take it off. Both are optional.</p>
-      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span></span></label>
+      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
       <label class="opt xcard"><input type="checkbox" id="promo"><i class="ti ti-sparkles" aria-hidden="true"></i><span class="xt"><span class="xn">Promo look</span><span class="xd">A fancier, magazine-style design.</span><span class="xp">$45 instead of $25</span><span class="xd">Phone + TV pair: $60 instead of $40</span></span></label>
-      <p class="hint" style="margin-top:4px">Rush is during business hours. If today's rush spots are full, we'll tell you and won't charge for it.</p>
-      <p class="price" id="priceLine" aria-live="polite"></p>
+      <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div></div>
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">6</span>Bottom of your graphic</p>
-      <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
-      <input type="text" id="site" placeholder="Website or Facebook page (if you want)" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
-    </div>
-
-    <div class="field">
-      <p class="ql"><span class="qn">7</span><label for="biz">Business name</label></p>
+      <p class="ql"><span class="qn">6</span><label for="biz">Business name</label></p>
       <input type="text" id="biz" placeholder="Smith Home Team" autocomplete="organization">
       <p class="err" id="eBiz" hidden></p>
       <label class="sl" for="brok">Brokerage</label>
@@ -244,7 +251,7 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">8</span>Your name, email, phone</p>
+      <p class="ql"><span class="qn">7</span>Your name, email, phone</p>
       <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
       <p class="err" id="eNm" hidden></p>
       <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
@@ -275,7 +282,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.13-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.14-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -412,20 +419,23 @@
     });
   }
   function showPrice() {
-    var g = groups(places()), total = g.reduce(function (n, x) { return n + x.price; }, 0);
-    if (!g.length) { $('priceLine').textContent = ''; return; }
-    var parts = g.map(function (x) { return x.shown + ($('promo').checked ? ' (Promo)' : '') + ' $' + x.price; }), rush = $('rush').checked ? 10 : 0;
+    var g = groups(places()), rush = $('rush').checked ? 10 : 0, rows = [];
+    if (!g.length) { $('priceBox').hidden = true; return; }
+    $('priceBox').hidden = false;
+    var total = g.reduce(function (n, x) { return n + x.price; }, 0);
+    g.forEach(function (x) { rows.push([x.shown + ($('promo').checked ? ' (Promo look)' : ''), '$' + x.price]); });
+    if (rush) rows.push(['Rush', '+$10']);
     // v2.8: new clients (no saved record on this phone) see the free first graphic taken off. The order system
     // checks for real (one free graphic per business) and takes the same $25 off line 1.
-    if (!client) {
-      var off = Math.min(25, total);
-      parts.push('First graphic FREE for new clients −$' + off);
-      if (rush) parts.push('Rush +$10');
-      $('priceLine').textContent = parts.join(' · ') + ' · You pay $' + (total - off + rush);
-    } else {
-      if (rush) parts.push('Rush +$10');
-      $('priceLine').textContent = (parts.length > 1 || g[0].use === 'both' ? parts.join(' · ') + ' · ' : '') + 'Total $' + (total + rush);
-    }
+    var off = client ? 0 : Math.min(25, total);
+    if (off) rows.push(['First graphic free (new clients)', '−$' + off]);
+    rows.push(['You pay', '$' + (total - off + rush)]);
+    var box = $('priceLine'); box.innerHTML = '';
+    rows.forEach(function (r, i) {
+      var d = document.createElement('div'); d.className = 'prow' + (i === rows.length - 1 ? ' ptot' : '');
+      var a = document.createElement('span'); a.textContent = r[0]; var b = document.createElement('span'); b.textContent = r[1];
+      d.appendChild(a); d.appendChild(b); box.appendChild(d);
+    });
   }
   document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'size' || e.target.id === 'rush' || e.target.id === 'promo')) { err('eSize', ''); showPrice(); } });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
