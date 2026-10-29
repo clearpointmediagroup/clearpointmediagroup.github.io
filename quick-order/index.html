@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v5.1 (Oct 29, 2026)
+  v5.2 (Oct 29, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v5.2 (Oct 29, 2026) CC-026: deleted the leftover helper text (help bubble words and old helper block).
     v5.1 (Oct 29, 2026) CC-026: took the "?" off every question and line, and removed the green "?" circles.
     v5.0 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
                         and why we ask for each part. Open for first-timers, folded up for returning clients.
@@ -436,32 +437,6 @@ details.how .inner{font-size:17px;line-height:1.45}
     $('f').hidden = false; $('sendBar').hidden = false; $('ok').hidden = true; $('closeHelp').hidden = true; $('closeBtn').disabled = false; $('closeBtn').textContent = 'Done, close this page'; window.scrollTo(0, 0);
   });
 })();
-</script>
-<script>
-/* v2.4: tips for the "Need help? Tap here" button (cpmg-order-helper.js) */
-(function () {
-  function f(id) { var x = document.getElementById(id); return x ? x.closest('.field') : null; }
-  function saved() { var x = document.getElementById('infoSaved'); return x && !x.hidden; }
-  /* CC-024: the help walk-through and corner buddy were removed (cpmg-order-helper.js no longer loaded). */
-})();
-</script>
-<script>
-/* CC-023 v1.0 (Oct 29, 2026): the words in each green "?" bubble. */
-window.CPMG_TIPS = [
-  { sel: 'label[for="biz"]', tip: 'The name people know you by. It can go on your graphic.<br><b>Example:</b> Scotto\'s Grill' },
-  { sel: 'label[for="type"]', tip: 'Helps us pick a look that fits your kind of business. Not listed? Pick <b>Other</b>.' },
-  { sel: 'label[for="nm"]', tip: 'So we know who to talk to about your order. It does not go on the graphic.' },
-  { sel: 'label[for="ph"]', tip: 'In case we have a quick question about your order.' },
-  { sel: 'label[for="em"]', tip: 'Your proof (a preview of your graphic) comes to this email. You look it over and OK it.' },
-  { sel: 'label[for="street"]', tip: 'Optional. Fill it in if you want your address on your graphics. We save it for next time.' },
-  { sel: 'label[for="hl"]', tip: 'The big words at the top of your graphic. Up to 10 words.<br><b>Example:</b> Tonight\'s special' },
-  { sel: 'label[for="ideas"]', tip: 'Up to 3 short lines that go under the headline. Press Enter after each one.<br><b>Example:</b><br>Shrimp and grits<br>$14.99 tonight only<br>Live music at 7' },
-  { sel: 'label[for="cta"]', tip: 'The one thing you want people to do after they see it.<br><b>Examples:</b> Come in tonight · Call to order · Book a table' },
-  { sel: '[data-q="size"]', tip: 'Pick the shape that fits where people will see it.<br><b>Tall</b> fills a phone screen (Facebook and Instagram too). <b>Wide</b> fills a TV or computer screen.<br>Not sure? Pick <b>Both</b> and get one of each.' },
-  { sel: '[data-q="pic"]', tip: 'Optional. Send a photo of your food, your place or your logo. Phone pictures are fine.' },
-  { sel: '[data-q="promo"]', tip: 'A fancier design built around <b>your logo and a photo you send</b>. $45 for one size, or $60 for Both.' },
-  { sel: '#rushOpt', tip: 'Need it fast? Your proof comes within <b>1 hour</b> for $10 more. Only 2 rush orders a day. Without rush, it comes within 5 hours.' }
-];
 </script>
 </body>
 </html>

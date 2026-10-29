@@ -1,11 +1,12 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v5.3 (Oct 29, 2026)
+  v5.4 (Oct 29, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.4 (Oct 29, 2026) CC-026: deleted the leftover helper text (help bubble words and old helper block).
     v5.3 (Oct 29, 2026) CC-026: took the "?" off every question and line, and removed the green "?" circles.
     v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
                         and why we ask for each part. Open for first-timers, folded up for returning clients.
@@ -572,39 +573,6 @@ details.how .inner{font-size:17px;line-height:1.45}
   });
   addG();
 })();
-</script>
-<script>
-/* v2.6: tips for the "Need help? Tap here" button (cpmg-order-helper.js) */
-(function () {
-  function g(sel) { return document.querySelector('#gList [data-g] ' + sel); }
-  function fld(f) { var x = g('[data-f="' + f + '"]'); return x ? x.closest('.field') : null; }
-  function fs(n) { var x = g('[data-n="' + n + '"]'); return x ? x.closest('fieldset') : null; }
-  function saved() { return !document.getElementById('dSaved').hidden; }
-  /* CC-024: the help walk-through and corner buddy were removed (cpmg-order-helper.js no longer loaded). */
-})();
-</script>
-<script>
-/* CC-023 v1.0 (Oct 29, 2026): the words in each green "?" bubble. */
-window.CPMG_TIPS = [
-  { sel: 'label[for="biz"]', tip: 'The name people know you by. It can go on your graphic.<br><b>Example:</b> ABC Plumbing' },
-  { sel: 'label[for="type"]', tip: 'Helps us pick a look that fits your kind of business. Not listed? Pick <b>Other</b>.' },
-  { sel: 'label[for="who"]', tip: 'So we know who to talk to about your order. It does not go on the graphic.' },
-  { sel: 'label[for="em"]', tip: 'Your proof (a preview of your graphic) comes to this email. You look it over and OK it.' },
-  { sel: 'label[for="ph"]', tip: 'In case we have a quick question about your order.' },
-  { sel: 'label[for="street"]', tip: 'Optional. Fill it in if you want your address on your graphics. We save it for next time.' },
-  { sel: 'label[for="fp"]', tip: 'The number your customers should call. It is printed on your graphic. Just the 10 digits.' },
-  { sel: '[data-q="size"]', tip: 'Pick the shape that fits where people will see it.<br><b>Tall</b> fills a phone screen. <b>Wide</b> fills a TV or computer screen. <b>Square</b> is a regular Facebook or Instagram post.<br>Not sure? Pick <b>Both</b> and get one tall and one wide.' },
-  { sel: '[data-q="promo"]', tip: 'A fancier design built around <b>your logo and a photo you send</b>. $45 for one size, or $60 for tall and wide. Add your logo or photo under <b>More options</b>.' },
-  { sel: '[data-q="hl"]', tip: 'The big words at the top of your graphic. Keep it to a few words.<br><b>Example:</b> Freeze warning this weekend' },
-  { sel: '[data-q="ideas"]', tip: 'The main points you want people to read, one per line (up to 5). Short is best.<br><b>Example:</b><br>Pipe insulation<br>$89 this month only' },
-  { sel: '[data-q="cta"]', tip: 'The one thing you want people to do after they see it.<br><b>Examples:</b> Call us today · Stop by Friday · Book online' },
-  { sel: '[data-q="col"]', tip: '<b>Your choice:</b> we pick colors that fit your business.<br><b>I\'ll pick:</b> you tap your main color.<br><b>Match my logo:</b> we use the colors in your logo.' },
-  { sel: '#rushOpt', tip: 'Need it fast? Your proof comes within <b>1 hour</b> for $10 more. Only 2 rush orders a day. Without rush, it comes within 5 hours.' },
-  { sel: '[data-q="pic"]', tip: 'Send your logo or a photo to use on your graphics. Phone pictures are fine.' },
-  { sel: 'label[for="web"]', tip: 'Optional. Your website, if you want it on your graphic.<br><b>Example:</b> abcplumbing.com' },
-  { sel: 'label[for="area"]', tip: 'Optional. The towns or neighborhoods you cover.<br><b>Example:</b> Carolina Forest' },
-  { sel: 'label[for="needBy"]', tip: 'Optional. The day and time you need your graphic. Leave it empty if there is no rush.' }
-];
 </script>
 </body>
 </html>
