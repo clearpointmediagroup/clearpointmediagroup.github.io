@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.0-TEST (Oct 29, 2026)
+  v1.1-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.1-TEST (Oct 29, 2026) CC-027: new Brokerage box under Business name (real estate ads must show it).
+                             Filled in from the client's saved record when it has one, and remembered on the
+                             phone, so they type it once. Sent as Brokerage.
     RE v1.0-TEST (Oct 29, 2026) CC-027: made from CPMG Order v1.2. Question 3 buttons are all real estate
                              (Just listed, Open house, Just sold, Price drop, Coming soon, Something else) with
                              real estate examples. Title says "Order a real estate graphic".
@@ -73,6 +76,10 @@ textarea#bdy{min-height:96px;font-size:18px}
       <p class="ql"><span class="qn">1</span><label for="biz">Business name</label></p>
       <input type="text" id="biz" placeholder="Coastal Homes Team" autocomplete="organization">
       <p class="err" id="eBiz" hidden></p>
+      <label class="sl" for="brok">Brokerage</label>
+      <p class="hint">The real estate company you work under.</p>
+      <input type="text" id="brok" placeholder="Coastal Realty Group" autocomplete="off">
+      <p class="err" id="eBrok" hidden></p>
     </div>
 
     <div class="field">
@@ -156,7 +163,7 @@ textarea#bdy{min-height:96px;font-size:18px}
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.0-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.1-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
   var key = C.param('k') || C.savedKey(), client = null, sending = false;
@@ -167,10 +174,13 @@ textarea#bdy{min-height:96px;font-size:18px}
 
   function fill(c) {
     $('biz').value = c.business || ''; $('nm').value = c.name || '';
+    if (c.brokerage) $('brok').value = c.brokerage;
     $('em').value = c.email || ''; $('ph').value = C.fmtPhone(c.phone || '');
     $('welcome').textContent = 'Welcome back' + (c.name ? ', ' + String(c.name).split(' ')[0] : '') + '! Your info is filled in.';
     $('welcome').hidden = false;
   }
+  var BROK_STORE = 'cpmgBrokerage';
+  try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
   if (key) {
     $('looking').hidden = false;
     C.lookupClient(key).then(function (c) {
@@ -181,17 +191,18 @@ textarea#bdy{min-height:96px;font-size:18px}
   }
 
   function err(id, msg) { C.showErr($(id), msg); return !!msg; }
-  ['biz', 'nm', 'em', 'ph', 'ttl', 'bdy', 'cta'].forEach(function (id) {
+  ['biz', 'brok', 'nm', 'em', 'ph', 'ttl', 'bdy', 'cta'].forEach(function (id) {
     $(id).addEventListener('input', function () { err('e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
   });
 
   $('f').addEventListener('submit', function (ev) {
     ev.preventDefault();
     if (sending) return;
-    var biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
+    var brok = $('brok').value.trim(), biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
     var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = C.lines($('bdy').value), cta = $('cta').value.trim();
     var bad = [];
     if (err('eBiz', biz ? '' : 'Type your business name.')) bad.push('biz');
+    if (err('eBrok', brok ? '' : 'Type your brokerage name.')) bad.push('brok');
     if (err('eNm', nm ? '' : 'Type your name.')) bad.push('nm');
     if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
     if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
@@ -208,12 +219,12 @@ textarea#bdy{min-height:96px;font-size:18px}
       kind: 'quick',
       formVersion: FORM_VERSION,
       clientKey: client ? key : '',
-      customer: { name: nm, business: biz, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed },
+      customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed },
       graphics: [{
         headline: ttl, lines: (hdg ? [hdg] : []).concat(bdy).slice(0, 3), cta: cta, use: USE[size] || 'phone',
         colors: { mode: 'cpmg', main: '', second: '' },
         notes: (hdg ? [hdg] : []).concat(bdy).slice(3).join('\n'),
-        more: { 'Form': 'Real estate', 'Kind of graphic': what, 'Heading': hdg, 'Where will you use it?': size, 'Size': SIZE[size] },
+        more: { 'Form': 'Real estate', 'Brokerage': brok, 'Kind of graphic': what, 'Heading': hdg, 'Where will you use it?': size, 'Size': SIZE[size] },
         photos: photos.list(),
         promo: false
       }],
@@ -227,6 +238,7 @@ textarea#bdy{min-height:96px;font-size:18px}
       sending = false;
       if (res && res.ok) {
         C.busy($('sendBtn'), false, 'Send my order');
+        try { window.localStorage.setItem(BROK_STORE, brok); } catch (e) { /* blocked: fine */ }
         if (res.clientKey) { key = res.clientKey; C.rememberKey(key); C.keyInLink(key); }
         client = { name: nm, business: biz, email: em, phone: ph };
         $('orderCode').textContent = res.orderCode || '';
