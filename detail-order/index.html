@@ -1,11 +1,12 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v4.9 (Oct 29, 2026)
+  v5.0 (Oct 29, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.0 (Oct 29, 2026) CC-017: the top says "Detailed Order / Long form, more choices" so people know which form they are in.
     v4.9 (Oct 29, 2026) New cute helper buddy in the corner; helper always waves and the part it talks about glows (cpmg-order-helper.js v3.1, CC-012 + CC-016).
     v4.8 (Oct 28, 2026) Every help tip 9 seconds, the first one too (cpmg-order-helper.js v2.9).
     v4.7 (Oct 28, 2026) Every help tip 10 seconds, the first one too (cpmg-order-helper.js v2.8).
@@ -117,7 +118,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Detailed Order</h1><p class="kind" style="margin:2px 0 4px;font-weight:800;font-size:17px;color:var(--green)">Long form, more choices</p><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
   <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
   <span class="pill" id="payPill">Nothing to pay until you approve your proof</span>
 

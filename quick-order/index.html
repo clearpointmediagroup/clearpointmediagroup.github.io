@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v4.7 (Oct 29, 2026)
+  v4.8 (Oct 29, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v4.8 (Oct 29, 2026) CC-017: the top says "Quick Order / Short form, about 1 minute" so people know which form they are in.
     v4.7 (Oct 29, 2026) New cute helper buddy in the corner; helper always waves and the part it talks about glows (cpmg-order-helper.js v3.1, CC-012 + CC-016).
     v4.6 (Oct 28, 2026) Every help tip 9 seconds, the first one too (cpmg-order-helper.js v2.9).
     v4.5 (Oct 28, 2026) Every help tip 10 seconds, the first one too (cpmg-order-helper.js v2.8).
@@ -101,7 +102,7 @@
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Quick Order</h1><p class="kind" style="margin:2px 0 4px;font-weight:800;font-size:17px;color:var(--green)">Short form, about 1 minute</p><p class="sub">ClearPoint Media Group · proof within 5 hours · open 9 a.m.–9 p.m. Eastern</p></div></div>
   <div id="freeTop" hidden style="margin:12px 0 0;padding:12px 14px;border:2px solid var(--green);border-radius:12px;background:var(--deep);color:var(--fg);font-size:18px;line-height:1.4;text-align:center"><b style="color:var(--green)">Your first graphic is free.</b> <span id="freeTopMore">After that, graphics are $25 each.</span></div>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
