@@ -1,6 +1,7 @@
 <!-- TEST COPY (CC-007) v1.0-TEST (Oct 28, 2026): copy of the live page pointed at the CPMG Orders TEST script, with an orange TEST banner. Not for clients. -->
 <!-- TEST (Oct 29, 2026) CC-017: top line says which form this is. -->
 <!-- TEST v3.1 (Oct 29, 2026) CC-016: loads cpmg-order-helper-test.js v3.1 (new helper buddy). -->
+<!-- TEST v5.1 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
@@ -9,6 +10,11 @@
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.1 (Oct 29, 2026) CC-023: a green "?" next to every question opens a plain-words bubble with an example
+                        (cpmg-order-tips.js v1.0). Clearer words: "Your ideas" is now "What should it say?",
+                        "What should people do?" is now "What should people do next?". Size choices show a shape picture,
+                        the shape (Tall / Wide / Square / Both), the pixel size and where it is used. Values sent to the
+                        order system did not change.
     v4.8 (Oct 28, 2026) Every help tip 9 seconds, the first one too (cpmg-order-helper.js v2.9).
     v4.7 (Oct 28, 2026) Every help tip 10 seconds, the first one too (cpmg-order-helper.js v2.8).
     v4.6 (Oct 28, 2026) Help tips 10 seconds each (cpmg-order-helper.js v2.7).
@@ -170,7 +176,7 @@
     <details class="more" id="more">
       <summary>More options (optional)</summary>
       <div class="inner">
-        <div class="field"><span class="lbl">Logo or photo</span>
+        <div class="field"><span class="lbl" data-q="pic">Logo or photo</span>
           <p class="hint">Up to 3 pictures. Phone photos are fine; we shrink big ones for you. Used on all your graphics.</p>
           <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
           <div class="thumbs" id="thumbs" hidden></div>
@@ -218,17 +224,17 @@
 <template id="gTpl">
   <div class="card g" data-g>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h3 data-t>Graphic 1</h3><button type="button" class="rm" data-rm hidden>Remove</button></div>
-    <fieldset><legend>Where will you use it?</legend>
-      <label class="opt"><input type="radio" data-n="size" value="Phone or Facebook story" checked> Phone or Facebook story</label>
-      <label class="opt"><input type="radio" data-n="size" value="Website or TV screen"> Website or TV screen</label>
-      <label class="opt"><input type="radio" data-n="size" value="Facebook or Instagram post"> Facebook or Instagram post</label>
-      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> Not sure? Give me both phone and wide (2 graphics, $40)</label>
+    <fieldset><legend data-q="size">Where will you use it?</legend>
+      <label class="opt"><input type="radio" data-n="size" value="Phone or Facebook story" checked> <span class="shp tall" aria-hidden="true"></span><span class="szt"><b>Tall: for phones ($25)</b><small>Phone screens, Facebook and Instagram stories · 9:16 · 1080 × 1920</small></span></label>
+      <label class="opt"><input type="radio" data-n="size" value="Website or TV screen"> <span class="shp wide" aria-hidden="true"></span><span class="szt"><b>Wide: TV, monitor or website ($25)</b><small>TVs in your store, computer screens, websites · 16:9 · 1920 × 1080</small></span></label>
+      <label class="opt"><input type="radio" data-n="size" value="Facebook or Instagram post"> <span class="shp sq" aria-hidden="true"></span><span class="szt"><b>Square: Facebook or Instagram post ($25)</b><small>Regular posts people scroll past · 1:1 · 1080 × 1080</small></span></label>
+      <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>Not sure? You get 2 graphics: one for phones, one for TVs</small></span></label>
     </fieldset>
-    <label class="opt"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
-    <div class="field"><label>What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
-    <div class="field"><label>Your ideas</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="Pipe insulation&#10;$89 this month only"></textarea><p class="err" data-e="ideas" hidden></p></div>
-    <div class="field"><label>What should people do?</label><input type="text" data-f="cta" placeholder="Call today"><p class="err" data-e="cta" hidden></p></div>
-    <fieldset><legend>Colors</legend>
+    <label class="opt" data-q="promo"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
+    <div class="field"><label data-q="hl">What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Freeze warning this weekend"><p class="err" data-e="hl" hidden></p></div>
+    <div class="field"><label data-q="ideas">What should it say?</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="Pipe insulation&#10;$89 this month only"></textarea><p class="err" data-e="ideas" hidden></p></div>
+    <div class="field"><label data-q="cta">What should people do next?</label><input type="text" data-f="cta" placeholder="Call us today"><p class="err" data-e="cta" hidden></p></div>
+    <fieldset><legend data-q="col">Colors</legend>
       <label class="opt"><input type="radio" data-n="col" value="CPMG picks" checked> Your choice (CPMG picks)</label>
       <label class="opt"><input type="radio" data-n="col" value="Pick my colors"> I'll pick my colors</label>
       <label class="opt"><input type="radio" data-n="col" value="Match my logo"> Match my logo</label>
@@ -548,15 +554,15 @@
   function fs(n) { var x = g('[data-n="' + n + '"]'); return x ? x.closest('fieldset') : null; }
   function saved() { return !document.getElementById('dSaved').hidden; }
   window.CPMG_HELP = [
-    { t: 'Hi! Ordering takes about 2 minutes.', s: "I'll show you each part. Tap Next anytime." },
+    { t: 'Hi! Ordering takes about 2 minutes.', s: "I'll show you each part. Tap any green ? for more help." },
     { t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
       s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
       el: function () { return saved() ? document.getElementById('dSaved') : document.getElementById('dFields'); } },
-    { t: 'Where will people see it?', s: 'Most people pick Phone ($25). Want a TV size too? Pick both ($40).', el: function () { return fs('size'); } },
+    { t: 'Where will people see it?', s: 'Tall is for phones, Wide is for TVs. Not sure? Pick Both ($40).', el: function () { return fs('size'); } },
     { t: 'Want your logo and photo on it?', s: 'Check Promo look. It costs a little more.', el: function () { var x = g('[data-n="promo"]'); return x ? x.closest('label') : null; } },
     { t: "What's it about? A few words.", s: 'Like: Freeze warning this weekend. This becomes the headline.', el: function () { return fld('hl'); } },
-    { t: 'Your ideas, one per line.', s: 'Short is best. The graphic does the talking.', el: function () { return fld('ideas'); } },
-    { t: 'What should people do?', s: 'Like: Call today, or Stop by Friday.', el: function () { return fld('cta'); } },
+    { t: 'What should it say? One idea per line.', s: 'Short is best. The graphic does the talking.', el: function () { return fld('ideas'); } },
+    { t: 'What should people do next?', s: 'Like: Call us today, or Stop by Friday.', el: function () { return fld('cta'); } },
     { t: 'Colors: we can pick for you.', s: 'Or pick your own, or match your logo.', el: function () { return fs('col'); } },
     { opt: true, t: 'In a hurry? Check Rush.', s: 'Your proof in 1 hour for $10 more.', el: function () { var r = document.getElementById('rushBox'); return r && !r.hidden ? r : null; } },
     { t: 'Logo, photo, and due date go in here.', s: "We opened it for you. All of it is optional.", el: function () { var m = document.getElementById('more'); m.open = true; return m; } },
@@ -564,6 +570,30 @@
   ];
 })();
 </script>
+<script>
+/* CC-023 v1.0 (Oct 29, 2026): the words in each green "?" bubble. */
+window.CPMG_TIPS = [
+  { sel: 'label[for="biz"]', tip: 'The name people know you by. It can go on your graphic.<br><b>Example:</b> ABC Plumbing' },
+  { sel: 'label[for="type"]', tip: 'Helps us pick a look that fits your kind of business. Not listed? Pick <b>Other</b>.' },
+  { sel: 'label[for="who"]', tip: 'So we know who to talk to about your order. It does not go on the graphic.' },
+  { sel: 'label[for="em"]', tip: 'Your proof (a preview of your graphic) comes to this email. You look it over and OK it.' },
+  { sel: 'label[for="ph"]', tip: 'In case we have a quick question about your order.' },
+  { sel: 'label[for="street"]', tip: 'Optional. Fill it in if you want your address on your graphics. We save it for next time.' },
+  { sel: 'label[for="fp"]', tip: 'The number your customers should call. It is printed on your graphic. Just the 10 digits.' },
+  { sel: '[data-q="size"]', tip: 'Pick the shape that fits where people will see it.<br><b>Tall</b> fills a phone screen. <b>Wide</b> fills a TV or computer screen. <b>Square</b> is a regular Facebook or Instagram post.<br>Not sure? Pick <b>Both</b> and get one tall and one wide.' },
+  { sel: '[data-q="promo"]', tip: 'A fancier design built around <b>your logo and a photo you send</b>. $45 for one size, or $60 for tall and wide. Add your logo or photo under <b>More options</b>.' },
+  { sel: '[data-q="hl"]', tip: 'The big words at the top of your graphic. Keep it to a few words.<br><b>Example:</b> Freeze warning this weekend' },
+  { sel: '[data-q="ideas"]', tip: 'The main points you want people to read, one per line (up to 5). Short is best.<br><b>Example:</b><br>Pipe insulation<br>$89 this month only' },
+  { sel: '[data-q="cta"]', tip: 'The one thing you want people to do after they see it.<br><b>Examples:</b> Call us today · Stop by Friday · Book online' },
+  { sel: '[data-q="col"]', tip: '<b>Your choice:</b> we pick colors that fit your business.<br><b>I\'ll pick:</b> you tap your main color.<br><b>Match my logo:</b> we use the colors in your logo.' },
+  { sel: '#rushOpt', tip: 'Need it fast? Your proof comes within <b>1 hour</b> for $10 more. Only 2 rush orders a day. Without rush, it comes within 5 hours.' },
+  { sel: '[data-q="pic"]', tip: 'Send your logo or a photo to use on your graphics. Phone pictures are fine.' },
+  { sel: 'label[for="web"]', tip: 'Optional. Your website, if you want it on your graphic.<br><b>Example:</b> abcplumbing.com' },
+  { sel: 'label[for="area"]', tip: 'Optional. The towns or neighborhoods you cover.<br><b>Example:</b> Carolina Forest' },
+  { sel: 'label[for="needBy"]', tip: 'Optional. The day and time you need your graphic. Leave it empty if there is no rush.' }
+];
+</script>
+<script src="../cpmg-order-tips-test.js?v=1.0"></script>
 <script src="../cpmg-order-helper-test.js?v=3.1d"></script>
 </body>
 </html>
