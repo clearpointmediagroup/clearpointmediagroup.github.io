@@ -1,8 +1,9 @@
 /*
  * CPMG order forms: "How to order" help bubble — cpmg-order-helper.js
- * v3.0 (Oct 29, 2026)
- * A green "How to order" button near the top of an order form. Tapping it opens a small
- * green helper (a smiling cartoon that waves) at the top of the screen. It walks through
+ * v3.1 (Oct 29, 2026)
+ * A green "How to order" button near the top of an order form, plus a cute green helper buddy who
+ * hops, waves and blinks in the bottom-right corner ("Hi! Need help? Tap me!"). Tapping either one opens
+ * the helper at the top of the screen. It walks through
  * the form one short tip at a time, scrolls to each part, and lights it up with a green ring.
  * Silent (no sound). Moves on by itself every few seconds; Back, Next and Close buttons too.
  * The helper always waves and the lit-up part always glows, even when a device has animations turned off.
@@ -10,6 +11,11 @@
  *   Before loading this file, the page sets window.CPMG_HELP = [ { t:'Big line', s:'Small line',
  *   el: function(){ return element or null } }, ... ]. Then: <script src="../assets/cpmg-order-helper.js?v=1.0"></script>
  * REVISION LOG
+ *   v3.1 (Oct 29, 2026) CC-016: new cute helper buddy Randy and Cindy picked (round green body, big blinking
+ *                       eyes, rosy cheeks, smile, a leaf on top). He lives in the bottom-right corner, hops,
+ *                       waves and wiggles his leaf, with a "Hi! Need help? Tap me!" bubble; tapping him opens
+ *                       the help. The same buddy (smaller) shows in the help box. Extra space at the bottom of
+ *                       the page so he never covers the Send button. Moves even with "reduce motion" on.
  *   v3.0 (Oct 29, 2026) CC-012: the helper always waves (bigger wave, with a hand) and the part of the form
  *                       it's talking about gets a pulsing green glow. No longer switched off by a device's
  *                       "reduce motion" setting, which is why it stood still on some phones and laptops.
@@ -76,15 +82,42 @@
     '@keyframes hlpBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}' +
     '@keyframes hlpWave{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-35deg)}}' +
     '@keyframes hlpGlowRing{0%,100%{outline-offset:4px;box-shadow:0 0 0 0 rgba(95,196,140,.15),0 0 6px 2px rgba(95,196,140,.25)}50%{outline-offset:8px;box-shadow:0 0 0 10px rgba(95,196,140,.28),0 0 22px 8px rgba(95,196,140,.55)}}' +
-    '@keyframes hlpIn{from{transform:translateY(-12px);opacity:0}to{transform:none;opacity:1}}';
+    '@keyframes hlpIn{from{transform:translateY(-12px);opacity:0}to{transform:none;opacity:1}}' +
+    /* v3.1 CC-016: buddy */
+    '.bdy-hop{animation:bdyHop 1.6s ease-in-out infinite;transform-origin:50% 100%;transform-box:view-box}' +
+    '.bdy-arm{animation:bdyWave .9s ease-in-out infinite;transform-origin:118px 92px;transform-box:view-box}' +
+    '.bdy-lid{animation:bdyBlink 4s infinite;transform-origin:center;transform-box:fill-box}' +
+    '.bdy-leaf{animation:bdySway 2s ease-in-out infinite;transform-origin:80px 32px;transform-box:view-box}' +
+    '@keyframes bdyHop{0%,100%{transform:translateY(0) scaleY(1)}40%{transform:translateY(-10px) scaleY(1.03)}55%{transform:translateY(0) scaleY(.96)}}' +
+    '@keyframes bdyWave{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(28deg)}}' +
+    '@keyframes bdyBlink{0%,92%,100%{transform:scaleY(0)}95%{transform:scaleY(1)}}' +
+    '@keyframes bdySway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}' +
+    '.bdy{position:fixed;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:flex-end;gap:4px;background:transparent;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
+    '.bdy-bub{background:#fff;color:#173404;border:2px solid #3B6D11;border-radius:14px;padding:6px 10px;font:800 15px var(--body);line-height:1.2;text-align:left;margin-bottom:58px;animation:bdyPop 3s ease-in-out infinite}' +
+    '@keyframes bdyPop{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}' +
+    'body.bdy-room{padding-bottom:130px}' +
+    '.hlp-bdy{flex:none}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
-  var face = '<svg class="hlp-bob" width="40" height="42" viewBox="0 0 80 80" overflow="visible" aria-hidden="true">' +
-    '<circle cx="34" cy="40" r="26" fill="#5fc48c"/>' +
-    '<circle cx="25" cy="35" r="5" fill="#fff"/><circle cx="43" cy="35" r="5" fill="#fff"/>' +
-    '<circle cx="26" cy="36" r="2.5" fill="#0c130f"/><circle cx="44" cy="36" r="2.5" fill="#0c130f"/>' +
-    '<path d="M23 48 Q34 57 45 48" stroke="#0c130f" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-    '<g class="hlp-arm"><line x1="58" y1="50" x2="70" y2="26" stroke="#5fc48c" stroke-width="6" stroke-linecap="round"/><circle cx="71" cy="22" r="6" fill="#5fc48c"/></g></svg>';
+  // v3.1 CC-016: the buddy (one drawing, used big in the corner and small in the help box)
+  function buddy(w, cls) {
+    return '<svg class="' + cls + '" width="' + w + '" height="' + Math.round(w * 190 / 170) + '" viewBox="0 0 170 190" overflow="visible" aria-hidden="true"><g class="bdy-hop">' +
+      '<g class="bdy-leaf"><path d="M80 32 C70 12 88 4 96 12 C92 20 86 26 80 32Z" fill="#97C459" stroke="#27500A" stroke-width="2"/><line x1="80" y1="32" x2="80" y2="42" stroke="#27500A" stroke-width="3" stroke-linecap="round"/></g>' +
+      '<ellipse cx="80" cy="182" rx="40" ry="6" fill="#000" opacity=".15"/>' +
+      '<rect x="56" y="150" width="16" height="26" rx="8" fill="#3B6D11"/><rect x="88" y="150" width="16" height="26" rx="8" fill="#3B6D11"/>' +
+      '<path d="M30 70 C38 108 34 116 40 116" stroke="#3B6D11" stroke-width="14" stroke-linecap="round" fill="none"/>' +
+      '<circle cx="80" cy="100" r="58" fill="#639922" stroke="#27500A" stroke-width="3"/>' +
+      '<ellipse cx="80" cy="122" rx="34" ry="26" fill="#C0DD97"/>' +
+      '<g class="bdy-arm"><path d="M118 92 C134 78 140 62 142 50" stroke="#3B6D11" stroke-width="14" stroke-linecap="round" fill="none"/><circle cx="143" cy="46" r="11" fill="#97C459" stroke="#27500A" stroke-width="2"/></g>' +
+      '<ellipse cx="62" cy="86" rx="11" ry="14" fill="#fff"/><ellipse cx="98" cy="86" rx="11" ry="14" fill="#fff"/>' +
+      '<circle cx="64" cy="89" r="6" fill="#173404"/><circle cx="100" cy="89" r="6" fill="#173404"/>' +
+      '<circle cx="66" cy="86" r="2" fill="#fff"/><circle cx="102" cy="86" r="2" fill="#fff"/>' +
+      '<rect class="bdy-lid" x="50" y="72" width="24" height="28" rx="12" fill="#639922"/><rect class="bdy-lid" x="86" y="72" width="24" height="28" rx="12" fill="#639922"/>' +
+      '<circle cx="50" cy="106" r="7" fill="#F0997B" opacity=".75"/><circle cx="110" cy="106" r="7" fill="#F0997B" opacity=".75"/>' +
+      '<path d="M68 106 Q80 120 92 106" stroke="#173404" stroke-width="3.5" fill="#D85A30" stroke-linecap="round"/>' +
+      '</g></svg>';
+  }
+  var face = buddy(44, 'hlp-bdy');
 
   var btn = document.createElement('button');
   btn.type = 'button'; btn.className = 'hlp-btn'; btn.id = 'hlpBtn';
@@ -102,6 +135,13 @@
     '<div class="hlp-ft"><span class="hlp-dots" id="hlpD"></span><span>' +
     '<button type="button" id="hlpB">Back</button> <button type="button" class="nx" id="hlpN">Next</button></span></div></div>';
   document.body.appendChild(box);
+
+  // v3.1 CC-016: buddy in the bottom-right corner; tapping him opens the help
+  var pal = document.createElement('button');
+  pal.type = 'button'; pal.className = 'bdy'; pal.id = 'bdyPal'; pal.setAttribute('aria-label', 'Need help? Tap me');
+  pal.innerHTML = '<span class="bdy-bub" aria-hidden="true">Hi! Need help?<br>Tap me!</span>' + buddy(78, 'bdy-big');
+  document.body.appendChild(pal);
+  document.body.classList.add('bdy-room');
 
   var i = 0, timer = null, lit = null, auto = true, list = STEPS;
   function $(id) { return document.getElementById(id); }
@@ -143,10 +183,11 @@
     list = STEPS.filter(function (s) { return !s.opt || target(s); });
     var tb = [].slice.call(document.body.children).filter(function (e) { return /TEST COPY/.test(e.textContent || '') && getComputedStyle(e).position === 'sticky'; })[0];   // TEST COPY only: sit under the orange banner
     box.style.top = tb ? tb.offsetHeight + 'px' : '0';
-    i = 0; auto = true; box.hidden = false; show();
+    i = 0; auto = true; box.hidden = false; pal.hidden = true; show();
   }
-  function close() { clearTimeout(timer); unlight(); box.hidden = true; btn.focus(); }
+  function close() { clearTimeout(timer); unlight(); box.hidden = true; pal.hidden = false; btn.focus(); }
   btn.addEventListener('click', function () { box.hidden ? open() : close(); });
+  pal.addEventListener('click', function () { box.hidden ? open() : close(); });
   $('hlpX').addEventListener('click', close);
   $('hlpN').addEventListener('click', function () { auto = false; if (i === list.length - 1) close(); else { i++; show(); } });
   $('hlpB').addEventListener('click', function () { auto = false; if (i > 0) { i--; show(); } });
