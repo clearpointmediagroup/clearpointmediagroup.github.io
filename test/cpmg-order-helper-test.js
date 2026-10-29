@@ -144,7 +144,7 @@
   document.body.classList.add('bdy-room');
   function lift() {   // sit just above the fixed Send bar so he never covers it
     var bar = document.querySelector('.bar'), h = 0;
-    if (bar && getComputedStyle(bar).position === 'fixed' && bar.offsetParent !== null) h = bar.offsetHeight;
+    if (bar && getComputedStyle(bar).position === 'fixed' && getComputedStyle(bar).display !== 'none') h = bar.getBoundingClientRect().height;
     pal.style.bottom = 'calc(' + (h + 10) + 'px + env(safe-area-inset-bottom,0px))';
   }
   lift(); window.addEventListener('resize', lift); setInterval(lift, 2000);
