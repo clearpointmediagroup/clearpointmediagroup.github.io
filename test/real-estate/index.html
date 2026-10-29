@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.7-TEST (Oct 29, 2026)
+  v1.8-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.8-TEST (Oct 29, 2026) CC-027: Business name and Brokerage examples changed from Coastal Homes Team /
+                             Coastal Realty Group to Smith Home Team / Main Street Realty (fits any city).
     RE v1.7-TEST (Oct 29, 2026) CC-027: Big-screen TV button uses our own modern picture (Randy picked C): a wide,
                              thin flat screen on the wall, drawn in green, in place of the stock monitor icon.
     RE v1.6-TEST (Oct 29, 2026) CC-027: Myrtle Beach wording taken out of the examples (123 Oak Street, 456 Maple Lane,
@@ -150,11 +152,11 @@
 
     <div class="field">
       <p class="ql"><span class="qn">5</span><label for="biz">Business name</label></p>
-      <input type="text" id="biz" placeholder="Coastal Homes Team" autocomplete="organization">
+      <input type="text" id="biz" placeholder="Smith Home Team" autocomplete="organization">
       <p class="err" id="eBiz" hidden></p>
       <label class="sl" for="brok">Brokerage</label>
       <p class="hint">The real estate company you work under.</p>
-      <input type="text" id="brok" placeholder="Coastal Realty Group" autocomplete="off">
+      <input type="text" id="brok" placeholder="Main Street Realty" autocomplete="off">
       <p class="err" id="eBrok" hidden></p>
     </div>
 
@@ -190,7 +192,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.7-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.8-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Website: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Website: 'Website (16:9 wide)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
