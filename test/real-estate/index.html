@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.7-TEST (Oct 29, 2026)
+  v2.8-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.8-TEST (Oct 29, 2026) CC-027: price line shows "First graphic FREE −$25 · You pay $X" for new clients
+                             (returning clients see the plain total).
     RE v2.7-TEST (Oct 29, 2026) CC-027: no office hours shown. New promise (Randy picked): "Most proofs come back within
                              5 hours. Late-night and weekend orders are ready the next business morning." (title line, intro,
                              thank-you screen, page description).
@@ -234,7 +236,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.7-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.8-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -273,7 +275,7 @@
     $('looking').hidden = false;
     C.lookupClient(key).then(function (c) {
       $('looking').hidden = true;
-      if (c && (c.email || c.business)) { client = c; fill(c); C.keyInLink(key); }
+      if (c && (c.email || c.business)) { client = c; fill(c); C.keyInLink(key); try { showPrice(); } catch (e) { /* ok */ } }
       else if (c === false) { C.forgetKey(); key = ''; }
     });
   }
@@ -371,7 +373,17 @@
   }
   function showPrice() {
     var g = groups(places()), total = g.reduce(function (n, x) { return n + x.price; }, 0);
-    $('priceLine').textContent = !g.length ? '' : (g.length > 1 || g[0].price === 40 ? g.map(function (x) { return x.shown + ' $' + x.price; }).join(' · ') + ' · Total $' + total : 'Price: $' + total);
+    if (!g.length) { $('priceLine').textContent = ''; return; }
+    var parts = g.map(function (x) { return x.shown + ' $' + x.price; });
+    // v2.8: new clients (no saved record on this phone) see the free first graphic taken off. The order system
+    // checks for real (one free graphic per business) and takes the same $25 off line 1.
+    if (!client) {
+      var off = Math.min(25, total);
+      parts.push('First graphic FREE −$' + off);
+      $('priceLine').textContent = parts.join(' · ') + ' · You pay $' + (total - off);
+    } else {
+      $('priceLine').textContent = (g.length > 1 || g[0].price === 40 ? parts.join(' · ') + ' · ' : '') + 'Total $' + total;
+    }
   }
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'size') { err('eSize', ''); showPrice(); } });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
