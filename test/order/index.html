@@ -1,0 +1,215 @@
+<!doctype html>
+<!--
+  CPMG Order (one simple form) — test/order/index.html
+  v1.0-TEST (Oct 29, 2026)
+  TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
+  One short form that replaces both Detail Order and Quick Order: 6 questions.
+  Sends the same "quick" order the order system already takes, so the script does not change.
+    Q1 Business name   Q2 Your name, email, phone   Q3 What's it for (4 taps)
+    Q4 What should it say (one box)   Q5 Photo (optional)   Q6 Phone or TV (2 taps)
+  Returning clients: their saved info is filled in for them (same saved link as Quick Order).
+  How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
+  REVISION LOG
+    v1.0-TEST (Oct 29, 2026) First version (change card for the one simple form).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0f1712">
+<meta name="color-scheme" content="dark">
+<title>CPMG Order</title>
+<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours. Open 9 a.m. to 9 p.m. Eastern">
+<link rel="icon" href="../../assets/cpmg-icon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/cpmg-icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CPMG Order">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../../assets/cpmg-order.css?v=1.1">
+<style>
+.qn{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--ink);font:800 17px var(--display);align-items:center;justify-content:center;margin-right:8px;flex:none}
+.ql{display:flex;align-items:center;font-size:20px;font-weight:700;margin:0 0 8px}
+.ql label{font:inherit;color:inherit;margin:0;padding:0}
+.taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.taps .opt{position:relative;justify-content:center;text-align:center;font-size:18px;min-height:56px;padding:10px 8px}
+.taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.welcome2{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:17px;margin:0}
+textarea#say{min-height:110px;font-size:18px}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:#9a3412;color:#fff;font:700 20px/1.3 system-ui,sans-serif;text-align:center;padding:10px 8px;letter-spacing:.04em">TEST COPY — NOT LIVE · no real clients, no real money</div>
+<div class="wrap narrow">
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a graphic</h1><p class="sub">$25 · Your first one is free · Proof in 5 hours · 9 a.m.–9 p.m.</p></div></div>
+
+  <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
+
+  <form id="f" novalidate autocomplete="on" class="stack">
+    <p class="welcome2" id="welcome" hidden></p>
+
+    <div class="field">
+      <p class="ql"><span class="qn">1</span><label for="biz">Business name</label></p>
+      <input type="text" id="biz" placeholder="Joe's Grill" autocomplete="organization">
+      <p class="err" id="eBiz" hidden></p>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">2</span>Your name, email, phone</p>
+      <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
+      <p class="err" id="eNm" hidden></p>
+      <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
+      <p class="err" id="eEm" hidden></p>
+      <input type="tel" id="ph" placeholder="Phone" autocomplete="tel" inputmode="tel" aria-label="Phone">
+      <p class="err" id="ePh" hidden></p>
+      <p class="hint">We save this, so next time it's filled in for you.</p>
+    </div>
+
+    <fieldset class="field">
+      <legend class="ql"><span class="qn">3</span>What's it for?</legend>
+      <div class="taps">
+        <label class="opt"><input type="radio" name="what" value="Special or menu" checked><span>Special or menu</span></label>
+        <label class="opt"><input type="radio" name="what" value="Event or band"><span>Event or band</span></label>
+        <label class="opt"><input type="radio" name="what" value="Sale or deal"><span>Sale or deal</span></label>
+        <label class="opt"><input type="radio" name="what" value="Something else"><span>Something else</span></label>
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <p class="ql"><span class="qn">4</span><label for="say">What should it say?</label></p>
+      <p class="hint">A few words is plenty. Put each idea on its own line.</p>
+      <textarea id="say" placeholder="Fish fry Friday&#10;$12.99&#10;5 to 9 p.m."></textarea>
+      <p class="err" id="eSay" hidden></p>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">5</span>Add a photo (if you want)</p>
+      <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
+      <div class="thumbs" id="thumbs" hidden></div>
+      <p class="err" id="ePic" hidden></p>
+    </div>
+
+    <fieldset class="field">
+      <legend class="ql"><span class="qn">6</span>Where will you show it?</legend>
+      <div class="taps">
+        <label class="opt"><input type="radio" name="size" value="Phone" checked><span>Phone</span></label>
+        <label class="opt"><input type="radio" name="size" value="TV"><span>TV</span></label>
+      </div>
+    </fieldset>
+
+    <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
+    <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
+  </form>
+
+  <div id="ok" class="card g done" hidden role="status">
+    <div class="ck" aria-hidden="true">&#10003;</div>
+    <h3>Got it, thank you!</h3>
+    <p>Your proof comes by email within 5 hours. Orders after 9 p.m. are ready the next morning.</p>
+    <p class="sub" id="codeLbl">Your order number</p>
+    <div class="code" id="orderCode"></div>
+    <button type="button" class="ghost" id="again">Order another</button>
+  </div>
+  <div class="foot">CPMG Order · Questions: randy.turner@cpmgdata.com</div>
+</div>
+<div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
+
+<script src="../cpmg-order-config-test.js?v=1.0"></script>
+<script src="../cpmg-order-test.js?v=1.8"></script>
+<script>
+(function () {
+  'use strict';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Order v1.0-TEST (Oct 29, 2026)';
+  var USE = { Phone: 'phone', TV: 'tv' };
+  var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
+  var key = C.param('k') || C.savedKey(), client = null, sending = false;
+
+  C.watchOpts(document);
+  var photos = C.photoPicker($('pic'), $('thumbs'), $('ePic'), function (list) { $('picClear').hidden = !list.length; });
+  $('picClear').addEventListener('click', function () { photos.clear(); });
+
+  function fill(c) {
+    $('biz').value = c.business || ''; $('nm').value = c.name || '';
+    $('em').value = c.email || ''; $('ph').value = C.fmtPhone(c.phone || '');
+    $('welcome').textContent = 'Welcome back' + (c.name ? ', ' + String(c.name).split(' ')[0] : '') + '! Your info is filled in.';
+    $('welcome').hidden = false;
+  }
+  if (key) {
+    $('looking').hidden = false;
+    C.lookupClient(key).then(function (c) {
+      $('looking').hidden = true;
+      if (c && (c.email || c.business)) { client = c; fill(c); C.keyInLink(key); }
+      else if (c === false) { C.forgetKey(); key = ''; }
+    });
+  }
+
+  function err(id, msg) { C.showErr($(id), msg); return !!msg; }
+  ['biz', 'nm', 'em', 'ph', 'say'].forEach(function (id) {
+    $(id).addEventListener('input', function () { err('e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
+  });
+
+  $('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (sending) return;
+    var biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
+    var say = C.lines($('say').value);
+    var bad = [];
+    if (err('eBiz', biz ? '' : 'Type your business name.')) bad.push('biz');
+    if (err('eNm', nm ? '' : 'Type your name.')) bad.push('nm');
+    if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
+    if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
+    if (err('eSay', say.length ? '' : 'Type a few words for your graphic.')) bad.push('say');
+    if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
+
+    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var s = document.querySelector('input[name="size"]:checked'), size = s ? s.value : 'Phone';
+    var changed = !client || client.business !== biz || client.name !== nm || client.email !== em || C.digits(client.phone) !== C.digits(ph);
+    var payload = {
+      kind: 'quick',
+      formVersion: FORM_VERSION,
+      clientKey: client ? key : '',
+      customer: { name: nm, business: biz, email: em, phone: ph, industry: client ? '' : '', edited: !!client && changed },
+      graphics: [{
+        headline: say[0], lines: say.slice(1, 4), cta: '', use: USE[size] || 'phone',
+        colors: { mode: 'cpmg', main: '', second: '' },
+        notes: say.slice(4).join('\n'),
+        more: { "What it's for": what, 'Where will you use it?': size, 'Size': SIZE[size] },
+        photos: photos.list(),
+        promo: false
+      }],
+      rush: false,
+      website: C.honeypot()
+    };
+
+    sending = true; $('sendErr').hidden = true;
+    C.busy($('sendBtn'), true, 'Sending…');
+    C.sendOrder(payload).then(function (res) {
+      sending = false;
+      if (res && res.ok) {
+        C.busy($('sendBtn'), false, 'Send my order');
+        if (res.clientKey) { key = res.clientKey; C.rememberKey(key); C.keyInLink(key); }
+        client = { name: nm, business: biz, email: em, phone: ph };
+        $('orderCode').textContent = res.orderCode || '';
+        $('orderCode').hidden = $('codeLbl').hidden = !res.orderCode;
+        $('f').hidden = true; $('sendBar').hidden = true; $('ok').hidden = false; window.scrollTo(0, 0);
+      } else {
+        C.busy($('sendBtn'), false, 'Try sending again');
+        $('sendErrText').textContent = C.failText(res); $('sendErr').hidden = false;
+        try { $('sendErr').scrollIntoView({ block: 'center' }); } catch (e) { /* old phone */ }
+      }
+    });
+  });
+
+  $('again').addEventListener('click', function () {
+    $('say').value = ''; photos.clear();
+    if (client) fill(client);
+    $('ok').hidden = true; $('f').hidden = false; $('sendBar').hidden = false; window.scrollTo(0, 0);
+  });
+})();
+</script>
+</body>
+</html>
