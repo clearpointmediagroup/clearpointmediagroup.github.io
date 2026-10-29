@@ -200,7 +200,7 @@ details.how .inner{font-size:17px;line-height:1.45}
 
     <div class="card stack" id="picNeed" style="gap:14px">
         <div class="field"><span class="lbl" data-q="pic">Photo or logo (optional)</span>
-          <p class="hint">Your house or listing, your food, your team or your logo. Up to 3 pictures. Phone photos are fine.</p>
+          <p class="hint">Your house or listing, your food, your team or your logo. Up to 3 pictures. Phone photos are fine. <b>Included in your price; no extra cost.</b></p>
           <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
           <div class="thumbs" id="thumbs" hidden></div>
           <p class="err" id="e-pic" hidden></p>
@@ -263,7 +263,7 @@ details.how .inner{font-size:17px;line-height:1.45}
       <label class="opt"><input type="radio" data-n="size" value="Facebook or Instagram post"> <span class="shp sq" aria-hidden="true"></span><span class="szt"><b>Square: Facebook or Instagram post ($25)</b><small>Regular posts people scroll past · 1:1 · 1080 × 1080</small></span></label>
       <label class="opt"><input type="radio" data-n="size" value="Phone + Wide"> <span class="shp2" aria-hidden="true"><span class="shp tall"></span><span class="shp wide"></span></span><span class="szt"><b>Both tall and wide ($40)</b><small>Not sure? You get 2 graphics: one for phones, one for TVs</small></span></label>
     </fieldset>
-    <label class="opt" data-q="promo"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look with my logo and photo ($45, or $60 for both sizes)</span></label>
+    <label class="opt" data-q="promo"><input type="checkbox" data-n="promo"> <span data-promotxt>Promo look: a fancier design ($45, or $60 for both sizes)</span></label>
     <div class="field"><label data-q="hl">What's this one about?</label><p class="hint">A few words. This becomes the headline.</p><input type="text" data-f="hl" placeholder="Big sale this weekend"><p class="err" data-e="hl" hidden></p></div>
     <div class="field"><label data-q="ideas">What should it say?</label><p class="hint">One idea per line, up to 5 lines.</p><textarea data-f="ideas" placeholder="20% off everything&#10;Friday through Sunday only"></textarea><p class="err" data-e="ideas" hidden></p></div>
     <div class="field"><label data-q="cta">What should people do next?</label><input type="text" data-f="cta" placeholder="Stop by today"><p class="err" data-e="cta" hidden></p></div>
@@ -311,7 +311,7 @@ details.how .inner{font-size:17px;line-height:1.45}
   function money() { return C.orderTotal(P, cards().map(function (c) { return { pair: pick(c, 'size') === 'Phone + Wide', promo: promoOn(c) }; }), !client, rushOn()); }
   function total() { return money().total; }   // v4.1: takes the free first graphic off
   function priceText() { var t = total(); return t ? '$' + t : (P.monthlyPlan ? 'on your plan' : 'first one free'); }   // v4.1
-  function paintPromo(c) { var t = c.querySelector('[data-promotxt]'); if (t) t.textContent = 'Promo look with my logo and photo ($' + P.promo + ', or $' + P.promoPair + ' for both sizes)'; }
+  function paintPromo(c) { var t = c.querySelector('[data-promotxt]'); if (t) t.textContent = 'Promo look: a fancier design ($' + P.promo + ', or $' + P.promoPair + ' for both sizes)'; }
   var freeChecked = !key;   // v3.1: true once we know if this is a returning client
   function howBox() {        // CC-024: "How this works" opens for first-timers, folds up for returning clients
     var h = $('howBox'); if (!h || h.getAttribute('data-touched')) return;
@@ -608,13 +608,13 @@ window.CPMG_TIPS = [
   { sel: 'label[for="street"]', tip: 'Optional. Fill it in if you want your address on your graphics. We save it for next time.' },
   { sel: 'label[for="fp"]', tip: 'The number your customers should call. It is printed on your graphic. Just the 10 digits.' },
   { sel: '[data-q="size"]', tip: 'Pick the shape that fits where people will see it.<br><b>Tall</b> fills a phone screen. <b>Wide</b> fills a TV or computer screen. <b>Square</b> is a regular Facebook or Instagram post.<br>Not sure? Pick <b>Both</b> and get one tall and one wide.' },
-  { sel: '[data-q="promo"]', tip: 'A fancier design built around <b>your logo and a photo you send</b>. $45 for one size, or $60 for tall and wide. Add your logo or photo in the <b>Photo or logo</b> box below.' },
+  { sel: '[data-q="promo"]', tip: 'Your photo is <b>included at no extra cost</b> on every graphic. Promo is a fancier, magazine-style design built around your logo and photo. $45 for one size, or $60 for tall and wide.' },
   { sel: '[data-q="hl"]', tip: 'The big words at the top of your graphic. Keep it to a few words.<br><b>Example:</b> {hl}' },
   { sel: '[data-q="ideas"]', tip: 'The main points you want people to read, one per line (up to 5). Short is best.<br><b>Example:</b><br>{ideas}' },
   { sel: '[data-q="cta"]', tip: 'The one thing you want people to do after they see it.<br><b>Example:</b> {cta}' },
   { sel: '[data-q="col"]', tip: '<b>Your choice:</b> we pick colors that fit your business.<br><b>I\'ll pick:</b> you tap your main color.<br><b>Match my logo:</b> we use the colors in your logo.' },
   { sel: '#rushOpt', tip: 'Need it fast? Your proof comes within <b>1 hour</b> for $10 more. Only 2 rush orders a day. Without rush, it comes within 5 hours.' },
-  { sel: '[data-q="pic"]', tip: 'Send a photo to use on your graphics: your house or listing, your food, your team, your place or your logo. Phone pictures are fine.' },
+  { sel: '[data-q="pic"]', tip: 'Send a photo to use on your graphics: your house or listing, your food, your team, your place or your logo. Phone pictures are fine. <b>It\'s included in your price; no extra cost.</b>' },
   { sel: 'label[for="web"]', tip: 'Optional. Your website, if you want it on your graphic.<br><b>Example:</b> {web}' },
   { sel: 'label[for="area"]', tip: 'Optional. The towns or neighborhoods you cover.<br><b>Example:</b> {area}' },
   { sel: 'label[for="needBy"]', tip: 'Optional. The day and time you need your graphic. Leave it empty if there is no rush.' }
