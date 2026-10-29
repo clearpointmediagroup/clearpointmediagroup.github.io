@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.5-TEST (Oct 29, 2026)
+  v1.6-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.6-TEST (Oct 29, 2026) CC-027: Myrtle Beach wording taken out of the examples (123 Oak Street, 456 Maple Lane,
+                             Serving our neighborhood). Question 4 has 3 buttons: Phone (tall), Big-screen TV (wide 16:9,
+                             flat-screen picture), Website (wide 16:9). Website is sent as a wide graphic like the TV.
     RE v1.5-TEST (Oct 29, 2026) CC-027: new order: 1 What kind of graphic, 2 What should it say, 3 Photo,
                              4 Phone or TV, 5 Business name + Brokerage, 6 Your name, email, phone (info moved to the end).
     RE v1.4-TEST (Oct 29, 2026) CC-027: cartoon emoji pictures swapped for clean green line icons (Tabler):
@@ -64,6 +67,9 @@
 .taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .taps .opt{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;text-align:center;font-size:18px;font-weight:600;min-height:96px;padding:12px 8px;border-width:2px}
 .taps .pic{font-size:34px;line-height:1;color:var(--green)}
+.taps.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.taps.three .opt{font-size:16px;padding:10px 4px}
+.taps .szn{font-size:14px;font-weight:400;color:var(--muted)}
 .photo .ti{font-size:22px}
 .taps .opt.on{border:3px solid var(--green);background:var(--deep)}
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
@@ -132,9 +138,10 @@
 
     <fieldset class="field">
       <legend class="ql"><span class="qn">4</span>Where will you show it?</legend>
-      <div class="taps">
-        <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span></label>
-        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><i class="ti ti-device-tv"></i></span><span>TV</span></label>
+      <div class="taps three">
+        <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
+        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><i class="ti ti-device-desktop"></i></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
+        <label class="opt"><input type="radio" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
       </div>
     </fieldset>
 
@@ -180,9 +187,9 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.5-TEST (Oct 29, 2026)';
-  var USE = { Phone: 'phone', TV: 'tv' };
-  var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.6-TEST (Oct 29, 2026)';
+  var USE = { Phone: 'phone', TV: 'tv', Website: 'tv' };
+  var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Website: 'Website (16:9 wide)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
   var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
 
@@ -272,13 +279,13 @@
 
   // v1.2: gray examples match the picture tapped in question 3
   var EX = {
-    '': ['Just Listed', '123 Ocean Blvd., Myrtle Beach', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', '5 minutes to the beach'], 'Call me for a showing'],
-    'Just listed': ['Just Listed', '123 Ocean Blvd., Myrtle Beach', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', '5 minutes to the beach'], 'Call me for a showing'],
-    'Open house': ['Open House', '123 Ocean Blvd.', ['Sunday 1 to 4 p.m.', '3 beds, 2 baths', '$425,000', 'Brand-new kitchen', 'Snacks and drinks'], 'Stop by and take a look'],
-    'Just sold': ['Just Sold', '123 Ocean Blvd.', ['Sold in 9 days', 'Over asking price', '3 beds, 2 baths', 'Multiple offers', 'Happy new owners'], 'Thinking of selling? Call me'],
-    'Price drop': ['New Price', '123 Ocean Blvd.', ['Now $399,000', 'Was $425,000', '3 beds, 2 baths', 'Move-in ready', 'Going fast'], 'Book a showing today'],
-    'Coming soon': ['Coming Soon', 'Carolina Forest', ['4 beds, 3 baths', 'On the market Nov. 15', 'About $500,000', 'Big corner lot', 'Ask for a sneak peek'], 'Call me for a sneak peek'],
-    'Something else': ['Happy Thanksgiving', 'From my family to yours', ['Wishing you the best', 'Thank you for your trust', 'Free home value check', 'Serving Myrtle Beach', 'Ready when you are'], 'Call me anytime']
+    '': ['Just Listed', '123 Oak Street', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', 'Near shops and schools'], 'Call me for a showing'],
+    'Just listed': ['Just Listed', '123 Oak Street', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', 'Near shops and schools'], 'Call me for a showing'],
+    'Open house': ['Open House', '123 Oak Street', ['Sunday 1 to 4 p.m.', '3 beds, 2 baths', '$425,000', 'Brand-new kitchen', 'Snacks and drinks'], 'Stop by and take a look'],
+    'Just sold': ['Just Sold', '123 Oak Street', ['Sold in 9 days', 'Over asking price', '3 beds, 2 baths', 'Multiple offers', 'Happy new owners'], 'Thinking of selling? Call me'],
+    'Price drop': ['New Price', '123 Oak Street', ['Now $399,000', 'Was $425,000', '3 beds, 2 baths', 'Move-in ready', 'Going fast'], 'Book a showing today'],
+    'Coming soon': ['Coming Soon', '456 Maple Lane', ['4 beds, 3 baths', 'On the market Nov. 15', 'About $500,000', 'Big corner lot', 'Ask for a sneak peek'], 'Call me for a sneak peek'],
+    'Something else': ['Happy Thanksgiving', 'From my family to yours', ['Wishing you the best', 'Thank you for your trust', 'Free home value check', 'Serving our neighborhood', 'Ready when you are'], 'Call me anytime']
   };
   function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; }
   examples('');
