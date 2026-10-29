@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.15-TEST (Oct 29, 2026)
+  v2.16-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.16-TEST (Oct 29, 2026) CC-027: new question 2 "Pick a look": Professional, Casual, Luxury, Pool and summer,
+                             Holiday (opens "Which holiday?"), You pick for me (picked to start). Sent as Look (goes to Notes and the
+                             Gemini file). Questions now 1-8.
     RE v2.15-TEST (Oct 29, 2026) CC-027: website box hint shortened so it isn't cut off on a phone; "if you want" moved
                              to a small line above the box.
     RE v2.14-TEST (Oct 29, 2026) CC-027: regroup (Randy approved): "Bottom of the graphic" (show phone, website) is a
@@ -185,8 +188,25 @@
       <p class="err" id="eWhat" hidden></p>
     </fieldset>
 
+    <fieldset class="field">
+      <legend class="ql"><span class="qn">2</span>Pick a look</legend>
+      <p class="hint">Tap one. Not sure? We'll pick for you.</p>
+      <div class="taps" id="lookTaps">
+        <label class="opt"><input type="radio" name="look" value="Professional"><span class="pic" aria-hidden="true"><i class="ti ti-briefcase"></i></span><span>Professional</span><span class="szn">Clean and polished</span></label>
+        <label class="opt"><input type="radio" name="look" value="Casual"><span class="pic" aria-hidden="true"><i class="ti ti-mood-smile"></i></span><span>Casual</span><span class="szn">Warm and friendly</span></label>
+        <label class="opt"><input type="radio" name="look" value="Luxury"><span class="pic" aria-hidden="true"><i class="ti ti-diamond"></i></span><span>Luxury</span><span class="szn">High-end homes</span></label>
+        <label class="opt"><input type="radio" name="look" value="Pool and summer"><span class="pic" aria-hidden="true"><i class="ti ti-sun"></i></span><span>Pool and summer</span><span class="szn">Bright and sunny</span></label>
+        <label class="opt"><input type="radio" name="look" value="Holiday"><span class="pic" aria-hidden="true"><i class="ti ti-gift"></i></span><span>Holiday</span><span class="szn">Tell us which one</span></label>
+        <label class="opt"><input type="radio" name="look" value="You pick for me" checked><span class="pic" aria-hidden="true"><i class="ti ti-wand"></i></span><span>You pick for me</span><span class="szn">We pick the look</span></label>
+      </div>
+      <div id="holidayBox" hidden style="margin-top:10px">
+        <label class="sl" for="holiday" style="margin-top:0">Which holiday?</label>
+        <input type="text" id="holiday" placeholder="Thanksgiving" autocomplete="off">
+      </div>
+    </fieldset>
+
     <div class="field">
-      <p class="ql"><span class="qn">2</span>What should it say?</p>
+      <p class="ql"><span class="qn">3</span>What should it say?</p>
       <p class="hint">Fill in the 4 parts of your graphic. A few words each.</p>
       <label class="sl" for="ttl">Title</label>
       <p class="hint">The big words at the top.</p>
@@ -216,7 +236,7 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">3</span>Add photos (if you want)</p>
+      <p class="ql"><span class="qn">4</span>Add photos (if you want)</p>
       <p class="hint">Up to 3: the house, your headshot, and your logo. Take a new picture, or upload ones you already have.</p>
       <div class="photo"><label class="btn" for="cam"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="cam" accept="image/*" capture="environment"></label><label class="btn" for="pic"><i class="ti ti-photo" aria-hidden="true"></i> Upload a picture<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
       <div class="thumbs" id="thumbs" hidden></div>
@@ -224,7 +244,7 @@
     </div>
 
     <fieldset class="field">
-      <legend class="ql"><span class="qn">4</span>Where will you show it?</legend>
+      <legend class="ql"><span class="qn">5</span>Where will you show it?</legend>
       <p class="hint">Tap all that you want.</p>
       <div class="taps" id="sizeTaps" tabindex="-1">
         <label class="opt"><input type="checkbox" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
@@ -236,7 +256,7 @@
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">5</span>Want it faster or fancier?</p>
+      <p class="ql"><span class="qn">6</span>Want it faster or fancier?</p>
       <p class="hint">Tap a box to add it. Tap again to take it off. Both are optional.</p>
       <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
       <label class="opt xcard"><input type="checkbox" id="promo"><i class="ti ti-sparkles" aria-hidden="true"></i><span class="xt"><span class="xn">Promo look</span><span class="xd">A fancier, magazine-style design.</span><span class="xp">$45 instead of $25</span><span class="xd">Phone + TV pair: $60 instead of $40</span></span></label>
@@ -244,7 +264,7 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">6</span><label for="biz">Business name</label></p>
+      <p class="ql"><span class="qn">7</span><label for="biz">Business name</label></p>
       <input type="text" id="biz" placeholder="Smith Home Team" autocomplete="organization">
       <p class="err" id="eBiz" hidden></p>
       <label class="sl" for="brok">Brokerage</label>
@@ -254,7 +274,7 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">7</span>Your name, email, phone</p>
+      <p class="ql"><span class="qn">8</span>Your name, email, phone</p>
       <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
       <p class="err" id="eNm" hidden></p>
       <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
@@ -285,7 +305,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.15-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.16-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -361,7 +381,7 @@
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
         more: { showPhone: $('showPh').checked, website: $('site').value.trim() } },
-      graphics: graphicsFor(picked, { promo: $('promo').checked, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
+      graphics: graphicsFor(picked, { look: lookText(), promo: $('promo').checked, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
       rush: $('rush').checked,
       website: C.honeypot()
     };
@@ -402,6 +422,12 @@
 
   // v2.4: more than one place. Phone + (TV or Website) = one $40 pair; TV and Website share one wide graphic;
   // Social media is its own $25 graphic. Prices stay the order system's (first one free is taken off there).
+  // v2.16: the look they picked (Holiday adds which holiday)
+  function lookText() {
+    var l = document.querySelector('input[name="look"]:checked'), v = l ? l.value : 'You pick for me', h = $('holiday').value.trim();
+    return v === 'Holiday' && h ? 'Holiday: ' + h : v;
+  }
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') $('holidayBox').hidden = e.target.value !== 'Holiday'; });
   function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
@@ -417,7 +443,7 @@
     var list = photos.list();
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
-        more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size },
+        more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look },
         photos: list, promo: !!t.promo };
     });
   }
