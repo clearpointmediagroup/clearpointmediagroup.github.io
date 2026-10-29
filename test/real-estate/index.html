@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.8-TEST (Oct 29, 2026)
+  v2.9-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.9-TEST (Oct 29, 2026) CC-027: new question 5 "Make it special": Rush (+$10, proof within 1 hour) and Promo look
+                             ($45, $60 pair) as one-tap choices; price line adds them. Questions now 1-8.
     RE v2.8-TEST (Oct 29, 2026) CC-027: price line shows "First graphic FREE −$25 · You pay $X" for new clients
                              (returning clients see the plain total).
     RE v2.7-TEST (Oct 29, 2026) CC-027: no office hours shown. New promise (Randy picked): "Most proofs come back within
@@ -103,7 +105,8 @@
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .price{font-size:18px;font-weight:700;color:var(--green);margin:10px 0 0}
-.chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:6px 0 0}
+.chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:8px 0 0;line-height:1.35}
+.chk b{color:var(--green)}
 .chk input{width:24px;height:24px;flex:none;accent-color:var(--green)}
 .intro{background:var(--deep);border:2px solid var(--green);border-radius:12px;padding:12px 14px;margin:0 0 16px}
 .intro p{margin:0;font-size:17px;line-height:1.55}
@@ -189,13 +192,20 @@
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">5</span>Bottom of your graphic</p>
+      <p class="ql"><span class="qn">5</span>Make it special (if you want)</p>
+      <label class="chk"><input type="checkbox" id="rush"> <span>Rush: proof within 1 hour <b>+$10</b></span></label>
+      <label class="chk"><input type="checkbox" id="promo"> <span>Promo look: a fancier, magazine-style design <b>$45</b> ($60 for a pair)</span></label>
+      <p class="hint" style="margin-top:6px">Rush is during business hours. If today's rush spots are full, we'll tell you and won't charge for it.</p>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">6</span>Bottom of your graphic</p>
       <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
       <input type="text" id="site" placeholder="Website or Facebook page (if you want)" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">6</span><label for="biz">Business name</label></p>
+      <p class="ql"><span class="qn">7</span><label for="biz">Business name</label></p>
       <input type="text" id="biz" placeholder="Smith Home Team" autocomplete="organization">
       <p class="err" id="eBiz" hidden></p>
       <label class="sl" for="brok">Brokerage</label>
@@ -205,7 +215,7 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">7</span>Your name, email, phone</p>
+      <p class="ql"><span class="qn">8</span>Your name, email, phone</p>
       <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
       <p class="err" id="eNm" hidden></p>
       <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
@@ -236,7 +246,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.8-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.9-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -312,8 +322,8 @@
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
         more: { showPhone: $('showPh').checked, website: $('site').value.trim() } },
-      graphics: graphicsFor(picked, { ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
-      rush: false,
+      graphics: graphicsFor(picked, { promo: $('promo').checked, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
+      rush: $('rush').checked,
       website: C.honeypot()
     };
 
@@ -357,10 +367,11 @@
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
     var wideName = wide.map(function (v) { return SHOWN[v]; }).join(' + ');
-    if (tall && wide.length) out.push({ use: 'both', shown: 'Phone + ' + wideName, size: 'Phone + Wide', price: 40 });
-    else if (tall) out.push({ use: 'phone', shown: 'Phone', size: SIZE.Phone, price: 25 });
-    else if (wide.length) out.push({ use: 'tv', shown: wideName, size: 'Wide 16:9', price: 25 });
-    if (p.indexOf('Social') > -1) out.push({ use: 'social', shown: 'Social media', size: SIZE.Social, price: 25 });
+    var pr = $('promo') && $('promo').checked, one = pr ? 45 : 25, pair = pr ? 60 : 40;
+    if (tall && wide.length) out.push({ use: 'both', shown: 'Phone + ' + wideName, size: 'Phone + Wide', price: pair });
+    else if (tall) out.push({ use: 'phone', shown: 'Phone', size: SIZE.Phone, price: one });
+    else if (wide.length) out.push({ use: 'tv', shown: wideName, size: 'Wide 16:9', price: one });
+    if (p.indexOf('Social') > -1) out.push({ use: 'social', shown: 'Social media', size: SIZE.Social, price: one });
     return out;
   }
   function graphicsFor(p, t) {
@@ -368,24 +379,26 @@
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
         more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size },
-        photos: list, promo: false };
+        photos: list, promo: !!t.promo };
     });
   }
   function showPrice() {
     var g = groups(places()), total = g.reduce(function (n, x) { return n + x.price; }, 0);
     if (!g.length) { $('priceLine').textContent = ''; return; }
-    var parts = g.map(function (x) { return x.shown + ' $' + x.price; });
+    var parts = g.map(function (x) { return x.shown + ($('promo').checked ? ' (Promo)' : '') + ' $' + x.price; }), rush = $('rush').checked ? 10 : 0;
     // v2.8: new clients (no saved record on this phone) see the free first graphic taken off. The order system
     // checks for real (one free graphic per business) and takes the same $25 off line 1.
     if (!client) {
       var off = Math.min(25, total);
       parts.push('First graphic FREE −$' + off);
-      $('priceLine').textContent = parts.join(' · ') + ' · You pay $' + (total - off);
+      if (rush) parts.push('Rush +$10');
+      $('priceLine').textContent = parts.join(' · ') + ' · You pay $' + (total - off + rush);
     } else {
-      $('priceLine').textContent = (g.length > 1 || g[0].price === 40 ? parts.join(' · ') + ' · ' : '') + 'Total $' + total;
+      if (rush) parts.push('Rush +$10');
+      $('priceLine').textContent = (parts.length > 1 || g[0].use === 'both' ? parts.join(' · ') + ' · ' : '') + 'Total $' + (total + rush);
     }
   }
-  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'size') { err('eSize', ''); showPrice(); } });
+  document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'size' || e.target.id === 'rush' || e.target.id === 'promo')) { err('eSize', ''); showPrice(); } });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
 
   $('again').addEventListener('click', function () {
