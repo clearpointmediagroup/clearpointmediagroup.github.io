@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.4-TEST (Oct 29, 2026)
+  v1.5-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.5-TEST (Oct 29, 2026) CC-027: new order: 1 What kind of graphic, 2 What should it say, 3 Photo,
+                             4 Phone or TV, 5 Business name + Brokerage, 6 Your name, email, phone (info moved to the end).
     RE v1.4-TEST (Oct 29, 2026) CC-027: cartoon emoji pictures swapped for clean green line icons (Tabler):
                              house, door, house with check, price tag, calendar, pencil; phone, TV, camera too.
     RE v1.3-TEST (Oct 29, 2026) CC-027: Body is 5 short line boxes, each with its own gray example that
@@ -83,29 +85,8 @@
   <form id="f" novalidate autocomplete="on" class="stack">
     <p class="welcome2" id="welcome" hidden></p>
 
-    <div class="field">
-      <p class="ql"><span class="qn">1</span><label for="biz">Business name</label></p>
-      <input type="text" id="biz" placeholder="Coastal Homes Team" autocomplete="organization">
-      <p class="err" id="eBiz" hidden></p>
-      <label class="sl" for="brok">Brokerage</label>
-      <p class="hint">The real estate company you work under.</p>
-      <input type="text" id="brok" placeholder="Coastal Realty Group" autocomplete="off">
-      <p class="err" id="eBrok" hidden></p>
-    </div>
-
-    <div class="field">
-      <p class="ql"><span class="qn">2</span>Your name, email, phone</p>
-      <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
-      <p class="err" id="eNm" hidden></p>
-      <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
-      <p class="err" id="eEm" hidden></p>
-      <input type="tel" id="ph" placeholder="Phone" autocomplete="tel" inputmode="tel" aria-label="Phone">
-      <p class="err" id="ePh" hidden></p>
-      <p class="hint">We save this, so next time it's filled in for you.</p>
-    </div>
-
     <fieldset class="field">
-      <legend class="ql"><span class="qn">3</span>What kind of graphic?</legend>
+      <legend class="ql"><span class="qn">1</span>What kind of graphic?</legend>
       <p class="hint">Tap one picture.</p>
       <div class="taps" id="whatTaps" tabindex="-1">
         <label class="opt"><input type="radio" name="what" value="Just listed"><span class="pic" aria-hidden="true"><i class="ti ti-home"></i></span><span>Just listed</span></label>
@@ -119,7 +100,7 @@
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">4</span>What should it say?</p>
+      <p class="ql"><span class="qn">2</span>What should it say?</p>
       <p class="hint">Fill in the 4 parts of your graphic. A few words each.</p>
       <label class="sl" for="ttl">Title</label>
       <p class="hint">The big words at the top.</p>
@@ -143,19 +124,40 @@
     </div>
 
     <div class="field">
-      <p class="ql"><span class="qn">5</span>Add a photo (if you want)</p>
+      <p class="ql"><span class="qn">3</span>Add a photo (if you want)</p>
       <div class="photo"><label class="btn" for="pic"><i class="ti ti-camera" aria-hidden="true"></i> Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
       <div class="thumbs" id="thumbs" hidden></div>
       <p class="err" id="ePic" hidden></p>
     </div>
 
     <fieldset class="field">
-      <legend class="ql"><span class="qn">6</span>Where will you show it?</legend>
+      <legend class="ql"><span class="qn">4</span>Where will you show it?</legend>
       <div class="taps">
         <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span></label>
         <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><i class="ti ti-device-tv"></i></span><span>TV</span></label>
       </div>
     </fieldset>
+
+    <div class="field">
+      <p class="ql"><span class="qn">5</span><label for="biz">Business name</label></p>
+      <input type="text" id="biz" placeholder="Coastal Homes Team" autocomplete="organization">
+      <p class="err" id="eBiz" hidden></p>
+      <label class="sl" for="brok">Brokerage</label>
+      <p class="hint">The real estate company you work under.</p>
+      <input type="text" id="brok" placeholder="Coastal Realty Group" autocomplete="off">
+      <p class="err" id="eBrok" hidden></p>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">6</span>Your name, email, phone</p>
+      <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
+      <p class="err" id="eNm" hidden></p>
+      <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
+      <p class="err" id="eEm" hidden></p>
+      <input type="tel" id="ph" placeholder="Phone" autocomplete="tel" inputmode="tel" aria-label="Phone">
+      <p class="err" id="ePh" hidden></p>
+      <p class="hint">We save this, so next time it's filled in for you.</p>
+    </div>
 
     <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
     <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
@@ -178,7 +180,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.4-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.5-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
