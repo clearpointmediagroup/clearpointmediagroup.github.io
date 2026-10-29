@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.17-TEST (Oct 29, 2026)
+  v2.18-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,7 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.18-TEST (Oct 29, 2026) CC-027: "You pick for me" spans the full row when the look count is odd.
     RE v2.17-TEST (Oct 29, 2026) CC-027: Pick a look adds "3D poster" (Bold, professional 3D). 7 looks.
     RE v2.16-TEST (Oct 29, 2026) CC-027: new question 2 "Pick a look": Professional, Casual, Luxury, Pool and summer,
                              Holiday (opens "Which holiday?"), You pick for me (picked to start). Sent as Look (goes to Notes and the
@@ -122,6 +123,7 @@
 .taps .opt.on{border:3px solid var(--green);background:var(--deep)}
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+#lookTaps .opt:last-child:nth-child(odd){grid-column:1 / -1}
 .xcard{position:relative;display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line, #2c3d33);border-radius:12px;padding:12px 14px;margin:0 0 10px;background:var(--card);cursor:pointer}
 .xcard input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .xcard .ti{font-size:30px;color:var(--green);margin-top:2px;flex:none}
@@ -307,7 +309,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.17-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.18-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
