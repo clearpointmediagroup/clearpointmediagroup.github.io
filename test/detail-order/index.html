@@ -1,7 +1,7 @@
 <!-- TEST COPY (CC-007) v1.0-TEST (Oct 28, 2026): copy of the live page pointed at the CPMG Orders TEST script, with an orange TEST banner. Not for clients. -->
 <!-- TEST (Oct 29, 2026) CC-017: top line says which form this is. -->
 <!-- TEST v3.1 (Oct 29, 2026) CC-016: loads cpmg-order-helper-test.js v3.1 (new helper buddy). -->
-<!-- TEST v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top (open for first-timers, folded for returning clients). -->
+<!-- TEST v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top (open for first-timers, folded for returning clients). Helper walk-through and corner buddy removed. -->
 <!-- TEST v5.1 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
 <!doctype html>
 <!--
@@ -13,6 +13,7 @@
   REVISION LOG
     v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
                         and why we ask for each part. Open for first-timers, folded up for returning clients.
+                        Removed the whole helper (orange help button, walk-through and corner buddy) for a clean top.
     v5.1 (Oct 29, 2026) CC-023: a green "?" next to every question opens a plain-words bubble with an example
                         (cpmg-order-tips.js v1.0). Clearer words: "Your ideas" is now "What should it say?",
                         "What should people do?" is now "What should people do next?". Size choices show a shape picture,
@@ -582,21 +583,7 @@ details.how .inner{font-size:17px;line-height:1.45}
   function fld(f) { var x = g('[data-f="' + f + '"]'); return x ? x.closest('.field') : null; }
   function fs(n) { var x = g('[data-n="' + n + '"]'); return x ? x.closest('fieldset') : null; }
   function saved() { return !document.getElementById('dSaved').hidden; }
-  window.CPMG_HELP = [
-    { t: 'Hi! Ordering takes about 2 minutes.', s: "I'll show you each part. Tap any green ? for more help." },
-    { t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
-      s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
-      el: function () { return saved() ? document.getElementById('dSaved') : document.getElementById('dFields'); } },
-    { t: 'Where will people see it?', s: 'Tall is for phones, Wide is for TVs. Not sure? Pick Both ($40).', el: function () { return fs('size'); } },
-    { t: 'Want your logo and photo on it?', s: 'Check Promo look. It costs a little more.', el: function () { var x = g('[data-n="promo"]'); return x ? x.closest('label') : null; } },
-    { t: "What's it about? A few words.", s: 'Like: Freeze warning this weekend. This becomes the headline.', el: function () { return fld('hl'); } },
-    { t: 'What should it say? One idea per line.', s: 'Short is best. The graphic does the talking.', el: function () { return fld('ideas'); } },
-    { t: 'What should people do next?', s: 'Like: Call us today, or Stop by Friday.', el: function () { return fld('cta'); } },
-    { t: 'Colors: we can pick for you.', s: 'Or pick your own, or match your logo.', el: function () { return fs('col'); } },
-    { opt: true, t: 'In a hurry? Check Rush.', s: 'Your proof in 1 hour for $10 more.', el: function () { var r = document.getElementById('rushBox'); return r && !r.hidden ? r : null; } },
-    { t: 'Logo, photo, and due date go in here.', s: "We opened it for you. All of it is optional.", el: function () { var m = document.getElementById('more'); m.open = true; return m; } },
-    { t: 'Tap Review my order.', s: 'Check it, then send. You see a proof first. You pay only after you OK it.', el: function () { return document.getElementById('go'); } }
-  ];
+  /* CC-024: the help walk-through and corner buddy were removed (cpmg-order-helper.js no longer loaded). */
 })();
 </script>
 <script>
@@ -623,6 +610,5 @@ window.CPMG_TIPS = [
 ];
 </script>
 <script src="../cpmg-order-tips-test.js?v=1.0"></script>
-<script src="../cpmg-order-helper-test.js?v=3.1d"></script>
 </body>
 </html>

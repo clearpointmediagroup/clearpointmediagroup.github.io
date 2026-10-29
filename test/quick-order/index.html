@@ -1,7 +1,7 @@
 <!-- TEST COPY (CC-007) v1.0-TEST (Oct 28, 2026): copy of the live page pointed at the CPMG Orders TEST script, with an orange TEST banner. Not for clients. -->
 <!-- TEST (Oct 29, 2026) CC-017: top line says which form this is. -->
 <!-- TEST v3.1 (Oct 29, 2026) CC-016: loads cpmg-order-helper-test.js v3.1 (new helper buddy). -->
-<!-- TEST v5.0 (Oct 29, 2026) CC-024: "New here? How this works" box at the top (open for first-timers, folded for returning clients). -->
+<!-- TEST v5.0 (Oct 29, 2026) CC-024: "New here? How this works" box at the top (open for first-timers, folded for returning clients). Helper walk-through and corner buddy removed. -->
 <!-- TEST v4.9 (Oct 29, 2026) CC-023: green "?" help bubbles (cpmg-order-tips-test.js v1.0), clearer words, size choices with shape, size and use. -->
 <!doctype html>
 <!--
@@ -15,6 +15,7 @@
   REVISION LOG
     v5.0 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
                         and why we ask for each part. Open for first-timers, folded up for returning clients.
+                        Removed the whole helper (orange help button, walk-through and corner buddy) for a clean top.
     v4.9 (Oct 29, 2026) CC-023: a green "?" next to every question opens a plain-words bubble with an example
                         (cpmg-order-tips.js v1.0). Clearer words: "Up to 3 short lines" is now "Extra lines to show (up to 3)",
                         "What should people do?" is now "What should people do next?". Size choices show a shape picture,
@@ -444,19 +445,7 @@ details.how .inner{font-size:17px;line-height:1.45}
 (function () {
   function f(id) { var x = document.getElementById(id); return x ? x.closest('.field') : null; }
   function saved() { var x = document.getElementById('infoSaved'); return x && !x.hidden; }
-  window.CPMG_HELP = [
-    { t: 'Hi! This takes about 1 minute.', s: "I'll show you each part. Tap any green ? for more help." },
-    { opt: true, t: function () { return saved() ? 'Your saved info is here.' : 'Your info goes here, one time.'; },
-      s: function () { return saved() ? 'Need a change? Tap Edit my info.' : 'We save it. Next time it fills in for you.'; },
-      el: function () { return document.getElementById('info'); } },
-    { t: 'Headline: a few words.', s: "Like: Tonight's special.", el: function () { return f('hl'); } },
-    { t: 'Extra lines to show, up to 3.', s: 'Press Enter after each one. Short is best.', el: function () { return f('ideas'); } },
-    { t: 'What should people do next?', s: 'Like: Come in tonight.', el: function () { return f('cta'); } },
-    { t: 'Where will people see it?', s: 'Tall is for phones, Wide is for TVs, or get both.', el: function () { var x = document.querySelector('input[name="size"]'); return x ? x.closest('fieldset') : null; } },
-    { t: 'Have a photo? Add it.', s: 'No photo? That\'s fine. Skip it.', el: function () { return f('pic'); } },
-    { opt: true, t: 'In a hurry? Check Rush.', s: 'Your proof in 1 hour for $10 more.', el: function () { var r = document.getElementById('rushBox'); return r && !r.hidden ? r : null; } },
-    { t: 'Tap Send. That\'s it.', s: 'You see a proof first. You pay only after you OK it.', el: function () { return document.getElementById('sendBtn'); } }
-  ];
+  /* CC-024: the help walk-through and corner buddy were removed (cpmg-order-helper.js no longer loaded). */
 })();
 </script>
 <script>
@@ -478,6 +467,5 @@ window.CPMG_TIPS = [
 ];
 </script>
 <script src="../cpmg-order-tips-test.js?v=1.0"></script>
-<script src="../cpmg-order-helper-test.js?v=3.1d"></script>
 </body>
 </html>
