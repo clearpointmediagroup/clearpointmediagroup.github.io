@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v1.3-TEST (Oct 29, 2026)
+  v1.4-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v1.4-TEST (Oct 29, 2026) CC-027: cartoon emoji pictures swapped for clean green line icons (Tabler):
+                             house, door, house with check, price tag, calendar, pencil; phone, TV, camera too.
     RE v1.3-TEST (Oct 29, 2026) CC-027: Body is 5 short line boxes, each with its own gray example that
                              matches the picture tapped (price, day, size, what's special). Sent as lines = first 3
                              body lines, the rest in notes; Heading is sent in its own Heading spot.
@@ -51,6 +53,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link rel="stylesheet" href="../../assets/cpmg-order.css?v=1.1">
 <style>
 .qn{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--ink);font:800 17px var(--display);align-items:center;justify-content:center;margin-right:8px;flex:none}
@@ -58,7 +61,8 @@
 .ql label{font:inherit;color:inherit;margin:0;padding:0}
 .taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .taps .opt{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;text-align:center;font-size:18px;font-weight:600;min-height:96px;padding:12px 8px;border-width:2px}
-.taps .pic{font-size:34px;line-height:1}
+.taps .pic{font-size:34px;line-height:1;color:var(--green)}
+.photo .ti{font-size:22px}
 .taps .opt.on{border:3px solid var(--green);background:var(--deep)}
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
@@ -104,12 +108,12 @@
       <legend class="ql"><span class="qn">3</span>What kind of graphic?</legend>
       <p class="hint">Tap one picture.</p>
       <div class="taps" id="whatTaps" tabindex="-1">
-        <label class="opt"><input type="radio" name="what" value="Just listed"><span class="pic" aria-hidden="true">&#128273;</span><span>Just listed</span></label>
-        <label class="opt"><input type="radio" name="what" value="Open house"><span class="pic" aria-hidden="true">&#127969;</span><span>Open house</span></label>
-        <label class="opt"><input type="radio" name="what" value="Just sold"><span class="pic" aria-hidden="true">&#127881;</span><span>Just sold</span></label>
-        <label class="opt"><input type="radio" name="what" value="Price drop"><span class="pic" aria-hidden="true">&#128201;</span><span>Price drop</span></label>
-        <label class="opt"><input type="radio" name="what" value="Coming soon"><span class="pic" aria-hidden="true">&#9203;</span><span>Coming soon</span></label>
-        <label class="opt"><input type="radio" name="what" value="Something else"><span class="pic" aria-hidden="true">&#10067;</span><span>Something else</span></label>
+        <label class="opt"><input type="radio" name="what" value="Just listed"><span class="pic" aria-hidden="true"><i class="ti ti-home"></i></span><span>Just listed</span></label>
+        <label class="opt"><input type="radio" name="what" value="Open house"><span class="pic" aria-hidden="true"><i class="ti ti-door"></i></span><span>Open house</span></label>
+        <label class="opt"><input type="radio" name="what" value="Just sold"><span class="pic" aria-hidden="true"><i class="ti ti-home-check"></i></span><span>Just sold</span></label>
+        <label class="opt"><input type="radio" name="what" value="Price drop"><span class="pic" aria-hidden="true"><i class="ti ti-tag"></i></span><span>Price drop</span></label>
+        <label class="opt"><input type="radio" name="what" value="Coming soon"><span class="pic" aria-hidden="true"><i class="ti ti-calendar"></i></span><span>Coming soon</span></label>
+        <label class="opt"><input type="radio" name="what" value="Something else"><span class="pic" aria-hidden="true"><i class="ti ti-pencil"></i></span><span>Something else</span></label>
       </div>
       <p class="err" id="eWhat" hidden></p>
     </fieldset>
@@ -140,7 +144,7 @@
 
     <div class="field">
       <p class="ql"><span class="qn">5</span>Add a photo (if you want)</p>
-      <div class="photo"><label class="btn" for="pic">&#128247; Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
+      <div class="photo"><label class="btn" for="pic"><i class="ti ti-camera" aria-hidden="true"></i> Take or pick a photo<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
       <div class="thumbs" id="thumbs" hidden></div>
       <p class="err" id="ePic" hidden></p>
     </div>
@@ -148,8 +152,8 @@
     <fieldset class="field">
       <legend class="ql"><span class="qn">6</span>Where will you show it?</legend>
       <div class="taps">
-        <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true">&#128241;</span><span>Phone</span></label>
-        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true">&#128250;</span><span>TV</span></label>
+        <label class="opt"><input type="radio" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span></label>
+        <label class="opt"><input type="radio" name="size" value="TV"><span class="pic" aria-hidden="true"><i class="ti ti-device-tv"></i></span><span>TV</span></label>
       </div>
     </fieldset>
 
@@ -174,7 +178,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.3-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v1.4-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Wide (TV or website)' };
   var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
