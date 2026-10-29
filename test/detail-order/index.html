@@ -522,6 +522,7 @@ details.how .inner{font-size:17px;line-height:1.45}
     if (!$('show').checked && $('fp').value.trim()) h += '<dt>On graphics</dt><dd>' + e(C.fmtPhone($('fp').value)) + '</dd>';
     if (photos.count()) h += '<dt>Photos</dt><dd>' + photos.count() + '</dd>';
     if (needByText()) h += '<dt>Need it by</dt><dd>' + e(needByText()) + '</dd>';
+    if ($('type').value === 'Real estate' && $('brok').value.trim()) h += '<dt>Brokerage</dt><dd>' + e($('brok').value.trim()) + '</dd>';   // CC-025
     if (rushOn()) h += '<dt>Rush</dt><dd>Proof within 1 hour (+$' + P.rush + ')</dd>';   // v2.1
     h += '</dl>';
     cards().forEach(function (c, i) {
