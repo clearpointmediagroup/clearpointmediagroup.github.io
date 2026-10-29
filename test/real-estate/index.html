@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.12-TEST (Oct 29, 2026)
+  v2.13-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.13-TEST (Oct 29, 2026) CC-027: question 5 redone (Randy found it confusing): "Want it faster or fancier?"
+                             with 2 big tap boxes (Rush: proof in 1 hour, Adds $10; Promo look: $45 instead of $25, pair $60
+                             instead of $40), picked box gets a green border and "Picked"; price line moved under these boxes.
     RE v2.12-TEST (Oct 29, 2026) CC-027: About us and How this works boxes folded up; each opens with a tap
                              ("Tap to read"), so question 1 shows on the first screen.
     RE v2.11-TEST (Oct 29, 2026) CC-027: "About ClearPoint Media Group" box above "How this works" (Randy approved
@@ -110,6 +113,15 @@
 .taps .opt.on{border:3px solid var(--green);background:var(--deep)}
 .taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
 .taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.xcard{position:relative;display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line, #2c3d33);border-radius:12px;padding:12px 14px;margin:0 0 10px;background:var(--card);cursor:pointer}
+.xcard input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.xcard .ti{font-size:30px;color:var(--green);margin-top:2px;flex:none}
+.xcard .xt{display:flex;flex-direction:column;gap:2px}
+.xcard .xn{font-size:19px;font-weight:700}
+.xcard .xd{font-size:16px;color:var(--muted)}
+.xcard .xp{font-size:18px;font-weight:700;color:var(--green);margin-top:2px}
+.xcard.on{border:3px solid var(--green);background:var(--deep)}
+.xcard.on .xn::after{content:'  \2713 Picked';font-size:15px;font-weight:600;color:var(--green)}
 .price{font-size:18px;font-weight:700;color:var(--green);margin:10px 0 0}
 .chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:8px 0 0;line-height:1.35}
 .chk b{color:var(--green)}
@@ -204,14 +216,15 @@
         <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
       </div>
       <p class="err" id="eSize" hidden></p>
-      <p class="price" id="priceLine" aria-live="polite"></p>
     </fieldset>
 
     <div class="field">
-      <p class="ql"><span class="qn">5</span>Make it special (if you want)</p>
-      <label class="chk"><input type="checkbox" id="rush"> <span>Rush: proof within 1 hour <b>+$10</b></span></label>
-      <label class="chk"><input type="checkbox" id="promo"> <span>Promo look: a fancier, magazine-style design <b>$45</b> ($60 for a pair)</span></label>
-      <p class="hint" style="margin-top:6px">Rush is during business hours. If today's rush spots are full, we'll tell you and won't charge for it.</p>
+      <p class="ql"><span class="qn">5</span>Want it faster or fancier?</p>
+      <p class="hint">Tap a box to add it. Tap again to take it off. Both are optional.</p>
+      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span></span></label>
+      <label class="opt xcard"><input type="checkbox" id="promo"><i class="ti ti-sparkles" aria-hidden="true"></i><span class="xt"><span class="xn">Promo look</span><span class="xd">A fancier, magazine-style design.</span><span class="xp">$45 instead of $25</span><span class="xd">Phone + TV pair: $60 instead of $40</span></span></label>
+      <p class="hint" style="margin-top:4px">Rush is during business hours. If today's rush spots are full, we'll tell you and won't charge for it.</p>
+      <p class="price" id="priceLine" aria-live="polite"></p>
     </div>
 
     <div class="field">
@@ -262,7 +275,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.12-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.13-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
