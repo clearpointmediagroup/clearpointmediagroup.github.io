@@ -15,7 +15,7 @@
  *                       eyes, rosy cheeks, smile, a leaf on top). He lives in the bottom-right corner, hops,
  *                       waves and wiggles his leaf, with a "Hi! Need help? Tap me!" bubble; tapping him opens
  *                       the help. The same buddy (smaller) shows in the help box. Extra space at the bottom of
- *                       the page so he never covers the Send button. Moves even with "reduce motion" on.
+ *                       the page, and he sits just above the Send bar, so he never covers it. Moves even with "reduce motion" on.
  *   v3.0 (Oct 29, 2026) CC-012: the helper always waves (bigger wave, with a hand) and the part of the form
  *                       it's talking about gets a pulsing green glow. No longer switched off by a device's
  *                       "reduce motion" setting, which is why it stood still on some phones and laptops.
@@ -142,6 +142,12 @@
   pal.innerHTML = '<span class="bdy-bub" aria-hidden="true">Hi! Need help?<br>Tap me!</span>' + buddy(78, 'bdy-big');
   document.body.appendChild(pal);
   document.body.classList.add('bdy-room');
+  function lift() {   // sit just above the fixed Send bar so he never covers it
+    var bar = document.querySelector('.bar'), h = 0;
+    if (bar && getComputedStyle(bar).position === 'fixed' && bar.offsetParent !== null) h = bar.offsetHeight;
+    pal.style.bottom = 'calc(' + (h + 10) + 'px + env(safe-area-inset-bottom,0px))';
+  }
+  lift(); window.addEventListener('resize', lift); setInterval(lift, 2000);
 
   var i = 0, timer = null, lit = null, auto = true, list = STEPS;
   function $(id) { return document.getElementById(id); }
