@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.6-TEST (Oct 29, 2026)
+  v2.7-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.7-TEST (Oct 29, 2026) CC-027: no office hours shown. New promise (Randy picked): "Most proofs come back within
+                             5 hours. Late-night and weekend orders are ready the next business morning." (title line, intro,
+                             thank-you screen, page description).
     RE v2.6-TEST (Oct 29, 2026) CC-027: Need it by box (day and time) taken off: the 5 hours start when they send it.
                              Question 5 is now just "Bottom of your graphic" (Show my phone, Website or Facebook page).
     RE v2.5-TEST (Oct 29, 2026) CC-027: Need it by has a time box next to the day; sent as "Fri, Nov 7, 2026, 2:00 PM".
@@ -70,7 +73,7 @@
 <meta name="theme-color" content="#0f1712">
 <meta name="color-scheme" content="dark">
 <title>CPMG Real Estate Order</title>
-<meta name="description" content="Order a graphic from ClearPoint Media Group. Proof within 5 hours. Open 9 a.m. to 9 p.m. Eastern">
+<meta name="description" content="Order a real estate graphic from ClearPoint Media Group. Most proofs within 5 hours.">
 <link rel="icon" href="../../assets/cpmg-icon.svg" type="image/svg+xml">
 <link rel="icon" href="../../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../../assets/cpmg-icon-180.png">
@@ -112,11 +115,11 @@
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a real estate graphic</h1><p class="sub">$25 · Your first one is free · Proof in 5 hours · 9 a.m.–9 p.m.</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a real estate graphic</h1><p class="sub">$25 · Your first one is free · Most proofs in 5 hours</p></div></div>
 
   <div class="intro">
     <p class="ih">How this works</p>
-    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a proof within 5 hours (9 a.m. to 9 p.m.). Look it over, ask for changes, and pay once you approve it. $25 each, and your first one is free.</p>
+    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a proof. Most proofs come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay once you approve it. $25 each, and your first one is free.</p>
   </div>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -217,7 +220,7 @@
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Your proof comes by email within 5 hours. Orders after 9 p.m. are ready the next morning.</p>
+    <p>Most proofs come back by email within 5 hours. Late-night and weekend orders are ready the next business morning.</p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
     <button type="button" class="ghost" id="again">Order another</button>
@@ -231,7 +234,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.6-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.7-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
