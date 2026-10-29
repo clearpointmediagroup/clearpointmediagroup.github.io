@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.10-TEST (Oct 29, 2026)
+  v2.11-TEST (Oct 29, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.11-TEST (Oct 29, 2026) CC-027: "About ClearPoint Media Group" box above "How this works" (Randy approved
+                             the wording): what CPMG does, the 4 listing posts, every screen, checked word for word, no contracts.
     RE v2.10-TEST (Oct 29, 2026) CC-027: price line says "First graphic FREE for new clients" (a returning client
                              without their saved link still pays full price; the order system checks).
     RE v2.9-TEST (Oct 29, 2026) CC-027: new question 5 "Make it special": Rush (+$10, proof within 1 hour) and Promo look
@@ -123,6 +125,11 @@
 <body>
 <div class="wrap narrow">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a real estate graphic</h1><p class="sub">$25 · Your first one is free · Most proofs in 5 hours</p></div></div>
+
+  <div class="intro">
+    <p class="ih">About ClearPoint Media Group</p>
+    <p>We make professional graphics for local businesses, fast. Real estate agents use us for just listed, open house, price drop and just sold posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.</p>
+  </div>
 
   <div class="intro">
     <p class="ih">How this works</p>
@@ -248,7 +255,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.10-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.11-TEST (Oct 29, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
