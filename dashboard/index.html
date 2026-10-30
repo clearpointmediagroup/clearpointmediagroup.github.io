@@ -1,6 +1,8 @@
-<!-- CPMG Dashboard (GitHub) v3.4 (Oct 28, 2026) · clearpointmediagroup.github.io/dashboard/
+<!-- CPMG Dashboard (GitHub) v3.5 (Oct 30, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
      Revision log:
+     v3.5 (Oct 30, 2026) Sales emails box: "clicked" number and a "Call these first (replied or clicked)" row, both
+       tap-through lists. They show once CPMG_DashboardMetrics.gs v1.3 is live (hidden until then).
      v3.4 (Oct 28, 2026) Prospects: Website / Facebook / Instagram buttons on every prospect and record (from the columns,
        or from "FB:" / "IG:" in Notes). Prospects box starts by location: Houston and Myrtle Beach area. Inside a list,
        an Area picker narrows it (Heights, Pearland, Garden City Beach...). Goes with CPMG_DashboardMetrics.gs v1.2.
@@ -289,7 +291,7 @@ function call(fn, args, ok, failed) {
     function (e) { if (failed) failed(); msg('Something went wrong: ' + esc(e && e.message), 'err'); });
 }
 var MINE = { randy: 'randy', cindy: 'cindy' };
-var PAGE_VERSION = 'v3.4 (Oct 28, 2026)';
+var PAGE_VERSION = 'v3.5 (Oct 30, 2026)';
 var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
 var lastOk = 0;                         // time (ms) of the last good refresh
 function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
@@ -634,7 +636,9 @@ function drawMetrics() {
     '<div class="mline">Claude last changed this: <b>' + esc(j['Last updated'] || 'not yet') + '</b></div>') + '</div>';
   h += '<div class="mbox"><h3>✉️ Sales emails</h3>' + (s.ok === false ? mErr(s) :
     '<div class="mnums">' + mN(s.sentToday, 'sent today') + mN(s.sentWeek, 'sent this week') + mT(s.opened, 'opened', false, 'sales', 'opened', 'Opened the email') +
+    (s.clicked == null ? '' : mT(s.clicked, 'clicked', false, 'sales', 'clicked', 'Clicked a link')) +
     mT(s.replied, 'replied', false, 'sales', 'replied', 'Replied') + mT(s.bounced, 'bounced', s.bounced > 0, 'sales', 'bounced', 'Bounced') + mT(s.unsubscribed, 'unsubscribed', false, 'sales', 'unsubscribed', 'Unsubscribed') + '</div>' +
+    (s.callFirst == null ? '' : mR('Call these first (replied or clicked)', s.callFirst, 'sales', 'callfirst', 'Call these first')) +
     mR('Sent in all', s.sent, 'sales', 'sent', 'Sales emails sent') + mR('Ready to email', s.notYetEmailed, 'sales', 'ready', 'Ready to email') +
     '<div class="mline">Last sent: <b>' + esc(s.lastSent) + '</b></div>') + '</div>';
   h += '<div class="mbox"><h3>🎯 Prospects</h3>' + (p.ok === false ? mErr(p) :
