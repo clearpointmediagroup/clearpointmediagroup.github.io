@@ -2,13 +2,14 @@
 <!--
   CPMG HVAC Order — test/order/hvac/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.2-TEST (Oct 30, 2026)
+  v3.3-TEST (Oct 30, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.3-TEST (Oct 30, 2026) Added the concrete industry (demo for Michael, ABC Concrete). Words only; no code change.
     v3.2-TEST (Oct 30, 2026) Randy: "You pick for me" shows a plain, neutral sample picture (looks/you-pick.jpg) in every industry.
     v3.1-TEST (Oct 30, 2026) 8 industries: real-estate, restaurant, plumbing, hvac, lawn-care, cpa, home-inspector,
                              business. Words now live in tools/cpmg_packs.py; tools/build-order-forms.py builds one page
@@ -1609,6 +1610,180 @@
      ""
     ],
     "Call us anytime"
+   ]
+  }
+ },
+ "concrete": {
+  "industry": "Concrete",
+  "form": "Concrete",
+  "title": "Order a graphic for your concrete business",
+  "foot": "CPMG Concrete Order",
+  "about": "We make professional graphics for local businesses, fast. Concrete contractors use us for driveway and patio specials, free estimates and job updates that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your concrete business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like a driveway or patio you poured, your truck, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Driveway special",
+    "road"
+   ],
+   [
+    "Patio or sidewalk",
+    "layout-grid"
+   ],
+   [
+    "Free estimate",
+    "calculator"
+   ],
+   [
+    "New concrete care",
+    "info-circle"
+   ],
+   [
+    "Now hiring",
+    "users"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "Before and after",
+    "arrows-left-right",
+    "Show the old and new",
+    "before-after"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Areas you serve (if you want)",
+   "hint": "A few town names, like Conway and Myrtle Beach.",
+   "ph": "Conway, Myrtle Beach",
+   "need": "",
+   "key": "areas",
+   "note": "Areas served",
+   "store": "cpmgExtra_concrete"
+  },
+  "biz": "ABC Concrete",
+  "photo1": [
+   "Job photo",
+   "Big background, like a driveway or patio you poured. Your words go on top.",
+   "Job photo",
+   "Job"
+  ],
+  "ex": {
+   "": [
+    "Driveway Special",
+    "New Driveways from $6 a sq. ft.",
+    [
+     "Old concrete torn out",
+     "Smooth, strong finish",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call for your quote"
+   ],
+   "Driveway special": [
+    "Driveway Special",
+    "New Driveways from $6 a sq. ft.",
+    [
+     "Old concrete torn out",
+     "Smooth, strong finish",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call for your quote"
+   ],
+   "Patio or sidewalk": [
+    "Backyard Patios",
+    "Built to Last",
+    [
+     "Plain or stamped",
+     "Done in about a week",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call to get started"
+   ],
+   "Free estimate": [
+    "Free Estimates",
+    "Driveways, Patios, Slabs",
+    [
+     "We come to you",
+     "Written quote in 48 hours",
+     "Licensed and insured",
+     "",
+     ""
+    ],
+    "Call or text today"
+   ],
+   "New concrete care": [
+    "Your New Concrete",
+    "How to Care for It",
+    [
+     "Walk on it after 1 day",
+     "Drive on it after 7 days",
+     "Keep it damp the first week",
+     "",
+     ""
+    ],
+    "Questions? Call us"
+   ],
+   "Now hiring": [
+    "Now Hiring",
+    "Concrete Finishers",
+    [
+     "Full time, steady work",
+     "Good pay",
+     "Experience a plus",
+     "",
+     ""
+    ],
+    "Call us to apply"
+   ],
+   "Something else": [
+    "Rain Delay",
+    "Your Pour Is Moved",
+    [
+     "New date coming soon",
+     "Thank you for your patience",
+     "",
+     "",
+     ""
+    ],
+    "Call with questions"
    ]
   }
  },

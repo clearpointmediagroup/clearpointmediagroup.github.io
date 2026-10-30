@@ -1,4 +1,6 @@
-# CPMG industry packs v1.0 (Oct 30, 2026) — the words for every industry form.
+# CPMG industry packs v1.1 (Oct 30, 2026)
+# v1.1 (Oct 30, 2026) Added concrete (demo for Michael, made-up name ABC Concrete).
+# v1.0 (Oct 30, 2026) First version — the words for every industry form.
 # Used by tools/build-order-forms.py to build test/order/<industry>/index.html from the master form.
 # To add an industry: copy one entry, change the words, run: python3 tools/build-order-forms.py
 HOW = ("Get a ready-to-post graphic for your {what}. Tap the kind of graphic you need, type a few words for each part, "
@@ -101,6 +103,19 @@ PACKS = {
        'New service': E('Now Offering','Mold and Radon Testing',['Fast results','Peace of mind'],'Ask about it today'),
        'Thank you': E('Thank You','To all our agents and buyers',['We appreciate your trust','Proudly serving our town'],'Call us anytime'),
        'Something else': E('Happy Thanksgiving','From our team to you',['Thank you for your trust','Wishing you a warm holiday'],'Call us anytime')}),
+ 'concrete': dict(name='Concrete', title='Order a graphic for your concrete business', foot='CPMG Concrete Order',
+   who='Concrete contractors', uses='driveway and patio specials, free estimates and job updates', what='concrete business', photos='a driveway or patio you poured, your truck, your headshot or your logo',
+   kinds=[('Driveway special','road'),('Patio or sidewalk','layout-grid'),('Free estimate','calculator'),('New concrete care','info-circle'),('Now hiring','users'),('Something else','pencil')],
+   looks=[('Professional','briefcase','Clean and polished','professional'),('Friendly','mood-smile','Warm and welcoming','friendly'),('Bold and bright','bolt','Grabs attention','bold'),('Before and after','arrows-left-right','Show the old and new','before-after'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Holiday','gift','Tell us which one','holiday')],
+   extra=dict(label='Areas you serve (if you want)', hint='A few town names, like Conway and Myrtle Beach.', ph='Conway, Myrtle Beach', need='', key='areas', note='Areas served'),
+   biz='ABC Concrete', photo1=('Job photo','Big background, like a driveway or patio you poured. Your words go on top.','Job photo','Job'), scene='a brand-new smooth concrete driveway in front of a two-story brick home with a green lawn',
+   ex={'': E('Driveway Special','New Driveways from $6 a sq. ft.',['Old concrete torn out','Smooth, strong finish','Free estimate'],'Call for your quote'),
+       'Driveway special': E('Driveway Special','New Driveways from $6 a sq. ft.',['Old concrete torn out','Smooth, strong finish','Free estimate'],'Call for your quote'),
+       'Patio or sidewalk': E('Backyard Patios','Built to Last',['Plain or stamped','Done in about a week','Free estimate'],'Call to get started'),
+       'Free estimate': E('Free Estimates','Driveways, Patios, Slabs',['We come to you','Written quote in 48 hours','Licensed and insured'],'Call or text today'),
+       'New concrete care': E('Your New Concrete','How to Care for It',['Walk on it after 1 day','Drive on it after 7 days','Keep it damp the first week'],'Questions? Call us'),
+       'Now hiring': E('Now Hiring','Concrete Finishers',['Full time, steady work','Good pay','Experience a plus'],'Call us to apply'),
+       'Something else': E('Rain Delay','Your Pour Is Moved',['New date coming soon','Thank you for your patience'],'Call with questions')}),
  'business': dict(name='Small business', title='Order a graphic for your business', foot='CPMG Business Order',
    who='Shops, offices, salons and restaurants', uses='specials, events, announcements and holiday hours', what='business', photos='your shop, your headshot or your logo',
    kinds=[('Special or sale','tag'),('Event','calendar-event'),('Announcement','speakerphone'),('Holiday hours','clock'),('Now hiring','users'),('Something else','pencil')],
