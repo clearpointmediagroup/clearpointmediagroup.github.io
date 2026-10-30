@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.27-TEST (Oct 30, 2026)
+  v2.28-TEST (Oct 30, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,11 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.28-TEST (Oct 30, 2026) Randy: photo question rebuilt as 3 labeled spots, each with its own Take a picture /
+                             Upload buttons and a Remove button: House photo (big background, words on top), Your headshot
+                             (small circle by your name, no words on your face), Your logo (small, in a corner). All optional.
+                             Replaces the v2.27 "What is this?" question. Still sent in the order notes ("Photos") and in
+                             each file name (Photo1_House_...), so no script change.
     RE v2.27-TEST (Oct 30, 2026) Randy: each photo now asks "What is this?" with 3 taps: The house (big background,
                              words on top), My headshot (small circle by your name, no words on your face), My logo
                              (small, in a corner). Required for each photo before sending. Sent in the order notes
@@ -279,12 +284,26 @@
 
     <div class="field">
       <p class="ql"><span class="qn">4</span>Add photos (if you want)</p>
-      <p class="hint">Up to 3: the house, your headshot, and your logo. Take a new picture, or upload ones you already have. Then tap what each photo is, so we know where it goes.</p>
-      <div class="photo"><label class="btn" for="cam"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="cam" accept="image/*" capture="environment"></label><label class="btn" for="pic"><i class="ti ti-photo" aria-hidden="true"></i> Upload a picture<input type="file" id="pic" accept="image/*" multiple></label><button type="button" class="rm" id="picClear" hidden>Clear photos</button></div>
-      <div class="thumbs" id="thumbs" hidden style="display:none"></div>
-      <div id="picTags"></div>
+      <p class="hint">Each photo has its own spot, so we know where it goes. Skip any you don't have.</p>
+      <div class="gbox" style="margin-top:12px">
+        <p class="gt" style="margin:0"><i class="ti ti-home" aria-hidden="true"></i> House photo</p>
+        <p class="hint" style="margin:4px 0 10px">Big background. Your words go on top.</p>
+        <div class="slotPic" id="pvHouse" hidden style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img id="imHouse" alt="Your house photo" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmHouse">Remove</button></div>
+        <div class="photo" id="btHouse"><label class="btn" for="camHouse"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camHouse" accept="image/*" capture="environment"></label><label class="btn" for="upHouse"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upHouse" accept="image/*"></label></div>
+      </div>
+      <div class="gbox" style="margin-top:12px">
+        <p class="gt" style="margin:0"><i class="ti ti-user-circle" aria-hidden="true"></i> Your headshot</p>
+        <p class="hint" style="margin:4px 0 10px">Small circle by your name. No words on your face.</p>
+        <div class="slotPic" id="pvHeadshot" hidden style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img id="imHeadshot" alt="Your your headshot" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmHeadshot">Remove</button></div>
+        <div class="photo" id="btHeadshot"><label class="btn" for="camHeadshot"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camHeadshot" accept="image/*" capture="environment"></label><label class="btn" for="upHeadshot"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upHeadshot" accept="image/*"></label></div>
+      </div>
+      <div class="gbox" style="margin-top:12px">
+        <p class="gt" style="margin:0"><i class="ti ti-badge" aria-hidden="true"></i> Your logo</p>
+        <p class="hint" style="margin:4px 0 10px">Small, in a corner.</p>
+        <div class="slotPic" id="pvLogo" hidden style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img id="imLogo" alt="Your your logo" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmLogo">Remove</button></div>
+        <div class="photo" id="btLogo"><label class="btn" for="camLogo"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camLogo" accept="image/*" capture="environment"></label><label class="btn" for="upLogo"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upLogo" accept="image/*"></label></div>
+      </div>
       <p class="err" id="ePic" hidden></p>
-      <p class="err" id="eTag" hidden></p>
     </div>
 
     <fieldset class="field">
@@ -366,55 +385,35 @@
   var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
 
   C.watchOpts(document);
-  // v2.27: ask what each photo is (house / headshot / logo) so it lands in the right spot.
-  var ROLES = [
-    ['House', 'The house', 'Big background. The words go on top.'],
-    ['Headshot', 'My headshot', 'Small circle by your name. No words on your face.'],
-    ['Logo', 'My logo', 'Small, in a corner.']
-  ];
-  var tags = [];
-  function drawTags(list) {
-    var box = $('picTags'); box.innerHTML = '';
-    tags.length = list.length;
-    list.forEach(function (ph, i) {
-      var row = document.createElement('div');
-      row.className = 'gbox'; row.style.marginTop = '12px'; row.id = 'tagRow' + i;
-      var top = document.createElement('div'); top.style.cssText = 'display:flex;gap:12px;align-items:center;margin-bottom:8px';
-      var im = document.createElement('img'); im.src = ph.url; im.alt = 'Your photo ' + (i + 1);
-      im.style.cssText = 'width:72px;height:72px;object-fit:cover;border-radius:10px;border:2px solid var(--green);flex:none';
-      var q = document.createElement('p'); q.className = 'gt'; q.style.margin = '0'; q.textContent = 'Photo ' + (i + 1) + ': what is this?';
-      top.appendChild(im); top.appendChild(q); row.appendChild(top);
-      ROLES.forEach(function (r) {
-        var lb = document.createElement('label'); lb.className = 'chk'; lb.style.cssText = 'display:flex;gap:10px;align-items:flex-start;margin:8px 0';
-        var inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'ptag' + i; inp.value = r[0];
-        if (tags[i] === r[0]) inp.checked = true;
-        inp.addEventListener('change', function () { tags[i] = r[0]; $('eTag').hidden = true; });
-        var t = document.createElement('span');
-        var b = document.createElement('strong'); b.textContent = r[1];
-        var d = document.createElement('span'); d.textContent = ' ' + r[2]; d.style.color = 'var(--muted, #9fb3a8)';
-        t.appendChild(b); t.appendChild(d); lb.appendChild(inp); lb.appendChild(t); row.appendChild(lb);
-      });
-      box.appendChild(row);
-    });
+  // v2.28: 3 labeled photo spots (house, headshot, logo), each with its own buttons.
+  var SLOTS = [['House', 'The house'], ['Headshot', 'My headshot'], ['Logo', 'My logo']], slotPic = {};
+  function showSlot(k) {
+    var ph = slotPic[k];
+    $('pv' + k).hidden = !ph; $('pv' + k).style.display = ph ? 'flex' : 'none';
+    $('bt' + k).style.display = ph ? 'none' : '';
+    if (ph) $('im' + k).src = ph.url;
   }
-  function roleName(v) { for (var k = 0; k < ROLES.length; k++) if (ROLES[k][0] === v) return ROLES[k][1]; return 'Not said'; }
-  var photos = C.photoPicker($('pic'), $('thumbs'), $('ePic'), function (list) { $('picClear').hidden = !list.length; if (!list.length) tags = []; drawTags(list); });
-  // v2.0: "Take a picture" opens the camera; the picture is handed to the same photo list as "Upload a picture"
-  $('cam').addEventListener('change', function () {
-    var cam = $('cam');
-    if (!cam.files || !cam.files.length) return;
-    try {
-      var dt = new DataTransfer();
-      [].forEach.call(cam.files, function (f) { dt.items.add(f); });
-      $('pic').files = dt.files;
-      $('pic').dispatchEvent(new Event('change'));
-    } catch (e) {
-      try { console.log('CPMG camera hand-off failed: ' + e); } catch (x) {}
-      var m = $('ePic'); m.textContent = 'That picture could not be added. Please tap "Upload a picture" and pick it from your photos.'; m.hidden = false;
-    }
-    cam.value = '';
+  function addSlot(k, input) {
+    var f = input.files && input.files[0]; input.value = '';
+    if (!f) return;
+    var m = $('ePic'); m.textContent = 'Getting your photo ready…'; m.hidden = false;
+    C.shrinkPhoto(f).then(function (ph) { slotPic[k] = ph; m.hidden = true; showSlot(k); },
+      function () { m.textContent = 'That photo could not be opened. Please try a JPG or PNG.'; m.hidden = false; });
+  }
+  SLOTS.forEach(function (sl) {
+    var k = sl[0];
+    $('cam' + k).addEventListener('change', function () { addSlot(k, this); });
+    $('up' + k).addEventListener('change', function () { addSlot(k, this); });
+    $('rm' + k).addEventListener('click', function () { delete slotPic[k]; showSlot(k); });
+    showSlot(k);
   });
-  $('picClear').addEventListener('click', function () { photos.clear(); });
+  var photos = {
+    picked: function () { return SLOTS.filter(function (sl) { return slotPic[sl[0]]; }); },
+    list: function () { return this.picked().map(function (sl, i) { var ph = slotPic[sl[0]]; return { name: 'Photo' + (i + 1) + '_' + sl[0] + '_' + ph.name, mimeType: ph.mimeType, dataBase64: ph.dataBase64 }; }); },
+    note: function () { return this.picked().map(function (sl, i) { return 'Photo ' + (i + 1) + ': ' + sl[1]; }).join(' · '); },
+    count: function () { return this.picked().length; },
+    clear: function () { slotPic = {}; SLOTS.forEach(function (sl) { showSlot(sl[0]); }); }
+  };
 
   function fill(c) {
     $('biz').value = c.business || ''; $('nm').value = c.name || '';
@@ -455,10 +454,6 @@
     if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
     if (err('eSize', places().length ? '' : 'Tap at least one place.')) bad.unshift('sizeTaps');
     if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
-    var nP = photos.count(), missing = -1;
-    for (var t = 0; t < nP; t++) if (!tags[t]) { missing = t; break; }
-    if (err('eTag', missing > -1 ? 'Tap what photo ' + (missing + 1) + ' is: the house, your headshot, or your logo.' : '') && !bad.length) { try { $('tagRow' + missing).scrollIntoView({ block: 'center' }); } catch (e) { /* old phone */ } return; }
-    if (missing > -1) bad.push('picTags');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
     var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
@@ -556,10 +551,7 @@
     return out;
   }
   function graphicsFor(p, t) {
-    var list = photos.list().map(function (ph, i) {
-      return { name: 'Photo' + (i + 1) + '_' + (tags[i] || 'Photo') + '_' + ph.name, mimeType: ph.mimeType, dataBase64: ph.dataBase64 };
-    });
-    var photoNote = list.map(function (ph, i) { return 'Photo ' + (i + 1) + ': ' + roleName(tags[i]); }).join(' · ');
+    var list = photos.list(), photoNote = photos.note();
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
         more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None' },
