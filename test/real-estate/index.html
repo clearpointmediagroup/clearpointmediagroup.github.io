@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.25-TEST (Oct 30, 2026)
+  v2.26-TEST (Oct 30, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,12 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.26-TEST (Oct 30, 2026) Randy: (1) Bottom of the graphic now has 3 boxes: Website, Facebook page, Instagram
+                             (all optional). Sent to the order system joined in the same website field it reads now
+                             ("Website: ... · Facebook: ... · Instagram: ..."), plus each one on its own, so no script change.
+                             (2) "Your price" box moved to the bottom, right above Send my order, and always shown
+                             (asks them to tap a place until they do). The Send bar shows the total too
+                             ("You pay $0 · first one free" for new clients).
     RE v2.25-TEST (Oct 30, 2026) CC-030: Casual and Pool and summer example pictures fixed (address boxes no longer run into
                              the title; Casual details on two clean lines with one wood edge; Pool Call me button no longer
                              runs into the details box). Picture link bumped to ?v=3.
@@ -256,8 +262,13 @@
       <div class="gbox">
         <p class="gt">Bottom of the graphic</p>
         <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
-        <p class="hint" style="margin:8px 0 0">Add your website or Facebook page if you want it on there.</p>
-        <input type="text" id="site" placeholder="Website or Facebook page" autocomplete="url" autocapitalize="off" spellcheck="false" aria-label="Website or Facebook page" style="margin-top:8px">
+        <p class="hint" style="margin:10px 0 0">Want people to find you online? Add any of these and we'll put them at the bottom too. All are optional.</p>
+        <label class="sl" for="site" style="margin-top:10px">Website</label>
+        <input type="text" id="site" placeholder="smithhometeam.com" autocomplete="url" autocapitalize="off" spellcheck="false">
+        <label class="sl" for="fb" style="margin-top:10px">Facebook page</label>
+        <input type="text" id="fb" placeholder="facebook.com/smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <label class="sl" for="ig" style="margin-top:10px">Instagram</label>
+        <input type="text" id="ig" placeholder="@smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
       </div>
     </div>
 
@@ -285,7 +296,6 @@
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
       <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
       <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
-      <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div></div>
     </div>
 
     <div class="field">
@@ -311,6 +321,7 @@
 
     <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
     <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
+    <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div></div>
   </form>
 
   <div class="lookpop" id="lookPop" hidden role="dialog" aria-modal="true" aria-labelledby="lookCap">
@@ -333,7 +344,7 @@
   </div>
   <div class="foot">CPMG Real Estate Order · Questions: randy.turner@cpmgdata.com</div>
 </div>
-<div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
+<div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
 
 <script src="../cpmg-order-config-test.js?v=1.0"></script>
 <script src="../cpmg-order-test.js?v=1.8"></script>
@@ -415,7 +426,7 @@
       formVersion: FORM_VERSION,
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
-        more: { showPhone: $('showPh').checked, website: $('site').value.trim() } },
+        more: { showPhone: $('showPh').checked, website: socials(), site: $('site').value.trim(), facebook: $('fb').value.trim(), instagram: $('ig').value.trim() } },
       graphics: graphicsFor(picked, { look: lookText(), promo: false, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
       rush: $('rush').checked,
       website: C.honeypot()
@@ -509,10 +520,21 @@
         photos: list, promo: !!t.promo };
     });
   }
+  function socials() {
+    var out = [], v;
+    if ((v = $('site').value.trim())) out.push('Website: ' + v);
+    if ((v = $('fb').value.trim())) out.push('Facebook: ' + v);
+    if ((v = $('ig').value.trim())) out.push('Instagram: ' + v);
+    return out.join(' · ');
+  }
   function showPrice() {
     var g = groups(places()), rush = $('rush').checked ? 10 : 0, rows = [];
-    if (!g.length) { $('priceBox').hidden = true; return; }
     $('priceBox').hidden = false;
+    if (!g.length) {
+      $('priceLine').innerHTML = '<div class="prow"><span>Tap where you\'ll show it (question 5) to see your price.</span></div>';
+      $('barTot').textContent = client ? '$25 each' : '$25 each · your first one is free';
+      return;
+    }
     var total = g.reduce(function (n, x) { return n + x.price; }, 0);
     g.forEach(function (x) { rows.push([x.shown, '$' + x.price]); });
     if (rush) rows.push(['Rush', '+$10']);
@@ -521,6 +543,7 @@
     var off = client ? 0 : Math.min(25, total);
     if (off) rows.push(['First graphic free (new clients)', '−$' + off]);
     rows.push(['You pay', '$' + (total - off + rush)]);
+    $('barTot').textContent = 'You pay $' + (total - off + rush) + (off ? ' · first one free' : '');
     var box = $('priceLine'); box.innerHTML = '';
     rows.forEach(function (r, i) {
       var d = document.createElement('div'); d.className = 'prow' + (i === rows.length - 1 ? ' ptot' : '');
