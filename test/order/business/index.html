@@ -2,13 +2,14 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.1-TEST (Oct 30, 2026)
+  v3.2-TEST (Oct 30, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.2-TEST (Oct 30, 2026) Randy: "You pick for me" shows a plain, neutral sample picture (looks/you-pick.jpg) in every industry.
     v3.1-TEST (Oct 30, 2026) 8 industries: real-estate, restaurant, plumbing, hvac, lawn-care, cpa, home-inspector,
                              business. Words now live in tools/cpmg_packs.py; tools/build-order-forms.py builds one page
                              per industry at test/order/<industry>/ (same code). Extra question can be optional.
@@ -1810,7 +1811,7 @@
       return lb;
     }
     PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
-    PACK.looks.concat([['You pick for me', 'wand', 'We pick the look', '']]).forEach(function (k) { el('lookTaps').appendChild(tap('look', k[0], k[1], k[2], k[0] === 'You pick for me')); });
+    PACK.looks.concat([['You pick for me', 'wand', 'We pick the look', 'you-pick']]).forEach(function (k) { el('lookTaps').appendChild(tap('look', k[0], k[1], k[2], k[0] === 'You pick for me')); });
     // v3.0 item 5: East Coast time line, plus how far ahead of the client that is
     var tz = "We're on East Coast time.";
     try {
@@ -1823,7 +1824,7 @@
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.1-TEST (Oct 30, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.2-TEST (Oct 30, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -1960,7 +1961,7 @@
     return v === 'Holiday' && h ? 'Holiday: ' + h : v;
   }
   // v2.19: example picture for the look they tap (pictures made in the CPMG Gem, Oct 29, 2026)
-  var LOOK_IMG = {}; PACK.looks.forEach(function (l) { if (l[3]) LOOK_IMG[l[0]] = l[3]; });
+  var LOOK_IMG = { 'You pick for me': 'you-pick' }; PACK.looks.forEach(function (l) { if (l[3]) LOOK_IMG[l[0]] = l[3]; });   // v3.2: neutral sample for You pick for me
   // v2.21: the example pops up big on top of the page; "Use this look" keeps it, "Pick a different look" un-picks it
   var lastFocus = null;
   try { document.getElementById('lookImg').onerror = function () { this.hidden = true; document.getElementById('lookSoon').hidden = false; }; } catch (e) { /* ok */ }
