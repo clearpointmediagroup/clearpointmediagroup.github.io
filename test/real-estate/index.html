@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.24-TEST (Oct 30, 2026)
+  v2.25-TEST (Oct 30, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,9 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.25-TEST (Oct 30, 2026) CC-030: Casual and Pool and summer example pictures fixed (address boxes no longer run into
+                             the title; Casual details on two clean lines with one wood edge; Pool Call me button no longer
+                             runs into the details box). Picture link bumped to ?v=3.
     RE v2.24-TEST (Oct 30, 2026) CC-030: Professional example picture fixed (address box no longer runs into the
                              JUST LISTED banner; clear gap added). Picture link bumped to ?v=2 so phones show the new one.
     RE v2.23-TEST (Oct 29, 2026) CC-027: Promo look ($45) taken off (Randy: confusing next to Pick a look; every look is $25).
@@ -466,7 +469,7 @@
   function showLook(v) {
     var f = LOOK_IMG[v];
     if (!f) return;
-    $('lookImg').src = 'looks/' + f + '.jpg?v=2'; $('lookImg').alt = 'Example of the ' + v + ' look';
+    $('lookImg').src = 'looks/' + f + '.jpg?v=3'; $('lookImg').alt = 'Example of the ' + v + ' look';
     $('lookCap').textContent = v;
     lastFocus = document.activeElement;
     $('lookPop').hidden = false; document.body.style.overflow = 'hidden'; $('sendBar').style.visibility = 'hidden';
