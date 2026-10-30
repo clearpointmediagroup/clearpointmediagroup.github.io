@@ -6,11 +6,12 @@
 <meta name="robots" content="noindex">
 <title>ClearPoint Media Group</title>
 <!--
-  CPMG click page - v1.2 (Oct 26, 2026)
+  CPMG click page - v1.3 (Oct 30, 2026)
   A link in a CPMG sales email opens this page. It quietly tells the mail merge script about the click,
   then opens the real page right away. The places it can open are fixed below (DEST), so nobody can use
   it to send people anywhere else.
   REVISION LOG
+    v1.3 (Oct 30, 2026) Added the CPMG website (site, Google Sites) and Instagram (ig) links (mail merge v1.24).
     v1.2 (Oct 26, 2026) Added the CPMG Facebook page (fb) link.
     v1.1 (Oct 26, 2026) Click is sent to the script as "go" (Apps Script fails on a "c" parameter).
     v1.0 (Oct 26, 2026) First version: form (Detail Order) link; site and fb fall back to the form until filled in.
@@ -27,8 +28,9 @@ a{display:inline-block;background:#1f7a43;color:#ffffff;padding:14px 26px;border
 (function () {
   var DEST = {
     form: 'https://clearpointmediagroup.github.io/detail-order/',
-    site: '',
-    fb: 'https://www.facebook.com/profile.php?id=61595065748576'
+    site: 'https://sites.google.com/cpmgdata.com/cpmg',
+    fb: 'https://www.facebook.com/profile.php?id=61595065748576',
+    ig: 'https://www.instagram.com/clearpointmediagroup/'
   };
   var TRACK = 'https://script.google.com/macros/s/AKfycbwyL0lg7idT_G9KkE08PEqnvgMGeIJ1E2_2N_hsBQtBGN2joCHO1W67xIQwuVURoSunLQ/exec';
   var q = new URLSearchParams(location.search);
