@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.28-TEST (Oct 30, 2026)
+  v2.29-TEST (Oct 30, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,13 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.29-TEST (Oct 30, 2026) Randy (tester review fixes 2, 3, 6, 7): (2) each part of question 3 shows a plain
+                             "Example:" line that changes with the kind of graphic, plus "the gray words are only examples".
+                             (3) plain words: Heading -> "Second line", Body -> "Details", Call to action -> "What should
+                             people do?", proof -> "preview", "Wide 16:9" -> "Wide", Rush explained. (6) new "Show my business
+                             name" box (on to start) in Bottom of the graphic; sent in the order notes ("Bottom of graphic").
+                             (7) price box says how paying works: nothing now, preview by email, pay by card with a secure
+                             Square link once they OK it. Labels only; field names and the order system are unchanged.
     RE v2.28-TEST (Oct 30, 2026) Randy: photo question rebuilt as 3 labeled spots, each with its own Take a picture /
                              Upload buttons and a Remove button: House photo (big background, words on top), Your headshot
                              (small circle by your name, no words on your face), Your logo (small, in a corner). All optional.
@@ -198,7 +205,7 @@
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a real estate graphic</h1><p class="sub">$25 · Your first one is free · Most proofs in 5 hours</p></div></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1>Order a real estate graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p></div></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -207,7 +214,7 @@
 
   <details class="intro">
     <summary class="ih">How this works</summary>
-    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a proof. Most proofs come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay once you approve it. $25 each, and your first one is free.</p>
+    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
   </details>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -249,29 +256,30 @@
 
     <div class="field">
       <p class="ql"><span class="qn">3</span>What should it say?</p>
-      <p class="hint">Fill in the 4 parts of your graphic. A few words each.</p>
+      <p class="hint">Fill in the parts of your graphic. A few words each. The gray words in each box are only examples. Type your own.</p>
       <label class="sl" for="ttl">Title</label>
-      <p class="hint">The big words at the top.</p>
+      <p class="hint">The big words at the top. Example: <b id="xTtl"></b></p>
       <input type="text" id="ttl" autocomplete="off">
       <p class="err" id="eTtl" hidden></p>
-      <label class="sl" for="hdg">Heading (if you want)</label>
-      <p class="hint">A smaller line under the title.</p>
+      <label class="sl" for="hdg">Second line (if you want)</label>
+      <p class="hint">A smaller line under the title. Example: <b id="xHdg"></b></p>
       <input type="text" id="hdg" autocomplete="off">
-      <label class="sl" for="b1">Body</label>
-      <p class="hint">Up to 5 short lines. A few words each, like a price, a day, or what's special.</p>
-      <div class="bl"><b>1</b><input type="text" id="b1" autocomplete="off" aria-label="Body line 1"></div>
-      <div class="bl"><b>2</b><input type="text" id="b2" autocomplete="off" aria-label="Body line 2"></div>
-      <div class="bl"><b>3</b><input type="text" id="b3" autocomplete="off" aria-label="Body line 3"></div>
-      <div class="bl"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Body line 4"></div>
-      <div class="bl"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Body line 5"></div>
+      <label class="sl" for="b1">Details</label>
+      <p class="hint">Up to 5 short lines, a few words each. Example: <b id="xBdy"></b></p>
+      <div class="bl"><b>1</b><input type="text" id="b1" autocomplete="off" aria-label="Details line 1"></div>
+      <div class="bl"><b>2</b><input type="text" id="b2" autocomplete="off" aria-label="Details line 2"></div>
+      <div class="bl"><b>3</b><input type="text" id="b3" autocomplete="off" aria-label="Details line 3"></div>
+      <div class="bl"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Details line 4"></div>
+      <div class="bl"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Details line 5"></div>
       <p class="err" id="eBdy" hidden></p>
-      <label class="sl" for="cta">Call to action</label>
-      <p class="hint">What should people do?</p>
+      <label class="sl" for="cta">What should people do?</label>
+      <p class="hint">One short line telling people what to do next. Example: <b id="xCta"></b></p>
       <input type="text" id="cta" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
       <div class="gbox">
         <p class="gt">Bottom of the graphic</p>
-        <label class="chk"><input type="checkbox" id="showPh" checked> Show my phone number</label>
+        <label class="chk"><input type="checkbox" id="showBiz" checked> Show my business name</label>
+        <label class="chk" style="margin-top:8px"><input type="checkbox" id="showPh" checked> Show my phone number</label>
         <p class="hint" style="margin:10px 0 0">Want people to find you online? Add any of these and we'll put them at the bottom too. All are optional.</p>
         <label class="sl" for="site" style="margin-top:10px">Website</label>
         <input type="text" id="site" placeholder="smithhometeam.com" autocomplete="url" autocapitalize="off" spellcheck="false">
@@ -311,9 +319,9 @@
       <p class="hint">Tap all that you want.</p>
       <div class="taps" id="sizeTaps" tabindex="-1">
         <label class="opt"><input type="checkbox" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
-        <label class="opt"><input type="checkbox" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide 16:9</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide</span></label>
         <label class="opt"><input type="checkbox" name="size" value="Social"><span class="pic" aria-hidden="true"><i class="ti ti-share"></i></span><span>Social media</span><span class="szn">Facebook, Instagram</span></label>
-        <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide 16:9</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide</span></label>
       </div>
       <p class="err" id="eSize" hidden></p>
     </fieldset>
@@ -321,7 +329,7 @@
     <div class="field">
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
       <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
-      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your proof in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
+      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your preview in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
     </div>
 
     <div class="field">
@@ -338,7 +346,7 @@
       <p class="ql"><span class="qn">8</span>Your name, email, phone</p>
       <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
       <p class="err" id="eNm" hidden></p>
-      <input type="email" id="em" placeholder="Email (your proof comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
+      <input type="email" id="em" placeholder="Email (your preview comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
       <p class="err" id="eEm" hidden></p>
       <input type="tel" id="ph" placeholder="Phone" autocomplete="tel" inputmode="tel" aria-label="Phone">
       <p class="err" id="ePh" hidden></p>
@@ -347,7 +355,7 @@
 
     <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
     <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
-    <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div></div>
+    <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div><p class="hint" style="margin:10px 0 0"><b>How you pay:</b> nothing now. We email you a preview first. Once you OK it, you pay by card with a secure Square link.</p></div>
   </form>
 
   <div class="lookpop" id="lookPop" hidden role="dialog" aria-modal="true" aria-labelledby="lookCap">
@@ -363,7 +371,7 @@
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Most proofs come back by email within 5 hours. Late-night and weekend orders are ready the next business morning.</p>
+    <p>Most previews come back by email within 5 hours. Late-night and weekend orders are ready the next business morning.</p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
     <button type="button" class="ghost" id="again">Order another</button>
@@ -464,7 +472,7 @@
       formVersion: FORM_VERSION,
       clientKey: client ? key : '',
       customer: { name: nm, business: biz, brokerage: brok, email: em, phone: ph, industry: 'Real estate', edited: !!client && changed,
-        more: { showPhone: $('showPh').checked, website: socials(), site: $('site').value.trim(), facebook: $('fb').value.trim(), instagram: $('ig').value.trim() } },
+        more: { showPhone: $('showPh').checked, showBusiness: $('showBiz').checked, website: socials(), site: $('site').value.trim(), facebook: $('fb').value.trim(), instagram: $('ig').value.trim() } },
       graphics: graphicsFor(picked, { look: lookText(), promo: false, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
       rush: $('rush').checked,
       website: C.honeypot()
@@ -500,7 +508,7 @@
     'Coming soon': ['Coming Soon', '456 Maple Lane', ['4 beds, 3 baths', 'On the market Nov. 15', 'About $500,000', 'Big corner lot', 'Ask for a sneak peek'], 'Call me for a sneak peek'],
     'Something else': ['Happy Thanksgiving', 'From my family to yours', ['Wishing you the best', 'Thank you for your trust', 'Free home value check', 'Serving our neighborhood', 'Ready when you are'], 'Call me anytime']
   };
-  function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; }
+  function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; $('xTtl').textContent = '"' + e[0] + '"'; $('xHdg').textContent = '"' + e[1] + '"'; $('xBdy').textContent = '"' + e[2][0] + '" or "' + e[2][1] + '"'; $('xCta').textContent = '"' + e[3] + '"'; }
   examples('');
   setTimeout(function () { try { showPrice(); } catch (e) { /* ok */ } }, 0);
 
@@ -554,7 +562,7 @@
     var list = photos.list(), photoNote = photos.note();
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
-        more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None' },
+        more: { 'Form': 'Real estate', 'Brokerage': t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
         photos: list, promo: !!t.promo };
     });
   }
