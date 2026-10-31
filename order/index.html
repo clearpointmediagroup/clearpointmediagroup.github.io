@@ -1,0 +1,25 @@
+<!doctype html>
+<!--
+  CPMG order link (single point) - v1.0 (Oct 31, 2026)
+  This is the ONE order link for the website, Facebook, Instagram, emails, handouts and QR codes:
+      https://clearpointmediagroup.github.io/order/
+  It opens the current standard order form. To point every site at a different form later
+  (for example a cloned form for another business type), change FORM below. Nothing else needs to change.
+  REVISION LOG
+    v1.0 (Oct 31, 2026) CC-033: first version. Opens the live real estate form (real-estate/ v3.1).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Order a graphic - ClearPoint Media Group</title>
+<link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
+<meta http-equiv="refresh" content="0; url=../real-estate/">
+<style>body{margin:0;background:#0f1712;color:#e4ede8;font:18px "Segoe UI",Arial,sans-serif;padding:24px 16px}a{color:#5fc48c;font-weight:700}</style>
+<script>
+  var FORM = '../real-estate/';   // <- the current standard order form (change only this line)
+  location.replace(FORM + location.search + location.hash);
+</script>
+</head>
+<body><p>Opening the ClearPoint Media Group order form… <a href="../real-estate/">Tap here if it doesn't open.</a></p></body>
+</html>
