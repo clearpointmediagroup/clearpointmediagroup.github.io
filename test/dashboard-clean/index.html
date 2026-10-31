@@ -1,0 +1,748 @@
+<!-- TEST COPY (CC-028) v3.6-TEST (Oct 31, 2026): cleaner main screen. Same live order data as the real dashboard. Not for clients.
+     v3.6-TEST (Oct 31, 2026) Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
+       Claude jobs box removed; System bar turns red if something breaks. Nothing else changed. -->
+<!-- CPMG Dashboard (GitHub) v3.5 (Oct 30, 2026) · clearpointmediagroup.github.io/dashboard/
+     Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
+     Revision log:
+     v3.5 (Oct 30, 2026) Sales emails box: "clicked" number and a "Call these first (replied or clicked)" row, both
+       tap-through lists. They show once CPMG_DashboardMetrics.gs v1.3 is live (hidden until then).
+     v3.4 (Oct 28, 2026) Prospects: Website / Facebook / Instagram buttons on every prospect and record (from the columns,
+       or from "FB:" / "IG:" in Notes). Prospects box starts by location: Houston and Myrtle Beach area. Inside a list,
+       an Area picker narrows it (Heights, Pearland, Garden City Beach...). Goes with CPMG_DashboardMetrics.gs v1.2.
+     v3.3 (Oct 28, 2026) Drill-downs on the live number boxes: tap a number -> its list -> tap a row -> the full record.
+       Orders open the same order record as the 6 order boxes. Prospects and Social show every column of the sheet row,
+       with tap-to-call, email and web links. Read only (CPMG_DashboardApi.gs v1.3, CPMG_DashboardMetrics.gs v1.1).
+     v3.2 (Oct 28, 2026) My pages moved back up (under Clients); live number boxes moved below it. Phone held upright
+       opens with everything showing; TV view only when sideways or on the TV (button still switches). Business Plan
+       link added under Running the business. On-screen version fixed (it still said v2.7).
+     v3.1 (Oct 28, 2026) Live number boxes under the order boxes: Orders, Claude jobs, Sales emails, Prospects,
+       Social, System. All read fresh from your Google Sheets every 20 seconds (CPMG_DashboardMetrics.gs v1.0).
+       "My pages" relabeled: those are Claude pages, not live numbers.
+     v3.0 (Oct 28, 2026) Sign-in screen shows only the CPMG logo and the PIN box (no names). After a right PIN,
+       it asks "Who's using this?" (Randy or Cindy). Names never show to anyone without the PIN.
+     v2.9 (Oct 28, 2026) Eye: press and hold to see the PIN (let go to hide), or tap to switch. Numbers refresh every 20 seconds (was 60).
+     v2.8 (Oct 28, 2026) Eye button on the PIN box: tap it to see the PIN you typed, tap again to hide it.
+     v2.7 (Oct 28, 2026) Clients box (folded up, tap to open) under the order boxes: health groups, To do today,
+       tap to call, follow-up date, notes, Contacted today (goes with CPMG_DashboardApi.gs v1.1).
+       TV view: phone or screen sideways shows only the six order boxes, big, plus a thin LIVE line.
+       "Show menus" brings the rest back.
+     v2.6 (Oct 28, 2026) Loading bar: a green bar with a sweeping light shows while the dashboard loads,
+       refreshes or signs in, so you can see it working.
+     v2.5 (Oct 27, 2026) Review order: Cindy checks first, Randy reviews last (goes with CPMG_Dashboard.gs v1.1).
+     v2.4 (Oct 27, 2026) Page heading now "CPMG Dashboard" (dropped "Order"); version line updated.
+     v2.3 (Oct 27, 2026) Phone app name is now "CPMG Dashboard" (own manifest.webmanifest); tab title "CPMG Dashboard".
+     v2.2 (Oct 27, 2026) Project Plan link points to the rebuilt Project Plan.
+     v2.1 (Oct 27, 2026) "My pages" menu under the stage boxes: prospects, social, Facebook for both;
+       order forms and admin pages for Randy only.
+     v2.0 (Oct 27, 2026) Moved to GitHub so it opens on any phone, laptop or kiosk with no Google sign-in.
+       Sign-in screen (tap your name, type the PIN), "Remember this phone", Log out button.
+     Built from CPMG_DashboardPage.html v1.2 (everything else unchanged). -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>TEST CPMG Dashboard</title>
+<link rel="icon" href="../../assets/cpmg-icon-192.png">
+<link rel="apple-touch-icon" href="../../assets/cpmg-icon-180.png">
+<meta name="theme-color" content="#0f1712">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#0f1712;--surface:#17221c;--box:#173404;--fg:#c9e6b0;--strong:#dff0c8;--muted:#9fc47c;--line:#2f4a24;
+  --green:#97c459;--amber:#fac775;--amber-bg:#412402;--red:#f4a6a6;--red-bg:#4a1717;
+  --display:"Archivo",Arial,sans-serif;--body:"Source Sans 3","Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:20px;line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto;padding:18px 16px 60px}
+h1{font-family:var(--display);font-size:32px;margin:0;color:var(--strong)}
+h2{font-family:var(--display);font-size:24px;margin:0;color:var(--strong)}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sub{font-size:16px;color:var(--muted)}
+button{font:700 20px var(--body);border-radius:999px;border:0;padding:14px 22px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.btn{background:var(--green);color:var(--bg)}
+.btn2{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btnwarn{background:var(--amber-bg);color:var(--amber);border:2px solid var(--amber)}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.stage{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;width:100%;color:var(--fg);font:inherit}
+.stage.mine{border:3px solid var(--amber)}
+.stage.empty{opacity:.45}
+.stages{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.clHead.bad{border-color:var(--red);background:var(--red-bg)}
+.foldBody{margin-top:12px}
+body.tv #pagesFold,body.tv #salesFold,body.tv #sysFold{display:none!important}
+.count{font:700 44px var(--display);color:var(--strong);min-width:64px;text-align:center}
+.stage .lbl{font:700 24px var(--display);color:var(--strong)}
+.stage .nt{font-size:17px;color:var(--muted)}
+.tag{display:inline-block;font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--amber);border:1.5px solid var(--amber);border-radius:999px;padding:0 9px;margin-top:4px}
+.list{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.job{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:16px;cursor:pointer;text-align:left;width:100%;color:var(--fg);font:inherit}
+.job.kicked{background:var(--red-bg);border-color:var(--red)}
+.job b{font:700 22px var(--display);color:var(--strong);display:block}
+.job .m{font-size:17px;color:var(--muted)}
+.job .k{font-size:17px;color:var(--red);font-weight:700}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted)}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+.imgs{display:flex;flex-direction:column;gap:14px}
+.imgs figure{margin:0;background:#000;border-radius:12px;padding:10px;text-align:center}
+.imgs img{max-width:100%;max-height:70vh;border-radius:8px}
+.imgs figcaption{font-size:15px;color:var(--muted);margin-top:6px;word-break:break-all}
+dl{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;margin:0}
+dt{font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+dd{margin:0;white-space:pre-line;word-break:break-word}
+.notes{white-space:pre-line;font-size:17px}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.warn{background:var(--amber-bg);border:2px solid var(--amber);color:var(--amber);border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:600}
+.err{background:var(--red-bg);border:2px solid var(--red);color:var(--red);border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:600}
+textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;border:2px solid var(--green);background:var(--bg);color:var(--strong);margin-top:8px}
+.full{position:fixed;inset:0;background:#000;z-index:10;display:flex;flex-direction:column}
+.full img{flex:1;min-height:0;width:100%;object-fit:contain}
+.full .bar{display:flex;justify-content:center;gap:12px;padding:12px;background:#000}
+.hide{display:none!important}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.lk{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--fg);text-decoration:none}
+.lk:hover{border-color:var(--green)}
+.lk b{font:700 21px var(--display);color:var(--strong)}
+.lk span{font-size:16px;color:var(--muted)}
+.lgrp{font:700 15px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--green);margin-top:22px}
+.signin{max-width:440px;margin:8vh auto 0;display:flex;flex-direction:column;gap:16px}
+.signLogo{width:120px;height:120px;border-radius:24px;margin:0 auto;display:block}
+.signin h1{text-align:center}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:22px}
+.mbox{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.mbox h3{margin:0;font:700 22px var(--display);color:var(--strong)}
+.mnums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mn{background:var(--bg);border-radius:10px;padding:8px 10px;min-width:0}
+.mn b{display:block;font:700 30px var(--display);color:var(--strong);font-variant-numeric:tabular-nums;line-height:1.1}
+.mn span{font-size:16px;color:var(--muted)}
+.mn.warn b{color:var(--amber)}
+.mline{font-size:17px;color:var(--muted);overflow-wrap:anywhere}
+.mline b{color:var(--fg)}
+.mbox details summary{cursor:pointer;color:var(--green);font-weight:700;font-size:17px}
+.mbox ul{margin:8px 0 0;padding-left:20px;font-size:17px;color:var(--fg)}
+.mbox .merr{color:var(--amber);font-size:17px}
+body.tv .mgrid,body.tv #pagesHead,body.tv #pagesNote,body.tv #links{display:none}
+button.mn{border:0;text-align:left;cursor:pointer;color:inherit;font:inherit;width:100%;position:relative;box-shadow:inset 0 0 0 1px var(--line)}
+button.mn::after{content:"›";position:absolute;right:10px;top:8px;font-size:22px;color:var(--green)}
+button.mn:active,.mi:active{transform:scale(.98)}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;background:var(--bg);border:0;border-radius:10px;padding:10px 12px;margin-top:6px;color:var(--fg);font:inherit;font-size:17px;cursor:pointer;text-align:left}
+.mrow b{color:var(--strong)}
+.mi{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.mi b{font-size:20px;color:var(--strong);overflow-wrap:anywhere}
+.mi .m{color:var(--muted);font-size:16px;overflow-wrap:anywhere}
+.mi .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.mi .acts a,.rec a{color:var(--green);font-weight:700;text-decoration:underline;overflow-wrap:anywhere}
+.rec dl{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
+.rec dt{color:var(--muted);font-size:15px;margin-top:10px}
+.rec dd{margin:0;font-size:19px;color:var(--fg);overflow-wrap:anywhere;white-space:pre-wrap}
+.lb{display:inline-block;padding:7px 14px;border-radius:999px;border:2px solid var(--green);color:var(--green)!important;font-weight:700;text-decoration:none!important;font-size:16px}
+.lbs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+#areaPick{font:18px var(--body);padding:10px 12px;border-radius:10px;border:2px solid var(--green);background:var(--box);color:var(--strong);width:100%;margin-top:10px}
+.whos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.whoBtn{font-size:22px;padding:16px}
+.whoBtn.on{background:var(--green);color:var(--bg)}
+#pin{font:700 28px var(--body);letter-spacing:.3em;padding:12px 14px;border-radius:12px;border:2px solid var(--green);background:var(--surface);color:var(--strong);width:100%;box-sizing:border-box}
+.pinwrap{position:relative}
+.pinwrap #pin{padding-right:64px}
+.eyeBtn{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;background:transparent;color:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.eyeBtn svg{width:30px;height:30px}
+.rem{display:flex;gap:10px;align-items:center;font-size:18px;color:var(--muted)}
+.rem input{width:22px;height:22px}
+.tan{background:#3a2a10;border:1.5px solid var(--amber);border-radius:8px;padding:6px 10px;color:var(--amber);font-weight:700;word-break:break-all}
+/* v1.1 LIVE bar + version line */
+.livebar{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin-bottom:14px}
+.live{display:flex;align-items:center;gap:12px;font:700 22px var(--display);color:var(--green)}
+.dot{width:20px;height:20px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);flex:none;animation:blink 1.6s ease-in-out infinite}
+.live.stale{color:var(--amber)}
+.live.stale .dot{background:var(--amber);box-shadow:0 0 10px var(--amber);animation:none}
+.livebar.stale{background:var(--amber-bg);border-color:var(--amber)}
+.ver{font-size:16px;font-weight:600;color:var(--muted);overflow-wrap:anywhere}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.stage{min-width:0}
+.stage .lbl,.stage .nt{overflow-wrap:anywhere}
+/* v1.1 sideways view (laptop / TV): six boxes in one row, big type */
+@media (min-width:900px) and (orientation:landscape){
+  .wrap{max-width:none;padding:18px 2vw 40px}
+  h1{font-size:clamp(32px,2.6vw,60px)}
+  .sub{font-size:clamp(16px,1.2vw,28px)}
+  .live{font-size:clamp(22px,1.8vw,42px)}
+  .dot{width:clamp(20px,1.6vw,38px);height:clamp(20px,1.6vw,38px)}
+  .ver{font-size:clamp(16px,1.1vw,26px)}
+  .stages{grid-template-columns:repeat(6,minmax(0,1fr));gap:1.2vw}
+  .stage{flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;gap:.6vw;padding:1.4vw 0.8vw}
+  .count{font-size:clamp(48px,6vw,140px);min-width:0;line-height:1}
+  .stage .lbl{font-size:clamp(20px,1.8vw,42px);line-height:1.15}
+  .stage .nt{font-size:clamp(15px,1.15vw,26px)}
+  .tag{font-size:clamp(14px,1vw,22px)}
+}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{padding-top:8px}h1{font-size:28px}}
+/* v2.6 loading bar: green track, fill grows left to right, light sweeps across */
+.ldbar{position:relative;height:14px;border-radius:999px;background:var(--box);border:1.5px solid var(--green);overflow:hidden;margin:6px 0 14px}
+.ldbar .lf{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--green);opacity:.55;animation:ldfill 12s cubic-bezier(.08,.6,.25,1) forwards}
+.ldbar .ls{position:absolute;top:0;bottom:0;left:-40%;width:40%;background:linear-gradient(90deg,rgba(223,240,200,0),rgba(223,240,200,.9),rgba(223,240,200,0));animation:ldshine 1.3s linear infinite}
+.ldtext{font:700 18px var(--body);color:var(--green);margin-top:6px}
+@keyframes ldfill{0%{width:0}100%{width:94%}}
+@keyframes ldshine{0%{left:-40%}100%{left:100%}}
+@media (prefers-reduced-motion:reduce){.ldbar .ls{animation-duration:3s}}
+/* v2.7 Clients box (folded up) */
+.cl{margin-top:22px}
+.clHead{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--box);border:2px solid var(--green);border-radius:14px;padding:16px 18px;color:var(--strong);font:700 24px var(--display);cursor:pointer;text-align:left}
+.clHead .cc{font:600 17px var(--body);color:var(--muted)}
+.clHead .ca{font:700 17px var(--body);color:var(--green);white-space:nowrap}
+.clTiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.clTile{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.clTile b{display:block;font:700 30px var(--display);color:var(--strong)}
+.clTile span{font-size:16px;color:var(--muted)}
+.clTile.on{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber) inset}
+.clCard{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px}
+.clCard summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.clCard summary::-webkit-details-marker{display:none}
+.clCard summary b{font:700 21px var(--display);color:var(--strong);overflow-wrap:anywhere}
+.clCard a{color:var(--amber)}
+.chip{font-size:14px;font-weight:700;border-radius:999px;padding:2px 10px;border:1.5px solid currentColor;white-space:nowrap}
+.h-new{color:#8fbbe8}.h-active{color:var(--green)}.h-check{color:var(--amber)}.h-slip{color:var(--red)}.h-lost{color:var(--muted)}
+/* v2.7 TV view: sideways = only the six order boxes */
+#tvBtn{display:none;font-size:16px;padding:6px 14px}
+@media (orientation:landscape) and (min-width:640px){
+  #tvBtn{display:inline-block}
+  body.tv .top,body.tv #msg,body.tv #pagesHead,body.tv #links,body.tv #clients,body.tv #loading,body.tv .ver{display:none!important}
+  body.tv .wrap{max-width:none;padding:1.2vh 1.5vw}
+  body.tv .livebar{padding:.5vh 1.2vw;margin-bottom:1.2vh}
+  body.tv .live{font-size:min(3.2vh,2vw)}
+  body.tv .stages{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;height:calc(100vh - 11vh);gap:1.4vw}
+  body.tv .stage{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:1vh;padding:1vh 1vw}
+  body.tv .count{font-size:min(16vh,10vw);line-height:1;min-width:0}
+  body.tv .stage .lbl{font-size:min(5.5vh,3.2vw);line-height:1.15}
+  body.tv .stage .nt{display:none}
+  body.tv .tag{font-size:min(2.8vh,1.7vw)}
+}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:#9a3412;color:#fff;font:700 20px/1.3 system-ui,sans-serif;text-align:center;padding:10px 8px;letter-spacing:.04em">TEST COPY · cleaner layout · real order data</div>
+<div class="wrap signin hide" id="signin">
+  <img class="signLogo" src="../../assets/cpmg-icon-192.png" alt="CPMG">
+  <h1>CPMG Dashboard</h1>
+  <div class="sub" id="signSub">Type the PIN to sign in.</div>
+  <div class="whos hide" id="whoStep"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
+  <label for="pin" class="sub" id="pinLbl">PIN</label>
+  <div class="pinwrap" id="pinWrap"><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="10"><button type="button" class="eyeBtn" id="eyeBtn" aria-label="Show PIN" title="Show PIN"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line id="eyeSlash" x1="3" y1="3" x2="21" y2="21"/></svg></button></div>
+  <script>(function(){var b=document.getElementById('eyeBtn'),p=document.getElementById('pin'),s=document.getElementById('eyeSlash'),held=false,timer=null,longPress=false;function set(show){p.type=show?'text':'password';s.style.display=show?'none':'';b.setAttribute('aria-label',show?'Hide PIN':'Show PIN');b.title=show?'Hide PIN':'Show PIN';}b.addEventListener('pointerdown',function(ev){ev.preventDefault();longPress=false;timer=setTimeout(function(){longPress=true;held=true;set(true);},250);});function up(){clearTimeout(timer);if(held){held=false;set(false);}}b.addEventListener('pointerup',up);b.addEventListener('pointerleave',up);b.addEventListener('pointercancel',up);b.addEventListener('contextmenu',function(ev){ev.preventDefault();});b.addEventListener('click',function(){if(longPress){longPress=false;return;}set(p.type==='password');});})();</script>
+  <label class="rem"><input type="checkbox" id="remember"> Remember me on this phone (only on your own phone)</label>
+  <button type="button" class="btn" id="signinBtn" style="font-size:22px;padding:14px">Sign in</button>
+  <div id="signinLoad" class="hide"><div class="ldtext">Signing in…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
+  <div id="signinMsg"></div>
+</div>
+<div class="wrap hide" id="dash">
+  <div class="livebar" id="livebar">
+    <div class="live" id="live"><span class="dot" aria-hidden="true"></span><span id="liveText" aria-live="polite">Connecting…</span></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div class="ver" id="ver"></div><button type="button" class="btn2" id="tvBtn">Show menus</button></div>
+  </div>
+  <div class="top">
+    <div><h1>CPMG Dashboard</h1><div class="sub" id="sub">Loading…</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn2" id="refresh" type="button">Refresh</button><button class="btn2" id="logout" type="button">Log out</button></div>
+  </div>
+  <div id="loading" class="hide"><div class="ldtext" id="ldText">Loading your orders…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
+  <div id="msg"></div>
+  <div id="vStages"><div class="stages" id="stages"></div><div class="cl" id="clients"><button type="button" class="clHead" id="clToggle" aria-expanded="false"><span>Clients <span class="cc" id="clCount"></span></span><span class="ca" id="clArrow">Tap to open ▸</span></button><div id="clBody" class="hide"></div></div><div class="cl" id="salesFold"><button type="button" class="clHead" data-fold="salesBody" aria-expanded="false"><span>Sales and prospects</span><span class="ca">Tap to open ▸</span></button><div id="salesBody" class="hide foldBody"><div class="mgrid" id="metrics"></div></div></div><div class="cl" id="pagesFold"><button type="button" class="clHead" data-fold="pagesBody" aria-expanded="false"><span>My pages</span><span class="ca">Tap to open ▸</span></button><div id="pagesBody" class="hide foldBody"><div class="sub" id="pagesNote" style="margin-bottom:8px">These open in the Claude app and change only when Claude updates them.</div><div id="links"></div></div></div><div class="cl" id="sysFold"><button type="button" class="clHead" data-fold="sysBody" aria-expanded="false"><span>System: <span id="sysState">checking…</span></span><span class="ca">Tap to open ▸</span></button><div id="sysBody" class="hide foldBody"><div class="mgrid" id="sysBox"></div></div></div></div>
+  <div id="vList" class="hide">
+    <button class="btn2" type="button" data-go="stages">← All stages</button>
+    <h2 id="listTitle" style="margin-top:14px"></h2>
+    <div class="list" id="list"></div>
+  </div>
+  <div id="vMore" class="hide">
+    <button class="btn2" type="button" data-go="stages">← Dashboard</button>
+    <h2 id="moreTitle" style="margin-top:14px"></h2>
+    <div class="sub" id="moreSub"></div>
+    <div class="list" id="more"></div>
+  </div>
+  <div id="vRec" class="hide">
+    <button class="btn2" type="button" id="recBack">← Back to the list</button>
+    <div id="rec" class="rec" style="margin-top:14px"></div>
+  </div>
+  <div id="vJob" class="hide">
+    <button class="btn2" type="button" id="backList">← Back to the list</button>
+    <div id="job"></div>
+  </div>
+</div>
+<div class="full hide" id="full">
+  <img id="fullImg" alt="">
+  <div class="bar"><button class="btn" type="button" id="fullBack">Back to the form</button></div>
+</div>
+<script>
+var KEY = '';
+var API = 'https://script.google.com/macros/s/AKfycbxvlHJmEaoJpsfmAF2DDmIUPtOTUUirZJSpbF8ye92LOxWwoUJC8jZaGUAPeawv-dIh/exec';
+var PASS = null, WHO = '', HELD_PIN = '', HELD_REM = false, HELD_PASS = '';
+try { PASS = localStorage.getItem('cpmgPass') || sessionStorage.getItem('cpmgPass'); } catch (e) {}
+function savePass(p, remember) { try { (remember ? localStorage : sessionStorage).setItem('cpmgPass', p); } catch (e) {} }
+function clearPass() { try { localStorage.removeItem('cpmgPass'); sessionStorage.removeItem('cpmgPass'); } catch (e) {} PASS = null; }
+function post(body, ok, fail) {
+  fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+    .then(function (r) { return r.json(); }).then(ok).catch(fail);
+}
+var D = null, curStage = null, curJob = null;
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { var d = document.createElement('div'); d.textContent = String(s == null ? '' : s); return d.innerHTML; }
+function show(v) { ['vStages', 'vList', 'vJob', 'vMore', 'vRec'].forEach(function (x) { $(x).classList.toggle('hide', x !== v); }); tvSet(v === 'vStages'); window.scrollTo(0, 0); }
+// v2.7 TV view: on when the order boxes are showing, unless "Show menus" was tapped
+// v3.2: TV view is automatic only when the screen is sideways (TV, laptop, phone turned). Upright phone shows everything.
+var tvMode = 'auto'; try { tvMode = sessionStorage.getItem('cpmgTvMode') || 'auto'; } catch (e) {}
+var tvStages = false;
+function tvWide() { return window.innerWidth > window.innerHeight; }
+function tvSet(onStages) { tvStages = !!onStages; var on = tvStages && (tvMode === 'on' || (tvMode === 'auto' && tvWide())); document.body.classList.toggle('tv', on); $('tvBtn').textContent = on ? 'Show menus' : 'TV view'; }
+window.addEventListener('resize', function () { if (!$('dash').classList.contains('hide')) tvSet(tvStages); });
+function msg(html, cls) { $('msg').innerHTML = html ? '<div class="' + (cls || 'warn') + '">' + html + '</div>' : ''; }
+function call(fn, args, ok, failed) {
+  post({ api: 'dash', fn: fn, pass: PASS, args: args.slice(1) },
+    function (res) { if (res && res.signin) { if (failed) failed(); signedOut(res.error); return; } ok(res); },
+    function (e) { if (failed) failed(); msg('Something went wrong: ' + esc(e && e.message), 'err'); });
+}
+var MINE = { randy: 'randy', cindy: 'cindy' };
+var PAGE_VERSION = 'v3.6-TEST (Oct 31, 2026)';
+var STALE_MS = 3 * 60 * 1000;          // older than this = amber "Not updating"
+var lastOk = 0;                         // time (ms) of the last good refresh
+function clock(d) { var h = d.getHours(), m = d.getMinutes(); return (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + (h < 12 ? 'AM' : 'PM'); }
+function drawVersion(serverVer) {
+  $('ver').textContent = 'Dashboard ' + PAGE_VERSION + (serverVer ? ' · server ' + serverVer : '');
+}
+function drawLive() {
+  var stale = !lastOk || (Date.now() - lastOk) > STALE_MS;
+  $('live').classList.toggle('stale', stale);
+  $('livebar').classList.toggle('stale', stale);
+  var t = !lastOk ? (stale && Date.now() - pageStart > STALE_MS ? 'Not updating, check connection' : 'Connecting…')
+    : (stale ? 'Not updating, check connection · last ' + clock(new Date(lastOk)) : 'LIVE · updated ' + clock(new Date(lastOk)));
+  if ($('liveText').textContent !== t) $('liveText').textContent = t;
+}
+var pageStart = Date.now();
+drawVersion('');
+
+function gotDashboard(res, then) {
+    if (!res || !res.ok) { msg(esc(res ? res.error : 'No answer.'), 'err'); drawLive(); return; }
+    D = res;
+    lastOk = Date.now(); drawLive(); drawVersion(res.version);
+    $('sub').textContent = 'Hi ' + res.name + ' · updated ' + res.at;
+    drawStages();
+    if (curStage && !$('vList').classList.contains('hide')) drawList(curStage);
+    if (then) then();
+}
+function loading(on, text) {
+  var b = $('loading'); if (!b) return;
+  if (on) { $('ldText').textContent = text || 'Loading your orders…'; b.classList.remove('hide');
+    var bar = b.querySelector('.ldbar'), c = bar.cloneNode(true); bar.parentNode.replaceChild(c, bar); }
+  else b.classList.add('hide');
+}
+function load(then) {
+  loading(true);
+  call('getDashboard', [KEY], function (res) { loading(false); gotDashboard(res, then); }, function () { loading(false); });
+}
+// Quiet refresh for the 60-second timer: no error pop-up, the LIVE light shows trouble instead.
+// Only redraws the list if it is the screen showing, so an open order or full screen is never disturbed.
+function poll() {
+  if (!PASS) return;
+  post({ api: 'dash', fn: 'getDashboard', pass: PASS, args: [] }, function (res) {
+      if (res && res.signin) { signedOut(res.error); return; }
+      if (!res || !res.ok) { Logger_(res); drawLive(); return; }
+      var listOpen = !$('vList').classList.contains('hide');
+      D = res; lastOk = Date.now(); drawLive(); drawVersion(res.version);
+      $('sub').textContent = 'Hi ' + res.name + ' · updated ' + res.at;
+      drawStages();
+      if (curStage && listOpen) { var y = window.scrollY; drawList(curStage); window.scrollTo(0, y); }
+    }, function (e) { Logger_(e); drawLive(); });
+}
+function Logger_(e) { try { console.warn('Dashboard refresh failed:', e && (e.message || e.error) || e); } catch (x) {} }
+// v2.7 Clients box
+var CL = null, clOpen = false, clF = '';
+function clYmd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+function clDays(s) { if (!s) return 9999; var p = s.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]), t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((t - d) / 864e5); }
+function clHealth(c) { var d = clDays(c.last); if (d <= 30) return (c.orders <= 1 && clDays(c.first) <= 30) ? 'new' : 'active'; if (d <= 60) return 'check'; if (d <= 90) return 'slip'; return 'lost'; }
+function clTodo(c) { if (c.followUp) return c.followUp <= clYmd(new Date()); var h = clHealth(c); return (h === 'check' || h === 'slip') && (!c.lastContact || clDays(c.lastContact) > 14); }
+var CLH = { 'new': 'New', active: 'Active', check: 'Check in', slip: 'Slipping', lost: 'Lost' };
+function loadClients() {
+  $('clBody').innerHTML = '<div class="ldtext">Loading clients…</div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div>';
+  call('getClients', [KEY], function (res) {
+    if (!res || !res.ok) { $('clBody').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    CL = res.clients; drawClients();
+  }, function () { $('clBody').innerHTML = '<div class="err">Could not load clients. Tap Clients to try again.</div>'; CL = null; });
+}
+function drawClients() {
+  var n = { todo: 0, 'new': 0, active: 0, check: 0, slip: 0, lost: 0 };
+  CL.forEach(function (c) { n[clHealth(c)]++; if (clTodo(c)) n.todo++; });
+  $('clCount').textContent = '(' + CL.length + (n.todo ? ' · ' + n.todo + ' to do today' : '') + ')';
+  var tiles = [['todo', 'To do today'], ['', 'Everyone'], ['new', 'New'], ['active', 'Active'], ['check', 'Check in'], ['slip', 'Slipping'], ['lost', 'Lost']];
+  var h = '<div class="clTiles">' + tiles.map(function (t) {
+    return '<button type="button" class="clTile' + (clF === t[0] ? ' on' : '') + '" data-clf="' + t[0] + '"><b>' + (t[0] === '' ? CL.length : n[t[0]]) + '</b><span>' + t[1] + '</span></button>';
+  }).join('') + '</div>';
+  var list = CL.filter(function (c) { return !clF || (clF === 'todo' ? clTodo(c) : clHealth(c) === clF); });
+  h += list.length ? list.map(function (c) {
+    var hk = clHealth(c), tel = String(c.phone).replace(/[^0-9+]/g, '');
+    return '<details class="clCard" data-code="' + esc(c.code) + '"><summary><b>' + esc(c.business) + '</b><span class="chip h-' + hk + '">' + (clTodo(c) ? 'To do · ' : '') + CLH[hk] + '</span></summary>' +
+      '<dl style="margin-top:10px">' + row('Contact', c.contact) +
+      (c.phone ? '<dt>Phone</dt><dd><a href="tel:' + esc(tel) + '">' + esc(c.phone) + '</a></dd>' : '') +
+      (c.email ? '<dt>Email</dt><dd><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></dd>' : '') +
+      row('Type', c.type) + row('Area', c.area) + row('Orders', String(c.orders)) + row('Last order', c.last) +
+      row('Monthly plan', c.plan ? 'Yes' : '') + row('Last contact', c.lastContact) + '</dl>' +
+      '<label class="sub" style="display:block;margin-top:10px">Follow-up date<input type="date" class="clFu" value="' + esc(c.followUp) + '"></label>' +
+      '<label class="sub" style="display:block;margin-top:8px">Notes<textarea class="clNotes" rows="3">' + esc(c.notes) + '</textarea></label>' +
+      '<div class="acts"><button type="button" class="btn" data-clsave="save">Save</button><button type="button" class="btn2" data-clsave="contacted">Contacted today</button></div><div class="clMsg"></div></details>';
+  }).join('') : '<div class="empty" style="margin-top:10px">Nobody here right now.</div>';
+  $('clBody').innerHTML = h;
+}
+function saveClientCard(btn) {
+  var card = btn.closest('.clCard'), code = card.dataset.code, contacted = btn.dataset.clsave === 'contacted';
+  var fu = card.querySelector('.clFu').value;
+  if (contacted) { var d = new Date(); d.setDate(d.getDate() + 30); fu = clYmd(d); }   // next check-in 30 days out
+  btn.disabled = true; card.querySelector('.clMsg').innerHTML = '<div class="sub" style="margin-top:8px">Saving…</div>';
+  call('saveClient', [KEY, code, { followUp: fu, notes: card.querySelector('.clNotes').value, contacted: contacted }], function (res) {
+    btn.disabled = false;
+    if (!res || !res.ok) { card.querySelector('.clMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    var c = CL.filter(function (x) { return x.code === code; })[0];
+    if (c) { c.followUp = res.client.followUp; c.notes = res.client.notes; if (res.client.lastContact) c.lastContact = res.client.lastContact; }
+    drawClients();
+    var again = document.querySelector('.clCard[data-code="' + CSS.escape(code) + '"]');
+    if (again) { again.open = true; again.querySelector('.clMsg').innerHTML = '<div class="warn">Saved.</div>'; }
+  }, function () { btn.disabled = false; });
+}
+var LINKS = [
+  { g: 'Sales', who: 'both', t: 'Prospects', d: 'Restaurants, bars and other places to call or visit', u: 'https://claude.ai/artifact/AdpWkKeiWVfcBixu2nTxD9' },
+  { g: 'Sales', who: 'both', t: 'Social prospects', d: 'Facebook groups and pages where we post', u: 'https://claude.ai/artifact/LBvZw6mcHGGDYRcg8sLy3N' },
+  { g: 'Sales', who: 'both', t: 'CPMG on Facebook', d: 'Our business page and sample graphics', u: 'https://www.facebook.com/profile.php?id=61595065748576' },
+  { g: 'Order forms', who: 'randy', t: 'Detail Order', d: 'Full form for new customers', u: 'https://clearpointmediagroup.github.io/detail-order/' },
+  { g: 'Order forms', who: 'randy', t: 'Quick Order', d: 'Short form for regulars', u: 'https://clearpointmediagroup.github.io/quick-order/' },
+  { g: 'Running the business', who: 'randy', t: 'Day-One Report', d: 'What is left, what Claude is doing', u: 'https://claude.ai/artifact/TYtE5vofRJiXDB2A1YkJhQ' },
+  { g: 'Running the business', who: 'randy', t: 'Start Here', d: 'Home page for all your CPMG pages', u: 'https://claude.ai/artifact/QJGzsEKxJnhWcZTtToTYRJ' },
+  { g: 'Running the business', who: 'randy', t: 'Project Plan', d: 'Every step in order', u: 'https://claude.ai/artifact/Fto9eDjTrA5tZLhLwMUkZx' }, { g: 'Running the business', who: 'randy', t: 'Business Plan', d: 'Your plan, prices and hours', u: 'https://claude.ai/artifact/5YbkLDZxMayXBajjxWGn41' },
+  { g: 'Running the business', who: 'randy', t: 'Work Log', d: 'Every change Claude made', u: 'https://claude.ai/artifact/Fd2eL621Tmsy7g739WL6xK' },
+  { g: 'Running the business', who: 'randy', t: 'Order Workflow', d: 'How an order moves, step by step', u: 'https://claude.ai/artifact/EX51PPUTgKbFQQWtHEu5G5' },
+  { g: 'Running the business', who: 'randy', t: 'Scripts', d: 'All the live code', u: 'https://claude.ai/artifact/3zroVtEXaG3vMDduG3z47s' },
+  { g: 'Running the business', who: 'randy', t: 'Setup Guides', d: 'Phone number, bank account, QuickBooks', u: 'https://claude.ai/artifact/WGzzDh2k628ZzHov5ehZuL' }
+];
+var linksDrawn = '';
+function drawLinks() {
+  if (!D || linksDrawn === D.who) return;
+  linksDrawn = D.who;
+  var mine = LINKS.filter(function (l) { return l.who === 'both' || l.who === D.who; }), h = '', grp = '';
+  mine.forEach(function (l) {
+    if (l.g !== grp) { if (grp) h += '</div>'; grp = l.g; h += '<div class="lgrp">' + esc(grp) + '</div><div class="links">'; }
+    h += '<a class="lk" href="' + l.u + '" target="_blank" rel="noopener"><b>' + esc(l.t) + '</b><span>' + esc(l.d) + '</span></a>';
+  });
+  $('links').innerHTML = h + (grp ? '</div>' : '');
+}
+function drawStages() {
+  drawLinks();
+  $('stages').innerHTML = D.stages.map(function (s, i) {
+    var mine = s.key === MINE[D.who];
+    return '<button type="button" class="stage' + (mine ? ' mine' : '') + (Number(s.count) ? '' : ' empty') + '" data-stage="' + s.key + '">' +
+      '<span class="count">' + s.count + '</span><span><span class="lbl">' + (i + 1) + '. ' + esc(s.label) + '</span><br>' +
+      '<span class="nt">' + esc(s.note) + '</span>' + (mine ? '<br><span class="tag">Your queue</span>' : '') + '</span></button>';
+  }).join('');
+}
+function drawList(stage) {
+  curStage = stage;
+  var s = D.stages.filter(function (x) { return x.key === stage; })[0];
+  $('listTitle').textContent = s.label + ' (' + s.count + ')';
+  var jobs = D.jobs.filter(function (j) { return j.stage === stage; });
+  $('list').innerHTML = jobs.length ? jobs.map(function (j, i) {
+    return '<button type="button" class="job' + (j.kicked ? ' kicked' : '') + '" data-job="' + i + '"><b>' + esc(j.business) + '</b>' +
+      '<div>' + esc(j.headline) + '</div>' +
+      '<div class="m">' + esc(j.id) + ' · ' + esc(j.size) + ' · came in ' + esc(j.received) + (j.needBy ? ' · need by ' + esc(j.needBy) : '') + '</div>' +
+      (j.kicked ? '<div class="k">' + esc(j.lastNote) + '</div>' : (j.lastNote ? '<div class="m">' + esc(j.lastNote) + '</div>' : '')) +
+      (j.checks ? '<div class="k">Check: ' + esc(j.checks) + '</div>' : '') + '</button>';
+  }).join('') : '<div class="empty">Nothing here right now.</div>';
+  $('list').dataset.stage = stage;
+  show('vList');
+}
+function openJob(tab, id) {
+  msg('');
+  $('job').innerHTML = '<div class="card">Opening the order…</div>';
+  show('vJob');
+  call('getJob', [KEY, tab, id], function (res) {
+    if (!res || !res.ok) { $('job').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    curJob = res.job; drawJob();
+  });
+}
+function row(label, val) { return val ? '<dt>' + esc(label) + '</dt><dd>' + esc(val) + '</dd>' : ''; }
+function drawJob() {
+  var j = curJob, h = '';
+  h += '<div class="card"><h2>' + esc(j.business) + '</h2><div class="sub">' + esc(j.id) + ' · ' + esc(j.status) + '</div></div>';
+  if (j.images.length) {
+    h += '<div class="card imgs">' + j.images.map(function (im, i) {
+      return '<figure>' + (im.data ? '<img src="' + im.data + '" alt="Proof ' + (i + 1) + '">' : '<p>Too big to show here. <a href="' + esc(im.link) + '" target="_blank" style="color:var(--amber)">Open it in Drive</a></p>') +
+        '<figcaption>' + esc(im.name) + '</figcaption>' +
+        (im.data ? '<button class="btn" type="button" data-full="' + i + '" style="margin-top:10px">Full screen</button>' : '') + '</figure>';
+    }).join('') + '</div>';
+  } else {
+    h += '<div class="warn">No _PROOF image in the order folder yet.' + (j.stage === 'new' || j.stage === 'processing' ? ' It moves to Cindy\'s review by itself once the proof is saved there.' : '') + '</div>';
+  }
+  if (j.checks) h += '<div class="warn">Check before you approve: ' + esc(j.checks) + '</div>';
+  h += '<div class="card"><dl>' + row('Headline', j.headline) + row('Ideas', j.ideas) + row('Call to action', j.cta) +
+    row('Phone on graphic', j.footerPhone) + row('Website', j.website) + row('Area', j.area) + row('Size', j.size) +
+    row('Colors', j.colors) + row('Notes', j.notes) + row('Need by', j.needBy) + row('Came in', j.received) +
+    row('Contact', j.contact + ' · ' + j.phone + ' · ' + j.email) + row('Proof sent', j.proofSent) + row('Delivered', j.delivered) + '</dl>' +
+    '<div class="acts"><a class="btn2" style="text-decoration:none;padding:12px 18px;border-radius:999px;font-weight:700" href="' + esc(j.folder) + '" target="_blank">Open order folder</a></div></div>';
+  if (j.reviewNotes) h += '<div class="card"><h2>History</h2><div class="notes" style="margin-top:8px">' + esc(j.reviewNotes) + '</div></div>';
+  h += '<div class="card" id="acts">' + actionsFor(j) + '</div>';
+  $('job').innerHTML = h;
+}
+function actionsFor(j) {
+  var me = D.who, s = j.stage;
+  if (me === 'cindy' && s !== 'cindy') return '<div class="sub">Only jobs in Cindy\'s review can be moved from your link.</div>';
+  if (s === 'new') return '<h2>Next</h2><p>Mark it as being made in Gemini + Claude.</p><div class="acts"><button class="btn" type="button" data-act="start">Start processing</button></div>';
+  if (s === 'processing') return '<h2>Next</h2><p>Being made. It moves to Cindy\'s review by itself once the new _PROOF image is saved in the order folder.</p>';
+  if (s === 'randy' || s === 'cindy') return '<h2>Your call</h2><div class="acts"><button class="btn" type="button" data-act="forward">' +
+    (s === 'cindy' ? 'Send forward to Randy' : 'Send forward: ready to send') + '</button>' +
+    '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox();
+  if (s === 'ready') return '<h2>Release</h2><p>Takes one more look before anything is emailed.</p><div class="acts"><button class="btn" type="button" data-act="preview" data-kind="proof">Release to customer</button>' +
+    '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox() + '<div id="look"></div>';
+  if (s === 'sent' && j.status === 'Proof Sent') return '<h2>After they pay</h2><p>Sends the clean _FINAL graphic. Takes one more look first.</p><div class="acts"><button class="btn" type="button" data-act="preview" data-kind="final">Send final graphic</button></div><div id="look"></div>';
+  return '<div class="sub">Done. Nothing more to do here.</div>';
+}
+function kickBox() {
+  return '<div id="kick" class="hide" style="margin-top:14px"><label for="kickNote"><b>What needs fixing?</b></label>' +
+    '<textarea id="kickNote" rows="3" placeholder="Example: phone number wrong, should be (843) 555-0123"></textarea>' +
+    '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Kick it back</button><button class="btn2" type="button" data-act="kickcancel">Never mind</button></div></div>';
+}
+function move(action, note) {
+  call('moveJob', [KEY, curJob.tab, curJob.id, action, note || ''], function (res) {
+    if (!res || !res.ok) { msg(esc(res ? res.error : 'No answer.'), 'err'); window.scrollTo(0, 0); return; }
+    msg('Done. ' + esc(curJob.business) + ' is now: ' + esc(res.status) + '.', 'warn');
+    load(function () { drawList(curStage || 'new'); });
+  });
+}
+function preview(kind) {
+  $('look').innerHTML = '<div class="card">Checking…</div>';
+  call('getSendPreview', [KEY, curJob.tab, curJob.id, kind], function (res) {
+    if (!res || !res.ok) { $('look').innerHTML = '<div class="err">' + esc(res ? (res.error || res.message) : 'No answer.') + '</div>'; return; }
+    var p = res.preview;
+    var h = '<div class="warn" style="color:var(--fg)"><h2 style="color:var(--amber)">One more look</h2>' +
+      '<p>' + (kind === 'proof' ? 'Email the proof to' : 'Has ' + esc(p.business) + ' paid? If yes, email the final to') + ' <b>' + esc(p.contact) + '</b>:</p>' +
+      '<div class="tan">' + esc(p.to) + '</div><p>Attaching:</p>' + p.images.map(function (n) { return '<div class="tan" style="margin-top:6px">' + esc(n) + '</div>'; }).join('');
+    if (kind === 'proof') {
+      h += p.free ? '<p><b>Free order:</b> no pay link needed. The email just asks them to reply "approved".</p>'   // v1.2
+        : p.payLink ? '<p>Pay link:</p><div class="tan">' + esc(p.payLink) + '</div>'
+        : '<p><b>No pay link yet.</b> Paste the QuickBooks pay link:</p><input id="payLink" type="url" placeholder="https://">';
+      if (p.total) h += '<p>Total: ' + esc(p.total) + '</p>';
+      if (p.oddPhones.length) h += '<p>Phone check: ' + esc(p.oddPhones.join(', ')) + ' isn\'t local, so the email asks them to confirm it.</p>';
+    }
+    if (p.waiting.length) h += '<p>Not ready yet, sent later: ' + esc(p.waiting.join(', ')) + '</p>';
+    h += '<div class="acts"><button class="btn" type="button" data-act="send" data-kind="' + kind + '">Yes, send it</button><button class="btn2" type="button" data-act="lookcancel">Not yet</button></div></div>';
+    $('look').innerHTML = h;
+  });
+}
+function send(kind) {
+  var pl = $('payLink') ? $('payLink').value.trim() : '';
+  if ($('payLink') && !/^https?:\/\/\S+$/.test(pl)) { $('look').insertAdjacentHTML('beforeend', '<div class="err">Paste the full pay link (it starts with https://) first.</div>'); return; }
+  $('look').innerHTML = '<div class="card">Sending…</div>';
+  call('sendFromDashboard', [KEY, curJob.tab, curJob.id, kind, pl], function (res) {
+    if (!res || !res.ok) { $('look').innerHTML = '<div class="err">' + esc(res ? (res.message || res.error) : 'No answer.') + '</div>'; return; }
+    msg(esc(res.message), 'warn');
+    load(function () { drawList('sent'); });
+  });
+}
+document.addEventListener('click', function (ev) {
+  var t = ev.target.closest('button,[data-full]'); if (!t) return;
+  if (t.id === 'refresh') { msg(''); load(); if (clOpen) loadClients(); return; }
+  if (t.id === 'tvBtn') { tvMode = document.body.classList.contains('tv') ? 'off' : 'on'; try { sessionStorage.setItem('cpmgTvMode', tvMode); } catch (e) {} tvSet(!$('vStages').classList.contains('hide')); return; }
+  if (t.dataset.fold) { var fb = $(t.dataset.fold), op = fb.classList.contains('hide'); fb.classList.toggle('hide', !op); t.setAttribute('aria-expanded', op); t.querySelector('.ca').textContent = op ? 'Tap to fold up ▾' : 'Tap to open ▸'; return; }
+  if (t.id === 'clToggle') { clOpen = !clOpen; $('clBody').classList.toggle('hide', !clOpen); t.setAttribute('aria-expanded', clOpen); $('clArrow').textContent = clOpen ? 'Tap to fold up ▾' : 'Tap to open ▸'; if (clOpen && !CL) loadClients(); return; }
+  if (t.hasAttribute('data-clf')) { clF = t.getAttribute('data-clf'); drawClients(); return; }
+  if (t.dataset.clsave) { saveClientCard(t); return; }
+  if (t.id === 'backList') { if (MORE_BACK) { MORE_BACK = false; show('vMore'); return; } drawList(curStage || 'new'); return; }
+  if (t.id === 'fullBack') { $('full').classList.add('hide'); return; }
+  if (t.dataset.go === 'stages') { curStage = null; show('vStages'); return; }
+  if (t.dataset.stage) { msg(''); drawList(t.dataset.stage); return; }
+  if (t.dataset.job) { var j = D.jobs.filter(function (x) { return x.stage === curStage; })[+t.dataset.job]; if (j) openJob(j.tab, j.id); return; }
+  if (t.dataset.full) { $('fullImg').src = curJob.images[+t.dataset.full].data; $('full').classList.remove('hide'); return; }
+  var a = t.dataset.act; if (!a) return;
+  if (a === 'start' || a === 'forward') { t.disabled = true; move(a); }
+  else if (a === 'kickopen') { $('kick').classList.remove('hide'); $('kickNote').focus(); }
+  else if (a === 'kickcancel') { $('kick').classList.add('hide'); }
+  else if (a === 'kickback') { var n = $('kickNote').value.trim(); if (!n) { $('kickNote').placeholder = 'Type what needs fixing first'; $('kickNote').focus(); return; } t.disabled = true; move('kickback', n); }
+  else if (a === 'preview') { preview(t.dataset.kind); }
+  else if (a === 'lookcancel') { $('look').innerHTML = ''; }
+  else if (a === 'send') { t.disabled = true; send(t.dataset.kind); }
+});
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('full').classList.add('hide'); });
+function showSignin(text) {
+  $('dash').classList.add('hide'); $('signin').classList.remove('hide');
+  $('signinMsg').innerHTML = text ? '<div class="warn">' + esc(text) + '</div>' : '';
+}
+function signedOut(text) { clearPass(); linksDrawn = ''; CL = null; document.body.classList.remove('tv'); showSignin(text || 'Please sign in again.'); }
+function startDash() { $('signin').classList.add('hide'); $('dash').classList.remove('hide'); tvSet(true); load(); }
+function pinStepShow(on) {
+  ['pinLbl', 'pinWrap', 'signinBtn'].forEach(function (x) { $(x).classList.toggle('hide', !on); });
+  document.querySelector('.rem').classList.toggle('hide', !on);
+  $('whoStep').classList.toggle('hide', on);
+  $('signSub').textContent = on ? 'Type the PIN to sign in.' : "Who's using this?";
+}
+function doSignin() {
+  var pin = $('pin').value.trim();
+  if (!pin) { $('signinMsg').innerHTML = '<div class="err">Type the PIN first.</div>'; $('pin').focus(); return; }
+  var remember = $('remember').checked;
+  $('signinBtn').disabled = true; $('signinMsg').innerHTML = ''; $('signinLoad').classList.remove('hide');
+  // v3.0: check the PIN first (as Randy); names only show after a right PIN
+  post({ api: 'dash', fn: 'login', who: 'randy', pin: pin, remember: remember }, function (res) {
+    $('signinLoad').classList.add('hide');
+    $('signinBtn').disabled = false; $('pin').value = '';
+    if (!res || !res.ok) { $('signinMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    HELD_PIN = pin; HELD_REM = remember; HELD_PASS = res.pass; pinStepShow(false);
+  }, function (e) { $('signinLoad').classList.add('hide'); $('signinBtn').disabled = false; $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+}
+function pickWho(who) {
+  if (!HELD_PASS) { pinStepShow(true); return; }
+  if (who === 'randy') { PASS = HELD_PASS; savePass(PASS, HELD_REM); HELD_PIN = ''; HELD_PASS = ''; pinStepShow(true); startDash(); return; }
+  $('signinLoad').classList.remove('hide'); $('signinMsg').innerHTML = '';
+  post({ api: 'dash', fn: 'logout', pass: HELD_PASS }, function () {}, function () {});
+  post({ api: 'dash', fn: 'login', who: who, pin: HELD_PIN, remember: HELD_REM }, function (res) {
+    $('signinLoad').classList.add('hide'); HELD_PIN = ''; HELD_PASS = '';
+    if (!res || !res.ok) { pinStepShow(true); $('signinMsg').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    PASS = res.pass; savePass(PASS, HELD_REM); pinStepShow(true); startDash();
+  }, function () { $('signinLoad').classList.add('hide'); pinStepShow(true); $('signinMsg').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+}
+document.addEventListener('click', function (ev) {
+  var t = ev.target.closest('button'); if (!t) return;
+  if (t.dataset.who) { WHO = t.dataset.who; pickWho(WHO); return; }
+  if (t.id === 'signinBtn') { doSignin(); return; }
+  if (t.id === 'logout') { post({ api: 'dash', fn: 'logout', pass: PASS }, function () {}, function () {}); signedOut('You are logged out.'); return; }
+});
+$('pin').addEventListener('keydown', function (e) { if (e.key === 'Enter') doSignin(); });
+// v3.1 Live number boxes (getMetrics). Read fresh from the sheets every 20 seconds.
+var M = null;
+function mN(v, label, warn) { return '<div class="mn' + (warn ? ' warn' : '') + '"><b>' + esc(v) + '</b><span>' + esc(label) + '</span></div>'; }
+function mMoney(n) { return '$' + (Number(n) || 0).toLocaleString(); }
+function mErr(p) { return p && p.ok === false ? '<div class="merr">⚠ ' + esc(p.error || 'Could not read this.') + '</div>' : ''; }
+function mList(obj) { var k = Object.keys(obj || {}); return k.length ? '<ul>' + k.map(function (x) { return '<li>' + esc(x) + ': <b>' + esc(obj[x]) + '</b></li>'; }).join('') + '</ul>' : '<div class="mline">None yet.</div>'; }
+// v3.3: every number with a › can be tapped -> list -> full record
+function mT(v, label, warn, kind, key, title) { return '<button type="button" class="mn' + (warn ? ' warn' : '') + '" data-mk="' + esc(kind) + '" data-mkey="' + esc(key) + '" data-mt="' + esc(title) + '"><b>' + esc(v) + '</b><span>' + esc(label) + '</span></button>'; }
+function mR(text, n, kind, key, title) { return '<button type="button" class="mrow" data-mk="' + esc(kind) + '" data-mkey="' + esc(key) + '" data-mt="' + esc(title) + '"><span>' + esc(text) + '</span><span><b>' + esc(n) + '</b> ›</span></button>'; }
+// v3.4 locations: a list belongs to Houston when its name says Houston; everything else is the Myrtle Beach area
+function mLoc(name) { return /houston/i.test(name) ? 'Houston' : 'Myrtle Beach area'; }
+function mLocRows(tabs) {
+  var by = {}; tabs.forEach(function (x) { var l = mLoc(x.name); by[l] = (by[l] || 0) + x.count; });
+  return ['Myrtle Beach area', 'Houston'].filter(function (l) { return by[l] !== undefined; }).map(function (l) { return mR(l, by[l], 'local', 'loc:' + l, l + ' prospects'); }).join('');
+}
+function mLinks(L) {
+  if (!L) return '';
+  var h = (L.web ? '<a class="lb" href="' + esc(L.web) + '" target="_blank" rel="noopener">Website</a>' : '') +
+    (L.fb ? '<a class="lb" href="' + esc(L.fb) + '" target="_blank" rel="noopener">Facebook</a>' : '') +
+    (L.ig ? '<a class="lb" href="' + esc(L.ig) + '" target="_blank" rel="noopener">Instagram</a>' : '');
+  return h ? '<div class="lbs">' + h + '</div>' : '';
+}
+function drawMetrics() {
+  var el = $('metrics'); if (!el || !M) return;
+  var o = M.orders || {}, p = M.prospects || {}, s = M.sales || {}, so = M.social || {}, j = (M.project || {}).items || {}, sy = M.system || {};
+  var h = '';
+  h += '<div class="mbox"><h3>📦 Orders</h3>' + (o.ok === false ? mErr(o) :
+    '<div class="mnums">' + mT(o.today, 'today', false, 'orders', 'today', 'Orders today') + mT(o.week, 'this week', false, 'orders', 'week', 'Orders this week') +
+    mT(o.open, 'open · ' + mMoney(o.openValue), false, 'orders', 'open', 'Open orders') + mT(o.late, 'late (over 5 hrs)', o.late > 0, 'orders', 'late', 'Late orders (over 5 hours)') +
+    mT(o.delivered, 'sent · ' + mMoney(o.deliveredValue), false, 'orders', 'sent', 'Sent to client') + mT(o.total, 'in all', false, 'orders', 'all', 'All orders') + '</div>' +
+    '<div class="mline">Last order: <b>' + esc(o.lastOrder) + '</b>' + (o.test ? ' · ' + esc(o.test) + ' are TEST orders' : '') + '</div>') + '</div>';
+  h += '<div class="mbox"><h3>✉️ Sales emails</h3>' + (s.ok === false ? mErr(s) :
+    '<div class="mnums">' + mN(s.sentToday, 'sent today') + mN(s.sentWeek, 'sent this week') + mT(s.opened, 'opened', false, 'sales', 'opened', 'Opened the email') +
+    (s.clicked == null ? '' : mT(s.clicked, 'clicked', false, 'sales', 'clicked', 'Clicked a link')) +
+    mT(s.replied, 'replied', false, 'sales', 'replied', 'Replied') + mT(s.bounced, 'bounced', s.bounced > 0, 'sales', 'bounced', 'Bounced') + mT(s.unsubscribed, 'unsubscribed', false, 'sales', 'unsubscribed', 'Unsubscribed') + '</div>' +
+    (s.callFirst == null ? '' : mR('Call these first (replied or clicked)', s.callFirst, 'sales', 'callfirst', 'Call these first')) +
+    mR('Sent in all', s.sent, 'sales', 'sent', 'Sales emails sent') + mR('Ready to email', s.notYetEmailed, 'sales', 'ready', 'Ready to email') +
+    '<div class="mline">Last sent: <b>' + esc(s.lastSent) + '</b></div>') + '</div>';
+  h += '<div class="mbox"><h3>🎯 Prospects</h3>' + (p.ok === false ? mErr(p) :
+    '<div class="mnums">' + mT(p.total, 'in all', false, 'local', 'plists', 'Prospect lists') + mT(p.withEmail, 'have an email', false, 'sales', 'ready', 'Ready to email') +
+    mN(p.followDue, 'follow-ups due', p.followDue > 0) + mN(Object.keys(p.salesStatus || {}).reduce(function (a, k) { return a + p.salesStatus[k]; }, 0), 'contacted (sales status)') + '</div>' +
+    mLocRows(p.tabs || [])) + '</div>';
+  h += '<div class="mbox"><h3>📣 Social</h3>' + (so.ok === false ? mErr(so) :
+    '<div class="mnums">' + mT(so.places, 'places to post', false, 'social', 'all', 'Places to post') + mN(so.postsWeek, 'posts this week') + mN(so.posts, 'posts in all') + mN(so.leads, 'leads') + '</div>' +
+    Object.keys(so.status || {}).map(function (k) { return mR(k, so.status[k], 'social', k, 'Social: ' + k); }).join('') +
+    '<div class="mline">Last post: <b>' + esc(so.lastPost) + '</b></div>') + '</div>';
+  el.innerHTML = h; h = '';
+  h += '<div class="mbox"><h3>🛠 System</h3>' + (sy.ok === false ? mErr(sy) :
+    '<div class="mnums">' + mN(sy.answering ? 'OK' : 'DOWN', 'order system', !sy.answering) + mN(sy.emailQuota == null ? '?' : sy.emailQuota, 'emails it can send today', sy.emailQuota != null && sy.emailQuota < 50) +
+    mT(sy.timers == null ? '?' : sy.timers, 'timers running', false, 'local', 'timers', 'Timers running') + mN(M.asOf || '', 'numbers checked') + '</div>' +
+    '<div class="mline">Numbers script ' + esc(M.version || '') + '</div>') + '</div>';
+  if ($('sysBox')) $('sysBox').innerHTML = h;
+  var bad = sy.ok === false || !sy.answering || o.late > 0;
+  if ($('sysState')) { $('sysState').textContent = bad ? (o.late > 0 && sy.answering ? o.late + ' late order' + (o.late > 1 ? 's' : '') : 'needs a look') : 'all OK'; $('sysState').closest('button').classList.toggle('bad', bad); }
+}
+// v3.3 drill-down screens
+var MORE = null, MORE_BACK = false, MORE_ASK = null, MORE_ALL = [];
+document.addEventListener('change', function (ev) {
+  if (ev.target.id !== 'areaPick') return;
+  var a = ev.target.value, items = a ? MORE_ALL.filter(function (x) { return x.area === a; }) : MORE_ALL;
+  $('moreList').innerHTML = moreItems(items);
+  $('moreSub').textContent = items.length + (a ? ' in ' + a : ' in all') + ' \u00b7 tap one to open it';
+});
+function moreShow(title, sub, html) { $('moreTitle').textContent = title; $('moreSub').textContent = sub || ''; $('more').innerHTML = html; show('vMore'); }
+function linkify(v) {
+  var s = String(v);
+  if (/^https?:\/\//i.test(s)) return '<a href="' + esc(s) + '" target="_blank" rel="noopener">' + esc(s) + '</a>';
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)) return '<a href="mailto:' + esc(s) + '">' + esc(s) + '</a>';
+  if (/^[\d\s().+-]{10,}$/.test(s) && s.replace(/\D/g, '').length >= 10) return '<a href="tel:' + esc(s.replace(/[^\d+]/g, '')) + '">' + esc(s) + '</a>';
+  return esc(s);
+}
+function moreItems(items) {
+  MORE = items;
+  return items.length ? items.map(function (x, i) {
+    return '<div class="mi" role="button" tabindex="0" data-mi="' + i + '"><b>' + esc(x.title || '(no name)') + '</b>' +
+      (x.line ? '<div>' + esc(x.line) + '</div>' : '') + (x.sub ? '<div class="m">' + esc(x.sub) + '</div>' : '') +
+      ((x.phone || x.email) ? '<div class="acts">' + (x.phone ? linkify(x.phone) : '') + (x.email ? linkify(x.email) : '') + '</div>' : '') + mLinks(x.links) + '</div>';
+  }).join('') : '<div class="card">Nothing here right now.</div>';
+}
+function openMore(kind, key, title) {
+  msg('');
+  if (kind === 'local') {
+    var j = (M && M.project && M.project.items) || {}, list = [];
+    if (key === 'yourturn') list = j['Your turn list'] ? String(j['Your turn list']).split(' \u2022 ') : [];
+    if (key === 'waiting') list = j['Waiting to start list'] ? String(j['Waiting to start list']).split(' \u2022 ') : [];
+    if (key === 'timers') list = (M && M.system && M.system.timerNames) || [];
+    if (key.indexOf('loc:') === 0) { var loc = key.slice(4), lt = ((M && M.prospects && M.prospects.tabs) || []).filter(function (x) { return mLoc(x.name) === loc; }); moreShow(title, 'Tap a list to see its prospects.', lt.map(function (x) { return mR(x.name, x.count, 'plist', x.name, x.name); }).join('')); MORE = null; return; }
+    if (key === 'plists') { var tabs = (M && M.prospects && M.prospects.tabs) || []; moreShow(title, 'Pick a location.', mLocRows(tabs)); MORE = null; return; }
+    moreShow(title, list.length + ' item' + (list.length === 1 ? '' : 's'), list.length ? list.map(function (x) { return '<div class="card">' + esc(x) + '</div>'; }).join('') : '<div class="card">Nothing here right now.</div>');
+    MORE = null; return;
+  }
+  moreShow(title, 'Loading\u2026', '<div class="card">Reading your sheet\u2026</div>');
+  var ask = MORE_ASK = kind + '|' + key;
+  post({ api: 'dash', fn: 'getMetricList', pass: PASS, args: [kind, key] }, function (res) {
+    if (MORE_ASK !== ask) return;
+    if (res && res.signin) { signedOut(res.error); return; }
+    if (!res || !res.ok) { $('moreSub').textContent = ''; $('more').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    $('moreSub').textContent = res.total + ' in all' + (res.total > res.items.length ? ' \u00b7 showing the first ' + res.items.length : '') + ' \u00b7 tap one to open it';
+    MORE_ALL = res.items;
+    var areas = {}; res.items.forEach(function (x) { if (x.area) areas[x.area] = (areas[x.area] || 0) + 1; });
+    var ak = Object.keys(areas).sort();
+    var pick = (kind === 'plist' && ak.length > 1) ? '<select id="areaPick" aria-label="Area"><option value="">All areas (' + res.items.length + ')</option>' + ak.map(function (a) { return '<option value="' + esc(a) + '">' + esc(a) + ' (' + areas[a] + ')</option>'; }).join('') + '</select>' : '';
+    $('more').innerHTML = pick + '<div class="list" id="moreList">' + moreItems(res.items) + '</div>';
+  }, function () { $('more').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+}
+function openRec(x) {
+  if (x.src === 'order') { MORE_BACK = true; openJob(x.tab, x.id); return; }
+  $('rec').innerHTML = '<div class="card">Opening\u2026</div>'; show('vRec');
+  post({ api: 'dash', fn: 'getRecord', pass: PASS, args: [x.src, x.tab, x.row] }, function (res) {
+    if (res && res.signin) { signedOut(res.error); return; }
+    if (!res || !res.ok) { $('rec').innerHTML = '<div class="err">' + esc(res ? res.error : 'No answer.') + '</div>'; return; }
+    $('rec').innerHTML = '<div class="card"><h2>' + esc(x.title) + '</h2><div class="sub">' + esc(x.tab) + ' \u00b7 row ' + esc(res.row) + '</div>' + mLinks(res.links) + '<dl>' +
+      res.fields.map(function (f) { return '<dt>' + esc(f[0]) + '</dt><dd>' + linkify(f[1]) + '</dd>'; }).join('') + '</dl></div>';
+  }, function () { $('rec').innerHTML = '<div class="err">Could not reach the order system. Check your connection.</div>'; });
+}
+document.addEventListener('click', function (ev) {
+  if (ev.target.closest('a')) return;
+  var b = ev.target.closest('[data-mk]');
+  if (b) { openMore(b.dataset.mk, b.dataset.mkey, b.dataset.mt); return; }
+  var it = ev.target.closest('[data-mi]');
+  if (it && MORE && MORE[+it.dataset.mi]) { openRec(MORE[+it.dataset.mi]); return; }
+  if (ev.target.closest('#recBack')) { show('vMore'); return; }
+});
+document.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' && ev.target.dataset && ev.target.dataset.mi !== undefined) ev.target.click(); });
+function loadMetrics() {
+  if (!PASS) return;
+  post({ api: 'dash', fn: 'getMetrics', pass: PASS, args: [] }, function (res) {
+    if (res && res.signin) return;
+    if (!res || !res.ok) { if ($('metrics') && !M) $('metrics').innerHTML = '<div class="mbox"><div class="merr">⚠ Could not read the live numbers. Trying again in 20 seconds.</div></div>'; return; }
+    M = res; drawMetrics();
+  }, function () {});
+}
+var startDash0 = startDash; startDash = function () { startDash0(); if ($('metrics') && !M) $('metrics').innerHTML = '<div class="mbox"><div class="mline">Loading the live numbers…</div></div>'; loadMetrics(); };
+var poll0 = poll; poll = function () { poll0(); loadMetrics(); };
+if (PASS) startDash(); else showSignin('');
+setInterval(poll, 20000);                 // refresh every 20 seconds on every screen
+setInterval(drawLive, 15000);             // re-check freshness so the light turns amber on time
+</script>
+</body>
+</html>
