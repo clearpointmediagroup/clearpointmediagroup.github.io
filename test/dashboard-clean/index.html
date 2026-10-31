@@ -1,5 +1,5 @@
 <!-- TEST COPY (CC-031) v3.6-TEST (Oct 31, 2026): cleaner main screen. Same live order data as the real dashboard. Not for clients.
-     v3.6-TEST (Oct 31, 2026) Sign-in: the loading bar shows at the top of the screen (logo hides while it works); smaller logo; one-line TEST banner. Big loading bar with a seconds count on every wait (PIN check, name tap, first load); order boxes wait until orders arrive. Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
+     v3.6-TEST (Oct 31, 2026) Approve and Reject buttons under every picture; the order moves on only when all are approved; a rejected picture sends it back with a note naming it; "Back to the order" button. Sign-in: the loading bar shows at the top of the screen (logo hides while it works); smaller logo; one-line TEST banner. Big loading bar with a seconds count on every wait (PIN check, name tap, first load); order boxes wait until orders arrive. Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
        Claude jobs box removed; System bar turns red if something breaks. Nothing else changed. -->
 <!-- CPMG Dashboard (GitHub) v3.5 (Oct 30, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
@@ -67,6 +67,14 @@ button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .stage{background:var(--box);border:2px solid var(--green);border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;width:100%;color:var(--fg);font:inherit}
 .stage.mine{border:3px solid var(--amber)}
 .stage.empty{opacity:.45}
+.pk{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;justify-content:center}
+.pk button{min-width:140px}
+.pk .on.ok{outline:4px solid var(--strong)}
+.pk .on.no{outline:4px solid var(--amber)}
+figure.ok{outline:4px solid var(--green);border-radius:14px}
+figure.no{outline:4px solid var(--red);border-radius:14px}
+.pkstate{font-weight:700;font-size:19px;margin-top:8px}
+#decide{border:3px solid var(--amber)}
 .stages{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 .clHead.bad{border-color:var(--red);background:var(--red-bg)}
 .foldBody{margin-top:12px}
@@ -271,7 +279,7 @@ button.mn:active,.mi:active{transform:scale(.98)}
 </div>
 <div class="full hide" id="full">
   <img id="fullImg" alt="">
-  <div class="bar"><button class="btn" type="button" id="fullBack">Back to the form</button></div>
+  <div class="bar"><button class="btn" type="button" id="fullBack">Back to the order</button></div>
 </div>
 <script>
 var KEY = '';
@@ -467,13 +475,19 @@ function openJob(tab, id) {
 function row(label, val) { return val ? '<dt>' + esc(label) + '</dt><dd>' + esc(val) + '</dd>' : ''; }
 function drawJob() {
   var j = curJob, h = '';
+  if (PICK_JOB !== j.id) { PICK = {}; PICK_JOB = j.id; }
   h += '<div class="card"><h2>' + esc(j.business) + '</h2><div class="sub">' + esc(j.id) + ' · ' + esc(j.status) + '</div></div>';
   if (j.images.length) {
     h += '<div class="card imgs">' + j.images.map(function (im, i) {
-      return '<figure>' + (im.data ? '<img src="' + im.data + '" alt="Proof ' + (i + 1) + '">' : '<p>Too big to show here. <a href="' + esc(im.link) + '" target="_blank" style="color:var(--amber)">Open it in Drive</a></p>') +
+      var rv = canReview(j), pk = PICK[i];
+      return '<figure class="' + (pk === 'ok' ? 'ok' : pk === 'no' ? 'no' : '') + '">' + (im.data ? '<img src="' + im.data + '" alt="Proof ' + (i + 1) + '">' : '<p>Too big to show here. <a href="' + esc(im.link) + '" target="_blank" style="color:var(--amber)">Open it in Drive</a></p>') +
         '<figcaption>' + esc(im.name) + '</figcaption>' +
-        (im.data ? '<button class="btn" type="button" data-full="' + i + '" style="margin-top:10px">Full screen</button>' : '') + '</figure>';
+        (im.data ? '<button class="btn2" type="button" data-full="' + i + '" style="margin-top:10px">Full screen</button>' : '') +
+        (rv ? '<div class="pkstate">Picture ' + (i + 1) + ' of ' + j.images.length + (pk === 'ok' ? ': approved ✓' : pk === 'no' ? ': rejected ✗' : ': your call') + '</div>' +
+          '<div class="pk"><button type="button" class="btn ok' + (pk === 'ok' ? ' on' : '') + '" data-pick="ok" data-pi="' + i + '">✓ Approve</button>' +
+          '<button type="button" class="btnwarn no' + (pk === 'no' ? ' on' : '') + '" data-pick="no" data-pi="' + i + '">✗ Reject</button></div>' : '') + '</figure>';
     }).join('') + '</div>';
+    if (canReview(j)) h += '<div class="card" id="decide">' + decideBox(j) + '</div>';
   } else {
     h += '<div class="warn">No _PROOF image in the order folder yet.' + (j.stage === 'new' || j.stage === 'processing' ? ' It moves to Cindy\'s review by itself once the proof is saved there.' : '') + '</div>';
   }
@@ -487,11 +501,28 @@ function drawJob() {
   h += '<div class="card" id="acts">' + actionsFor(j) + '</div>';
   $('job').innerHTML = h;
 }
+// v3.6: Approve / Reject under every picture. The order moves on only when every picture is approved.
+var PICK = {}, PICK_JOB = null;
+function canReview(j) { return (j.stage === 'cindy' || j.stage === 'randy') && !(D.who === 'cindy' && j.stage !== 'cindy'); }
+function decideBox(j) {
+  var n = j.images.length, ok = 0, bad = [];
+  for (var i = 0; i < n; i++) { if (PICK[i] === 'ok') ok++; else if (PICK[i] === 'no') bad.push(i); }
+  var lbl = j.stage === 'cindy' ? 'Approve: send to Randy' : 'Approve: ready to send to client';
+  if (bad.length) {
+    var pre = bad.map(function (i) { return 'Picture ' + (i + 1) + ' (' + j.images[i].name + ') rejected: '; }).join('\n');
+    return '<h2 style="color:var(--amber)">Send it back</h2><p>' + bad.length + ' of ' + n + ' picture' + (n > 1 ? 's' : '') + ' rejected. Say what needs fixing:</p>' +
+      '<textarea id="kickNote" rows="3">' + esc(pre) + '</textarea>' +
+      '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Send it back to fix</button></div>';
+  }
+  if (ok === n) return '<h2>All ' + n + ' approved</h2><div class="acts"><button class="btn" type="button" data-act="forward" style="font-size:22px">' + lbl + '</button></div>';
+  return '<h2>Your call</h2><p>Tap Approve or Reject under ' + (n > 1 ? 'each picture' : 'the picture') + '. ' + ok + ' of ' + n + ' approved so far.</p>';
+}
 function actionsFor(j) {
   var me = D.who, s = j.stage;
   if (me === 'cindy' && s !== 'cindy') return '<div class="sub">Only jobs in Cindy\'s review can be moved from your link.</div>';
   if (s === 'new') return '<h2>Next</h2><p>Mark it as being made in Gemini + Claude.</p><div class="acts"><button class="btn" type="button" data-act="start">Start processing</button></div>';
   if (s === 'processing') return '<h2>Next</h2><p>Being made. It moves to Cindy\'s review by itself once the new _PROOF image is saved in the order folder.</p>';
+  if (canReview(j) && j.images.length) return '<div class="sub">Approve or reject is right under the picture' + (j.images.length > 1 ? 's' : '') + ' at the top.</div>';
   if (s === 'randy' || s === 'cindy') return '<h2>Your call</h2><div class="acts"><button class="btn" type="button" data-act="forward">' +
     (s === 'cindy' ? 'Send forward to Randy' : 'Send forward: ready to send') + '</button>' +
     '<button class="btnwarn" type="button" data-act="kickopen">Kick back</button></div>' + kickBox();
@@ -555,6 +586,7 @@ document.addEventListener('click', function (ev) {
   if (t.dataset.go === 'stages') { curStage = null; show('vStages'); return; }
   if (t.dataset.stage) { msg(''); drawList(t.dataset.stage); return; }
   if (t.dataset.job) { var j = D.jobs.filter(function (x) { return x.stage === curStage; })[+t.dataset.job]; if (j) openJob(j.tab, j.id); return; }
+  if (t.dataset.pick) { var pi = +t.dataset.pi; PICK[pi] = PICK[pi] === t.dataset.pick ? undefined : t.dataset.pick; var y = window.scrollY; drawJob(); window.scrollTo(0, y); return; }
   if (t.dataset.full) { $('fullImg').src = curJob.images[+t.dataset.full].data; $('full').classList.remove('hide'); return; }
   var a = t.dataset.act; if (!a) return;
   if (a === 'start' || a === 'forward') { t.disabled = true; move(a); }
