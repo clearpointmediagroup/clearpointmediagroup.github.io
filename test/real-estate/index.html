@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.29-TEST (Oct 30, 2026)
+  v2.30-TEST (Oct 31, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -11,6 +11,8 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
+    RE v2.30-TEST (Oct 31, 2026) CC-029 (Project Plan step 6): hours promise now says Eastern Time and the 4 p.m. cutoff
+                             (How this works box and Got it screen). Rush box: "Weekdays before 4 p.m. Eastern Time."
     RE v2.29-TEST (Oct 30, 2026) Randy (tester review fixes 2, 3, 6, 7): (2) each part of question 3 shows a plain
                              "Example:" line that changes with the kind of graphic, plus "the gray words are only examples".
                              (3) plain words: Heading -> "Second line", Body -> "Details", Call to action -> "What should
@@ -214,7 +216,7 @@
 
   <details class="intro">
     <summary class="ih">How this works</summary>
-    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
+    <p>Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours (Eastern Time). Orders after 4 p.m. or on weekends are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
   </details>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -329,7 +331,7 @@
     <div class="field">
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
       <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
-      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your preview in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
+      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your preview in 1 hour instead of 5. Weekdays before 4 p.m. Eastern Time.</span><span class="xp">Adds $10</span><span class="xs">If today's rush spots are full, we won't charge for it.</span></span></label>
     </div>
 
     <div class="field">
@@ -371,7 +373,7 @@
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Most previews come back by email within 5 hours. Late-night and weekend orders are ready the next business morning.</p>
+    <p>Most previews come back by email within 5 hours (Eastern Time). Orders after 4 p.m. or on weekends are ready the next business morning.</p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
     <button type="button" class="ghost" id="again">Order another</button>
@@ -385,7 +387,7 @@
 <script>
 (function () {
   'use strict';
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.23-TEST (Oct 29, 2026)';
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Real Estate Order v2.30-TEST (Oct 31, 2026)';
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
