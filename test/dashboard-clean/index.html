@@ -93,8 +93,8 @@ body.tv #pagesFold,body.tv #salesFold,body.tv #sysFold{display:none!important}
 .card{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
 .imgs{display:flex;flex-direction:column;gap:14px}
 .imgs figure{margin:0;background:#000;border-radius:12px;padding:10px;text-align:center}
-.imgs img{max-width:100%;max-height:70vh;border-radius:8px}
-.imgs figcaption{font-size:15px;color:var(--muted);margin-top:6px;word-break:break-all}
+.imgs img{display:block;margin:0 auto;max-width:100%;max-height:75vh;border-radius:8px}
+.imgs figcaption{font-size:13px;margin-top:10px!important;color:var(--muted);margin-top:6px;word-break:break-all}
 dl{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;margin:0}
 dt{font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:3px}
 dd{margin:0;white-space:pre-line;word-break:break-word}
@@ -479,13 +479,14 @@ function drawJob() {
   h += '<div class="card"><h2>' + esc(j.business) + '</h2><div class="sub">' + esc(j.id) + ' · ' + esc(j.status) + '</div></div>';
   if (j.images.length) {
     h += '<div class="card imgs">' + j.images.map(function (im, i) {
-      var rv = canReview(j), pk = PICK[i];
-      return '<figure class="' + (pk === 'ok' ? 'ok' : pk === 'no' ? 'no' : '') + '">' + (im.data ? '<img src="' + im.data + '" alt="Proof ' + (i + 1) + '">' : '<p>Too big to show here. <a href="' + esc(im.link) + '" target="_blank" style="color:var(--amber)">Open it in Drive</a></p>') +
-        '<figcaption>' + esc(im.name) + '</figcaption>' +
-        (im.data ? '<button class="btn2" type="button" data-full="' + i + '" style="margin-top:10px">Full screen</button>' : '') +
-        (rv ? '<div class="pkstate">Picture ' + (i + 1) + ' of ' + j.images.length + (pk === 'ok' ? ': approved ✓' : pk === 'no' ? ': rejected ✗' : ': your call') + '</div>' +
-          '<div class="pk"><button type="button" class="btn ok' + (pk === 'ok' ? ' on' : '') + '" data-pick="ok" data-pi="' + i + '">✓ Approve</button>' +
-          '<button type="button" class="btnwarn no' + (pk === 'no' ? ' on' : '') + '" data-pick="no" data-pi="' + i + '">✗ Reject</button></div>' : '') + '</figure>';
+      var rv = canReview(j), pk = PICK[i], st = pk === 'ok' ? ' · approved ✓' : pk === 'no' ? ' · rejected ✗' : '';
+      return '<figure class="' + (pk === 'ok' ? 'ok' : pk === 'no' ? 'no' : '') + '">' +
+        '<div class="pkstate" style="margin:0 0 8px">Picture ' + (i + 1) + ' of ' + j.images.length + st + '</div>' +
+        (im.data ? '<img src="' + im.data + '" alt="Proof ' + (i + 1) + '">' : '<p>Too big to show here. <a href="' + esc(im.link) + '" target="_blank" style="color:var(--amber)">Open it in Drive</a></p>') +
+        (im.data ? '<div><button class="btn2" type="button" data-full="' + i + '" style="margin-top:12px">Full screen</button></div>' : '') +
+        (rv ? '<div class="pk"><button type="button" class="btn ok' + (pk === 'ok' ? ' on' : '') + '" data-pick="ok" data-pi="' + i + '">✓ Approve</button>' +
+          '<button type="button" class="btnwarn no' + (pk === 'no' ? ' on' : '') + '" data-pick="no" data-pi="' + i + '">✗ Reject</button></div>' : '') +
+        '<figcaption>' + esc(im.name) + '</figcaption></figure>';
     }).join('') + '</div>';
     if (canReview(j)) h += '<div class="card" id="decide">' + decideBox(j) + '</div>';
   } else {
@@ -515,7 +516,7 @@ function decideBox(j) {
       '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Send it back to fix</button></div>' +
       '<p style="margin-top:12px"><b>What happens next:</b> the order goes back to be fixed. You fix the picture at the laptop (Claude + Gemini Gem) and save the new _PROOF in the order folder. It comes back to Cindy\'s review by itself.</p>';
   }
-  if (ok === n) return '<h2>All ' + n + ' approved</h2><div class="acts"><button class="btn" type="button" data-act="forward" style="font-size:22px">' + lbl + '</button></div>';
+  if (ok === n) return '<h2>' + (n > 1 ? 'All ' + n + ' pictures approved' : 'Picture approved') + '</h2><div class="acts"><button class="btn" type="button" data-act="forward" style="font-size:22px">' + lbl + '</button></div>';
   return '<h2>Your call</h2><p>Tap Approve or Reject under ' + (n > 1 ? 'each picture' : 'the picture') + '. ' + ok + ' of ' + n + ' approved so far.</p>';
 }
 function actionsFor(j) {
