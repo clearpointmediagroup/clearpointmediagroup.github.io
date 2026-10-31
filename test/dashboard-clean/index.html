@@ -1,5 +1,5 @@
 <!-- TEST COPY (CC-031) v3.6-TEST (Oct 31, 2026): cleaner main screen. Same live order data as the real dashboard. Not for clients.
-     v3.6-TEST (Oct 31, 2026) Sign-in screen moved up (smaller logo, less top space) and it scrolls to the bar. Big loading bar with a seconds count on every wait (PIN check, name tap, first load); order boxes wait until orders arrive. Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
+     v3.6-TEST (Oct 31, 2026) Sign-in: the loading bar shows at the top of the screen (logo hides while it works); smaller logo; one-line TEST banner. Big loading bar with a seconds count on every wait (PIN check, name tap, first load); order boxes wait until orders arrive. Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
        Claude jobs box removed; System bar turns red if something breaks. Nothing else changed. -->
 <!-- CPMG Dashboard (GitHub) v3.5 (Oct 30, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
@@ -106,6 +106,7 @@ textarea,input{width:100%;font:20px var(--body);padding:12px;border-radius:10px;
 .lk span{font-size:16px;color:var(--muted)}
 .lgrp{font:700 15px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--green);margin-top:22px}
 .signin{max-width:440px;margin:1vh auto 0;display:flex;flex-direction:column;gap:12px}
+.signin.busy .signLogo{display:none}
 .signLogo{width:76px;height:76px;border-radius:16px;margin:0 auto;display:block}
 .signin h1{text-align:center}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:22px}
@@ -222,10 +223,11 @@ button.mn:active,.mi:active{transform:scale(.98)}
 </style>
 </head>
 <body>
-<div style="position:sticky;top:0;z-index:9999;background:#9a3412;color:#fff;font:700 20px/1.3 system-ui,sans-serif;text-align:center;padding:10px 8px;letter-spacing:.04em">TEST COPY · cleaner layout · real order data</div>
+<div style="position:sticky;top:0;z-index:9999;background:#9a3412;color:#fff;font:700 15px/1.3 system-ui,sans-serif;text-align:center;padding:5px 8px;letter-spacing:.04em">TEST COPY</div>
 <div class="wrap signin hide" id="signin">
   <img class="signLogo" src="../../assets/cpmg-icon-192.png" alt="CPMG">
   <h1>CPMG Dashboard</h1>
+  <div id="signinLoad" class="hide" style="background:var(--surface);border:2px solid var(--green);border-radius:14px;padding:6px 16px 2px"><div class="ldtext" id="signinLdText">Checking your PIN…</div><div class="ldsec"></div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
   <div class="sub" id="signSub">Type the PIN to sign in.</div>
   <div class="whos hide" id="whoStep"><button type="button" class="btn2 whoBtn" data-who="randy">Randy</button><button type="button" class="btn2 whoBtn" data-who="cindy">Cindy</button></div>
   <label for="pin" class="sub" id="pinLbl">PIN</label>
@@ -233,8 +235,7 @@ button.mn:active,.mi:active{transform:scale(.98)}
   <script>(function(){var b=document.getElementById('eyeBtn'),p=document.getElementById('pin'),s=document.getElementById('eyeSlash'),held=false,timer=null,longPress=false;function set(show){p.type=show?'text':'password';s.style.display=show?'none':'';b.setAttribute('aria-label',show?'Hide PIN':'Show PIN');b.title=show?'Hide PIN':'Show PIN';}b.addEventListener('pointerdown',function(ev){ev.preventDefault();longPress=false;timer=setTimeout(function(){longPress=true;held=true;set(true);},250);});function up(){clearTimeout(timer);if(held){held=false;set(false);}}b.addEventListener('pointerup',up);b.addEventListener('pointerleave',up);b.addEventListener('pointercancel',up);b.addEventListener('contextmenu',function(ev){ev.preventDefault();});b.addEventListener('click',function(){if(longPress){longPress=false;return;}set(p.type==='password');});})();</script>
   <label class="rem"><input type="checkbox" id="remember"> Remember me on this phone (only on your own phone)</label>
   <button type="button" class="btn" id="signinBtn" style="font-size:22px;padding:14px">Sign in</button>
-  <div id="signinLoad" class="hide"><div class="ldtext" id="signinLdText">Checking your PIN…</div><div class="ldsec"></div><div class="ldbar" aria-hidden="true"><span class="lf"></span><span class="ls"></span></div></div>
-  <div id="signinMsg"></div>
+    <div id="signinMsg"></div>
 </div>
 <div class="wrap hide" id="dash">
   <div class="livebar" id="livebar">
@@ -573,7 +574,7 @@ function signedOut(text) { clearPass(); linksDrawn = ''; CL = null; document.bod
 var FIRSTLOAD = false;
 function startDash() { $('signinLoad').classList.add('hide'); $('signin').classList.add('hide'); $('dash').classList.remove('hide'); FIRSTLOAD = true; $('vStages').classList.add('hide'); tvSet(true); load(); }
 // v3.6: every wait shows a big bar plus a seconds count, so you can see it is still working
-setInterval(function () { ['signinLoad', 'loading'].forEach(function (id) { var b = $(id); if (!b) return; var s = b.querySelector('.ldsec'); if (b.classList.contains('hide')) { b._n = 0; if (s) s.textContent = ''; return; } b._n = (b._n || 0) + 1; if (s) s.textContent = 'Still working… ' + b._n + ' second' + (b._n > 1 ? 's' : '') + (b._n >= 20 ? ' (slow connection, hang on)' : ''); }); }, 1000);
+setInterval(function () { ['signinLoad', 'loading'].forEach(function (id) { var b = $(id); if (!b) return; var s = b.querySelector('.ldsec'); if (b.classList.contains('hide')) { if (id === 'signinLoad') $('signin').classList.remove('busy'); b._n = 0; if (s) s.textContent = ''; return; } b._n = (b._n || 0) + 1; if (s) s.textContent = 'Still working… ' + b._n + ' second' + (b._n > 1 ? 's' : '') + (b._n >= 20 ? ' (slow connection, hang on)' : ''); }); }, 1000);
 function pinStepShow(on) {
   ['pinLbl', 'pinWrap', 'signinBtn'].forEach(function (x) { $(x).classList.toggle('hide', !on); });
   document.querySelector('.rem').classList.toggle('hide', !on);
@@ -584,7 +585,7 @@ function doSignin() {
   var pin = $('pin').value.trim();
   if (!pin) { $('signinMsg').innerHTML = '<div class="err">Type the PIN first.</div>'; $('pin').focus(); return; }
   var remember = $('remember').checked;
-  $('signinBtn').disabled = true; $('signinMsg').innerHTML = ''; $('signinLdText').textContent = 'Checking your PIN…'; $('signinLoad').classList.remove('hide'); try { $('pin').blur(); $('signinLoad').scrollIntoView({ block: 'end', behavior: 'smooth' }); } catch (e) {}
+  $('signinBtn').disabled = true; $('signinMsg').innerHTML = ''; $('signinLdText').textContent = 'Checking your PIN…'; $('signinLoad').classList.remove('hide'); $('signin').classList.add('busy'); window.scrollTo(0, 0); try { $('pin').blur(); } catch (e) {}
   // v3.0: check the PIN first (as Randy); names only show after a right PIN
   post({ api: 'dash', fn: 'login', who: 'randy', pin: pin, remember: remember }, function (res) {
     $('signinLoad').classList.add('hide');
@@ -596,7 +597,7 @@ function doSignin() {
 function pickWho(who) {
   if (!HELD_PASS) { pinStepShow(true); return; }
   document.querySelectorAll('.whoBtn').forEach(function (b) { b.classList.toggle('on', b.dataset.who === who); });
-  $('signinLdText').textContent = 'Opening your dashboard…'; $('signinLoad').classList.remove('hide'); try { $('signinLoad').scrollIntoView({ block: 'end', behavior: 'smooth' }); } catch (e) {}
+  $('signinLdText').textContent = 'Opening your dashboard…'; $('signinLoad').classList.remove('hide'); $('signin').classList.add('busy'); window.scrollTo(0, 0);
   if (who === 'randy') { PASS = HELD_PASS; savePass(PASS, HELD_REM); HELD_PIN = ''; HELD_PASS = ''; pinStepShow(true); startDash(); return; }
   $('signinLoad').classList.remove('hide'); $('signinMsg').innerHTML = '';
   post({ api: 'dash', fn: 'logout', pass: HELD_PASS }, function () {}, function () {});
