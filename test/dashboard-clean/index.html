@@ -512,7 +512,8 @@ function decideBox(j) {
     var pre = bad.map(function (i) { return 'Picture ' + (i + 1) + ' (' + j.images[i].name + ') rejected: '; }).join('\n');
     return '<h2 style="color:var(--amber)">Send it back</h2><p>' + bad.length + ' of ' + n + ' picture' + (n > 1 ? 's' : '') + ' rejected. Say what needs fixing:</p>' +
       '<textarea id="kickNote" rows="3">' + esc(pre) + '</textarea>' +
-      '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Send it back to fix</button></div>';
+      '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Send it back to fix</button></div>' +
+      '<p style="margin-top:12px"><b>What happens next:</b> the order goes back to be fixed. You fix the picture at the laptop (Claude + Gemini Gem) and save the new _PROOF in the order folder. It comes back to Cindy\'s review by itself.</p>';
   }
   if (ok === n) return '<h2>All ' + n + ' approved</h2><div class="acts"><button class="btn" type="button" data-act="forward" style="font-size:22px">' + lbl + '</button></div>';
   return '<h2>Your call</h2><p>Tap Approve or Reject under ' + (n > 1 ? 'each picture' : 'the picture') + '. ' + ok + ' of ' + n + ' approved so far.</p>';
