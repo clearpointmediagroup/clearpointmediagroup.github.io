@@ -1,5 +1,5 @@
 <!-- TEST COPY (CC-031) v3.6-TEST (Oct 31, 2026): cleaner main screen. Same live order data as the real dashboard. Not for clients.
-     v3.6-TEST (Oct 31, 2026) Approve and Reject buttons under every picture; the order moves on only when all are approved; a rejected picture sends it back with a note naming it; "Back to the order" button. Sign-in: the loading bar shows at the top of the screen (logo hides while it works); smaller logo; one-line TEST banner. Big loading bar with a seconds count on every wait (PIN check, name tap, first load); order boxes wait until orders arrive. Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
+     v3.6-TEST (Oct 31, 2026) After every button, a "What happens next" box (and what isn't built yet). Approve and Reject buttons under every picture; the order moves on only when all are approved; a rejected picture sends it back with a note naming it; "Back to the order" button. Sign-in: the loading bar shows at the top of the screen (logo hides while it works); smaller logo; one-line TEST banner. Big loading bar with a seconds count on every wait (PIN check, name tap, first load); order boxes wait until orders arrive. Empty order steps fade out; My pages, Sales and prospects, and System folded behind tap bars;
        Claude jobs box removed; System bar turns red if something breaks. Nothing else changed. -->
 <!-- CPMG Dashboard (GitHub) v3.5 (Oct 30, 2026) · clearpointmediagroup.github.io/dashboard/
      Talks to CPMG_DashboardApi.gs v1.0 through the order system web app. Sign in with name + PIN.
@@ -536,11 +536,28 @@ function kickBox() {
     '<textarea id="kickNote" rows="3" placeholder="Example: phone number wrong, should be (843) 555-0123"></textarea>' +
     '<div class="acts"><button class="btnwarn" type="button" data-act="kickback">Kick it back</button><button class="btn2" type="button" data-act="kickcancel">Never mind</button></div></div>';
 }
+// v3.6: after every button, a "What happens next" box says what to do next (and what isn't built yet)
+var NEXT = {
+  start: ['Marked as being made', 'Make the picture at the laptop: Claude + your Gemini Gem. Save the _PROOF picture in the order folder. It moves to Cindy\'s review by itself.', 'processing'],
+  forward_cindy: ['Sent to Randy\'s review', 'Randy: tap the gold "Randy reviews" box, open this order, and Approve or Reject each picture.', 'randy'],
+  forward_randy: ['Ready to send to the client', 'Open the order in "Ready to send" and tap "Release to customer". You get one more look at the email before it goes out. NOT BUILT YET: the Square pay link. Until it is, the email has no Pay button (free orders are fine).', 'ready'],
+  kickback: ['Sent back to be fixed', 'Fix the picture at the laptop (Claude + Gemini Gem) and save the new _PROOF in the order folder. It comes back to Cindy\'s review by itself.', 'processing'],
+  send_proof: ['Proof emailed to the client', 'Wait for the client to approve and pay. NOT BUILT YET: the Square pay link and the automatic "they paid" check. For now, when they pay, open the order in "Sent" and tap "Send final graphic".', 'sent'],
+  send_final: ['Final graphic sent', 'Nothing more to do. The order is finished.', 'sent']
+};
+function nextBox(key, biz) {
+  var n = NEXT[key]; if (!n) return;
+  msg('<h2 style="color:var(--amber)">✓ ' + esc(n[0]) + '</h2><div style="margin-top:6px"><b>' + esc(biz) + '</b></div>' +
+    '<div style="margin-top:10px;font-size:20px"><b>What happens next:</b> ' + esc(n[1]) + '</div>' +
+    '<div class="acts" style="margin-top:12px"><button class="btn" type="button" data-stage="' + n[2] + '">Go to that box</button></div>', 'warn');
+  window.scrollTo(0, 0);
+}
 function move(action, note) {
+  var from = curJob.stage, biz = curJob.business;
   call('moveJob', [KEY, curJob.tab, curJob.id, action, note || ''], function (res) {
     if (!res || !res.ok) { msg(esc(res ? res.error : 'No answer.'), 'err'); window.scrollTo(0, 0); return; }
-    msg('Done. ' + esc(curJob.business) + ' is now: ' + esc(res.status) + '.', 'warn');
-    load(function () { drawList(curStage || 'new'); });
+    var key = action === 'forward' ? 'forward_' + from : action;
+    load(function () { drawList(NEXT[key] ? NEXT[key][2] : (curStage || 'new')); nextBox(key, biz); });
   });
 }
 function preview(kind) {
@@ -569,8 +586,8 @@ function send(kind) {
   $('look').innerHTML = '<div class="card">Sending…</div>';
   call('sendFromDashboard', [KEY, curJob.tab, curJob.id, kind, pl], function (res) {
     if (!res || !res.ok) { $('look').innerHTML = '<div class="err">' + esc(res ? (res.message || res.error) : 'No answer.') + '</div>'; return; }
-    msg(esc(res.message), 'warn');
-    load(function () { drawList('sent'); });
+    var biz = curJob.business;
+    load(function () { drawList('sent'); nextBox('send_' + kind, biz); });
   });
 }
 document.addEventListener('click', function (ev) {
