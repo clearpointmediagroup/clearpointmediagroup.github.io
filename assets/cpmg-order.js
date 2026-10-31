@@ -1,6 +1,6 @@
 /*
  * CPMG order forms: shared helpers — cpmg-order.js
- * v1.7 (Oct 28, 2026)
+ * v1.8 (Oct 31, 2026)
  *
  * Used by detail-order/index.html and quick-order/index.html.
  * - Word and line counting (same rules as the previews)
@@ -11,6 +11,7 @@
  * and iPhone Safari.
  *
  * REVISION LOG
+ *   v1.8 (Oct 31, 2026) CC-032: "form not switched on" message now gives (843) 321-9518 as well as the email.
  *   v1.7 (Oct 28, 2026) Test mode: orange bar removed. The name says it instead: "New_Detail Order" or
  *                       "New_Quick Order" at the top of the form and on the browser tab.
  *   v1.6 (Oct 28, 2026) Test mode (?new=1) stays a brand-new client every time: the phone never saves
@@ -204,7 +205,7 @@ var CPMG = (function () {
   /** Plain-words message for a failed send. Keeps the script's own words when it gave some. */
   function failText(reply) {
     var e = reply && reply.error ? String(reply.error) : '';
-    if (e === 'not-set-up') return 'This form is not switched on yet. Please email randy.turner@cpmgdata.com and we will take your order.';
+    if (e === 'not-set-up') return 'This form is not switched on yet. Please call or text (843) 321-9518 or email randy.turner@cpmgdata.com and we will take your order.';
     if (e === 'timeout') return 'This is taking too long. Check your signal, then tap the button again. What you typed is still here.';
     if (e === 'network' || e === 'bad-reply' || e === 'pack' || !e) return 'We could not send your order. Check your signal, then tap the button again. What you typed is still here.';
     return e + ' What you typed is still here.';

@@ -1,11 +1,12 @@
 <!doctype html>
 <!--
   CPMG Detail Order — detail-order/index.html
-  v5.4 (Oct 29, 2026)
+  v5.5 (Oct 31, 2026)
   The full order form (more details and choices, e.g. real estate). Look and wording match the approved
   "CPMG Detail Order Preview" v0.2. Sends the order to the CPMG order system
   (Apps Script) behind the scenes, so it works on phones signed into two Google accounts.
   REVISION LOG
+    v5.5 (Oct 31, 2026) CC-032: bottom line now "Questions? Call or text (843) 321-9518 or email randy.turner@cpmgdata.com".
     v5.4 (Oct 29, 2026) CC-026: deleted the leftover helper text (help bubble words and old helper block).
     v5.3 (Oct 29, 2026) CC-026: took the "?" off every question and line, and removed the green "?" circles.
     v5.2 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
@@ -240,7 +241,7 @@ details.how .inner{font-size:17px;line-height:1.45}
     <p class="sub">Need another graphic</p>
     <button type="button" class="ghost" id="again">Start a new order</button>
   </div>
-  <div class="foot">CPMG Detail Order · v4.8 (Oct 28, 2026) · Questions: randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Detail Order · v5.5 (Oct 31, 2026) · Questions? Call or text <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
 </div>
 <div class="bar" id="bar"><button type="button" class="big" id="go">Review my order</button></div>
 
@@ -276,7 +277,7 @@ details.how .inner{font-size:17px;line-height:1.45}
 </template>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.7"></script>
+<script src="../assets/cpmg-order.js?v=1.8"></script>
 <script>
 /* CPMG Detail Order page script v2.7 (Oct 28, 2026) */
 (function () {

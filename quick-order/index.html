@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Quick Order — quick-order/index.html
-  v5.2 (Oct 29, 2026)
+  v5.3 (Oct 31, 2026)
   The short form, mostly for restaurants and regulars. Works for a first-time customer too.
   First time: a "Your info" box is open; they fill it in once and it is saved to their record.
   After that: the box folds up to "Welcome back" with their saved info and an Edit button.
   The phone remembers them (their key in the link and on the phone), so they just fill in
   the graphic request.
   REVISION LOG
+    v5.3 (Oct 31, 2026) CC-032: bottom line now "Questions? Call or text (843) 321-9518 or email randy.turner@cpmgdata.com".
     v5.2 (Oct 29, 2026) CC-026: deleted the leftover helper text (help bubble words and old helper block).
     v5.1 (Oct 29, 2026) CC-026: took the "?" off every question and line, and removed the green "?" circles.
     v5.0 (Oct 29, 2026) CC-024: "New here? How this works" box at the top explains the whole process in 5 steps
@@ -231,12 +232,12 @@ details.how .inner{font-size:17px;line-height:1.45}
     <p class="sub">Need another graphic</p>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot">CPMG Quick Order · v4.6 (Oct 28, 2026) · Questions: randy.turner@cpmgdata.com</div>
+  <div class="foot">CPMG Quick Order · v5.3 (Oct 31, 2026) · Questions? Call or text <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
 </div>
 <div class="bar narrow" id="sendBar"><button type="submit" form="f" class="big" id="sendBtn">Send</button></div>
 
 <script src="../assets/cpmg-order-config.js?v=1.0"></script>
-<script src="../assets/cpmg-order.js?v=1.7"></script>
+<script src="../assets/cpmg-order.js?v=1.8"></script>
 <script>
 /* CPMG Quick Order page script v2.2 (Oct 27, 2026) */
 (function () {
