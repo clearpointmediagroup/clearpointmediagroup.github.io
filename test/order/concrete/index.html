@@ -2,13 +2,14 @@
 <!--
   CPMG Concrete Order — test/order/concrete/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.15-TEST (Nov 3, 2026)
+  v3.16-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.16-TEST (Nov 3, 2026) Randy: a big green "Click here for full screen" button at the top of the light form on wide screens (browsers need a tap to go full screen). It goes away once full screen is on and comes back if they leave it. Phones do not see it.
     v3.15-TEST (Nov 3, 2026) Randy: dark green felt like an old computer and had too many buttons. New LITE look for lean pages (body class lite): light cream and white,
                              3 steps (kind, what it says, about you), no icons on tiles, and the look, photos, where-shown and bottom-of-graphic boxes sit behind one "More choices (optional)" tap
                              (defaults: You pick for me, Phone, show name and phone). No desktop poster, no start screen. Same ids and same order sent.
@@ -432,6 +433,10 @@ body.lite .bar.narrow{display:block;text-align:center;padding:10px 20px calc(10p
 body.lite .bar.narrow .big{display:block;width:100%;max-width:680px;margin:0 auto}
 body.lite .bar.narrow #barTot{display:block;width:100%;max-width:680px;margin:0 auto 8px!important;text-align:center}
 body.lite details.intro{display:none}
+body.lite .fsbtn{display:none;width:100%;margin:0 0 16px;padding:18px 20px;border:0;border-radius:16px;background:var(--green);color:#fff;font:800 24px var(--display);cursor:pointer;align-items:center;justify-content:center;gap:12px}
+body.lite .fsbtn svg{width:30px;height:30px;flex:none}
+body.lite .fsbtn:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
+@media (min-width:1100px){body.lite .fsbtn.show{display:flex}}
 body.lite .liteline{font-size:19px;color:var(--muted);margin:6px 0 18px}
 body.lite .top h1{font-size:30px}
 body.lite .field{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:0 0 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -647,6 +652,16 @@ body.lite .card.g{background:#fff;border-color:var(--green);color:var(--fg)}
   function up(id, sel) { var e = document.getElementById(id); return e && e.closest(sel); }
   var look = up('lookTaps', 'fieldset'), size = up('sizeTaps', 'fieldset'), photos = up('btHouse', '.field'), gbw = up('showBiz', '.field.gbwrap') || up('showBiz', '.field');
   var biz = up('biz', '.field'), contact = up('nm', '.field'), say = up('ttl', '.field'), what = up('whatTaps', 'fieldset');
+  // big full-screen button (wide screens only). Browsers only allow full screen after a tap, so we ask for one.
+  var fb = document.createElement('button'); fb.type = 'button'; fb.className = 'fsbtn show';
+  fb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Click here for full screen</span>';
+  var de = document.documentElement;
+  function inFs() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  function paint() { fb.classList.toggle('show', !inFs()); }
+  fb.addEventListener('click', function () { try { var r = de.requestFullscreen || de.webkitRequestFullscreen; if (r) { var pr = r.call(de); if (pr && pr.catch) pr.catch(function () {}); } } catch (e) { /* ok */ } fb.classList.remove('show'); });
+  document.addEventListener('fullscreenchange', paint); document.addEventListener('webkitfullscreenchange', paint);
+  if (!(de.requestFullscreen || de.webkitRequestFullscreen)) fb.className = 'fsbtn';
+  var wrapEl = document.querySelector('.wrap.narrow'); if (wrapEl) wrapEl.insertBefore(fb, wrapEl.firstChild);
   var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Three quick steps. About 2 minutes.';
   var top = document.querySelector('.top'); if (top && top.parentNode) top.parentNode.insertBefore(line, top.nextSibling);
   function num(field, n, text) { var q = field && field.querySelector('.qn'); if (q) q.textContent = String(n); if (text) { var l = field.querySelector('.ql'); if (l) { var t = l.lastChild; if (t && t.nodeType === 3) t.nodeValue = text; } } }
@@ -2372,7 +2387,7 @@ body.lite .card.g{background:#fff;border-color:var(--green);color:var(--fg)}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.15-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.16-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
