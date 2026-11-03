@@ -2,13 +2,15 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.6-TEST (Nov 3, 2026)
+  v3.7-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.7-TEST (Nov 3, 2026) Randy: the what-to-do box was too bright and the cursor was hard to see. It is now dark with a green outline like the
+                             other boxes; every poster box has a bright green cursor and a green glow while you type in it. Desktop poster only.
     v3.6-TEST (Nov 3, 2026) Randy: the form flows like filling in the infographic. On a wide screen a small script moves the same boxes
                              into a poster in the middle (photo spots across the top, Title, Second line, Details, the what-to-do button, and a
                              bottom strip with business name, phone, website, Facebook and Instagram), with kind/look on the left and where/rush/
@@ -348,8 +350,12 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
   body.dz .poster .bl{margin:0 0 6px;gap:10px}
   body.dz .poster .bl b{width:12px;height:12px;border-radius:50%;background:var(--green);font-size:0;flex:none}
   body.dz .poster .bl input{font-size:19px;padding:5px 10px}
-  body.dz .poster #cta{font-size:23px;font-weight:800;text-align:center;background:var(--green);color:var(--ink);border:2px solid var(--green);border-radius:999px;padding:7px 18px}
-  body.dz .poster #cta::placeholder{color:#2c5a43;opacity:1}
+  body.dz .poster #cta{font-size:23px;font-weight:800;text-align:center;background:rgba(15,23,18,.45);color:#a8e6c3;border:2px solid var(--green);border-radius:999px;padding:7px 18px}
+  body.dz .poster #cta::placeholder{color:#a9c0b2;opacity:1;font-weight:600}
+  /* clear cursor and a glow on the box being typed in */
+  body.dz .poster input[type=text],body.dz .pz-foot input[type=tel],body.dz .pz-foot input[type=text]{caret-color:#8ff0b7}
+  body.dz .poster input:focus,body.dz .pz-foot input:focus{outline:none;border-style:solid;border-color:#8ff0b7;background:rgba(95,196,140,.14);box-shadow:0 0 0 3px rgba(95,196,140,.35)}
+  body.dz .poster #cta:focus{background:rgba(95,196,140,.18);color:#d6f7e4}
   body.dz .pz-foot{margin:auto -24px 0;background:#0c130f;border-top:3px solid var(--green);padding:10px 24px 10px;display:grid;grid-template-columns:1.3fr 1fr;gap:6px 10px;align-items:start}
   body.dz .pz-foot>.err{grid-column:1/-1}
   body.dz .pz-foot input[type=text],body.dz .pz-foot input[type=tel]{border:2px solid #3b5a48;background:transparent;font-size:17px;padding:5px 9px}
@@ -2211,7 +2217,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.6-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.7-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
