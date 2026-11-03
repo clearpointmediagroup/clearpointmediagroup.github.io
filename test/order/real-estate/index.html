@@ -2,13 +2,14 @@
 <!--
   CPMG Real estate Order — test/order/real-estate/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.23-TEST (Nov 3, 2026)
+  v3.24-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.24-TEST (Nov 3, 2026) Randy: Pick a look gets a Beach vibe (summer) and a Holiday look in the real estate and restaurant forms. Holiday opens a drop-down of the major holidays (New Year's Day through New Year's Eve, plus Other) in place of the old free-text box; sent the same way ("Holiday: Christmas").
     v3.23-TEST (Nov 3, 2026) Randy: "Take a picture" did nothing on his laptop (browsers ignore the camera request on computers). On a computer with a mouse it now opens a small camera window with Take photo and Cancel; the photo goes into the same Upload box. No camera or blocked: says so, Upload still works. Phones untouched.
     v3.22-TEST (Nov 3, 2026) Randy: in full screen a big "Exit full screen" button sits in the top-right corner, so nobody needs to know the Esc key. (Another session made v3.21 at the same time; merged.)
     v3.21-TEST (Nov 3, 2026) Randy: More choices is not optional, show it, and fit the whole form on the screen. On a wide screen More choices is always open (no fold, no + sign, the word optional is gone) and its four boxes sit in two small columns (look and where on the left, photos and bottom of graphic on the right) with a wider 4th column, so the whole form fits with no scrolling. Phones still fold it.
@@ -539,6 +540,9 @@ body.lite .foot{display:none}
 body.lite .fsexit{display:none;position:fixed;top:10px;right:14px;z-index:2147480000;padding:10px 18px;border:2px solid var(--green);border-radius:12px;background:#fff;color:var(--green);font:800 18px var(--display);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 body.lite .fsexit.show{display:block}
 body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
+#holiday{width:100%;font:inherit;font-size:18px;padding:12px 10px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg)}
+#holiday:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(95,196,140,.25)}
+body.lite #holiday{border-color:#b7c3ba;background:#fff;color:var(--fg);font-size:16px;padding:8px 10px}
 </style>
 </head>
 <body class="lean lite">
@@ -573,7 +577,7 @@ body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
       <div class="taps" id="lookTaps"></div>
       <div id="holidayBox" hidden style="margin-top:10px">
         <label class="sl" for="holiday" style="margin-top:0">Which holiday?</label>
-        <input type="text" id="holiday" placeholder="Thanksgiving" autocomplete="off">
+        <select id="holiday" autocomplete="off"><option value="">Choose a holiday…</option><option>New Year&#39;s Day</option><option>Martin Luther King Jr. Day</option><option>Valentine&#39;s Day</option><option>Presidents&#39; Day</option><option>St. Patrick&#39;s Day</option><option>Easter</option><option>Mother&#39;s Day</option><option>Memorial Day</option><option>Father&#39;s Day</option><option>4th of July</option><option>Labor Day</option><option>Halloween</option><option>Veterans Day</option><option>Thanksgiving</option><option>Christmas</option><option>New Year&#39;s Eve</option><option>Other (put it in the title)</option></select>
       </div>
     </fieldset>
 
@@ -992,6 +996,18 @@ body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
     "cube",
     "Bold, professional 3D",
     "3d-poster"
+   ],
+   [
+    "Beach vibe",
+    "sun",
+    "Summer and sunny",
+    "beach-vibe"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Pick the holiday",
+    "holiday"
    ]
   ],
   "extra": {
@@ -1148,6 +1164,18 @@ body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
     "mood-smile",
     "Warm and friendly",
     "casual"
+   ],
+   [
+    "Beach vibe",
+    "sun",
+    "Summer and sunny",
+    "beach-vibe"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Pick the holiday",
+    "holiday"
    ]
   ],
   "extra": {
@@ -2509,7 +2537,7 @@ body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.23-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.24-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };

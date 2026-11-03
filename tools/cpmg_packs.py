@@ -1,4 +1,5 @@
 # CPMG industry packs v1.3 (Nov 3, 2026)
+# v1.4 (Nov 3, 2026) Real estate and restaurant (lean) get two more looks: Beach vibe (summer) and Holiday (pick from a list of major holidays).
 # v1.3 (Nov 3, 2026) Restaurant is now "lean" too: 3 looks (3D poster with the Myrtle Beach vibe, Chalkboard, Casual) plus You pick for me; same trims as real estate.
 # v1.2 (Nov 3, 2026) Real estate is now "lean" (Randy: too many things to fill): 3 looks plus You pick for me, no website/Facebook/Instagram boxes,
 #                    house photo only (no headshot or logo spot), no Rush, 3 detail lines. Set lean=True on a pack to get this. Restaurants next.
@@ -18,7 +19,7 @@ PACKS = {
  'real-estate': dict(lean=True, name='Real estate', title='Order a real estate graphic', foot='CPMG Real Estate Order',
    who='Real estate agents', uses='just listed, open house, price drop and just sold posts', what='listing', photos='the house, your headshot or your logo',
    kinds=[('Just listed','home'),('Open house','door'),('Just sold','home-check'),('Price drop','tag'),('Coming soon','calendar'),('Something else','pencil')],
-   looks=[('Professional','briefcase','Clean and polished','professional'),('Luxury','diamond','High-end homes','luxury'),('3D poster','cube','Bold, professional 3D','3d-poster')],
+   looks=[('Professional','briefcase','Clean and polished','professional'),('Luxury','diamond','High-end homes','luxury'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
    extra=dict(label='Brokerage', hint='The real estate company you work under.', ph='Main Street Realty', need='Type your brokerage name.', key='brokerage', note='Brokerage'),
    biz='Smith Home Team', photo1=('House photo','Big background. Your words go on top.','The house','House'), scene='an upscale two-story brick home on a tree-lined street with a green lawn',
    ex={'': E('Just Listed','123 Oak Street',['3 beds, 2 baths','$425,000','1,850 sq. ft.'],'Call me for a showing'),
@@ -31,7 +32,7 @@ PACKS = {
  'restaurant': dict(lean=True, name='Restaurant', title='Order a graphic for your restaurant', foot='CPMG Restaurant Order',
    who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant', photos='your food, your bar or dining room, your headshot or your logo',
    kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
-   looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual')],
+   looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
    extra=dict(label='What kind of place? (if you want)', hint='A few words, like seafood restaurant, sports bar or cafe.', ph='Seafood restaurant', need='', key='placeType', note='Kind of place'),
    biz="Smith's Seafood Grill", photo1=('Food or place photo','Big background, like your dish, your bar or your dining room. Your words go on top.','Food or place photo','Food'), scene='a plate of shrimp and grits on a rustic wooden table in a cozy coastal restaurant',
    ex={'': E("Tonight's Special",'Shrimp and Grits',['$14.99','Served 5 to 9 p.m.','Fresh local shrimp'],'Come hungry!'),
