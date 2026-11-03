@@ -1,13 +1,19 @@
 <!doctype html>
 <!--
   CPMG Standard Order Form — test/order/index.html
-  v3.4-TEST (Nov 3, 2026)
+  v3.6-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.6-TEST (Nov 3, 2026) Randy: the form flows like filling in the infographic. On a wide screen a small script moves the same boxes
+                             into a poster in the middle (photo spots across the top, Title, Second line, Details, the what-to-do button, and a
+                             bottom strip with business name, phone, website, Facebook and Instagram), with kind/look on the left and where/rush/
+                             contact/price on the right. Same ids and values, so ordering is unchanged. Phones never run it. Edited here only.
+    v3.5-TEST (Nov 3, 2026) Randy picked look A: same dark green, easier to read. Brighter gray example words and small text,
+                             slightly bigger small text on desktop, stronger borders on boxes and inputs. Colors only; applies to phones too.
     v3.4-TEST (Nov 3, 2026) Randy: desktop one-screen layout. On a laptop or desktop (1100 px wide or more) the form flows into 4 columns so
                              it fits on one screen: [1 kind, 2 look] [3 what it says] [bottom of the graphic, 4 photos] [5 where, 6 rush, 7 business,
                              8 contact, price]. Phones keep the one-column form in the same order. The Bottom of the graphic box moved out of
@@ -226,6 +232,13 @@
 .bl input{flex:1;min-width:0}
 .sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
 
+/* ===== v3.5-TEST (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
+:root{--muted:#cfe0d5;--line:#4a6656;--card:#1d2b24;--deep:#244034}
+input::placeholder,textarea::placeholder{color:#a9c0b2;opacity:1}
+input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;background:#1d2b24}
+.taps .opt,.xcard,.gbox{border-color:#5d7f68}
+.taps .opt .szn{color:#cfe0d5}
+.hint{color:#cfe0d5}
 /* ===== v3.4-TEST (Nov 3, 2026) desktop one-screen layout. Phones are not changed. ===== */
 @media (min-width:1100px){
   body{font-size:16px}
@@ -245,13 +258,13 @@
   .ql{font-size:18px;margin:0 0 2px}
   .qn{width:26px;height:26px;font-size:15px}
   .sl{font-size:16px;margin:6px 0 0}
-  .hint{font-size:12.5px;line-height:1.3}
+  .hint{font-size:13.5px;line-height:1.3}
   input[type=text],input[type=email],input[type=tel]{padding:6px 10px;font-size:16px}
   .bl{margin:0 0 4px}
   .taps{gap:6px}
   .taps .opt{flex-direction:row;justify-content:flex-start;gap:8px;min-height:44px;padding:4px 10px;font-size:15px;text-align:left}
   .taps .pic{font-size:24px}
-  .taps .opt .szn{margin-left:auto;font-size:12px;line-height:1.2;text-align:right}
+  .taps .opt .szn{margin-left:auto;font-size:13px;line-height:1.2;text-align:right}
   .taps .opt.on::after{font-size:12px;margin-left:auto}
   #sizeTaps .opt{flex-wrap:wrap}
   .xcard{padding:4px 10px;margin:0}
@@ -292,7 +305,65 @@
 /* shorter screens: shrink the whole form a little so it still fits (Chrome, Edge, Safari, Firefox 126+) */
 @media (min-width:1100px) and (max-height:960px){.wrap.narrow{zoom:.94}}
 @media (min-width:1100px) and (max-height:860px){.wrap.narrow{zoom:.86}}
-@media (min-width:1100px) and (max-height:780px){.wrap.narrow{zoom:.8}}
+@media (min-width:1100px) and (max-height:780px){.wrap.narrow{zoom:.77}}
+/* ===== v3.6-TEST (Nov 3, 2026) poster-style form on desktop. Switched on by the script just before the main script (adds class "dz" to the page). Phones are not changed. ===== */
+@media (min-width:1100px){
+  body.dz #f.stack{display:grid;column-count:auto;grid-template-columns:350px minmax(0,1fr) 350px;gap:0 26px;align-items:start;max-width:1500px;margin:0 auto}
+  body.dz #f>*{margin:0;break-before:auto;break-inside:auto}
+  body.dz #f>.welcome2,body.dz #f>.hp,body.dz #f>#sendErr{grid-column:1/-1}
+  body.dz .zl{grid-column:1}.dz .poster{grid-column:2}.dz .zr{grid-column:3}
+  body.dz .zl,body.dz .zr{display:flex;flex-direction:column;gap:8px;min-width:0}
+  body.dz .dz-gone{display:none!important}
+  /* rails */
+  body.dz .zl .taps{margin-bottom:6px}
+  body.dz .zl .taps .opt{min-height:56px;font-size:17px}
+  body.dz .zr>.field,body.dz .zr>fieldset{margin:0}
+  body.dz #lookTaps .opt{flex-wrap:wrap;align-content:center;gap:0 8px}
+  body.dz #lookTaps .opt .szn{flex:0 0 100%;margin-left:0;text-align:left;line-height:1.2}
+  body.dz #lookTaps .opt.on::after{position:absolute;top:6px;right:10px;margin:0}
+  /* the poster */
+  body.dz .poster{position:relative;display:flex;flex-direction:column;border:3px solid var(--green);border-radius:22px;padding:12px 24px 0;background:linear-gradient(160deg,#1f3a2e 0%,#16271f 55%,#10201a 100%);min-height:760px;overflow:hidden;min-width:0}
+  body.dz .pz-head{text-align:center}
+  body.dz .pz-head .ql{justify-content:center;font-size:17px;margin:0}
+  body.dz .pz-head .hint{display:none}
+  body.dz .pz-photos{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:10px;margin:6px 0 2px}
+  body.dz .pz-photos .gbox{margin:0!important;padding:6px 8px;display:flex;flex-direction:column;gap:2px;align-items:center;text-align:center;border:2px dashed var(--green);background:rgba(15,23,18,.55)}
+  body.dz .pz-photos .gbox .gt{font-size:14px;margin:0!important}
+  body.dz .pz-photos .gbox .hint{display:none}
+  body.dz .pz-photos .photo{flex-direction:row;justify-content:center;gap:5px}
+  body.dz .pz-photos .photo .btn,body.dz .pz-photos .photo label.btn{padding:4px 8px;min-height:30px;font-size:13px}
+  body.dz .pz-photos .slotPic{margin:0 0 4px!important}
+  body.dz .pz-photos .slotPic img{width:46px!important;height:46px!important}
+  body.dz .pz-photos .pz-photohead{grid-column:1/-1;text-align:center;font-size:12.5px;color:var(--muted);margin:0}
+  body.dz .poster .sl{display:block;text-align:center;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin:10px 0 2px}
+  body.dz .poster label[for=ttl]::after{content:" — the big words at the top";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
+  body.dz .poster label[for=hdg]::after{content:" — a smaller line under it";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
+  body.dz .poster label[for=b1]::after{content:" — up to 5 short lines, a few words each";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
+  body.dz .poster label[for=cta]::after{content:" — one short line";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
+  body.dz .poster .pz-grp>.hint{display:none}
+  body.dz .poster input[type=text]{background:rgba(15,23,18,.45);border:2px dashed #5d7f68;color:var(--fg)}
+  body.dz .poster #ttl{font-size:42px;font-weight:800;text-align:center;line-height:1.1;padding:6px 10px}
+  body.dz .poster #hdg{font-size:24px;text-align:center;padding:5px 10px}
+  body.dz .poster .bl{margin:0 0 6px;gap:10px}
+  body.dz .poster .bl b{width:12px;height:12px;border-radius:50%;background:var(--green);font-size:0;flex:none}
+  body.dz .poster .bl input{font-size:19px;padding:5px 10px}
+  body.dz .poster #cta{font-size:23px;font-weight:800;text-align:center;background:var(--green);color:var(--ink);border:2px solid var(--green);border-radius:999px;padding:7px 18px}
+  body.dz .poster #cta::placeholder{color:#2c5a43;opacity:1}
+  body.dz .pz-foot{margin:auto -24px 0;background:#0c130f;border-top:3px solid var(--green);padding:10px 24px 10px;display:grid;grid-template-columns:1.3fr 1fr;gap:6px 10px;align-items:start}
+  body.dz .pz-foot>.err{grid-column:1/-1}
+  body.dz .pz-foot input[type=text],body.dz .pz-foot input[type=tel]{border:2px solid #3b5a48;background:transparent;font-size:17px;padding:5px 9px}
+  body.dz .pz-foot .gbox{grid-column:1/-1;margin:0;padding:0;border:0;background:transparent;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px 8px}
+  body.dz .pz-foot .gbox .gt,body.dz .pz-foot .gbox>.hint{display:none}
+  body.dz .pz-foot .gbox>.chk{grid-row:1;font-size:13px;margin:0;color:var(--muted)}
+  body.dz .pz-foot .gbox>.chk:nth-of-type(1){grid-column:1}
+  body.dz .pz-foot .gbox>.chk:nth-of-type(2){grid-column:2}
+  body.dz .pz-foot .gbox>.chk input{width:18px;height:18px}
+  body.dz .pz-foot .gbox>.sl{text-align:left;margin:4px 0 0;font-size:11px;grid-row:2}
+  body.dz .pz-foot .gbox>input{grid-row:3;font-size:14px!important;padding:5px 8px!important}
+  body.dz .pz-foot .gbox>[for=site],body.dz .pz-foot .gbox>#site{grid-column:1}
+  body.dz .pz-foot .gbox>[for=fb],body.dz .pz-foot .gbox>#fb{grid-column:2}
+  body.dz .pz-foot .gbox>[for=ig],body.dz .pz-foot .gbox>#ig{grid-column:3}
+}
 </style>
 </head>
 <body>
@@ -462,6 +533,71 @@
 </div>
 <div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
 
+<script>
+/* CPMG poster layout v1.0-TEST (Nov 3, 2026)
+   On a wide screen (1100 px or more) this moves the boxes of the form into a "poster" in the middle with a left and a right side panel.
+   It only MOVES the same boxes (same ids, same values), and puts them back when the window gets narrow. Phones never run it.
+   If anything here fails, the normal form still works. */
+(function () {
+  var f = document.getElementById('f');
+  if (!f || !window.matchMedia) return;
+  var mq = window.matchMedia('(min-width:1100px)'), moved = [], made = [], gone = [], texts = [], on = false;
+  function $(id) { return document.getElementById(id); }
+  function up(id, sel) { var e = $(id); return e ? e.closest(sel) : null; }
+  function slot(n) { if (!n || !n.parentNode) return null; var c = document.createComment('dz'); n.parentNode.insertBefore(c, n); moved.push({ n: n, c: c }); return n; }
+  function put(box, nodes) { nodes.forEach(function (n) { if (slot(n)) box.appendChild(n); }); return box; }
+  function mk(cls) { var d = document.createElement('div'); d.className = cls; made.push(d); return d; }
+  function hintAfter(l) { var h = l && l.nextElementSibling; return h && h.classList.contains('hint') ? h : null; }
+  function lab(id) { return f.querySelector('label[for="' + id + '"]'); }
+  function grp(label, extra) { var l = lab(label); var d = mk('pz-grp'); return put(d, [l, hintAfter(l)].concat(extra)); }
+  function setText(n, s) { if (n) { texts.push({ n: n, s: n.textContent }); n.textContent = s; } }
+  function hide(n) { if (n) { n.classList.add('dz-gone'); gone.push(n); } }
+  function arrange() {
+    if (on) return; on = true;
+    try {
+      var hp = f.querySelector('.hp');
+      var q1 = up('whatTaps', 'fieldset'), q2 = up('lookTaps', 'fieldset'), q3 = up('ttl', '.field'), gbw = up('site', '.field'),
+          ph4 = up('pvHouse', '.field'), q5 = up('sizeTaps', 'fieldset'), q6 = up('rush', '.field'), q7 = up('biz', '.field'), q8 = up('nm', '.field');
+      var zl = mk('zl'), poster = mk('poster'), zr = mk('zr');
+      put(zl, [q1, q2]);
+      // top of the poster
+      var head = put(mk('pz-head'), [q3.children[0], q3.children[1]]);
+      var photos = mk('pz-photos');
+      var ph4head = put(mk('pz-photohead'), []); ph4head.textContent = 'Add photos (if you want): each photo has its own spot.'; photos.appendChild(ph4head);
+      put(photos, [$('pvHeadshot').closest('.gbox'), $('pvHouse').closest('.gbox'), $('pvLogo').closest('.gbox'), $('ePic')]);
+      // the words
+      var gT = grp('ttl', [$('ttl'), $('eTtl')]);
+      var gH = grp('hdg', [$('hdg')]);
+      var gB = grp('b1', ['b1', 'b2', 'b3', 'b4', 'b5'].map(function (i) { return $(i).parentNode; }).concat([$('eBdy')]));
+      var gC = grp('cta', [$('cta'), $('eCta')]);
+      // the bottom strip
+      $('biz').setAttribute('aria-label', 'Business name');
+      var foot = put(mk('pz-foot'), [$('biz'), $('ph'), $('eBiz'), $('ePh'), $('site').closest('.gbox')]);
+      poster.appendChild(head); poster.appendChild(photos); poster.appendChild(gT); poster.appendChild(gH); poster.appendChild(gB); poster.appendChild(gC); poster.appendChild(foot);
+      // the right side
+      put(zr, [q5, q6, q7, q8, $('priceBox')]);
+      setText(q5.querySelector('.qn'), '4'); setText(q6.querySelector('.qn'), '5'); setText(q8.querySelector('.qn'), '6');
+      var q8t = q8.children[0]; if (q8t) { var nn = q8t.lastChild; if (nn && nn.nodeType === 3) setText(nn, 'Your name and email'); }
+      var q3t = head.children[0]; if (q3t && q3t.lastChild && q3t.lastChild.nodeType === 3) setText(q3t.lastChild, 'Your graphic: type right on it');
+      hide(q7.children[0]);   // "7 Business name" title: the name now lives in the poster footer
+      hide(q3); hide(gbw); hide(ph4);
+      f.insertBefore(zl, hp); f.insertBefore(poster, hp); f.insertBefore(zr, hp);
+      document.body.classList.add('dz');
+    } catch (e) { restore(); }
+  }
+  function restore() {
+    moved.slice().reverse().forEach(function (m) { if (m.c.parentNode) { m.c.parentNode.insertBefore(m.n, m.c); m.c.parentNode.removeChild(m.c); } });
+    made.forEach(function (d) { if (d.parentNode) d.parentNode.removeChild(d); });
+    gone.forEach(function (n) { n.classList.remove('dz-gone'); });
+    texts.slice().reverse().forEach(function (x) { x.n.textContent = x.s; });
+    moved = []; made = []; gone = []; texts = []; on = false;
+    document.body.classList.remove('dz');
+  }
+  function sync() { if (mq.matches) arrange(); else if (on) restore(); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync); else if (mq.addListener) mq.addListener(sync);
+})();
+</script>
 <script src="../cpmg-order-config-test.js?v=1.0"></script>
 <script src="../cpmg-order-test.js?v=1.8"></script>
 <script>
@@ -2074,7 +2210,7 @@
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.4-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.6-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
