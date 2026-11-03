@@ -2,13 +2,15 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.9-TEST (Nov 3, 2026)
+  v3.10-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.10-TEST (Nov 3, 2026) Randy: go full screen when the client comes to the form. Browsers only allow it after a tap, so the first tap on a wide screen goes full screen,
+                             and a Full screen / Exit full screen button sits in the top-right corner. Esc still leaves full screen and it does not come back by itself. Desktop only.
     v3.9-TEST (Nov 3, 2026) Randy: the Send bar at the very bottom was hidden behind his Windows taskbar. On desktop the Send my order button and the
                              "You pay" line now sit in the right panel under the price, and the fixed bottom bar is not used. Phones keep the bottom bar.
     v3.8-TEST (Nov 3, 2026) Randy: the labels above the poster boxes were too small to read. They are now 17 px, bold, bright green (Title, Second line,
@@ -249,7 +251,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 /* ===== v3.4-TEST (Nov 3, 2026) desktop one-screen layout. Phones are not changed. ===== */
 @media (min-width:1100px){
   body{font-size:16px}
-  .wrap.narrow{max-width:1700px;padding:4px 28px 66px;gap:6px 22px;display:grid;grid-template-columns:1.1fr 1fr 1fr;align-items:start}
+  .wrap.narrow{max-width:1700px;padding:4px 28px 66px;gap:6px 22px;display:grid;grid-template-columns:1.1fr 1fr 1fr auto;align-items:start}
   .wrap.narrow>form#f,.wrap.narrow>#ok,.wrap.narrow>.foot,.wrap.narrow>.loading{grid-column:1/-1}
   .wrap.narrow h1{font-size:23px}
   .wrap.narrow>.top .sub{font-size:13.5px}
@@ -330,6 +332,8 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
   body.dz .pz-send #barTot{margin:0 0 6px!important;text-align:center;font-size:18px}
   body.dz .pz-send .big{width:100%;max-width:none;min-height:58px;font-size:22px;margin:0}
   body.dz .wrap.narrow{padding-bottom:20px}
+  body.dz .pz-fs{justify-self:end;align-self:center;background:var(--deep);color:#8ff0b7;border:2px solid var(--green);border-radius:12px;padding:6px 14px;font:700 15px var(--body,inherit);cursor:pointer;white-space:nowrap}
+  body.dz .pz-fs:hover{background:#2f5646}
   body.dz #lookTaps .opt{flex-wrap:wrap;align-content:center;gap:0 8px}
   body.dz #lookTaps .opt .szn{flex:0 0 100%;margin-left:0;text-align:left;line-height:1.2}
   body.dz #lookTaps .opt.on::after{position:absolute;top:6px;right:10px;margin:0}
@@ -611,7 +615,27 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     moved = []; made = []; gone = []; texts = []; on = false;
     document.body.classList.remove('dz');
   }
-  function sync() { if (mq.matches) arrange(); else if (on) restore(); }
+  /* full screen: the first tap on a wide screen goes full screen (browsers only allow it after a tap); a corner button turns it on and off */
+  var fsBtn = null, fsTried = false, FS = !!(document.fullscreenEnabled && document.documentElement.requestFullscreen);
+  function fsLabel() { if (fsBtn) fsBtn.textContent = document.fullscreenElement ? 'Exit full screen' : 'Full screen'; }
+  function fsToggle() { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (e) { /* ok */ } }
+  function fsFirstTap(e) {
+    if (!on || !mq.matches || fsTried || document.fullscreenElement) return;
+    fsTried = true;
+    if (fsBtn && (e.target === fsBtn)) return;
+    try { var r = document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(function () { /* ok */ }); } catch (x) { /* ok */ }
+  }
+  function fsAdd() {
+    if (!FS || fsBtn) return;
+    var wrap = f.parentNode, anchor = wrap.querySelector('.loading') || f;
+    fsBtn = document.createElement('button'); fsBtn.type = 'button'; fsBtn.className = 'pz-fs'; fsBtn.setAttribute('aria-label', 'Full screen on or off');
+    fsBtn.addEventListener('click', function () { fsTried = true; fsToggle(); });
+    wrap.insertBefore(fsBtn, anchor); fsLabel();
+  }
+  function fsRemove() { if (fsBtn && fsBtn.parentNode) fsBtn.parentNode.removeChild(fsBtn); fsBtn = null; }
+  document.addEventListener('pointerdown', fsFirstTap, true);
+  document.addEventListener('fullscreenchange', fsLabel);
+  function sync() { if (mq.matches) { arrange(); fsAdd(); } else if (on) { restore(); fsRemove(); } }
   sync();
   if (mq.addEventListener) mq.addEventListener('change', sync); else if (mq.addListener) mq.addListener(sync);
 })();
@@ -2228,7 +2252,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.9-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.10-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
