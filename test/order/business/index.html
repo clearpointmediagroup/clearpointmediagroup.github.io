@@ -2,13 +2,14 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.17-TEST (Nov 3, 2026)
+  v3.18-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.18-TEST (Nov 3, 2026) Randy did not see the full screen button: it now shows on any window 700 px wide or more (was 1100), so a smaller laptop window still gets it.
     v3.17-TEST (Nov 3, 2026) Randy: the whole form on one screen. On a wide screen the light form puts the 3 steps side by side (kind | what it says | about you), with More choices and the price under them, and shrinks a little on short screens. Phones unchanged.
     v3.16-TEST (Nov 3, 2026) Randy: a big green "Click here for full screen" button at the top of the light form on wide screens (browsers need a tap to go full screen). It goes away once full screen is on and comes back if they leave it. Phones do not see it.
     v3.15-TEST (Nov 3, 2026) Randy: dark green felt like an old computer and had too many buttons. New LITE look for lean pages (body class lite): light cream and white,
@@ -437,7 +438,7 @@ body.lite details.intro{display:none}
 body.lite .fsbtn{display:none;width:100%;margin:0 0 16px;padding:18px 20px;border:0;border-radius:16px;background:var(--green);color:#fff;font:800 24px var(--display);cursor:pointer;align-items:center;justify-content:center;gap:12px}
 body.lite .fsbtn svg{width:30px;height:30px;flex:none}
 body.lite .fsbtn:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
-@media (min-width:1100px){body.lite .fsbtn.show{display:flex}}
+@media (min-width:700px){body.lite .fsbtn.show{display:flex}}
 body.lite .liteline{font-size:19px;color:var(--muted);margin:6px 0 18px}
 body.lite .top h1{font-size:30px}
 body.lite .field{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:0 0 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -2424,7 +2425,7 @@ body.lite .foot{display:none}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.17-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.18-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
