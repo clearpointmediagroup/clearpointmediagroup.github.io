@@ -2,13 +2,14 @@
 <!--
   CPMG Plumbing Order — test/order/plumbing/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.22-TEST (Nov 3, 2026)
+  v3.23-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.23-TEST (Nov 3, 2026) Randy: "Take a picture" did nothing on his laptop (browsers ignore the camera request on computers). On a computer with a mouse it now opens a small camera window with Take photo and Cancel; the photo goes into the same Upload box. No camera or blocked: says so, Upload still works. Phones untouched.
     v3.22-TEST (Nov 3, 2026) Randy: in full screen a big "Exit full screen" button sits in the top-right corner, so nobody needs to know the Esc key. (Another session made v3.21 at the same time; merged.)
     v3.21-TEST (Nov 3, 2026) Randy: More choices is not optional, show it, and fit the whole form on the screen. On a wide screen More choices is always open (no fold, no + sign, the word optional is gone) and its four boxes sit in two small columns (look and where on the left, photos and bottom of graphic on the right) with a wider 4th column, so the whole form fits with no scrolling. Phones still fold it.
     v3.20-TEST (Nov 3, 2026) Randy: use the empty space. On a wide screen the form is 4 columns side by side: kind (price under it) | what it says | about you | More choices (optional), which starts open there since it fits. No scrolling. Tap More choices to fold it. Phones keep it folded.
@@ -882,6 +883,54 @@ body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
   function sync() { if (mq.matches) { arrange(); fsAdd(); setTimeout(startShow, 0); } else if (on) { restore(); fsRemove(); startHide(); } }
   sync();
   if (mq.addEventListener) mq.addEventListener('change', sync); else if (mq.addListener) mq.addListener(sync);
+})();
+</script>
+<script>
+/* CPMG laptop camera v1.0-TEST (Nov 3, 2026): browsers ignore "capture" on laptops, so "Take a picture" only opened the file picker.
+   On a device with a mouse (not a phone) the button now opens a small camera window. The photo goes into the same Upload box,
+   so the rest of the form does not change. No camera, or the camera is blocked: it says so and Upload still works. Phones are not touched. */
+(function () {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
+  var labels = document.querySelectorAll('label.btn[for^="cam"]');
+  if (!labels.length) return;
+  var box = null, stream = null;
+  function stop() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+  function close() { stop(); if (box) { box.remove(); box = null; } document.removeEventListener('keydown', onKey); }
+  function onKey(e) { if (e.key === 'Escape') close(); }
+  function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt) e.textContent = txt; return e; }
+  var BTN = 'font:700 20px Arial,sans-serif;padding:14px 26px;border-radius:12px;cursor:pointer;margin:6px;border:2px solid #1f7a4d;';
+  function open(upId) {
+    close();
+    box = el('div', 'position:fixed;inset:0;z-index:2147483200;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px');
+    box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true');
+    var card = el('div', 'background:#fff;color:#1f2a24;border-radius:16px;padding:16px;max-width:560px;width:100%;text-align:center;font-family:Arial,sans-serif');
+    var msg = el('p', 'font-size:19px;margin:0 0 10px', 'Getting your camera ready…');
+    var vid = el('video', 'width:100%;max-height:60vh;border-radius:12px;background:#000;display:none'); vid.autoplay = true; vid.muted = true; vid.setAttribute('playsinline', '');
+    var row = el('div', 'margin-top:10px');
+    var go = el('button', BTN + 'background:#1f7a4d;color:#fff;display:none', 'Take photo'); go.type = 'button';
+    var no = el('button', BTN + 'background:#fff;color:#1f7a4d', 'Cancel'); no.type = 'button';
+    row.appendChild(go); row.appendChild(no); card.appendChild(msg); card.appendChild(vid); card.appendChild(row); box.appendChild(card); document.body.appendChild(box);
+    document.addEventListener('keydown', onKey);
+    no.addEventListener('click', close);
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (st) {
+      if (!box) { st.getTracks().forEach(function (t) { t.stop(); }); return; }
+      stream = st; vid.srcObject = st; vid.style.display = 'block'; go.style.display = 'inline-block'; msg.textContent = 'Smile! Tap Take photo.';
+      go.addEventListener('click', function () {
+        var w = vid.videoWidth || 1280, h = vid.videoHeight || 720, c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(vid, 0, 0, w, h);
+        c.toBlob(function (b) {
+          if (!b) { msg.textContent = 'That did not work. Please tap Cancel and use Upload.'; return; }
+          var file = new File([b], 'camera-photo.jpg', { type: 'image/jpeg' }), inp = document.getElementById(upId);
+          try { var dt = new DataTransfer(); dt.items.add(file); inp.files = dt.files; inp.dispatchEvent(new Event('change', { bubbles: true })); } catch (e) { msg.textContent = 'That did not work. Please tap Cancel and use Upload.'; return; }
+          close();
+        }, 'image/jpeg', 0.92);
+      });
+    }, function () { msg.textContent = 'We could not open your camera. Tap Cancel, then use Upload to pick a picture instead.'; });
+  }
+  [].forEach.call(labels, function (lb) {
+    lb.addEventListener('click', function (e) { e.preventDefault(); open((lb.getAttribute('for') || '').replace(/^cam/, 'up')); });
+  });
 })();
 </script>
 <script src="../../cpmg-order-config-test.js?v=1.0"></script>
@@ -2460,7 +2509,7 @@ body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.22-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.23-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
