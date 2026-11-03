@@ -2,13 +2,14 @@
 <!--
   CPMG Restaurant Order — test/order/restaurant/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.27-TEST (Nov 3, 2026)
+  v3.28-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.28-TEST (Nov 3, 2026) Randy: the holiday graphic has to match the holiday (like Hanukkah). Hanukkah is now in the holiday buttons (date worked out from the Hebrew calendar, first candle the evening before Kislev 25). The pick is sent as "Look: Holiday: <name>" in the order notes and the Gemini file, so the graphic is made for that holiday.
     v3.27-TEST (Nov 3, 2026) With the holiday buttons open the More choices panel was too tall. Look now has the whole left column; photos, where, and bottom of the graphic stack in the right column, so it still fits one screen.
     v3.26-TEST (Nov 3, 2026) Randy: tapping Holiday now breaks the holidays out as tap buttons (Veterans Day, Thanksgiving, Christmas, New Year's Eve, New Year's Day, Other) instead of a drop-down. Same list rules as v3.25 (next 60 days, updates itself); the hidden drop-down still holds the value, so the order is sent the same way.
     v3.25-TEST (Nov 3, 2026) Randy: the holiday drop-down shows only the holidays coming up now (next 60 days). Today that is Veterans Day, Thanksgiving, Christmas, New Year's Eve and New Year's Day. It updates itself through the year (the full list is built in), and Other is always there.
@@ -915,14 +916,15 @@ body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:3}
   function nth(y, m, n, wd) { var d = new Date(y, m, 1), add = (wd - d.getDay() + 7) % 7; return new Date(y, m, 1 + add + (n - 1) * 7); }
   function last(y, m, wd) { var d = new Date(y, m + 1, 0); return new Date(y, m, d.getDate() - ((d.getDay() - wd + 7) % 7)); }
   function easter(y) { var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mo = Math.floor((h + l - 7 * m + 114) / 31), da = ((h + l - 7 * m + 114) % 31) + 1; return new Date(y, mo - 1, da); }
-  function list(y) { return [
+  function hanuk(y) { try { var f = new Intl.DateTimeFormat('en-u-ca-hebrew', { day: 'numeric', month: 'long' }); for (var d = new Date(y, 10, 20); d <= new Date(y, 11, 31); d = new Date(y, d.getMonth(), d.getDate() + 1)) { var p = f.formatToParts(d), dy = p.filter(function (x) { return x.type === 'day'; })[0], mo = p.filter(function (x) { return x.type === 'month'; })[0]; if (dy && mo && dy.value === '25' && /kislev/i.test(mo.value)) return new Date(y, d.getMonth(), d.getDate() - 1); } } catch (e) { /* no Hebrew calendar on this phone: skip it */ } return null; }   // first candle is the evening before Kislev 25
+  function list(y) { var hk = hanuk(y); return (hk ? [['Hanukkah', hk]] : []).concat([
     ["New Year's Day", new Date(y, 0, 1)], ['Martin Luther King Jr. Day', nth(y, 0, 3, 1)], ["Valentine's Day", new Date(y, 1, 14)], ["Presidents' Day", nth(y, 1, 3, 1)],
     ["St. Patrick's Day", new Date(y, 2, 17)], ['Easter', easter(y)], ["Mother's Day", nth(y, 4, 2, 0)], ['Memorial Day', last(y, 4, 1)], ["Father's Day", nth(y, 5, 3, 0)],
     ['4th of July', new Date(y, 6, 4)], ['Labor Day', nth(y, 8, 1, 1)], ['Halloween', new Date(y, 9, 31)], ['Veterans Day', new Date(y, 10, 11)],
-    ['Thanksgiving', nth(y, 10, 4, 4)], ['Christmas', new Date(y, 11, 25)], ["New Year's Eve", new Date(y, 11, 31)] ]; }
+    ['Thanksgiving', nth(y, 10, 4, 4)], ['Christmas', new Date(y, 11, 25)], ["New Year's Eve", new Date(y, 11, 31)] ]); }
   try {
     var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), y = now.getFullYear(), DAY = 86400000, WINDOW = 60;
-    var up = list(y).concat(list(y + 1)).filter(function (h) { var n = Math.round((h[1] - t0) / DAY); return n >= 0 && n <= WINDOW; }).sort(function (a, b) { return a[1] - b[1]; });
+    var up = list(y).concat(list(y + 1)).filter(function (h) { var n = Math.round((h[1] - t0) / DAY); return n >= (h[0] === 'Hanukkah' ? -6 : 0) && n <= WINDOW; }).sort(function (a, b) { return a[1] - b[1]; });
     if (!up.length) return;
     var M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     sel.innerHTML = '';
@@ -2598,7 +2600,7 @@ body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:3}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.27-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.28-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
