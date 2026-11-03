@@ -2,13 +2,15 @@
 <!--
   CPMG Real estate Order — test/order/real-estate/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.13-TEST (Nov 3, 2026)
+  v3.14-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.14-TEST (Nov 3, 2026) Randy: restaurants next. The restaurant pack is lean too (3 looks: 3D poster with the Myrtle Beach vibe, Chalkboard, Casual; no Website/Facebook/Instagram,
+                             headshot or logo spots, or Rush). Look tiles have room for the check mark; a hair smaller on 720 px screens so nothing scrolls.
     v3.13-TEST (Nov 3, 2026) Randy: one form per market, real estate first (too many things to fill). A pack with lean=True (real estate) hides the extra look choices,
                              the Website/Facebook/Instagram boxes, the headshot and logo photo spots, Rush, and detail lines 4 and 5, and renumbers the steps. The code is the same
                              for every market; only the pack words and this switch change. Restaurants are next.
@@ -344,6 +346,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
   body.dz .pz-fs:hover{background:#2f5646}
   body.dz #lookTaps .opt{flex-wrap:wrap;align-content:center;gap:0 8px}
   body.dz #lookTaps .opt .szn{flex:0 0 100%;margin-left:0;text-align:left;line-height:1.2}
+  body.dz #lookTaps .opt{padding-right:30px}
   body.dz #lookTaps .opt.on::after{position:absolute;top:6px;right:10px;margin:0}
   /* the poster */
   body.dz .poster{position:relative;display:flex;flex-direction:column;border:3px solid var(--green);border-radius:22px;padding:12px 24px 0;background:linear-gradient(160deg,#1f3a2e 0%,#16271f 55%,#10201a 100%);min-height:760px;overflow:hidden;min-width:0}
@@ -396,7 +399,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 @media (min-width:1100px) and (max-height:960px){body.lean .wrap.narrow{zoom:1}}
 @media (min-width:1100px) and (max-height:860px){body.lean .wrap.narrow{zoom:.95}}
 @media (min-width:1100px) and (max-height:780px){body.lean .wrap.narrow{zoom:.9}}
-@media (min-width:1100px) and (max-height:740px){body.lean .wrap.narrow{zoom:.82}}
+@media (min-width:1100px) and (max-height:740px){body.lean .wrap.narrow{zoom:.8}}
 /* ===== v3.12-TEST start screen (wide screens only, made by the poster script) ===== */
 #pzStart{position:fixed;inset:0;z-index:2147482000;background:radial-gradient(ellipse at 50% 35%,#1f3a2e 0%,#12211a 55%,#0f1712 100%);display:flex;align-items:center;justify-content:center;padding:24px}
 #pzStart .pzs-card{max-width:680px;text-align:center}
@@ -904,16 +907,10 @@ body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a f
   ],
   "looks": [
    [
-    "Professional",
-    "briefcase",
-    "Clean and polished",
-    "professional"
-   ],
-   [
-    "Casual",
-    "mood-smile",
-    "Warm and friendly",
-    "casual"
+    "3D poster",
+    "cube",
+    "Bold 3D, Myrtle Beach vibe",
+    "3d-poster"
    ],
    [
     "Chalkboard",
@@ -922,22 +919,10 @@ body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a f
     "chalkboard"
    ],
    [
-    "Beach and coastal",
-    "beach",
-    "Bright and breezy",
-    "beach-coastal"
-   ],
-   [
-    "3D poster",
-    "cube",
-    "Bold, professional 3D",
-    "3d-poster"
-   ],
-   [
-    "Holiday",
-    "gift",
-    "Tell us which one",
-    "holiday"
+    "Casual",
+    "mood-smile",
+    "Warm and friendly",
+    "casual"
    ]
   ],
   "extra": {
@@ -2299,7 +2284,7 @@ body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a f
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.13-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.14-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };

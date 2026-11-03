@@ -1,4 +1,5 @@
-# CPMG industry packs v1.2 (Nov 3, 2026)
+# CPMG industry packs v1.3 (Nov 3, 2026)
+# v1.3 (Nov 3, 2026) Restaurant is now "lean" too: 3 looks (3D poster with the Myrtle Beach vibe, Chalkboard, Casual) plus You pick for me; same trims as real estate.
 # v1.2 (Nov 3, 2026) Real estate is now "lean" (Randy: too many things to fill): 3 looks plus You pick for me, no website/Facebook/Instagram boxes,
 #                    house photo only (no headshot or logo spot), no Rush, 3 detail lines. Set lean=True on a pack to get this. Restaurants next.
 # v1.1 (Oct 30, 2026) Added concrete (demo for Michael, made-up name ABC Concrete).
@@ -27,10 +28,10 @@ PACKS = {
        'Price drop': E('New Price','123 Oak Street',['Now $399,000','Was $425,000','3 beds, 2 baths','Move-in ready'],'Book a showing today'),
        'Coming soon': E('Coming Soon','123 Oak Street',['3 beds, 2 baths','Big backyard','Quiet street'],'Call me for early access'),
        'Something else': E('Happy Thanksgiving','From my family to yours',['Thank you for your trust','Wishing you a warm holiday'],'Call me anytime')}),
- 'restaurant': dict(name='Restaurant', title='Order a graphic for your restaurant', foot='CPMG Restaurant Order',
+ 'restaurant': dict(lean=True, name='Restaurant', title='Order a graphic for your restaurant', foot='CPMG Restaurant Order',
    who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant', photos='your food, your bar or dining room, your headshot or your logo',
    kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
-   looks=[('Professional','briefcase','Clean and polished','professional'),('Casual','mood-smile','Warm and friendly','casual'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Beach and coastal','beach','Bright and breezy','beach-coastal'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Holiday','gift','Tell us which one','holiday')],
+   looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual')],
    extra=dict(label='What kind of place? (if you want)', hint='A few words, like seafood restaurant, sports bar or cafe.', ph='Seafood restaurant', need='', key='placeType', note='Kind of place'),
    biz="Smith's Seafood Grill", photo1=('Food or place photo','Big background, like your dish, your bar or your dining room. Your words go on top.','Food or place photo','Food'), scene='a plate of shrimp and grits on a rustic wooden table in a cozy coastal restaurant',
    ex={'': E("Tonight's Special",'Shrimp and Grits',['$14.99','Served 5 to 9 p.m.','Fresh local shrimp'],'Come hungry!'),
