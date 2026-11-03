@@ -2,13 +2,15 @@
 <!--
   CPMG Restaurant Order — test/order/restaurant/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.10-TEST (Nov 3, 2026)
+  v3.11-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.11-TEST (Nov 3, 2026) Randy's laptop screen is 1440 x 720 (CSS pixels) in full screen, so on screens 740 px tall or less the whole poster shrinks a bit more
+                             (zoom .70) so the Send button and the bottom strip are visible without scrolling. Desktop poster only.
     v3.10-TEST (Nov 3, 2026) Randy: go full screen when the client comes to the form. Browsers only allow it after a tap, so the first tap on a wide screen goes full screen,
                              and a Full screen / Exit full screen button sits in the top-right corner. Esc still leaves full screen and it does not come back by itself. Desktop only.
     v3.9-TEST (Nov 3, 2026) Randy: the Send bar at the very bottom was hidden behind his Windows taskbar. On desktop the Send my order button and the
@@ -315,6 +317,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 @media (min-width:1100px) and (max-height:960px){.wrap.narrow{zoom:.94}}
 @media (min-width:1100px) and (max-height:860px){.wrap.narrow{zoom:.86}}
 @media (min-width:1100px) and (max-height:780px){.wrap.narrow{zoom:.77}}
+@media (min-width:1100px) and (max-height:740px){.wrap.narrow{zoom:.7}}
 /* ===== v3.6-TEST (Nov 3, 2026) poster-style form on desktop. Switched on by the script just before the main script (adds class "dz" to the page). Phones are not changed. ===== */
 @media (min-width:1100px){
   body.dz #f.stack{display:grid;column-count:auto;grid-template-columns:350px minmax(0,1fr) 350px;gap:0 26px;align-items:start;max-width:1500px;margin:0 auto}
@@ -2252,7 +2255,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.10-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.11-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
