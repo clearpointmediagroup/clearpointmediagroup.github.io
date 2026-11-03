@@ -1,4 +1,6 @@
-# CPMG industry packs v1.1 (Oct 30, 2026)
+# CPMG industry packs v1.2 (Nov 3, 2026)
+# v1.2 (Nov 3, 2026) Real estate is now "lean" (Randy: too many things to fill): 3 looks plus You pick for me, no website/Facebook/Instagram boxes,
+#                    house photo only (no headshot or logo spot), no Rush, 3 detail lines. Set lean=True on a pack to get this. Restaurants next.
 # v1.1 (Oct 30, 2026) Added concrete (demo for Michael, made-up name ABC Concrete).
 # v1.0 (Oct 30, 2026) First version — the words for every industry form.
 # Used by tools/build-order-forms.py to build test/order/<industry>/index.html from the master form.
@@ -12,10 +14,10 @@ ABOUT = ("We make professional graphics for local businesses, fast. {who} use us
          "No contracts and no design work on your end. Just tell us what to say.")
 def E(t, h, lines, cta): return [t, h, (lines + ['', '', '', '', ''])[:5], cta]
 PACKS = {
- 'real-estate': dict(name='Real estate', title='Order a real estate graphic', foot='CPMG Real Estate Order',
+ 'real-estate': dict(lean=True, name='Real estate', title='Order a real estate graphic', foot='CPMG Real Estate Order',
    who='Real estate agents', uses='just listed, open house, price drop and just sold posts', what='listing', photos='the house, your headshot or your logo',
    kinds=[('Just listed','home'),('Open house','door'),('Just sold','home-check'),('Price drop','tag'),('Coming soon','calendar'),('Something else','pencil')],
-   looks=[('Professional','briefcase','Clean and polished','professional'),('Casual','mood-smile','Warm and friendly','casual'),('Luxury','diamond','High-end homes','luxury'),('Pool and summer','sun','Bright and sunny','pool-summer'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Holiday','gift','Tell us which one','holiday')],
+   looks=[('Professional','briefcase','Clean and polished','professional'),('Luxury','diamond','High-end homes','luxury'),('3D poster','cube','Bold, professional 3D','3d-poster')],
    extra=dict(label='Brokerage', hint='The real estate company you work under.', ph='Main Street Realty', need='Type your brokerage name.', key='brokerage', note='Brokerage'),
    biz='Smith Home Team', photo1=('House photo','Big background. Your words go on top.','The house','House'), scene='an upscale two-story brick home on a tree-lined street with a green lawn',
    ex={'': E('Just Listed','123 Oak Street',['3 beds, 2 baths','$425,000','1,850 sq. ft.'],'Call me for a showing'),

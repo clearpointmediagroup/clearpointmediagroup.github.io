@@ -2,13 +2,16 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.12-TEST (Nov 3, 2026)
+  v3.13-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.13-TEST (Nov 3, 2026) Randy: one form per market, real estate first (too many things to fill). A pack with lean=True (real estate) hides the extra look choices,
+                             the Website/Facebook/Instagram boxes, the headshot and logo photo spots, Rush, and detail lines 4 and 5, and renumbers the steps. The code is the same
+                             for every market; only the pack words and this switch change. Restaurants are next.
     v3.12-TEST (Nov 3, 2026) Randy: most clients will not find the small Full screen button. On a wide screen the form now opens with a start screen: one big
                              "Start my order" button. That one tap goes full screen and shows the form. If full screen is blocked the form still opens. Phones skip the start screen.
     v3.11-TEST (Nov 3, 2026) Randy's laptop screen is 1440 x 720 (CSS pixels) in full screen, so on screens 740 px tall or less the whole poster shrinks a bit more
@@ -389,6 +392,11 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
   body.dz .pz-foot .gbox>[for=fb],body.dz .pz-foot .gbox>#fb{grid-column:2}
   body.dz .pz-foot .gbox>[for=ig],body.dz .pz-foot .gbox>#ig{grid-column:3}
 }
+/* lean forms have less on them, so they can stay bigger on short screens */
+@media (min-width:1100px) and (max-height:960px){body.lean .wrap.narrow{zoom:1}}
+@media (min-width:1100px) and (max-height:860px){body.lean .wrap.narrow{zoom:.95}}
+@media (min-width:1100px) and (max-height:780px){body.lean .wrap.narrow{zoom:.9}}
+@media (min-width:1100px) and (max-height:740px){body.lean .wrap.narrow{zoom:.82}}
 /* ===== v3.12-TEST start screen (wide screens only, made by the poster script) ===== */
 #pzStart{position:fixed;inset:0;z-index:2147482000;background:radial-gradient(ellipse at 50% 35%,#1f3a2e 0%,#12211a 55%,#0f1712 100%);display:flex;align-items:center;justify-content:center;padding:24px}
 #pzStart .pzs-card{max-width:680px;text-align:center}
@@ -399,6 +407,10 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 #pzStart .pzs-go{font:800 30px var(--display);background:var(--green);color:var(--ink);border:0;border-radius:18px;padding:20px 64px;min-width:400px;cursor:pointer}
 #pzStart .pzs-go:focus-visible{outline:4px solid #fac775;outline-offset:4px}
 #pzStart .pzs-s{font-size:15px;color:#a9c0b2;margin:18px 0 0}
+/* ===== v3.13-TEST (Nov 3, 2026) lean forms: pages built from a pack with lean=True get <body class="lean"> and hide the pieces marked "lh" ===== */
+body.lean .lh{display:none!important}
+body.lean .pz-photos{grid-template-columns:1fr}
+body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a few words each"}
 </style>
 </head>
 <body>
@@ -452,8 +464,8 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
       <div class="bl"><b>1</b><input type="text" id="b1" autocomplete="off" aria-label="Details line 1"></div>
       <div class="bl"><b>2</b><input type="text" id="b2" autocomplete="off" aria-label="Details line 2"></div>
       <div class="bl"><b>3</b><input type="text" id="b3" autocomplete="off" aria-label="Details line 3"></div>
-      <div class="bl"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Details line 4"></div>
-      <div class="bl"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Details line 5"></div>
+      <div class="bl lh"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Details line 4"></div>
+      <div class="bl lh"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Details line 5"></div>
       <p class="err" id="eBdy" hidden></p>
       <label class="sl" for="cta">What should people do?</label>
       <p class="hint">One short line telling people what to do next. Example: <b id="xCta"></b></p>
@@ -466,13 +478,13 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
         <p class="gt">Bottom of the graphic</p>
         <label class="chk"><input type="checkbox" id="showBiz" checked> Show my business name</label>
         <label class="chk" style="margin-top:8px"><input type="checkbox" id="showPh" checked> Show my phone number</label>
-        <p class="hint" style="margin:10px 0 0">Want people to find you online? Add any of these and we'll put them at the bottom too. All are optional.</p>
-        <label class="sl" for="site" style="margin-top:10px">Website</label>
-        <input type="text" id="site" placeholder="smithhometeam.com" autocomplete="url" autocapitalize="off" spellcheck="false">
-        <label class="sl" for="fb" style="margin-top:10px">Facebook page</label>
-        <input type="text" id="fb" placeholder="facebook.com/smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
-        <label class="sl" for="ig" style="margin-top:10px">Instagram</label>
-        <input type="text" id="ig" placeholder="@smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <p class="hint lh" style="margin:10px 0 0">Want people to find you online? Add any of these and we'll put them at the bottom too. All are optional.</p>
+        <label class="sl lh" for="site" style="margin-top:10px">Website</label>
+        <input type="text" class="lh" id="site" placeholder="smithhometeam.com" autocomplete="url" autocapitalize="off" spellcheck="false">
+        <label class="sl lh" for="fb" style="margin-top:10px">Facebook page</label>
+        <input type="text" class="lh" id="fb" placeholder="facebook.com/smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <label class="sl lh" for="ig" style="margin-top:10px">Instagram</label>
+        <input type="text" class="lh" id="ig" placeholder="@smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
       </div>
     </div>
 
@@ -485,13 +497,13 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
         <div class="slotPic" id="pvHouse" hidden style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img id="imHouse" alt="Your house photo" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmHouse">Remove</button></div>
         <div class="photo" id="btHouse"><label class="btn" for="camHouse"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camHouse" accept="image/*" capture="environment"></label><label class="btn" for="upHouse"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upHouse" accept="image/*"></label></div>
       </div>
-      <div class="gbox" style="margin-top:12px">
+      <div class="gbox lh" style="margin-top:12px">
         <p class="gt" style="margin:0"><i class="ti ti-user-circle" aria-hidden="true"></i> Your headshot</p>
         <p class="hint" style="margin:4px 0 10px">Small circle by your name. No words on your face.</p>
         <div class="slotPic" id="pvHeadshot" hidden style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img id="imHeadshot" alt="Your your headshot" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmHeadshot">Remove</button></div>
         <div class="photo" id="btHeadshot"><label class="btn" for="camHeadshot"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camHeadshot" accept="image/*" capture="environment"></label><label class="btn" for="upHeadshot"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upHeadshot" accept="image/*"></label></div>
       </div>
-      <div class="gbox" style="margin-top:12px">
+      <div class="gbox lh" style="margin-top:12px">
         <p class="gt" style="margin:0"><i class="ti ti-badge" aria-hidden="true"></i> Your logo</p>
         <p class="hint" style="margin:4px 0 10px">Small, in a corner.</p>
         <div class="slotPic" id="pvLogo" hidden style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img id="imLogo" alt="Your your logo" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmLogo">Remove</button></div>
@@ -512,7 +524,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
       <p class="err" id="eSize" hidden></p>
     </fieldset>
 
-    <div class="field">
+    <div class="field lh">
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
       <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
       <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your preview in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
@@ -575,6 +587,12 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
    If anything here fails, the normal form still works. */
 (function () {
   var f = document.getElementById('f');
+  var LEAN = document.body.classList.contains('lean');
+  if (f && LEAN) {   // fewer boxes: renumber the steps that are left, and say 3 lines (not 5)
+    [document.getElementById('biz'), document.getElementById('nm')].forEach(function (e, i) { var q = e && e.closest('.field'); q = q && q.querySelector('.qn'); if (q) q.textContent = String(6 + i); });
+    var dl = f.querySelector('label[for="b1"]'), dh = dl && dl.nextElementSibling;
+    if (dh && dh.firstChild && dh.firstChild.nodeType === 3) dh.firstChild.nodeValue = dh.firstChild.nodeValue.replace('Up to 5', 'Up to 3');
+  }
   if (!f || !window.matchMedia) return;
   var mq = window.matchMedia('(min-width:1100px)'), moved = [], made = [], gone = [], texts = [], on = false;
   function $(id) { return document.getElementById(id); }
@@ -613,7 +631,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
       put(zr, [q5, q6, q7, q8, $('priceBox')]);
       var send = put(mk('pz-send'), [$('barTot'), $('sendBtn')]); zr.appendChild(send);
       hide($('sendBar'));
-      setText(q5.querySelector('.qn'), '4'); setText(q6.querySelector('.qn'), '5'); setText(q8.querySelector('.qn'), '6');
+      setText(q5.querySelector('.qn'), '4'); if (!LEAN) setText(q6.querySelector('.qn'), '5'); setText(q8.querySelector('.qn'), LEAN ? '5' : '6');
       var q8t = q8.children[0]; if (q8t) { var nn = q8t.lastChild; if (nn && nn.nodeType === 3) setText(nn, 'Your name and email'); }
       var q3t = head.children[0]; if (q3t && q3t.lastChild && q3t.lastChild.nodeType === 3) setText(q3t.lastChild, 'Your graphic: type right on it');
       hide(q7.children[0]);   // "7 Business name" title: the name now lives in the poster footer
@@ -736,34 +754,16 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     "professional"
    ],
    [
-    "Casual",
-    "mood-smile",
-    "Warm and friendly",
-    "casual"
-   ],
-   [
     "Luxury",
     "diamond",
     "High-end homes",
     "luxury"
    ],
    [
-    "Pool and summer",
-    "sun",
-    "Bright and sunny",
-    "pool-summer"
-   ],
-   [
     "3D poster",
     "cube",
     "Bold, professional 3D",
     "3d-poster"
-   ],
-   [
-    "Holiday",
-    "gift",
-    "Tell us which one",
-    "holiday"
    ]
   ],
   "extra": {
@@ -2299,7 +2299,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.12-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.13-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
