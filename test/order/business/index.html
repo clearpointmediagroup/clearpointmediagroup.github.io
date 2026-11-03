@@ -2,13 +2,15 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.7-TEST (Nov 3, 2026)
+  v3.8-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.8-TEST (Nov 3, 2026) Randy: the labels above the poster boxes were too small to read. They are now 17 px, bold, bright green (Title, Second line,
+                             Details, What should people do?), with bigger helper words next to them, and the Website / Facebook / Instagram labels are 14 px bold. Desktop poster only.
     v3.7-TEST (Nov 3, 2026) Randy: the what-to-do box was too bright and the cursor was hard to see. It is now dark with a green outline like the
                              other boxes; every poster box has a bright green cursor and a green glow while you type in it. Desktop poster only.
     v3.6-TEST (Nov 3, 2026) Randy: the form flows like filling in the infographic. On a wide screen a small script moves the same boxes
@@ -338,16 +340,16 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
   body.dz .pz-photos .slotPic{margin:0 0 4px!important}
   body.dz .pz-photos .slotPic img{width:46px!important;height:46px!important}
   body.dz .pz-photos .pz-photohead{grid-column:1/-1;text-align:center;font-size:12.5px;color:var(--muted);margin:0}
-  body.dz .poster .sl{display:block;text-align:center;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin:10px 0 2px}
-  body.dz .poster label[for=ttl]::after{content:" — the big words at the top";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
-  body.dz .poster label[for=hdg]::after{content:" — a smaller line under it";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
-  body.dz .poster label[for=b1]::after{content:" — up to 5 short lines, a few words each";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
-  body.dz .poster label[for=cta]::after{content:" — one short line";font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
+  body.dz .poster .sl{display:block;text-align:center;font-size:17px;font-weight:800;letter-spacing:0;text-transform:none;color:#8ff0b7;margin:5px 0 1px}
+  body.dz .poster label[for=ttl]::after{content:" — the big words at the top";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster label[for=hdg]::after{content:" — a smaller line under it";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster label[for=b1]::after{content:" — up to 5 short lines, a few words each";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster label[for=cta]::after{content:" — one short line";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
   body.dz .poster .pz-grp>.hint{display:none}
   body.dz .poster input[type=text]{background:rgba(15,23,18,.45);border:2px dashed #5d7f68;color:var(--fg)}
   body.dz .poster #ttl{font-size:42px;font-weight:800;text-align:center;line-height:1.1;padding:6px 10px}
   body.dz .poster #hdg{font-size:24px;text-align:center;padding:5px 10px}
-  body.dz .poster .bl{margin:0 0 6px;gap:10px}
+  body.dz .poster .bl{margin:0 0 4px;gap:10px}
   body.dz .poster .bl b{width:12px;height:12px;border-radius:50%;background:var(--green);font-size:0;flex:none}
   body.dz .poster .bl input{font-size:19px;padding:5px 10px}
   body.dz .poster #cta{font-size:23px;font-weight:800;text-align:center;background:rgba(15,23,18,.45);color:#a8e6c3;border:2px solid var(--green);border-radius:999px;padding:7px 18px}
@@ -365,7 +367,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
   body.dz .pz-foot .gbox>.chk:nth-of-type(1){grid-column:1}
   body.dz .pz-foot .gbox>.chk:nth-of-type(2){grid-column:2}
   body.dz .pz-foot .gbox>.chk input{width:18px;height:18px}
-  body.dz .pz-foot .gbox>.sl{text-align:left;margin:4px 0 0;font-size:11px;grid-row:2}
+  body.dz .pz-foot .gbox>.sl{text-align:left;margin:4px 0 0;font-size:14px;font-weight:700;color:#8ff0b7;grid-row:2}
   body.dz .pz-foot .gbox>input{grid-row:3;font-size:14px!important;padding:5px 8px!important}
   body.dz .pz-foot .gbox>[for=site],body.dz .pz-foot .gbox>#site{grid-column:1}
   body.dz .pz-foot .gbox>[for=fb],body.dz .pz-foot .gbox>#fb{grid-column:2}
@@ -2217,7 +2219,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.7-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.8-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
