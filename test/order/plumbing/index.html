@@ -2,13 +2,16 @@
 <!--
   CPMG Plumbing Order — test/order/plumbing/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.14-TEST (Nov 3, 2026)
+  v3.15-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.15-TEST (Nov 3, 2026) Randy: dark green felt like an old computer and had too many buttons. New LITE look for lean pages (body class lite): light cream and white,
+                             3 steps (kind, what it says, about you), no icons on tiles, and the look, photos, where-shown and bottom-of-graphic boxes sit behind one "More choices (optional)" tap
+                             (defaults: You pick for me, Phone, show name and phone). No desktop poster, no start screen. Same ids and same order sent.
     v3.14-TEST (Nov 3, 2026) Randy: restaurants next. The restaurant pack is lean too (3 looks: 3D poster with the Myrtle Beach vibe, Chalkboard, Casual; no Website/Facebook/Instagram,
                              headshot or logo spots, or Rush). Look tiles have room for the check mark; a hair smaller on 720 px screens so nothing scrolls.
     v3.13-TEST (Nov 3, 2026) Randy: one form per market, real estate first (too many things to fill). A pack with lean=True (real estate) hides the extra look choices,
@@ -414,6 +417,59 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 body.lean .lh{display:none!important}
 body.lean .pz-photos{grid-template-columns:1fr}
 body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a few words each"}
+/* ===== v3.15-TEST (Nov 3, 2026) LITE: light, calm, 3 steps. Only on pages built with lite (body.lean.lite). Everything else about the form is unchanged. ===== */
+body.lite{--bg:#f7f5ef;--card:#ffffff;--fg:#1f2a24;--muted:#5b6b62;--line:#cdd6cf;--green:#1f7a4d;--deep:#e8f3ec;--ink:#ffffff;--err:#a12a2a;--errbg:#fdeaea;color-scheme:light;background:var(--bg);color:var(--fg)}
+body.lite .wrap.narrow{display:block;max-width:720px;margin:0 auto;padding:16px 20px 130px;zoom:1!important}
+body.lite #f.stack{display:block;column-count:1}
+body.lite #f>*{break-before:auto!important}
+body.lite .sl{margin:12px 0 4px}
+body.lite .hint{font-size:16px}
+body.lite .taps .opt{flex-direction:column;justify-content:center;text-align:center;padding:12px 8px}
+body.lite .wrap.narrow>.top{margin-bottom:0}
+body.lite .wrap.narrow h1{font-size:30px}
+body.lite .wrap.narrow>.top .sub{font-size:16px}
+body.lite .bar.narrow{display:block;text-align:center;padding:10px 20px calc(10px + env(safe-area-inset-bottom))}
+body.lite .bar.narrow .big{display:block;width:100%;max-width:680px;margin:0 auto}
+body.lite .bar.narrow #barTot{display:block;width:100%;max-width:680px;margin:0 auto 8px!important;text-align:center}
+body.lite details.intro{display:none}
+body.lite .liteline{font-size:19px;color:var(--muted);margin:6px 0 18px}
+body.lite .top h1{font-size:30px}
+body.lite .field{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:0 0 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+body.lite .ql{font-size:23px}
+body.lite .qn{background:var(--green);color:#fff}
+body.lite .hint{font-size:16px;color:var(--muted)}
+body.lite .field>.hint{display:none}
+body.lite .liteHint{display:block!important}
+body.lite .sl{font-size:18px;color:var(--fg);font-weight:700}
+body.lite .sl+.hint,body.lite .lite-nohint{display:none}
+body.lite input[type=text],body.lite input[type=email],body.lite input[type=tel]{background:#fff;color:var(--fg);border:2px solid #b7c3ba;border-radius:12px;font-size:20px;padding:14px 16px}
+body.lite input::placeholder{color:#8a978f}
+body.lite input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(31,122,77,.18)}
+body.lite .taps .opt{background:#fff;border:2px solid #b7c3ba;color:var(--fg);min-height:64px;font-size:19px}
+body.lite .taps .opt .pic,body.lite .taps .opt>i,body.lite .taps .opt .szn,body.lite .xt .xs{display:none}
+body.lite #whatTaps{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.lite .taps .opt.on{background:var(--deep);border:3px solid var(--green)}
+body.lite .taps .opt.on::after{content:'\2713';font-size:20px;color:var(--green);position:absolute;top:6px;right:10px}
+body.lite .gbox{background:#fff;border:1px solid var(--line);color:var(--fg)}
+body.lite .gt{color:var(--green)}
+body.lite .btn,body.lite .ghost{background:#fff;color:var(--green);border:2px solid var(--green)}
+body.lite .btn .ti{display:none}
+body.lite .bl b{background:var(--deep);color:var(--green)}
+body.lite details.more{background:#fff;border:1px dashed #9db0a4;border-radius:16px;margin:0 0 18px}
+body.lite details.more>summary{cursor:pointer;list-style:none;padding:18px 22px;font:700 20px var(--display);color:var(--green)}
+body.lite details.more>summary::-webkit-details-marker{display:none}
+body.lite details.more>summary::after{content:'  +';font-weight:800}
+body.lite details.more[open]>summary::after{content:'  \2212'}
+body.lite details.more .field{border:0;box-shadow:none;margin:0;padding:6px 22px 18px;border-top:1px solid var(--line);border-radius:0}
+body.lite details.more .ql{font-size:19px}
+body.lite details.more .qn{display:none}
+body.lite .pbox{background:var(--deep);border:1px solid #b9d6c5;color:var(--fg)}
+body.lite .bar{background:rgba(247,245,239,.96);border-top:1px solid var(--line)}
+body.lite .big{background:var(--green);color:#fff;border-radius:14px;font-size:22px}
+body.lite .foot{color:var(--muted)}
+body.lite .lookcard{background:#fff;border-color:var(--green);color:var(--fg)}
+body.lite .code{background:var(--deep);color:var(--green)}
+body.lite .card.g{background:#fff;border-color:var(--green);color:var(--fg)}
 </style>
 </head>
 <body>
@@ -584,6 +640,38 @@ body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a f
 <div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
 
 <script>
+/* CPMG lite layout v1.0-TEST (Nov 3, 2026): only runs when <body class="lite">. Moves the same boxes (same ids) into 3 steps + "More choices". */
+(function () {
+  var b = document.body; if (!b.classList.contains('lite')) return;
+  var f = document.getElementById('f'); if (!f) return;
+  function up(id, sel) { var e = document.getElementById(id); return e && e.closest(sel); }
+  var look = up('lookTaps', 'fieldset'), size = up('sizeTaps', 'fieldset'), photos = up('btHouse', '.field'), gbw = up('showBiz', '.field.gbwrap') || up('showBiz', '.field');
+  var biz = up('biz', '.field'), contact = up('nm', '.field'), say = up('ttl', '.field'), what = up('whatTaps', 'fieldset');
+  var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Three quick steps. About 2 minutes.';
+  var top = document.querySelector('.top'); if (top && top.parentNode) top.parentNode.insertBefore(line, top.nextSibling);
+  function num(field, n, text) { var q = field && field.querySelector('.qn'); if (q) q.textContent = String(n); if (text) { var l = field.querySelector('.ql'); if (l) { var t = l.lastChild; if (t && t.nodeType === 3) t.nodeValue = text; } } }
+  num(what, 1); num(say, 2);
+  // step 3 = business + contact together: "About you"
+  if (biz && contact) {
+    var cq = contact.querySelector('.ql'); if (cq && cq.lastChild && cq.lastChild.nodeType === 3) cq.lastChild.nodeValue = 'About you';
+    num(contact, 3);
+    var bq = biz.querySelector('.ql'); if (bq) { var bl = bq.querySelector('label'); if (bl) { bl.className = 'sl'; bl.style.display = 'block'; biz.insertBefore(bl, bq); } bq.remove(); }
+    biz.style.cssText = 'border:0;box-shadow:none;margin:0;padding:0;background:none';
+    contact.insertBefore(biz, cq.nextSibling);
+    contact.insertBefore(Object.assign(document.createElement('label'), { className: 'sl', textContent: 'Your name, email, phone' }), document.getElementById('nm'));
+  }
+  // everything else goes behind one tap
+  var d = document.createElement('details'); d.className = 'more';
+  d.innerHTML = '<summary>More choices (optional)</summary>';
+  [look, photos, size, gbw].forEach(function (x) { if (x) d.appendChild(x); });
+  var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
+  // short help under each question, in plain words
+  function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
+  hint(what, 'Tap one.'); hint(say, 'A few words each. The gray words are examples.');
+  if (look) { var lq = look.querySelector('.ql'); if (lq) lq.lastChild.nodeValue = 'Pick a look'; }
+})();
+</script>
+<script>
 /* CPMG poster layout v1.0-TEST (Nov 3, 2026)
    On a wide screen (1100 px or more) this moves the boxes of the form into a "poster" in the middle with a left and a right side panel.
    It only MOVES the same boxes (same ids, same values), and puts them back when the window gets narrow. Phones never run it.
@@ -591,12 +679,12 @@ body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a f
 (function () {
   var f = document.getElementById('f');
   var LEAN = document.body.classList.contains('lean');
-  if (f && LEAN) {   // fewer boxes: renumber the steps that are left, and say 3 lines (not 5)
+  if (f && LEAN && !document.body.classList.contains('lite')) {   // fewer boxes: renumber the steps that are left, and say 3 lines (not 5)
     [document.getElementById('biz'), document.getElementById('nm')].forEach(function (e, i) { var q = e && e.closest('.field'); q = q && q.querySelector('.qn'); if (q) q.textContent = String(6 + i); });
     var dl = f.querySelector('label[for="b1"]'), dh = dl && dl.nextElementSibling;
     if (dh && dh.firstChild && dh.firstChild.nodeType === 3) dh.firstChild.nodeValue = dh.firstChild.nodeValue.replace('Up to 5', 'Up to 3');
   }
-  if (!f || !window.matchMedia) return;
+  if (!f || !window.matchMedia || document.body.classList.contains('lite')) return;
   var mq = window.matchMedia('(min-width:1100px)'), moved = [], made = [], gone = [], texts = [], on = false;
   function $(id) { return document.getElementById(id); }
   function up(id, sel) { var e = $(id); return e ? e.closest(sel) : null; }
@@ -2284,7 +2372,7 @@ body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a f
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.14-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.15-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };

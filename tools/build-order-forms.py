@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""build-order-forms.py v1.1 (Nov 3, 2026)
+"""build-order-forms.py v1.2 (Nov 3, 2026)
 Builds every industry order form from ONE master form.
   master: test/order/index.html  (works with ?for=<industry>)
   output: test/order/<industry>/index.html  (one page per industry, same code, words from tools/cpmg_packs.py)
 Run after ANY change to the master form or the packs:  python3 tools/build-order-forms.py
 REVISION LOG
+  v1.2 (Nov 3, 2026) Lean pages are also built with the light 3-step look (body class "lean lite").
   v1.1 (Nov 3, 2026) A pack with lean=True gets <body class="lean"> (fewer boxes: see tools/cpmg_packs.py).
   v1.0 (Oct 30, 2026) First version: 8 industries.
 """
@@ -32,7 +33,7 @@ for k in PACKS:
     d = os.path.join(ROOT, 'test', 'order', k); os.makedirs(os.path.join(d, 'looks'), exist_ok=True)
     page = s.replace("var PACK_FIXED = '';", "var PACK_FIXED = '" + k + "';")
     page = re.sub(r'(src|href)="\.\./', r'\1="../../', page)
-    if PACKS[k].get('lean'): page = page.replace('<body>', '<body class="lean">', 1)
+    if PACKS[k].get('lean'): page = page.replace('<body>', '<body class="lean lite">', 1)
     page = page.replace('CPMG Standard Order Form — test/order/index.html', 'CPMG ' + PACKS[k]['name'] + ' Order — test/order/' + k + '/index.html\n  BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.')
     open(os.path.join(d, 'index.html'), 'w').write(page)
     print('built', k)
