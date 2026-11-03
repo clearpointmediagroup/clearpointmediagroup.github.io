@@ -1,4 +1,5 @@
 # CPMG industry packs v1.3 (Nov 3, 2026)
+# v1.5 (Nov 3, 2026) Real estate looks grow to 9 plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (Carolina beach house), Southern charm, Holiday.
 # v1.4 (Nov 3, 2026) Real estate and restaurant (lean) get two more looks: Beach vibe (summer) and Holiday (pick from a list of major holidays).
 # v1.3 (Nov 3, 2026) Restaurant is now "lean" too: 3 looks (3D poster with the Myrtle Beach vibe, Chalkboard, Casual) plus You pick for me; same trims as real estate.
 # v1.2 (Nov 3, 2026) Real estate is now "lean" (Randy: too many things to fill): 3 looks plus You pick for me, no website/Facebook/Instagram boxes,
@@ -19,7 +20,7 @@ PACKS = {
  'real-estate': dict(lean=True, name='Real estate', title='Order a real estate graphic', foot='CPMG Real Estate Order',
    who='Real estate agents', uses='just listed, open house, price drop and just sold posts', what='listing', photos='the house, your headshot or your logo',
    kinds=[('Just listed','home'),('Open house','door'),('Just sold','home-check'),('Price drop','tag'),('Coming soon','calendar'),('Something else','pencil')],
-   looks=[('Professional','briefcase','Clean and polished','professional'),('Luxury','diamond','High-end homes','luxury'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
+   looks=[('Professional','briefcase','Clean and polished','professional'),('Luxury','diamond','High-end homes','luxury'),('Modern','layout-grid','Sleek and simple','modern'),('Friendly','mood-smile','Warm neighborhood feel','friendly'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Bold and bright','bolt','Grabs attention','bold'),('Beach vibe','sun','Sunny Carolina beach house','beach-vibe'),('Southern charm','trees','Classic Carolina porch and oaks','southern-charm'),('Holiday','gift','Pick the holiday','holiday')],
    extra=dict(label='Brokerage', hint='The real estate company you work under.', ph='Main Street Realty', need='Type your brokerage name.', key='brokerage', note='Brokerage'),
    biz='Smith Home Team', photo1=('House photo','Big background. Your words go on top.','The house','House'), scene='an upscale two-story brick home on a tree-lined street with a green lawn',
    ex={'': E('Just Listed','123 Oak Street',['3 beds, 2 baths','$425,000','1,850 sq. ft.'],'Call me for a showing'),

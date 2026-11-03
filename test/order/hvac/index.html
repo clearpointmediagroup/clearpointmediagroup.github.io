@@ -2,13 +2,14 @@
 <!--
   CPMG HVAC Order — test/order/hvac/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.29-TEST (Nov 3, 2026)
+  v3.30-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.30-TEST (Nov 3, 2026) Randy: more looks to pick from. Real estate now has 9 looks plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (a sunny Carolina beach house), Southern charm, Holiday. New looks show "Sample picture coming soon" until their pictures are made. Words come from tools/cpmg_packs.py v1.5.
     v3.29-TEST (Nov 3, 2026) Randy: how to do holidays without leaving anyone out. A neutral "Season's greetings" button (for everyone: winter colors, snowflakes and lights, no religious symbols) is first in the holiday buttons in November and December. Every other holiday keeps its own button, in date order.
     v3.28-TEST (Nov 3, 2026) Randy: the holiday graphic has to match the holiday (like Hanukkah). Hanukkah is now in the holiday buttons (date worked out from the Hebrew calendar, first candle the evening before Kislev 25). The pick is sent as "Look: Holiday: <name>" in the order notes and the Gemini file, so the graphic is made for that holiday.
     v3.27-TEST (Nov 3, 2026) With the holiday buttons open the More choices panel was too tall. Look now has the whole left column; photos, where, and bottom of the graphic stack in the right column, so it still fits one screen.
@@ -554,7 +555,9 @@ body.lite #holiday{border-color:#b7c3ba;background:#fff;color:var(--fg);font-siz
 .hbtn[aria-pressed=true]{border:3px solid var(--green);background:var(--deep)}
 .hbtn:focus-visible{outline:4px solid #f0b429;outline-offset:2px}
 body.lite .hbtn{background:#fff;border-color:#b7c3ba;color:var(--fg);min-height:40px;font-size:14px;padding:3px 6px;border-radius:10px}
-body.lite .hbtn small{font-size:12px}
+body.lite .hbtn small{font-size:11px;line-height:1.1}
+body.lite .hgrid{gap:5px;margin-top:4px}
+body.lite .hbtn{min-height:34px;padding:2px 4px;font-size:13px;line-height:1.1}
 body.lite .hbtn[aria-pressed=true]{background:var(--deep);border:3px solid var(--green)}
 @media (min-width:1100px){
 body.lite .morebody>.field:nth-child(1){grid-column:1;grid-row:1/4}
@@ -1058,16 +1061,40 @@ body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:3}
     "luxury"
    ],
    [
+    "Modern",
+    "layout-grid",
+    "Sleek and simple",
+    "modern"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm neighborhood feel",
+    "friendly"
+   ],
+   [
     "3D poster",
     "cube",
     "Bold, professional 3D",
     "3d-poster"
    ],
    [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
     "Beach vibe",
     "sun",
-    "Summer and sunny",
+    "Sunny Carolina beach house",
     "beach-vibe"
+   ],
+   [
+    "Southern charm",
+    "trees",
+    "Classic Carolina porch and oaks",
+    "southern-charm"
    ],
    [
     "Holiday",
@@ -2603,7 +2630,7 @@ body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:3}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.29-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.30-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
