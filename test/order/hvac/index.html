@@ -2,13 +2,14 @@
 <!--
   CPMG HVAC Order — test/order/hvac/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.31-TEST (Nov 3, 2026)
+  v3.32-TEST (Nov 3, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.32-TEST (Nov 3, 2026) Randy: when the window is not full screen, What should people do? was hidden under the Send bar. Send bar is now one short row on wide screens, the form shrinks in smaller steps for short windows (down to 470 px tall), and the bottom padding is smaller. Test copy only.
     v3.31-TEST (Nov 3, 2026) Fit after v3.30: with 9 looks the form scrolled again. On wide screens (1300 px+) More choices is a wider 4th column with 3 small columns inside; on 1100-1299 px the bottom-of-graphic box moves under the look. Same photo changes as before (merged with v3.30): ONE photo per spot, tap the picture to see it big, Replace button. Original note: could not open the picture he added, only delete it, and did not know how many photos were allowed. Each photo spot is ONE photo and says so ("House photo (1 photo)"). Tap the small picture to see it big (Close button, or tap anywhere). New Replace button next to Remove swaps it without deleting first. A small line under it says "Tap the picture to see it big."
     v3.30-TEST (Nov 3, 2026) Randy: more looks to pick from. Real estate now has 9 looks plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (a sunny Carolina beach house), Southern charm, Holiday. New looks show "Sample picture coming soon" until their pictures are made. Words come from tools/cpmg_packs.py v1.5.
     v3.29-TEST (Nov 3, 2026) Randy: how to do holidays without leaving anyone out. A neutral "Season's greetings" button (for everyone: winter colors, snowflakes and lights, no religious symbols) is first in the holiday buttons in November and December. Every other holiday keeps its own button, in date order.
@@ -549,6 +550,17 @@ body.lite .foot{display:none}
 @media (min-width:1100px) and (max-height:800px){body.lite .wrap.narrow{zoom:.9}}
 @media (min-width:1100px) and (max-height:740px){body.lite .wrap.narrow{zoom:.8}}
 @media (min-width:1100px) and (max-height:660px){body.lite .wrap.narrow{zoom:.74}}
+/* v3.32-TEST: window NOT in full screen is short (browser bar + taskbar), so What should people do? sat under the Send bar. Smaller steps for short windows + a one-row Send bar (total beside the button) so the whole form shows without scrolling. */
+@media (min-width:1100px){
+body.lite .bar.narrow{display:flex;align-items:center;justify-content:center;gap:22px;padding:6px 20px}
+body.lite .bar.narrow #barTot{display:block;width:auto;max-width:none;margin:0!important;font-size:18px}
+body.lite .bar.narrow .big{display:block;width:auto;min-width:340px;max-width:none;margin:0;padding:8px 24px;font-size:20px}
+body.lite .wrap.narrow{padding-bottom:58px}
+}
+@media (min-width:1100px) and (max-height:620px){body.lite .wrap.narrow{zoom:.68}}
+@media (min-width:1100px) and (max-height:570px){body.lite .wrap.narrow{zoom:.62}}
+@media (min-width:1100px) and (max-height:520px){body.lite .wrap.narrow{zoom:.56}}
+@media (min-width:1100px) and (max-height:470px){body.lite .wrap.narrow{zoom:.5}}
 body.lite .fsexit{display:none;position:fixed;top:10px;right:14px;z-index:2147480000;padding:10px 18px;border:2px solid var(--green);border-radius:12px;background:#fff;color:var(--green);font:800 18px var(--display);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 body.lite .fsexit.show{display:block}
 body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
@@ -2660,7 +2672,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.31-TEST (Nov 3, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.32-TEST (Nov 3, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
