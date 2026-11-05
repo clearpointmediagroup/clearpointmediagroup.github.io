@@ -2,13 +2,14 @@
 <!--
   CPMG CPA and tax Order — test/order/cpa/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.33-TEST (Nov 4, 2026)
+  v3.34-TEST (Nov 4, 2026)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.34-TEST (Nov 4, 2026) Randy: the Send my order button is smaller and sits in the exact center of the page, with the price line centered just above it (wide screens). Test copy only.
     v3.33-TEST (Nov 4, 2026) Randy: the v3.32 fix only made the form tiny and left empty space. Now the form uses the whole window width and a small script picks the biggest size that still fits the window with no scrolling (in or out of full screen). The Your price box no longer runs into the Details box, and its words are plainer (no 'question 5'). Test copy only.
     v3.32-TEST (Nov 3, 2026) Randy: when the window is not full screen, What should people do? was hidden under the Send bar. Send bar is now one short row on wide screens, the form shrinks in smaller steps for short windows (down to 470 px tall), and the bottom padding is smaller. Test copy only.
     v3.31-TEST (Nov 3, 2026) Fit after v3.30: with 9 looks the form scrolled again. On wide screens (1300 px+) More choices is a wider 4th column with 3 small columns inside; on 1100-1299 px the bottom-of-graphic box moves under the look. Same photo changes as before (merged with v3.30): ONE photo per spot, tap the picture to see it big, Replace button. Original note: could not open the picture he added, only delete it, and did not know how many photos were allowed. Each photo spot is ONE photo and says so ("House photo (1 photo)"). Tap the small picture to see it big (Close button, or tap anywhere). New Replace button next to Remove swaps it without deleting first. A small line under it says "Tap the picture to see it big."
@@ -559,9 +560,9 @@ body.lite .wrap.narrow{padding-left:20px;padding-right:20px}
 }
 /* v3.32-TEST: window NOT in full screen is short (browser bar + taskbar), so What should people do? sat under the Send bar. Smaller steps for short windows + a one-row Send bar (total beside the button) so the whole form shows without scrolling. */
 @media (min-width:1100px){
-body.lite .bar.narrow{display:flex;align-items:center;justify-content:center;gap:22px;padding:6px 20px}
-body.lite .bar.narrow #barTot{display:block;width:auto;max-width:none;margin:0!important;font-size:18px}
-body.lite .bar.narrow .big{display:block;width:auto;min-width:340px;max-width:none;margin:0;padding:8px 24px;font-size:20px}
+body.lite .bar.narrow{display:block;text-align:center;padding:5px 20px}
+body.lite .bar.narrow #barTot{display:block;width:100%;max-width:none;margin:0 0 3px!important;font-size:15px;text-align:center}
+body.lite .bar.narrow .big{display:block;width:auto;min-width:230px;max-width:none;margin:0 auto;padding:7px 28px;font-size:18px}
 body.lite .wrap.narrow{padding-bottom:58px}
 }
 @media (min-width:1100px) and (max-height:620px){body.lite .wrap.narrow{zoom:.68}}
@@ -2679,7 +2680,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.33-TEST (Nov 4, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.34-TEST (Nov 4, 2026) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
