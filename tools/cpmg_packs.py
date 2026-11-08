@@ -1,4 +1,5 @@
-# CPMG industry packs v1.6 (Nov 8, 2026)
+# CPMG industry packs v1.7 (Nov 8, 2026)
+# v1.7 (Nov 8, 2026) Randy: no dark forms anywhere. Every industry pack is now lean (which also turns on the light tan and light green look).
 # v1.6 (Nov 8, 2026) Added insurance (independent insurance agents) and mountain-cabin (NC High Country / Smoky Mountains cabin and resort managers), test forms only. Copied from the cpa entry, words changed.
 # v1.5 (Nov 3, 2026) Real estate looks grow to 9 plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (Carolina beach house), Southern charm, Holiday.
 # v1.4 (Nov 3, 2026) Real estate and restaurant (lean) get two more looks: Beach vibe (summer) and Holiday (pick from a list of major holidays).
@@ -171,6 +172,7 @@ PACKS['mountain-cabin'] = _clone('cpa',
     kinds=[['Open dates','calendar-due'],['Holiday special','gift'],['Last-minute deal','clock'],['Event','building'],['New listing','user-plus'],['Something else','pencil']],
     extra={'label':'Booking website (if you want)','hint':'Where guests book.','ph':'smithcabins.com','need':'','key':'booking','note':'Booking site'},
     biz='Smith Mountain Cabins',
+    photo1=['Cabin photo','Big background, like your cabin or the view. Your words go on top.','Cabin photo','Cabin'],
     scene='a cozy log cabin in the mountains with warm lights, evening snow and pine trees',
     ex={'':['Christmas Dates Open','Smith Mountain Cabins',['Dec 20 to Dec 27','Hot tub and fireplace','Sleeps 6'],'Book your stay today'],
         'Open dates':['Christmas Dates Open','Smith Mountain Cabins',['Dec 20 to Dec 27','Hot tub and fireplace','Sleeps 6'],'Book your stay today'],
@@ -179,3 +181,7 @@ PACKS['mountain-cabin'] = _clone('cpa',
         'Event':['Christmas Lights Weekend','Dec 12 and 13',['Hot cocoa on the porch','Close to town','Great for families'],'Reserve your cabin'],
         'New listing':['New Cabin','Just Added This Season',['Sleeps 8','Game room and hot tub','Mountain view'],'See it and book'],
         'Something else':['Thank You','From our cabins to you',['We appreciate your stay','See you in the mountains'],'Call us anytime']})
+
+# v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
+for _k in PACKS:
+    PACKS[_k]['lean'] = True
