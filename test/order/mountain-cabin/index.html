@@ -1,0 +1,3269 @@
+<!doctype html>
+<!--
+  CPMG Mountain cabin Order — test/order/mountain-cabin/index.html
+  BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
+  v3.35-TEST (Nov 4, 2026)
+  ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
+  (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
+  script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
+  question (Brokerage / What kind of business?), the first photo spot, and the footer.
+  To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
+  STANDARD REVISION LOG
+    v3.35-TEST (Nov 4, 2026) Randy: the version number now shows on the form itself (small, top right of the header).
+    v3.34-TEST (Nov 4, 2026) Randy: the Send my order button is smaller and sits in the exact center of the page, with the price line centered just above it (wide screens). Test copy only.
+    v3.33-TEST (Nov 4, 2026) Randy: the v3.32 fix only made the form tiny and left empty space. Now the form uses the whole window width and a small script picks the biggest size that still fits the window with no scrolling (in or out of full screen). The Your price box no longer runs into the Details box, and its words are plainer (no 'question 5'). Test copy only.
+    v3.32-TEST (Nov 3, 2026) Randy: when the window is not full screen, What should people do? was hidden under the Send bar. Send bar is now one short row on wide screens, the form shrinks in smaller steps for short windows (down to 470 px tall), and the bottom padding is smaller. Test copy only.
+    v3.31-TEST (Nov 3, 2026) Fit after v3.30: with 9 looks the form scrolled again. On wide screens (1300 px+) More choices is a wider 4th column with 3 small columns inside; on 1100-1299 px the bottom-of-graphic box moves under the look. Same photo changes as before (merged with v3.30): ONE photo per spot, tap the picture to see it big, Replace button. Original note: could not open the picture he added, only delete it, and did not know how many photos were allowed. Each photo spot is ONE photo and says so ("House photo (1 photo)"). Tap the small picture to see it big (Close button, or tap anywhere). New Replace button next to Remove swaps it without deleting first. A small line under it says "Tap the picture to see it big."
+    v3.30-TEST (Nov 3, 2026) Randy: more looks to pick from. Real estate now has 9 looks plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (a sunny Carolina beach house), Southern charm, Holiday. New looks show "Sample picture coming soon" until their pictures are made. Words come from tools/cpmg_packs.py v1.5.
+    v3.29-TEST (Nov 3, 2026) Randy: how to do holidays without leaving anyone out. A neutral "Season's greetings" button (for everyone: winter colors, snowflakes and lights, no religious symbols) is first in the holiday buttons in November and December. Every other holiday keeps its own button, in date order.
+    v3.28-TEST (Nov 3, 2026) Randy: the holiday graphic has to match the holiday (like Hanukkah). Hanukkah is now in the holiday buttons (date worked out from the Hebrew calendar, first candle the evening before Kislev 25). The pick is sent as "Look: Holiday: <name>" in the order notes and the Gemini file, so the graphic is made for that holiday.
+    v3.27-TEST (Nov 3, 2026) With the holiday buttons open the More choices panel was too tall. Look now has the whole left column; photos, where, and bottom of the graphic stack in the right column, so it still fits one screen.
+    v3.26-TEST (Nov 3, 2026) Randy: tapping Holiday now breaks the holidays out as tap buttons (Veterans Day, Thanksgiving, Christmas, New Year's Eve, New Year's Day, Other) instead of a drop-down. Same list rules as v3.25 (next 60 days, updates itself); the hidden drop-down still holds the value, so the order is sent the same way.
+    v3.25-TEST (Nov 3, 2026) Randy: the holiday drop-down shows only the holidays coming up now (next 60 days). Today that is Veterans Day, Thanksgiving, Christmas, New Year's Eve and New Year's Day. It updates itself through the year (the full list is built in), and Other is always there.
+    v3.24-TEST (Nov 3, 2026) Randy: Pick a look gets a Beach vibe (summer) and a Holiday look in the real estate and restaurant forms. Holiday opens a drop-down of the major holidays (New Year's Day through New Year's Eve, plus Other) in place of the old free-text box; sent the same way ("Holiday: Christmas").
+    v3.23-TEST (Nov 3, 2026) Randy: "Take a picture" did nothing on his laptop (browsers ignore the camera request on computers). On a computer with a mouse it now opens a small camera window with Take photo and Cancel; the photo goes into the same Upload box. No camera or blocked: says so, Upload still works. Phones untouched.
+    v3.22-TEST (Nov 3, 2026) Randy: in full screen a big "Exit full screen" button sits in the top-right corner, so nobody needs to know the Esc key. (Another session made v3.21 at the same time; merged.)
+    v3.21-TEST (Nov 3, 2026) Randy: More choices is not optional, show it, and fit the whole form on the screen. On a wide screen More choices is always open (no fold, no + sign, the word optional is gone) and its four boxes sit in two small columns (look and where on the left, photos and bottom of graphic on the right) with a wider 4th column, so the whole form fits with no scrolling. Phones still fold it.
+    v3.20-TEST (Nov 3, 2026) Randy: use the empty space. On a wide screen the form is 4 columns side by side: kind (price under it) | what it says | about you | More choices (optional), which starts open there since it fits. No scrolling. Tap More choices to fold it. Phones keep it folded.
+    v3.19-TEST (Nov 3, 2026) (replaced by v3.20) Randy: opening More choices pushed the page down and made it scroll. On a wide screen the price sits under step 1 and More choices is one full-width strip along the bottom that opens into 4 columns (look, photos, where, bottom of graphic) so everything stays on one screen.
+    v3.18-TEST (Nov 3, 2026) Randy did not see the full screen button: it now shows on any window 700 px wide or more (was 1100), so a smaller laptop window still gets it.
+    v3.17-TEST (Nov 3, 2026) Randy: the whole form on one screen. On a wide screen the light form puts the 3 steps side by side (kind | what it says | about you), with More choices and the price under them, and shrinks a little on short screens. Phones unchanged.
+    v3.16-TEST (Nov 3, 2026) Randy: a big green "Click here for full screen" button at the top of the light form on wide screens (browsers need a tap to go full screen). It goes away once full screen is on and comes back if they leave it. Phones do not see it.
+    v3.15-TEST (Nov 3, 2026) Randy: dark green felt like an old computer and had too many buttons. New LITE look for lean pages (body class lite): light cream and white,
+                             3 steps (kind, what it says, about you), no icons on tiles, and the look, photos, where-shown and bottom-of-graphic boxes sit behind one "More choices (optional)" tap
+                             (defaults: You pick for me, Phone, show name and phone). No desktop poster, no start screen. Same ids and same order sent.
+    v3.14-TEST (Nov 3, 2026) Randy: restaurants next. The restaurant pack is lean too (3 looks: 3D poster with the Myrtle Beach vibe, Chalkboard, Casual; no Website/Facebook/Instagram,
+                             headshot or logo spots, or Rush). Look tiles have room for the check mark; a hair smaller on 720 px screens so nothing scrolls.
+    v3.13-TEST (Nov 3, 2026) Randy: one form per market, real estate first (too many things to fill). A pack with lean=True (real estate) hides the extra look choices,
+                             the Website/Facebook/Instagram boxes, the headshot and logo photo spots, Rush, and detail lines 4 and 5, and renumbers the steps. The code is the same
+                             for every market; only the pack words and this switch change. Restaurants are next.
+    v3.12-TEST (Nov 3, 2026) Randy: most clients will not find the small Full screen button. On a wide screen the form now opens with a start screen: one big
+                             "Start my order" button. That one tap goes full screen and shows the form. If full screen is blocked the form still opens. Phones skip the start screen.
+    v3.11-TEST (Nov 3, 2026) Randy's laptop screen is 1440 x 720 (CSS pixels) in full screen, so on screens 740 px tall or less the whole poster shrinks a bit more
+                             (zoom .70) so the Send button and the bottom strip are visible without scrolling. Desktop poster only.
+    v3.10-TEST (Nov 3, 2026) Randy: go full screen when the client comes to the form. Browsers only allow it after a tap, so the first tap on a wide screen goes full screen,
+                             and a Full screen / Exit full screen button sits in the top-right corner. Esc still leaves full screen and it does not come back by itself. Desktop only.
+    v3.9-TEST (Nov 3, 2026) Randy: the Send bar at the very bottom was hidden behind his Windows taskbar. On desktop the Send my order button and the
+                             "You pay" line now sit in the right panel under the price, and the fixed bottom bar is not used. Phones keep the bottom bar.
+    v3.8-TEST (Nov 3, 2026) Randy: the labels above the poster boxes were too small to read. They are now 17 px, bold, bright green (Title, Second line,
+                             Details, What should people do?), with bigger helper words next to them, and the Website / Facebook / Instagram labels are 14 px bold. Desktop poster only.
+    v3.7-TEST (Nov 3, 2026) Randy: the what-to-do box was too bright and the cursor was hard to see. It is now dark with a green outline like the
+                             other boxes; every poster box has a bright green cursor and a green glow while you type in it. Desktop poster only.
+    v3.6-TEST (Nov 3, 2026) Randy: the form flows like filling in the infographic. On a wide screen a small script moves the same boxes
+                             into a poster in the middle (photo spots across the top, Title, Second line, Details, the what-to-do button, and a
+                             bottom strip with business name, phone, website, Facebook and Instagram), with kind/look on the left and where/rush/
+                             contact/price on the right. Same ids and values, so ordering is unchanged. Phones never run it. Edited here only.
+    v3.5-TEST (Nov 3, 2026) Randy picked look A: same dark green, easier to read. Brighter gray example words and small text,
+                             slightly bigger small text on desktop, stronger borders on boxes and inputs. Colors only; applies to phones too.
+    v3.4-TEST (Nov 3, 2026) Randy: desktop one-screen layout. On a laptop or desktop (1100 px wide or more) the form flows into 4 columns so
+                             it fits on one screen: [1 kind, 2 look] [3 what it says] [bottom of the graphic, 4 photos] [5 where, 6 rush, 7 business,
+                             8 contact, price]. Phones keep the one-column form in the same order. The Bottom of the graphic box moved out of
+                             question 3 into its own block right after it (same boxes, same ids, same place on a phone). Layout only: same questions,
+                             same words, same order sent. Edited here only; tools/build-order-forms.py copies it to every industry page.
+    v3.3-TEST (Oct 30, 2026) Added the concrete industry (demo for Michael, ABC Concrete). Words only; no code change.
+    v3.2-TEST (Oct 30, 2026) Randy: "You pick for me" shows a plain, neutral sample picture (looks/you-pick.jpg) in every industry.
+    v3.1-TEST (Oct 30, 2026) 8 industries: real-estate, restaurant, plumbing, hvac, lawn-care, cpa, home-inspector,
+                             business. Words now live in tools/cpmg_packs.py; tools/build-order-forms.py builds one page
+                             per industry at test/order/<industry>/ (same code). Extra question can be optional.
+                             Every look has a sample picture spot; a missing picture shows "Sample picture coming soon".
+    v3.0-TEST (Oct 30, 2026) Randy approved: built from Real Estate Order v2.29-TEST. Adds industry packs
+                             (real-estate, business) and the East Coast time line ("We're on East Coast time",
+                             plus "That's N hours ahead of you" when the client is in another time zone).
+                             Sends to the same CPMG Orders TEST script as before (kind 'quick'); no script change.
+  ---- history of the real estate form this was built from ----
+  CPMG Real Estate Order — test/real-estate/index.html
+  v2.29-TEST (Oct 30, 2026)
+  Real estate version of the one simple form (one form per group of clients).
+  TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
+  One short form that replaces both Detail Order and Quick Order: 6 questions.
+  Sends the same "quick" order the order system already takes, so the script does not change.
+    Q1 Business name   Q2 Your name, email, phone   Q3 What kind of graphic (6 picture buttons)
+    Q4 What should it say: Title, Heading, Body, Call to action (4 boxes)   Q5 Photo (optional)   Q6 Phone or TV (2 taps)
+  Returning clients: their saved info is filled in for them (same saved link as Quick Order).
+  How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
+  REVISION LOG
+    RE v2.29-TEST (Oct 30, 2026) Randy (tester review fixes 2, 3, 6, 7): (2) each part of question 3 shows a plain
+                             "Example:" line that changes with the kind of graphic, plus "the gray words are only examples".
+                             (3) plain words: Heading -> "Second line", Body -> "Details", Call to action -> "What should
+                             people do?", proof -> "preview", "Wide 16:9" -> "Wide", Rush explained. (6) new "Show my business
+                             name" box (on to start) in Bottom of the graphic; sent in the order notes ("Bottom of graphic").
+                             (7) price box says how paying works: nothing now, preview by email, pay by card with a secure
+                             Square link once they OK it. Labels only; field names and the order system are unchanged.
+    RE v2.28-TEST (Oct 30, 2026) Randy: photo question rebuilt as 3 labeled spots, each with its own Take a picture /
+                             Upload buttons and a Remove button: House photo (big background, words on top), Your headshot
+                             (small circle by your name, no words on your face), Your logo (small, in a corner). All optional.
+                             Replaces the v2.27 "What is this?" question. Still sent in the order notes ("Photos") and in
+                             each file name (Photo1_House_...), so no script change.
+    RE v2.27-TEST (Oct 30, 2026) Randy: each photo now asks "What is this?" with 3 taps: The house (big background,
+                             words on top), My headshot (small circle by your name, no words on your face), My logo
+                             (small, in a corner). Required for each photo before sending. Sent in the order notes
+                             ("Photos": Photo 1: The house ...) and in each photo's file name (Photo1_House_...), so
+                             no script change. Real estate form only; the shared photo picker is unchanged.
+    RE v2.26-TEST (Oct 30, 2026) Randy: (1) Bottom of the graphic now has 3 boxes: Website, Facebook page, Instagram
+                             (all optional). Sent to the order system joined in the same website field it reads now
+                             ("Website: ... · Facebook: ... · Instagram: ..."), plus each one on its own, so no script change.
+                             (2) "Your price" box moved to the bottom, right above Send my order, and always shown
+                             (asks them to tap a place until they do). The Send bar shows the total too
+                             ("You pay $0 · first one free" for new clients).
+    RE v2.25-TEST (Oct 30, 2026) CC-030: Casual and Pool and summer example pictures fixed (address boxes no longer run into
+                             the title; Casual details on two clean lines with one wood edge; Pool Call me button no longer
+                             runs into the details box). Picture link bumped to ?v=3.
+    RE v2.24-TEST (Oct 30, 2026) CC-030: Professional example picture fixed (address box no longer runs into the
+                             JUST LISTED banner; clear gap added). Picture link bumped to ?v=2 so phones show the new one.
+    RE v2.23-TEST (Oct 29, 2026) CC-027: Promo look ($45) taken off (Randy: confusing next to Pick a look; every look is $25).
+                             Question 6 is now "Need it faster? (if you want)" with only the Rush box (+$10).
+    RE v2.22-TEST (Oct 29, 2026) CC-030: Send my order bar hidden while the look pop-up is open.
+    RE v2.21-TEST (Oct 29, 2026) CC-030: example pops up big on top of the page when a look is tapped (Randy: it was hidden
+                             below the buttons). "Use this look" keeps it; "Pick a different look" goes back to You pick for me.
+    RE v2.20-TEST (Oct 29, 2026) CC-030: example picture loads right away when a look is tapped (lazy loading removed).
+    RE v2.19-TEST (Oct 29, 2026) CC-030: tapping a look shows an example picture under the buttons (6 pictures made in
+                             the CPMG Gem v4.0, Randy approved), with "Example: ... look. Yours uses your own words and photos."
+                             You pick for me shows none. Pictures in test/real-estate/looks/.
+    RE v2.18-TEST (Oct 29, 2026) CC-027: "You pick for me" spans the full row when the look count is odd.
+    RE v2.17-TEST (Oct 29, 2026) CC-027: Pick a look adds "3D poster" (Bold, professional 3D). 7 looks.
+    RE v2.16-TEST (Oct 29, 2026) CC-027: new question 2 "Pick a look": Professional, Casual, Luxury, Pool and summer,
+                             Holiday (opens "Which holiday?"), You pick for me (picked to start). Sent as Look (goes to Notes and the
+                             Gemini file). Questions now 1-8.
+    RE v2.15-TEST (Oct 29, 2026) CC-027: website box hint shortened so it isn't cut off on a phone; "if you want" moved
+                             to a small line above the box.
+    RE v2.14-TEST (Oct 29, 2026) CC-027: regroup (Randy approved): "Bottom of the graphic" (show phone, website) is a
+                             green box inside question 2; the rush note is inside the Rush box; the price is its own "Your price"
+                             box, one line per item and You pay at the bottom. Questions now 1-7.
+    RE v2.13-TEST (Oct 29, 2026) CC-027: question 5 redone (Randy found it confusing): "Want it faster or fancier?"
+                             with 2 big tap boxes (Rush: proof in 1 hour, Adds $10; Promo look: $45 instead of $25, pair $60
+                             instead of $40), picked box gets a green border and "Picked"; price line moved under these boxes.
+    RE v2.12-TEST (Oct 29, 2026) CC-027: About us and How this works boxes folded up; each opens with a tap
+                             ("Tap to read"), so question 1 shows on the first screen.
+    RE v2.11-TEST (Oct 29, 2026) CC-027: "About ClearPoint Media Group" box above "How this works" (Randy approved
+                             the wording): what CPMG does, the 4 listing posts, every screen, checked word for word, no contracts.
+    RE v2.10-TEST (Oct 29, 2026) CC-027: price line says "First graphic FREE for new clients" (a returning client
+                             without their saved link still pays full price; the order system checks).
+    RE v2.9-TEST (Oct 29, 2026) CC-027: new question 5 "Make it special": Rush (+$10, proof within 1 hour) and Promo look
+                             ($45, $60 pair) as one-tap choices; price line adds them. Questions now 1-8.
+    RE v2.8-TEST (Oct 29, 2026) CC-027: price line shows "First graphic FREE −$25 · You pay $X" for new clients
+                             (returning clients see the plain total).
+    RE v2.7-TEST (Oct 29, 2026) CC-027: no office hours shown. New promise (Randy picked): "Most proofs come back within
+                             5 hours. Late-night and weekend orders are ready the next business morning." (title line, intro,
+                             thank-you screen, page description).
+    RE v2.6-TEST (Oct 29, 2026) CC-027: Need it by box (day and time) taken off: the 5 hours start when they send it.
+                             Question 5 is now just "Bottom of your graphic" (Show my phone, Website or Facebook page).
+    RE v2.5-TEST (Oct 29, 2026) CC-027: Need it by has a time box next to the day; sent as "Fri, Nov 7, 2026, 2:00 PM".
+    RE v2.4-TEST (Oct 29, 2026) CC-027: (1) photos: up to 3, the house, headshot and logo; (2) Where: tap more than one,
+                             today's prices (Phone + TV/Website = one $40 pair, Social +$25), price line shows the total;
+                             (3) Need it by date; (4) Bottom of graphic: Show my phone (on), Website or Facebook page.
+    RE v2.3-TEST (Oct 29, 2026) CC-027: short "How this works" intro box under the title (Randy approved the wording):
+                             what the form does, the parts to fill in, proof in 5 hours, pay once approved, $25, first free.
+    RE v2.2-TEST (Oct 29, 2026) CC-028: sends all 5 body lines (nothing to notes), 'Where shown' (Phone, Big-screen TV,
+                             Social media, Website), Social media as use 'social' (Size 'Social post (4:5)'). Needs
+                             CPMG_OrderSystem.gs v4.7-TEST + CPMG_OrderReceiver.gs v2.1-TEST (TEST deployment version 2).
+    RE v2.1-TEST (Oct 29, 2026) CC-027: question 4 gets a 4th button, Social media (Facebook, Instagram), sent as a
+                             4:5 social post (1080 x 1350). Buttons back to 2 across: Phone, Big-screen TV, Social media, Website.
+    RE v2.0-TEST (Oct 29, 2026) CC-027: photo question has 2 buttons: "Take a picture" opens the phone camera
+                             (capture), "Upload a picture" opens their photos. Many Android phones skipped the
+                             camera on the old single button. Both feed the same photo list.
+    RE v1.9-TEST (Oct 29, 2026) CC-027: red TEST COPY banner taken off the top (Randy's request). Still sends
+                             only to the CPMG Orders TEST script.
+    RE v1.8-TEST (Oct 29, 2026) CC-027: Business name and Brokerage examples changed from Coastal Homes Team /
+                             Coastal Realty Group to Smith Home Team / Main Street Realty (fits any city).
+    RE v1.7-TEST (Oct 29, 2026) CC-027: Big-screen TV button uses our own modern picture (Randy picked C): a wide,
+                             thin flat screen on the wall, drawn in green, in place of the stock monitor icon.
+    RE v1.6-TEST (Oct 29, 2026) CC-027: Myrtle Beach wording taken out of the examples (123 Oak Street, 456 Maple Lane,
+                             Serving our neighborhood). Question 4 has 3 buttons: Phone (tall), Big-screen TV (wide 16:9,
+                             flat-screen picture), Website (wide 16:9). Website is sent as a wide graphic like the TV.
+    RE v1.5-TEST (Oct 29, 2026) CC-027: new order: 1 What kind of graphic, 2 What should it say, 3 Photo,
+                             4 Phone or TV, 5 Business name + Brokerage, 6 Your name, email, phone (info moved to the end).
+    RE v1.4-TEST (Oct 29, 2026) CC-027: cartoon emoji pictures swapped for clean green line icons (Tabler):
+                             house, door, house with check, price tag, calendar, pencil; phone, TV, camera too.
+    RE v1.3-TEST (Oct 29, 2026) CC-027: Body is 5 short line boxes, each with its own gray example that
+                             matches the picture tapped (price, day, size, what's special). Sent as lines = first 3
+                             body lines, the rest in notes; Heading is sent in its own Heading spot.
+    RE v1.2-TEST (Oct 29, 2026) CC-027: test link (?new=1) always starts as a brand-new client (it was filling in
+                             an old test client's info).
+    RE v1.1-TEST (Oct 29, 2026) CC-027: new Brokerage box under Business name (real estate ads must show it).
+                             Filled in from the client's saved record when it has one, and remembered on the
+                             phone, so they type it once. Sent as Brokerage.
+    RE v1.0-TEST (Oct 29, 2026) CC-027: made from CPMG Order v1.2. Question 3 buttons are all real estate
+                             (Just listed, Open house, Just sold, Price drop, Coming soon, Something else) with
+                             real estate examples. Title says "Order a real estate graphic".
+    v1.2-TEST (Oct 29, 2026) CC-027: question 4 follows the graphic's format: Title, Heading (optional), Body,
+                             Call to action, each in its own box. Gray examples change to match the picture
+                             tapped in question 3. Sent as headline = Title, lines = Heading + Body lines,
+                             cta = Call to action.
+    v1.1-TEST (Oct 29, 2026) CC-027: question 3 is now "What kind of graphic? Tap one picture." with 6 big
+                             picture buttons (food or drink special, live music or band, event, sale or coupon,
+                             open house, something else). Nothing is picked until they tap; the picked one turns
+                             green and says "Picked". Phone and TV buttons got pictures too.
+    v1.0-TEST (Oct 29, 2026) First version (change card for the one simple form).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0f1712">
+<meta name="color-scheme" content="dark">
+<title>CPMG Real Estate Order</title>
+<meta name="description" content="Order a real estate graphic from ClearPoint Media Group. Most proofs within 5 hours.">
+<link rel="icon" href="../../../assets/cpmg-icon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../../assets/cpmg-icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CPMG Order">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="../../../assets/cpmg-order.css?v=1.1">
+<style>
+.qn{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--ink);font:800 17px var(--display);align-items:center;justify-content:center;margin-right:8px;flex:none}
+.ql{display:flex;align-items:center;font-size:20px;font-weight:700;margin:0 0 8px}
+.ql label{font:inherit;color:inherit;margin:0;padding:0}
+.taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.taps .opt{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;text-align:center;font-size:18px;font-weight:600;min-height:96px;padding:12px 8px;border-width:2px}
+.taps .pic{font-size:34px;line-height:1;color:var(--green)}
+.taps .tvpic{width:1.15em;height:1.15em;display:block}
+.taps.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.taps.three .opt{font-size:16px;padding:10px 4px}
+.taps .szn{font-size:14px;font-weight:400;color:var(--muted)}
+.photo .ti{font-size:22px}
+.taps .opt.on{border:3px solid var(--green);background:var(--deep)}
+.taps .opt.on::after{content:'\2713  Picked';font-size:15px;color:var(--green)}
+.taps .opt input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+#lookTaps .opt:last-child:nth-child(odd){grid-column:1 / -1}
+.lookpop{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px}
+.lookpop[hidden]{display:none}
+.lookcard{background:var(--card);border:2px solid var(--green);border-radius:16px;padding:14px;width:100%;max-width:380px;max-height:100%;overflow:auto;text-align:center}
+.lookcap{font:800 22px var(--display);color:var(--green);margin:0 0 10px}
+.lookcard img{display:block;width:auto;max-width:100%;max-height:58vh;height:auto;margin:0 auto;border-radius:12px}
+.looknote{font-size:15px;color:var(--muted);margin:8px 0 12px}
+.lookcard .big{width:100%}
+.lookcard .ghost{width:100%;margin-top:8px}
+.xcard{position:relative;display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line, #2c3d33);border-radius:12px;padding:12px 14px;margin:0 0 10px;background:var(--card);cursor:pointer}
+.xcard input{position:absolute;top:0;left:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.xcard .ti{font-size:30px;color:var(--green);margin-top:2px;flex:none}
+.xcard .xt{display:flex;flex-direction:column;gap:2px}
+.xcard .xn{font-size:19px;font-weight:700}
+.xcard .xd{font-size:16px;color:var(--muted)}
+.xcard .xp{font-size:18px;font-weight:700;color:var(--green);margin-top:2px}
+.xcard.on{border:3px solid var(--green);background:var(--deep)}
+.xcard.on .xn::after{content:'  \2713 Picked';font-size:15px;font-weight:600;color:var(--green)}
+.gbox{border:2px solid var(--green);border-radius:12px;padding:12px 14px;margin:14px 0 0;background:var(--deep)}
+.gbox .gt{font-size:18px;font-weight:700;color:var(--green);margin:0 0 4px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:17px;padding:4px 0}
+.prow span:last-child{flex:none;font-weight:700}
+.prow.msg span:last-child{flex:1 1 auto;font-weight:400;min-width:0;white-space:normal}
+.ptot{border-top:1px solid var(--green);margin-top:6px;padding-top:8px;font-size:19px;font-weight:800;color:var(--green)}
+.xcard .xs{font-size:14px;color:var(--muted);margin-top:4px}
+.price{font-size:18px;font-weight:700;color:var(--green);margin:10px 0 0}
+.chk{display:flex;align-items:center;gap:10px;font-size:18px;margin:8px 0 0;line-height:1.35}
+.chk b{color:var(--green)}
+.chk input{width:24px;height:24px;flex:none;accent-color:var(--green)}
+.intro{background:var(--deep);border:2px solid var(--green);border-radius:12px;padding:12px 14px;margin:0 0 16px}
+.intro p{margin:0;font-size:17px;line-height:1.55}
+.intro .ih{font:800 19px var(--display);color:var(--green);margin:0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:32px}
+.intro .ih::-webkit-details-marker{display:none}
+.intro .ih::after{content:'Tap to read \25BE';font:600 15px var(--body, inherit);color:var(--muted)}
+.intro[open] .ih::after{content:'Close \25B4'}
+.intro[open] .ih{margin:0 0 6px}
+.intro{margin:0 0 10px}
+.welcome2{background:var(--deep);border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;font-size:17px;margin:0}
+.bl{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.bl b{flex:none;width:22px;text-align:right;color:var(--muted);font-size:16px}
+.bl input{flex:1;min-width:0}
+.sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
+
+/* ===== v3.5-TEST (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
+:root{--muted:#cfe0d5;--line:#4a6656;--card:#1d2b24;--deep:#244034}
+input::placeholder,textarea::placeholder{color:#a9c0b2;opacity:1}
+input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;background:#1d2b24}
+.taps .opt,.xcard,.gbox{border-color:#5d7f68}
+.taps .opt .szn{color:#cfe0d5}
+.hint{color:#cfe0d5}
+/* ===== v3.4-TEST (Nov 3, 2026) desktop one-screen layout. Phones are not changed. ===== */
+@media (min-width:1100px){
+  body{font-size:16px}
+  .wrap.narrow{max-width:1700px;padding:4px 28px 66px;gap:6px 22px;display:grid;grid-template-columns:1.1fr 1fr 1fr auto;align-items:start}
+  .wrap.narrow>form#f,.wrap.narrow>#ok,.wrap.narrow>.foot,.wrap.narrow>.loading{grid-column:1/-1}
+  .wrap.narrow h1{font-size:23px}
+  .wrap.narrow>.top .sub{font-size:13.5px}
+  .wrap.narrow>.top .tzLine{margin-top:0!important}
+  .wrap.narrow>details.intro{position:relative;margin:0;padding:6px 12px}
+  .wrap.narrow>details.intro[open]>p{position:absolute;z-index:30;top:calc(100% + 6px);left:0;right:0;background:var(--deep);border:2px solid var(--green);border-radius:12px;padding:12px 14px;box-shadow:0 12px 30px rgba(0,0,0,.65)}
+  /* four columns flowing top to bottom: [1 kind, 2 look] [3 what it says] [bottom-of-graphic, 4 photos] [5 where, 6 rush, 7 business, 8 contact, price] */
+  #f.stack{display:block;column-count:4;column-gap:24px}
+  #f>*{break-inside:avoid;margin:0 0 8px}
+  #f>.welcome2{column-span:all}
+  #f>*:nth-child(4),#f>*:nth-child(5),#f>*:nth-child(7){break-before:column}
+  #f>.hp{margin:0}
+  .ql{font-size:18px;margin:0 0 2px}
+  .qn{width:26px;height:26px;font-size:15px}
+  .sl{font-size:16px;margin:6px 0 0}
+  .hint{font-size:13.5px;line-height:1.3}
+  input[type=text],input[type=email],input[type=tel]{padding:6px 10px;font-size:16px}
+  .bl{margin:0 0 4px}
+  .taps{gap:6px}
+  .taps .opt{flex-direction:row;justify-content:flex-start;gap:8px;min-height:44px;padding:4px 10px;font-size:15px;text-align:left}
+  .taps .pic{font-size:24px}
+  .taps .opt .szn{margin-left:auto;font-size:13px;line-height:1.2;text-align:right}
+  .taps .opt.on::after{font-size:12px;margin-left:auto}
+  #sizeTaps .opt{flex-wrap:wrap}
+  .xcard{padding:4px 10px;margin:0}
+  .xcard .xn{font-size:16px}.xcard .xd{font-size:13px}.xcard .xs{font-size:12px}
+  .gbox{padding:6px 10px;margin:6px 0 0}
+  .gbox .gt{font-size:16px;margin:0 0 2px!important}
+  .gbox .hint{margin:2px 0 6px!important}
+  .chk{font-size:15px;margin:2px 0 0}
+  .photo .btn,.photo label.btn{padding:6px 10px;min-height:34px;font-size:14px}
+  #f>*:nth-child(6)>.ql+.hint{display:none}
+  #f>*:nth-child(6)>.gbox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;align-items:center;margin-top:6px!important}
+  #f>*:nth-child(6)>.gbox>.gt,#f>*:nth-child(6)>.gbox>.hint{grid-column:1}
+  #f>*:nth-child(6)>.gbox>.hint{margin:0!important}
+  #f>*:nth-child(6)>.gbox>.slotPic{grid-column:1/-1;margin:6px 0!important}
+  #f>*:nth-child(6)>.gbox>.photo{grid-column:2;grid-row:1/span 2;flex-direction:column;align-items:stretch;gap:5px}
+  #f>*:nth-child(6)>.gbox>.photo .btn{justify-content:center;white-space:nowrap}
+  .xcard .xp{font-size:15px;margin-top:0}
+  /* roomier tiles where there is spare space (columns 1 and 2), tighter on the right */
+  #f>*:nth-child(2) .taps .opt{min-height:54px;font-size:16.5px}
+  #f>*:nth-child(3) .taps .opt{min-height:56px;font-size:16.5px}
+  #f>*:nth-child(4) input[type=text]{padding:8px 12px}
+  .taps .opt.on::after{content:'\2713';font-size:16px;margin-left:auto}
+  #sizeTaps .opt{min-height:44px}
+  .xcard .xt{display:grid;grid-template-columns:1fr auto;gap:0 8px;width:100%}
+  .xcard .xt .xd,.xcard .xt .xs{grid-column:1/-1}
+  .xcard .xp{grid-column:2;grid-row:1;align-self:center}
+  #f>*:nth-child(10) input{margin-bottom:4px!important}
+  .intro .ih{font-size:16px;min-height:24px}
+  .field{gap:3px}
+  #priceBox{padding:6px 10px}
+  #priceLine{display:flex;flex-wrap:wrap;gap:2px 18px}
+  .prow{font-size:14px;padding:0;gap:8px}
+  .ptot{border-top:0;margin:0;padding:0;font-size:17px;display:flex;gap:8px}
+  .bar.narrow{display:flex;align-items:center;justify-content:center;gap:24px;padding:6px 28px}
+  .bar.narrow #barTot{margin:0!important}
+  .bar.narrow .big{width:auto;min-width:360px;min-height:44px;padding:6px 24px;font-size:20px;margin:0}
+}
+/* shorter screens: shrink the whole form a little so it still fits (Chrome, Edge, Safari, Firefox 126+) */
+@media (min-width:1100px) and (max-height:960px){.wrap.narrow{zoom:.94}}
+@media (min-width:1100px) and (max-height:860px){.wrap.narrow{zoom:.86}}
+@media (min-width:1100px) and (max-height:780px){.wrap.narrow{zoom:.77}}
+@media (min-width:1100px) and (max-height:740px){.wrap.narrow{zoom:.7}}
+/* ===== v3.6-TEST (Nov 3, 2026) poster-style form on desktop. Switched on by the script just before the main script (adds class "dz" to the page). Phones are not changed. ===== */
+@media (min-width:1100px){
+  body.dz #f.stack{display:grid;column-count:auto;grid-template-columns:350px minmax(0,1fr) 350px;gap:0 26px;align-items:start;max-width:1500px;margin:0 auto}
+  body.dz #f>*{margin:0;break-before:auto;break-inside:auto}
+  body.dz #f>.welcome2,body.dz #f>.hp,body.dz #f>#sendErr{grid-column:1/-1}
+  body.dz .zl{grid-column:1}.dz .poster{grid-column:2}.dz .zr{grid-column:3}
+  body.dz .zl,body.dz .zr{display:flex;flex-direction:column;gap:8px;min-width:0}
+  body.dz .dz-gone{display:none!important}
+  /* rails */
+  body.dz .zl .taps{margin-bottom:6px}
+  body.dz .zl .taps .opt{min-height:56px;font-size:17px}
+  body.dz .zr>.field,body.dz .zr>fieldset{margin:0}
+  /* Send button sits in the right panel on desktop (the fixed bottom bar can end up under the Windows taskbar) */
+  body.dz .pz-send{margin-top:4px}
+  body.dz .pz-send #barTot{margin:0 0 6px!important;text-align:center;font-size:18px}
+  body.dz .pz-send .big{width:100%;max-width:none;min-height:58px;font-size:22px;margin:0}
+  body.dz .wrap.narrow{padding-bottom:20px}
+  body.dz .pz-fs{justify-self:end;align-self:center;background:var(--deep);color:#8ff0b7;border:2px solid var(--green);border-radius:12px;padding:6px 14px;font:700 15px var(--body,inherit);cursor:pointer;white-space:nowrap}
+  body.dz .pz-fs:hover{background:#2f5646}
+  body.dz #lookTaps .opt{flex-wrap:wrap;align-content:center;gap:0 8px}
+  body.dz #lookTaps .opt .szn{flex:0 0 100%;margin-left:0;text-align:left;line-height:1.2}
+  body.dz #lookTaps .opt{padding-right:30px}
+  body.dz #lookTaps .opt.on::after{position:absolute;top:6px;right:10px;margin:0}
+  /* the poster */
+  body.dz .poster{position:relative;display:flex;flex-direction:column;border:3px solid var(--green);border-radius:22px;padding:12px 24px 0;background:linear-gradient(160deg,#1f3a2e 0%,#16271f 55%,#10201a 100%);min-height:760px;overflow:hidden;min-width:0}
+  body.dz .pz-head{text-align:center}
+  body.dz .pz-head .ql{justify-content:center;font-size:17px;margin:0}
+  body.dz .pz-head .hint{display:none}
+  body.dz .pz-photos{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:10px;margin:6px 0 2px}
+  body.dz .pz-photos .gbox{margin:0!important;padding:6px 8px;display:flex;flex-direction:column;gap:2px;align-items:center;text-align:center;border:2px dashed var(--green);background:rgba(15,23,18,.55)}
+  body.dz .pz-photos .gbox .gt{font-size:14px;margin:0!important}
+  body.dz .pz-photos .gbox .hint{display:none}
+  body.dz .pz-photos .photo{flex-direction:row;justify-content:center;gap:5px}
+  body.dz .pz-photos .photo .btn,body.dz .pz-photos .photo label.btn{padding:4px 8px;min-height:30px;font-size:13px}
+  body.dz .pz-photos .slotPic{margin:0 0 4px!important}
+  body.dz .pz-photos .slotPic img{width:46px!important;height:46px!important}
+  body.dz .pz-photos .pz-photohead{grid-column:1/-1;text-align:center;font-size:12.5px;color:var(--muted);margin:0}
+  body.dz .poster .sl{display:block;text-align:center;font-size:17px;font-weight:800;letter-spacing:0;text-transform:none;color:#8ff0b7;margin:5px 0 1px}
+  body.dz .poster label[for=ttl]::after{content:" — the big words at the top";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster label[for=hdg]::after{content:" — a smaller line under it";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster label[for=b1]::after{content:" — up to 5 short lines, a few words each";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster label[for=cta]::after{content:" — one short line";font-weight:600;text-transform:none;letter-spacing:0;font-size:14px;color:#cfe0d5}
+  body.dz .poster .pz-grp>.hint{display:none}
+  body.dz .poster input[type=text]{background:rgba(15,23,18,.45);border:2px dashed #5d7f68;color:var(--fg)}
+  body.dz .poster #ttl{font-size:42px;font-weight:800;text-align:center;line-height:1.1;padding:6px 10px}
+  body.dz .poster #hdg{font-size:24px;text-align:center;padding:5px 10px}
+  body.dz .poster .bl{margin:0 0 4px;gap:10px}
+  body.dz .poster .bl b{width:12px;height:12px;border-radius:50%;background:var(--green);font-size:0;flex:none}
+  body.dz .poster .bl input{font-size:19px;padding:5px 10px}
+  body.dz .poster #cta{font-size:23px;font-weight:800;text-align:center;background:rgba(15,23,18,.45);color:#a8e6c3;border:2px solid var(--green);border-radius:999px;padding:7px 18px}
+  body.dz .poster #cta::placeholder{color:#a9c0b2;opacity:1;font-weight:600}
+  /* clear cursor and a glow on the box being typed in */
+  body.dz .poster input[type=text],body.dz .pz-foot input[type=tel],body.dz .pz-foot input[type=text]{caret-color:#8ff0b7}
+  body.dz .poster input:focus,body.dz .pz-foot input:focus{outline:none;border-style:solid;border-color:#8ff0b7;background:rgba(95,196,140,.14);box-shadow:0 0 0 3px rgba(95,196,140,.35)}
+  body.dz .poster #cta:focus{background:rgba(95,196,140,.18);color:#d6f7e4}
+  body.dz .pz-foot{margin:auto -24px 0;background:#0c130f;border-top:3px solid var(--green);padding:10px 24px 10px;display:grid;grid-template-columns:1.3fr 1fr;gap:6px 10px;align-items:start}
+  body.dz .pz-foot>.err{grid-column:1/-1}
+  body.dz .pz-foot input[type=text],body.dz .pz-foot input[type=tel]{border:2px solid #3b5a48;background:transparent;font-size:17px;padding:5px 9px}
+  body.dz .pz-foot .gbox{grid-column:1/-1;margin:0;padding:0;border:0;background:transparent;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px 8px}
+  body.dz .pz-foot .gbox .gt,body.dz .pz-foot .gbox>.hint{display:none}
+  body.dz .pz-foot .gbox>.chk{grid-row:1;font-size:13px;margin:0;color:var(--muted)}
+  body.dz .pz-foot .gbox>.chk:nth-of-type(1){grid-column:1}
+  body.dz .pz-foot .gbox>.chk:nth-of-type(2){grid-column:2}
+  body.dz .pz-foot .gbox>.chk input{width:18px;height:18px}
+  body.dz .pz-foot .gbox>.sl{text-align:left;margin:4px 0 0;font-size:14px;font-weight:700;color:#8ff0b7;grid-row:2}
+  body.dz .pz-foot .gbox>input{grid-row:3;font-size:14px!important;padding:5px 8px!important}
+  body.dz .pz-foot .gbox>[for=site],body.dz .pz-foot .gbox>#site{grid-column:1}
+  body.dz .pz-foot .gbox>[for=fb],body.dz .pz-foot .gbox>#fb{grid-column:2}
+  body.dz .pz-foot .gbox>[for=ig],body.dz .pz-foot .gbox>#ig{grid-column:3}
+}
+/* lean forms have less on them, so they can stay bigger on short screens */
+@media (min-width:1100px) and (max-height:960px){body.lean .wrap.narrow{zoom:1}}
+@media (min-width:1100px) and (max-height:860px){body.lean .wrap.narrow{zoom:.95}}
+@media (min-width:1100px) and (max-height:780px){body.lean .wrap.narrow{zoom:.9}}
+@media (min-width:1100px) and (max-height:740px){body.lean .wrap.narrow{zoom:.8}}
+/* ===== v3.12-TEST start screen (wide screens only, made by the poster script) ===== */
+#pzStart{position:fixed;inset:0;z-index:2147482000;background:radial-gradient(ellipse at 50% 35%,#1f3a2e 0%,#12211a 55%,#0f1712 100%);display:flex;align-items:center;justify-content:center;padding:24px}
+#pzStart .pzs-card{max-width:680px;text-align:center}
+#pzStart .pzs-logo{width:84px;height:84px;margin:0 auto 18px;border-radius:50%;border:3px solid var(--green);background:var(--deep);color:var(--green);font:800 30px var(--display);display:flex;align-items:center;justify-content:center}
+#pzStart .pzs-h{font:800 44px var(--display);margin:0 0 10px;color:var(--fg);line-height:1.1;text-transform:none;letter-spacing:0}
+#pzStart .pzs-p{font-size:22px;color:#cfe0d5;margin:0 0 4px}
+#pzStart .pzs-p2{font-size:17px;color:#cfe0d5;margin:0 0 28px}
+#pzStart .pzs-go{font:800 30px var(--display);background:var(--green);color:var(--ink);border:0;border-radius:18px;padding:20px 64px;min-width:400px;cursor:pointer}
+#pzStart .pzs-go:focus-visible{outline:4px solid #fac775;outline-offset:4px}
+#pzStart .pzs-s{font-size:15px;color:#a9c0b2;margin:18px 0 0}
+/* ===== v3.13-TEST (Nov 3, 2026) lean forms: pages built from a pack with lean=True get <body class="lean"> and hide the pieces marked "lh" ===== */
+body.lean .lh{display:none!important}
+body.lean .pz-photos{grid-template-columns:1fr}
+body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a few words each"}
+/* ===== v3.15-TEST (Nov 3, 2026) LITE: light, calm, 3 steps. Only on pages built with lite (body.lean.lite). Everything else about the form is unchanged. ===== */
+body.lite{--bg:#f7f5ef;--card:#ffffff;--fg:#1f2a24;--muted:#5b6b62;--line:#cdd6cf;--green:#1f7a4d;--deep:#e8f3ec;--ink:#ffffff;--err:#a12a2a;--errbg:#fdeaea;color-scheme:light;background:var(--bg);color:var(--fg)}
+body.lite .wrap.narrow{display:block;max-width:720px;margin:0 auto;padding:16px 20px 130px;zoom:1}
+body.lite #f.stack{display:block;column-count:1}
+body.lite #f>*{break-before:auto!important}
+body.lite .sl{margin:12px 0 4px}
+body.lite .hint{font-size:16px}
+body.lite .taps .opt{flex-direction:column;justify-content:center;text-align:center;padding:12px 8px}
+body.lite .wrap.narrow>.top{margin-bottom:0}
+body.lite .wrap.narrow h1{font-size:30px}
+body.lite .wrap.narrow>.top .sub{font-size:16px}
+body.lite .bar.narrow{display:block;text-align:center;padding:10px 20px calc(10px + env(safe-area-inset-bottom))}
+body.lite .bar.narrow .big{display:block;width:100%;max-width:680px;margin:0 auto}
+body.lite .bar.narrow #barTot{display:block;width:100%;max-width:680px;margin:0 auto 8px!important;text-align:center}
+body.lite details.intro{display:none}
+body.lite .fsbtn{display:none;width:100%;margin:0 0 16px;padding:18px 20px;border:0;border-radius:16px;background:var(--green);color:#fff;font:800 24px var(--display);cursor:pointer;align-items:center;justify-content:center;gap:12px}
+body.lite .fsbtn svg{width:30px;height:30px;flex:none}
+body.lite .fsbtn:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
+@media (min-width:700px){body.lite .fsbtn.show{display:flex}}
+body.lite .liteline{font-size:19px;color:var(--muted);margin:6px 0 18px}
+body.lite .top h1{font-size:30px}
+body.lite .field{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:0 0 18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+body.lite .ql{font-size:23px}
+body.lite .qn{background:var(--green);color:#fff}
+body.lite .hint{font-size:16px;color:var(--muted)}
+body.lite .field>.hint{display:none}
+body.lite .liteHint{display:block!important}
+body.lite .sl{font-size:18px;color:var(--fg);font-weight:700}
+body.lite .sl+.hint,body.lite .lite-nohint{display:none}
+body.lite input[type=text],body.lite input[type=email],body.lite input[type=tel]{background:#fff;color:var(--fg);border:2px solid #b7c3ba;border-radius:12px;font-size:20px;padding:14px 16px}
+body.lite input::placeholder{color:#8a978f}
+body.lite input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(31,122,77,.18)}
+body.lite .taps .opt{background:#fff;border:2px solid #b7c3ba;color:var(--fg);min-height:64px;font-size:19px}
+body.lite .taps .opt .pic,body.lite .taps .opt>i,body.lite .taps .opt .szn,body.lite .xt .xs{display:none}
+body.lite #whatTaps{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.lite .taps .opt.on{background:var(--deep);border:3px solid var(--green)}
+body.lite .taps .opt.on::after{content:'\2713';font-size:20px;color:var(--green);position:absolute;top:6px;right:10px}
+body.lite .gbox{background:#fff;border:1px solid var(--line);color:var(--fg)}
+body.lite .gt{color:var(--green)}
+body.lite .btn,body.lite .ghost{background:#fff;color:var(--green);border:2px solid var(--green)}
+body.lite .btn .ti{display:none}
+body.lite .bl b{background:var(--deep);color:var(--green)}
+body.lite details.more{background:#fff;border:1px dashed #9db0a4;border-radius:16px;margin:0 0 18px}
+body.lite details.more>summary{cursor:pointer;list-style:none;padding:18px 22px;font:700 20px var(--display);color:var(--green)}
+body.lite details.more>summary::-webkit-details-marker{display:none}
+body.lite details.more>summary::after{content:'  +';font-weight:800}
+body.lite details.more[open]>summary::after{content:'  \2212'}
+body.lite details.more .field{border:0;box-shadow:none;margin:0;padding:6px 22px 18px;border-top:1px solid var(--line);border-radius:0}
+body.lite details.more .ql{font-size:19px}
+body.lite details.more .qn{display:none}
+body.lite .pbox{background:var(--deep);border:1px solid #b9d6c5;color:var(--fg)}
+body.lite .bar{background:rgba(247,245,239,.96);border-top:1px solid var(--line)}
+body.lite .big{background:var(--green);color:#fff;border-radius:14px;font-size:22px}
+body.lite .foot{color:var(--muted)}
+body.lite .lookcard{background:#fff;border-color:var(--green);color:var(--fg)}
+body.lite .code{background:var(--deep);color:var(--green)}
+body.lite .card.g{background:#fff;border-color:var(--green);color:var(--fg)}
+/* v3.17-TEST lite on a wide screen: 3 steps side by side so the whole form is on one screen */
+@media (min-width:1100px){
+body.lite .wrap.narrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1fr) minmax(0,1.9fr);gap:0 14px;max-width:1500px;padding:8px 24px 76px;align-items:start}
+body.lite .wrap.narrow>.fsbtn,body.lite .wrap.narrow>.top,body.lite .wrap.narrow>.liteline,body.lite .wrap.narrow>.loading,body.lite .wrap.narrow>#ok,body.lite .wrap.narrow>.foot{grid-column:1/-1}
+body.lite .wrap.narrow>.top{display:flex;align-items:center;gap:14px;margin:0 0 2px}
+.verTag{margin-left:auto;align-self:flex-start;font-size:12px;color:#5f6b61;white-space:nowrap}
+body.lite .wrap.narrow>.top h1{font-size:26px;margin:0}
+body.lite .wrap.narrow>.top .sub{font-size:14px;margin:0}
+body.lite .wrap.narrow>.top .tzLine{display:inline;margin:0 0 0 8px!important}
+body.lite .liteline{margin:0 0 8px;font-size:16px}
+body.lite .fsbtn{margin:0 0 8px;padding:12px 16px;font-size:20px}
+body.lite #f.stack{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1fr) minmax(0,1.9fr);gap:0 14px;column-count:auto;align-items:start;grid-template-rows:auto 1fr}
+body.lite #f>.welcome2,body.lite #f>.hp,body.lite #f>#sendErr{grid-column:1/-1}
+body.lite #f>details.more{grid-column:4;grid-row:1/3;margin:0;align-self:start}
+body.lite #f>.lite-say{grid-column:2;grid-row:1/3}
+body.lite #f>.lite-you{grid-row:1/3}
+body.lite details.more>summary{padding:10px 16px}
+body.lite .morebody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 10px;align-items:start;padding:0 6px 8px}
+body.lite details.more>summary{cursor:default}
+body.lite .slotPic{margin-bottom:4px!important;gap:4px 10px!important}
+body.lite .slotPic img{width:60px!important;height:60px!important}
+body.lite .slotPic .pvTip{display:none}
+body.lite .slotPic .rm{min-height:28px;padding:2px 8px;font-size:13px}
+body.lite .slotPic img{width:52px!important;height:52px!important}
+body.lite details.more>summary::after,body.lite details.more[open]>summary::after{content:''}
+body.lite .morebody>.field{border:0;border-top:1px solid var(--line);padding:6px 8px 2px;margin:0}
+body.lite details.more>summary{padding:8px 14px;font-size:17px}
+body.lite .morebody .gbox p.gt{margin:0}
+body.lite .morebody .gbox .gt i,body.lite .morebody .gbox .gt .ti{display:none}
+body.lite .morebody .ql{font-size:16px;margin:0 0 4px}
+body.lite .morebody .taps{gap:6px}
+body.lite .morebody .taps .opt{min-height:34px;font-size:14px;padding:2px 6px}
+body.lite .morebody .ql{font-size:15px}
+body.lite .morebody .chk{margin:2px 0}
+body.lite .morebody .hint{display:none}
+body.lite .morebody .gbox{padding:8px 10px;margin:4px 0 0}
+body.lite .morebody .gbox .hint{display:none}
+body.lite .morebody .btn{padding:6px 10px;font-size:14px}
+body.lite .morebody .chk{font-size:15px}
+body.lite #f>.lite-what{grid-column:1;grid-row:1}
+body.lite #f>.lite-you{grid-column:3}
+body.lite #f>#priceBox{align-self:start}
+body.lite #f>#priceBox{grid-column:1;grid-row:2;margin:8px 0 0}
+body.lite #f>.field,body.lite #f>fieldset.field{margin:0;padding:14px 16px}
+body.lite .ql{font-size:20px}
+body.lite .sl{font-size:16px;margin:8px 0 3px}
+body.lite .hint{font-size:14px;margin:2px 0 6px}
+body.lite input[type=text],body.lite input[type=email],body.lite input[type=tel]{padding:8px 12px;font-size:17px;margin-bottom:0}
+body.lite .bl{margin:0 0 6px}
+body.lite #whatTaps .opt{min-height:50px;font-size:17px;padding:6px 6px}
+body.lite details.more>summary{padding:12px 16px;font-size:18px}
+body.lite .pbox{padding:10px 14px}
+body.lite .pbox .hint{display:none}
+body.lite .bar.narrow{padding:8px 20px}
+body.lite .bar.narrow .big{padding:12px;font-size:20px}
+body.lite .foot{display:none}
+}
+@media (min-width:1100px) and (max-height:800px){body.lite .wrap.narrow{zoom:.9}}
+@media (min-width:1100px) and (max-height:740px){body.lite .wrap.narrow{zoom:.8}}
+@media (min-width:1100px) and (max-height:660px){body.lite .wrap.narrow{zoom:.74}}
+/* v3.33-TEST: use the whole window. No width cap; a small script (fitToWindow, near the end) makes the form as big as it can be while still fitting the window with no scrolling. */
+@media (min-width:1100px){
+body.lite .wrap.narrow,body.lite #f.stack{max-width:none}
+body.lite .wrap.narrow{padding-left:20px;padding-right:20px}
+}
+/* v3.32-TEST: window NOT in full screen is short (browser bar + taskbar), so What should people do? sat under the Send bar. Smaller steps for short windows + a one-row Send bar (total beside the button) so the whole form shows without scrolling. */
+@media (min-width:1100px){
+body.lite .bar.narrow{display:block;text-align:center;padding:5px 20px}
+body.lite .bar.narrow #barTot{display:block;width:100%;max-width:none;margin:0 0 3px!important;font-size:15px;text-align:center}
+body.lite .bar.narrow .big{display:block;width:auto;min-width:230px;max-width:none;margin:0 auto;padding:7px 28px;font-size:18px}
+body.lite .wrap.narrow{padding-bottom:58px}
+}
+@media (min-width:1100px) and (max-height:620px){body.lite .wrap.narrow{zoom:.68}}
+@media (min-width:1100px) and (max-height:570px){body.lite .wrap.narrow{zoom:.62}}
+@media (min-width:1100px) and (max-height:520px){body.lite .wrap.narrow{zoom:.56}}
+@media (min-width:1100px) and (max-height:470px){body.lite .wrap.narrow{zoom:.5}}
+body.lite .fsexit{display:none;position:fixed;top:10px;right:14px;z-index:2147480000;padding:10px 18px;border:2px solid var(--green);border-radius:12px;background:#fff;color:var(--green);font:800 18px var(--display);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+body.lite .fsexit.show{display:block}
+body.lite .fsexit:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
+#holiday{width:100%;font:inherit;font-size:18px;padding:12px 10px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg)}
+#holiday:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(95,196,140,.25)}
+body.lite #holiday{border-color:#b7c3ba;background:#fff;color:var(--fg);font-size:16px;padding:8px 10px}
+.hgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:6px}
+.hbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:52px;padding:6px 8px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg);font:700 17px var(--body);cursor:pointer;text-align:center}
+.hbtn small{font:400 13px var(--body);color:var(--muted)}
+.hbtn[aria-pressed=true]{border:3px solid var(--green);background:var(--deep)}
+.hbtn:focus-visible{outline:4px solid #f0b429;outline-offset:2px}
+body.lite .hbtn{background:#fff;border-color:#b7c3ba;color:var(--fg);min-height:40px;font-size:14px;padding:3px 6px;border-radius:10px}
+body.lite .hbtn small{font-size:11px;line-height:1.1}
+body.lite .hgrid{gap:5px;margin-top:4px}
+body.lite .hbtn{min-height:34px;padding:2px 4px;font-size:13px;line-height:1.1}
+body.lite .hbtn[aria-pressed=true]{background:var(--deep);border:3px solid var(--green)}
+@media (min-width:1100px){
+body.lite .morebody>.field:nth-child(1){grid-column:1;grid-row:1/4}
+body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
+body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
+body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:3}
+}
+/* v3.22-TEST photo box: tap the picture to see it big, Replace button, one-photo label */
+.slotPic img{cursor:zoom-in}
+.slotPic .rm{min-height:34px;padding:4px 12px;font-size:14px}
+.slotPic .pvTip{flex-basis:100%;font-size:13px;color:var(--muted,#5f6f66)}
+.bigPic{position:fixed;inset:0;z-index:99999;background:rgba(10,20,14,.88);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+.bigPic img{max-width:94vw;max-height:84vh;object-fit:contain;border-radius:12px;background:#fff}
+.bigPic .bigX{position:absolute;top:14px;right:14px;background:#fff;color:#1f6b45;border:2px solid #1f6b45;border-radius:12px;padding:10px 18px;font:700 18px sans-serif;cursor:pointer}
+/* v3.31-TEST fit: with 9 looks + holidays the More choices column got too tall. Wide (1300 px+): the 4th column is wider and its boxes sit in 3 small columns (look | photos over bottom of graphic | where). Narrower (1100-1299): look over bottom of graphic on the left, photos over where on the right. */
+@media (min-width:1300px){
+body.lite .wrap.narrow,body.lite #f.stack{grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,.9fr) minmax(0,2.3fr)}
+body.lite .morebody{grid-template-columns:repeat(3,minmax(0,1fr))}
+body.lite .morebody #lookTaps .opt{font-size:12px;letter-spacing:-.2px;padding:2px 2px}
+body.lite .morebody>.field:nth-child(1){grid-column:1;grid-row:1/3}
+body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
+body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:2}
+body.lite .morebody>.field:nth-child(3){grid-column:3;grid-row:1}
+}
+@media (min-width:1100px) and (min-height:741px) and (max-height:790px){body.lite .wrap.narrow{zoom:.84}}   /* 1366 x 768 laptops: a little smaller so a picture added still fits */
+@media (min-width:1100px) and (max-width:1299px){
+body.lite .morebody>.field:nth-child(1){grid-column:1;grid-row:1}
+body.lite .morebody>.field:nth-child(4){grid-column:1;grid-row:2}
+body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
+body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
+}
+</style>
+</head>
+<body>
+<div class="wrap narrow">
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.35-TEST</span></div>
+
+  <details class="intro">
+    <summary class="ih">About ClearPoint Media Group</summary>
+    <p id="pkAbout">We make professional graphics for local businesses, fast. Real estate agents use us for just listed, open house, price drop and just sold posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.</p>
+  </details>
+
+  <details class="intro">
+    <summary class="ih">How this works</summary>
+    <p id="pkHow">Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
+  </details>
+
+  <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
+
+  <form id="f" novalidate autocomplete="on" class="stack">
+    <p class="welcome2" id="welcome" hidden></p>
+
+    <fieldset class="field">
+      <legend class="ql"><span class="qn">1</span>What kind of graphic?</legend>
+      <p class="hint">Tap one picture.</p>
+      <div class="taps" id="whatTaps" tabindex="-1"></div>
+      <p class="err" id="eWhat" hidden></p>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="ql"><span class="qn">2</span>Pick a look</legend>
+      <p class="hint">Tap one. Not sure? We'll pick for you.</p>
+      <div class="taps" id="lookTaps"></div>
+      <div id="holidayBox" hidden style="margin-top:10px">
+        <label class="sl" for="holiday" style="margin-top:0">Which holiday?</label>
+        <select id="holiday" autocomplete="off"><option value="">Choose a holiday…</option><option>New Year&#39;s Day</option><option>Martin Luther King Jr. Day</option><option>Valentine&#39;s Day</option><option>Presidents&#39; Day</option><option>St. Patrick&#39;s Day</option><option>Easter</option><option>Mother&#39;s Day</option><option>Memorial Day</option><option>Father&#39;s Day</option><option>4th of July</option><option>Labor Day</option><option>Halloween</option><option>Veterans Day</option><option>Thanksgiving</option><option>Christmas</option><option>New Year&#39;s Eve</option><option>Other (put it in the title)</option></select>
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <p class="ql"><span class="qn">3</span>What should it say?</p>
+      <p class="hint">Fill in the parts of your graphic. A few words each. The gray words in each box are only examples. Type your own.</p>
+      <label class="sl" for="ttl">Title</label>
+      <p class="hint">The big words at the top. Example: <b id="xTtl"></b></p>
+      <input type="text" id="ttl" autocomplete="off">
+      <p class="err" id="eTtl" hidden></p>
+      <label class="sl" for="hdg">Second line (if you want)</label>
+      <p class="hint">A smaller line under the title. Example: <b id="xHdg"></b></p>
+      <input type="text" id="hdg" autocomplete="off">
+      <label class="sl" for="b1">Details</label>
+      <p class="hint">Up to 5 short lines, a few words each. Example: <b id="xBdy"></b></p>
+      <div class="bl"><b>1</b><input type="text" id="b1" autocomplete="off" aria-label="Details line 1"></div>
+      <div class="bl"><b>2</b><input type="text" id="b2" autocomplete="off" aria-label="Details line 2"></div>
+      <div class="bl"><b>3</b><input type="text" id="b3" autocomplete="off" aria-label="Details line 3"></div>
+      <div class="bl lh"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Details line 4"></div>
+      <div class="bl lh"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Details line 5"></div>
+      <p class="err" id="eBdy" hidden></p>
+      <label class="sl" for="cta">What should people do?</label>
+      <p class="hint">One short line telling people what to do next. Example: <b id="xCta"></b></p>
+      <input type="text" id="cta" autocomplete="off">
+      <p class="err" id="eCta" hidden></p>
+    </div>
+
+    <div class="field gbwrap">
+      <div class="gbox" style="margin-top:0">
+        <p class="gt">Bottom of the graphic</p>
+        <label class="chk"><input type="checkbox" id="showBiz" checked> Show my business name</label>
+        <label class="chk" style="margin-top:8px"><input type="checkbox" id="showPh" checked> Show my phone number</label>
+        <p class="hint lh" style="margin:10px 0 0">Want people to find you online? Add any of these and we'll put them at the bottom too. All are optional.</p>
+        <label class="sl lh" for="site" style="margin-top:10px">Website</label>
+        <input type="text" class="lh" id="site" placeholder="smithhometeam.com" autocomplete="url" autocapitalize="off" spellcheck="false">
+        <label class="sl lh" for="fb" style="margin-top:10px">Facebook page</label>
+        <input type="text" class="lh" id="fb" placeholder="facebook.com/smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <label class="sl lh" for="ig" style="margin-top:10px">Instagram</label>
+        <input type="text" class="lh" id="ig" placeholder="@smithhometeam" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">4</span>Add photos (if you want)</p>
+      <p class="hint">Each photo has its own spot, so we know where it goes. Skip any you don't have.</p>
+      <div class="gbox" style="margin-top:12px">
+        <p class="gt" style="margin:0"><i class="ti ti-photo-star" aria-hidden="true"></i> <span id="pkP1">Main photo</span></p>
+        <p class="hint" style="margin:4px 0 10px" id="pkP1d">Big background. Your words go on top.</p>
+        <div class="slotPic" id="pvHouse" hidden style="display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:10px"><img id="imHouse" alt="Your house photo" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmHouse">Remove</button><button type="button" class="rm" id="rpHouse">Replace</button><span class="pvTip">Tap the picture to see it big.</span></div>
+        <div class="photo" id="btHouse"><label class="btn" for="camHouse"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camHouse" accept="image/*" capture="environment"></label><label class="btn" for="upHouse"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upHouse" accept="image/*"></label></div>
+      </div>
+      <div class="gbox lh" style="margin-top:12px">
+        <p class="gt" style="margin:0"><i class="ti ti-user-circle" aria-hidden="true"></i> Your headshot</p>
+        <p class="hint" style="margin:4px 0 10px">Small circle by your name. No words on your face.</p>
+        <div class="slotPic" id="pvHeadshot" hidden style="display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:10px"><img id="imHeadshot" alt="Your your headshot" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmHeadshot">Remove</button><button type="button" class="rm" id="rpHeadshot">Replace</button><span class="pvTip">Tap the picture to see it big.</span></div>
+        <div class="photo" id="btHeadshot"><label class="btn" for="camHeadshot"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camHeadshot" accept="image/*" capture="environment"></label><label class="btn" for="upHeadshot"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upHeadshot" accept="image/*"></label></div>
+      </div>
+      <div class="gbox lh" style="margin-top:12px">
+        <p class="gt" style="margin:0"><i class="ti ti-badge" aria-hidden="true"></i> Your logo</p>
+        <p class="hint" style="margin:4px 0 10px">Small, in a corner.</p>
+        <div class="slotPic" id="pvLogo" hidden style="display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:10px"><img id="imLogo" alt="Your your logo" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--green)"><button type="button" class="rm" id="rmLogo">Remove</button><button type="button" class="rm" id="rpLogo">Replace</button><span class="pvTip">Tap the picture to see it big.</span></div>
+        <div class="photo" id="btLogo"><label class="btn" for="camLogo"><i class="ti ti-camera" aria-hidden="true"></i> Take a picture<input type="file" id="camLogo" accept="image/*" capture="environment"></label><label class="btn" for="upLogo"><i class="ti ti-photo" aria-hidden="true"></i> Upload<input type="file" id="upLogo" accept="image/*"></label></div>
+      </div>
+      <p class="err" id="ePic" hidden></p>
+    </div>
+
+    <fieldset class="field">
+      <legend class="ql"><span class="qn">5</span>Where will you show it?</legend>
+      <p class="hint">Tap all that you want.</p>
+      <div class="taps" id="sizeTaps" tabindex="-1">
+        <label class="opt"><input type="checkbox" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Social"><span class="pic" aria-hidden="true"><i class="ti ti-share"></i></span><span>Social media</span><span class="szn">Facebook, Instagram</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide</span></label>
+      </div>
+      <p class="err" id="eSize" hidden></p>
+    </fieldset>
+
+    <div class="field lh">
+      <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
+      <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
+      <label class="opt xcard"><input type="checkbox" id="rush"><i class="ti ti-bolt" aria-hidden="true"></i><span class="xt"><span class="xn">Rush</span><span class="xd">Get your preview in 1 hour instead of 5.</span><span class="xp">Adds $10</span><span class="xs">During business hours. If today's rush spots are full, we won't charge for it.</span></span></label>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">7</span><label for="biz">Business name</label></p>
+      <input type="text" id="biz" placeholder="Smith Home Team" autocomplete="organization">
+      <p class="err" id="eBiz" hidden></p>
+      <label class="sl" for="brok" id="pkXl">Brokerage</label>
+      <p class="hint" id="pkXh">The real estate company you work under.</p>
+      <input type="text" id="brok" placeholder="Main Street Realty" autocomplete="off">
+      <p class="err" id="eBrok" hidden></p>
+    </div>
+
+    <div class="field">
+      <p class="ql"><span class="qn">8</span>Your name, email, phone</p>
+      <input type="text" id="nm" placeholder="Your name" autocomplete="name" aria-label="Your name" style="margin-bottom:8px">
+      <p class="err" id="eNm" hidden></p>
+      <input type="email" id="em" placeholder="Email (your preview comes here)" autocomplete="email" autocapitalize="off" spellcheck="false" aria-label="Email" style="margin-bottom:8px">
+      <p class="err" id="eEm" hidden></p>
+      <input type="tel" id="ph" placeholder="Phone" autocomplete="tel" inputmode="tel" aria-label="Phone">
+      <p class="err" id="ePh" hidden></p>
+      <p class="hint">We save this, so next time it's filled in for you.</p>
+    </div>
+
+    <div class="hp" aria-hidden="true"><label for="cpmgHp">Leave this empty</label><input type="text" id="cpmgHp" name="website" tabindex="-1" autocomplete="off"></div>
+    <div class="problem" id="sendErr" role="alert" hidden><p id="sendErrText"></p></div>
+    <div class="gbox pbox" id="priceBox" aria-live="polite"><p class="gt">Your price</p><div id="priceLine"></div><p class="hint" style="margin:10px 0 0"><b>How you pay:</b> nothing now. We email you a preview first. Once you OK it, you pay by card with a secure Square link.</p></div>
+  </form>
+
+  <div class="lookpop" id="lookPop" hidden role="dialog" aria-modal="true" aria-labelledby="lookCap">
+    <div class="lookcard">
+      <p class="lookcap" id="lookCap"></p>
+      <img id="lookImg" alt="" width="360" height="645" decoding="async">
+      <p class="looknote" id="lookSoon" hidden style="font-size:18px;padding:40px 10px">Sample picture coming soon.</p>
+      <p class="looknote">Example only. Yours uses your own words and photos.</p>
+      <button type="button" class="big" id="lookOk">Use this look</button>
+      <button type="button" class="ghost" id="lookNo">Pick a different look</button>
+    </div>
+  </div>
+
+  <div id="ok" class="card g done" hidden role="status">
+    <div class="ck" aria-hidden="true">&#10003;</div>
+    <h3>Got it, thank you!</h3>
+    <p>Most previews come back by email within 5 hours. Late-night and weekend orders are ready the next business morning.</p>
+    <p class="sub tzLine"></p>
+    <p class="sub" id="codeLbl">Your order number</p>
+    <div class="code" id="orderCode"></div>
+    <button type="button" class="ghost" id="again">Order another</button>
+  </div>
+  <div class="foot"><span id="pkFoot">CPMG Order</span> · Questions? Call or text <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
+</div>
+<div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
+
+<script>
+/* CPMG lite layout v1.0-TEST (Nov 3, 2026): only runs when <body class="lite">. Moves the same boxes (same ids) into 3 steps + "More choices". */
+(function () {
+  var b = document.body; if (!b.classList.contains('lite')) return;
+  var f = document.getElementById('f'); if (!f) return;
+  function up(id, sel) { var e = document.getElementById(id); return e && e.closest(sel); }
+  var look = up('lookTaps', 'fieldset'), size = up('sizeTaps', 'fieldset'), photos = up('btHouse', '.field'), gbw = up('showBiz', '.field.gbwrap') || up('showBiz', '.field');
+  var biz = up('biz', '.field'), contact = up('nm', '.field'), say = up('ttl', '.field'), what = up('whatTaps', 'fieldset');
+  // big full-screen button (wide screens only). Browsers only allow full screen after a tap, so we ask for one.
+  var fb = document.createElement('button'); fb.type = 'button'; fb.className = 'fsbtn show';
+  fb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Click here for full screen</span>';
+  var de = document.documentElement;
+  function inFs() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  function paint() { fb.classList.toggle('show', !inFs()); }
+  fb.addEventListener('click', function () { try { var r = de.requestFullscreen || de.webkitRequestFullscreen; if (r) { var pr = r.call(de); if (pr && pr.catch) pr.catch(function () {}); } } catch (e) { /* ok */ } fb.classList.remove('show'); });
+  document.addEventListener('fullscreenchange', paint); document.addEventListener('webkitfullscreenchange', paint);
+  if (!(de.requestFullscreen || de.webkitRequestFullscreen)) fb.className = 'fsbtn';
+  // Exit full screen button (big and plain, so nobody has to know about the Esc key)
+  var xb = document.createElement('button'); xb.type = 'button'; xb.className = 'fsexit'; xb.textContent = '\u2715  Exit full screen';
+  xb.addEventListener('click', function () { try { var x = document.exitFullscreen || document.webkitExitFullscreen; if (x) { var pr = x.call(document); if (pr && pr.catch) pr.catch(function () {}); } } catch (e) { /* ok */ } });
+  document.body.appendChild(xb);
+  function paintX() { xb.classList.toggle('show', inFs()); }
+  document.addEventListener('fullscreenchange', paintX); document.addEventListener('webkitfullscreenchange', paintX);
+  var wrapEl = document.querySelector('.wrap.narrow'); if (wrapEl) wrapEl.insertBefore(fb, wrapEl.firstChild);
+  var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Three quick steps. About 2 minutes.';
+  var top = document.querySelector('.top'); if (top && top.parentNode) top.parentNode.insertBefore(line, top.nextSibling);
+  function num(field, n, text) { var q = field && field.querySelector('.qn'); if (q) q.textContent = String(n); if (text) { var l = field.querySelector('.ql'); if (l) { var t = l.lastChild; if (t && t.nodeType === 3) t.nodeValue = text; } } }
+  num(what, 1); num(say, 2);
+  if (what) what.classList.add('lite-what'); if (say) say.classList.add('lite-say'); if (contact) contact.classList.add('lite-you');
+  // step 3 = business + contact together: "About you"
+  if (biz && contact) {
+    var cq = contact.querySelector('.ql'); if (cq && cq.lastChild && cq.lastChild.nodeType === 3) cq.lastChild.nodeValue = 'About you';
+    num(contact, 3);
+    var bq = biz.querySelector('.ql'); if (bq) { var bl = bq.querySelector('label'); if (bl) { bl.className = 'sl'; bl.style.display = 'block'; biz.insertBefore(bl, bq); } bq.remove(); }
+    biz.style.cssText = 'border:0;box-shadow:none;margin:0;padding:0;background:none';
+    contact.insertBefore(biz, cq.nextSibling);
+    contact.insertBefore(Object.assign(document.createElement('label'), { className: 'sl', textContent: 'Your name, email, phone' }), document.getElementById('nm'));
+  }
+  // everything else goes behind one tap
+  var d = document.createElement('details'); d.className = 'more';
+  d.innerHTML = '<summary>More choices</summary>';
+  var mb = document.createElement('div'); mb.className = 'morebody'; d.appendChild(mb);
+  [look, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });
+  var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
+  if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
+  d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
+  // short help under each question, in plain words
+  function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
+  hint(what, 'Tap one.'); hint(say, 'A few words each. The gray words are examples.');
+  if (look) { var lq = look.querySelector('.ql'); if (lq) lq.lastChild.nodeValue = 'Pick a look'; }
+})();
+</script>
+<script>
+/* CPMG poster layout v1.0-TEST (Nov 3, 2026)
+   On a wide screen (1100 px or more) this moves the boxes of the form into a "poster" in the middle with a left and a right side panel.
+   It only MOVES the same boxes (same ids, same values), and puts them back when the window gets narrow. Phones never run it.
+   If anything here fails, the normal form still works. */
+(function () {
+  var f = document.getElementById('f');
+  var LEAN = document.body.classList.contains('lean');
+  if (f && LEAN && !document.body.classList.contains('lite')) {   // fewer boxes: renumber the steps that are left, and say 3 lines (not 5)
+    [document.getElementById('biz'), document.getElementById('nm')].forEach(function (e, i) { var q = e && e.closest('.field'); q = q && q.querySelector('.qn'); if (q) q.textContent = String(6 + i); });
+    var dl = f.querySelector('label[for="b1"]'), dh = dl && dl.nextElementSibling;
+    if (dh && dh.firstChild && dh.firstChild.nodeType === 3) dh.firstChild.nodeValue = dh.firstChild.nodeValue.replace('Up to 5', 'Up to 3');
+  }
+  if (!f || !window.matchMedia || document.body.classList.contains('lite')) return;
+  var mq = window.matchMedia('(min-width:1100px)'), moved = [], made = [], gone = [], texts = [], on = false;
+  function $(id) { return document.getElementById(id); }
+  function up(id, sel) { var e = $(id); return e ? e.closest(sel) : null; }
+  function slot(n) { if (!n || !n.parentNode) return null; var c = document.createComment('dz'); n.parentNode.insertBefore(c, n); moved.push({ n: n, c: c }); return n; }
+  function put(box, nodes) { nodes.forEach(function (n) { if (slot(n)) box.appendChild(n); }); return box; }
+  function mk(cls) { var d = document.createElement('div'); d.className = cls; made.push(d); return d; }
+  function hintAfter(l) { var h = l && l.nextElementSibling; return h && h.classList.contains('hint') ? h : null; }
+  function lab(id) { return f.querySelector('label[for="' + id + '"]'); }
+  function grp(label, extra) { var l = lab(label); var d = mk('pz-grp'); return put(d, [l, hintAfter(l)].concat(extra)); }
+  function setText(n, s) { if (n) { texts.push({ n: n, s: n.textContent }); n.textContent = s; } }
+  function hide(n) { if (n) { n.classList.add('dz-gone'); gone.push(n); } }
+  function arrange() {
+    if (on) return; on = true;
+    try {
+      var hp = f.querySelector('.hp');
+      var q1 = up('whatTaps', 'fieldset'), q2 = up('lookTaps', 'fieldset'), q3 = up('ttl', '.field'), gbw = up('site', '.field'),
+          ph4 = up('pvHouse', '.field'), q5 = up('sizeTaps', 'fieldset'), q6 = up('rush', '.field'), q7 = up('biz', '.field'), q8 = up('nm', '.field');
+      var zl = mk('zl'), poster = mk('poster'), zr = mk('zr');
+      put(zl, [q1, q2]);
+      // top of the poster
+      var head = put(mk('pz-head'), [q3.children[0], q3.children[1]]);
+      var photos = mk('pz-photos');
+      var ph4head = put(mk('pz-photohead'), []); ph4head.textContent = 'Add photos (if you want): each photo has its own spot.'; photos.appendChild(ph4head);
+      put(photos, [$('pvHeadshot').closest('.gbox'), $('pvHouse').closest('.gbox'), $('pvLogo').closest('.gbox'), $('ePic')]);
+      // the words
+      var gT = grp('ttl', [$('ttl'), $('eTtl')]);
+      var gH = grp('hdg', [$('hdg')]);
+      var gB = grp('b1', ['b1', 'b2', 'b3', 'b4', 'b5'].map(function (i) { return $(i).parentNode; }).concat([$('eBdy')]));
+      var gC = grp('cta', [$('cta'), $('eCta')]);
+      // the bottom strip
+      $('biz').setAttribute('aria-label', 'Business name');
+      var foot = put(mk('pz-foot'), [$('biz'), $('ph'), $('eBiz'), $('ePh'), $('site').closest('.gbox')]);
+      poster.appendChild(head); poster.appendChild(photos); poster.appendChild(gT); poster.appendChild(gH); poster.appendChild(gB); poster.appendChild(gC); poster.appendChild(foot);
+      // the right side
+      put(zr, [q5, q6, q7, q8, $('priceBox')]);
+      var send = put(mk('pz-send'), [$('barTot'), $('sendBtn')]); zr.appendChild(send);
+      hide($('sendBar'));
+      setText(q5.querySelector('.qn'), '4'); if (!LEAN) setText(q6.querySelector('.qn'), '5'); setText(q8.querySelector('.qn'), LEAN ? '5' : '6');
+      var q8t = q8.children[0]; if (q8t) { var nn = q8t.lastChild; if (nn && nn.nodeType === 3) setText(nn, 'Your name and email'); }
+      var q3t = head.children[0]; if (q3t && q3t.lastChild && q3t.lastChild.nodeType === 3) setText(q3t.lastChild, 'Your graphic: type right on it');
+      hide(q7.children[0]);   // "7 Business name" title: the name now lives in the poster footer
+      hide(q3); hide(gbw); hide(ph4);
+      f.insertBefore(zl, hp); f.insertBefore(poster, hp); f.insertBefore(zr, hp);
+      document.body.classList.add('dz');
+    } catch (e) { restore(); }
+  }
+  function restore() {
+    moved.slice().reverse().forEach(function (m) { if (m.c.parentNode) { m.c.parentNode.insertBefore(m.n, m.c); m.c.parentNode.removeChild(m.c); } });
+    made.forEach(function (d) { if (d.parentNode) d.parentNode.removeChild(d); });
+    gone.forEach(function (n) { n.classList.remove('dz-gone'); });
+    texts.slice().reverse().forEach(function (x) { x.n.textContent = x.s; });
+    moved = []; made = []; gone = []; texts = []; on = false;
+    document.body.classList.remove('dz');
+  }
+  /* full screen: the first tap on a wide screen goes full screen (browsers only allow it after a tap); a corner button turns it on and off */
+  var fsBtn = null, fsTried = false, FS = !!(document.fullscreenEnabled && document.documentElement.requestFullscreen);
+  function fsLabel() { if (fsBtn) fsBtn.textContent = document.fullscreenElement ? 'Exit full screen' : 'Full screen'; }
+  function fsToggle() { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (e) { /* ok */ } }
+  function fsFirstTap(e) {
+    if (!on || !mq.matches || fsTried || document.fullscreenElement) return;
+    fsTried = true;
+    if (fsBtn && (e.target === fsBtn)) return;
+    try { var r = document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(function () { /* ok */ }); } catch (x) { /* ok */ }
+  }
+  function fsAdd() {
+    if (!FS || fsBtn) return;
+    var wrap = f.parentNode, anchor = wrap.querySelector('.loading') || f;
+    fsBtn = document.createElement('button'); fsBtn.type = 'button'; fsBtn.className = 'pz-fs'; fsBtn.setAttribute('aria-label', 'Full screen on or off');
+    fsBtn.addEventListener('click', function () { fsTried = true; fsToggle(); });
+    wrap.insertBefore(fsBtn, anchor); fsLabel();
+  }
+  function fsRemove() { if (fsBtn && fsBtn.parentNode) fsBtn.parentNode.removeChild(fsBtn); fsBtn = null; }
+  document.addEventListener('pointerdown', fsFirstTap, true);
+  document.addEventListener('fullscreenchange', fsLabel);
+  /* start screen: one big button that goes full screen and then shows the form (wide screens only; phones go straight to the form) */
+  var startEl = null, startDone = false, startFill = function () {};
+  document.addEventListener('DOMContentLoaded', function () { startFill(); });
+  window.addEventListener('load', function () { startFill(); });
+  function startHide() { if (startEl && startEl.parentNode) startEl.parentNode.removeChild(startEl); startEl = null; }
+  function startShow() {
+    if (startDone || startEl || !on || !mq.matches || document.fullscreenElement) return;
+    var title = (document.getElementById('pkTitle') || {}).textContent || 'Order a graphic';
+    var subEl = document.querySelector('.top .sub'), tzEl = document.querySelector('.top .tzLine');
+    startEl = document.createElement('div'); startEl.id = 'pzStart'; startEl.setAttribute('role', 'dialog'); startEl.setAttribute('aria-modal', 'true'); startEl.setAttribute('aria-label', 'Start your order');
+    var card = document.createElement('div'); card.className = 'pzs-card';
+    var logo = document.createElement('div'); logo.className = 'pzs-logo'; logo.textContent = 'CP'; logo.setAttribute('aria-hidden', 'true');
+    var h = document.createElement('h2'); h.className = 'pzs-h'; h.textContent = title;
+    var p1 = document.createElement('p'); p1.className = 'pzs-p'; p1.textContent = (subEl && subEl.textContent) || '$25 \u00b7 Your first one is free \u00b7 Preview in about 5 hours';
+    var p2 = document.createElement('p'); p2.className = 'pzs-p2'; p2.textContent = (tzEl && tzEl.textContent) || '';
+    var go = document.createElement('button'); go.type = 'button'; go.className = 'pzs-go'; go.textContent = 'Start my order';
+    var s = document.createElement('p'); s.className = 'pzs-s'; s.textContent = FS ? 'Your order opens in full screen. Press Esc any time to leave full screen.' : '';
+    [logo, h, p1, p2, go, s].forEach(function (n) { card.appendChild(n); });
+    startFill = function () {
+      var tt = document.getElementById('pkTitle'), sb = document.querySelector('.top .sub'), tz = document.querySelector('.top .tzLine');
+      if (tt && tt.textContent) h.textContent = tt.textContent; if (sb && sb.textContent) p1.textContent = sb.textContent; p2.textContent = (tz && tz.textContent) || '';
+    };
+    startEl.appendChild(card); document.body.appendChild(startEl);
+    go.addEventListener('click', function () {
+      startDone = true; fsTried = true;
+      if (FS && !document.fullscreenElement) { try { var r = document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(function () { /* ok */ }); } catch (x) { /* ok */ } }
+      startHide();
+      var first = document.querySelector('#whatTaps input'); try { if (first) first.focus({ preventScroll: true }); } catch (e) { /* ok */ }
+    });
+    try { go.focus(); } catch (e) { /* ok */ }
+    startFill();
+  }
+  function sync() { if (mq.matches) { arrange(); fsAdd(); setTimeout(startShow, 0); } else if (on) { restore(); fsRemove(); startHide(); } }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync); else if (mq.addListener) mq.addListener(sync);
+})();
+</script>
+<script>
+/* CPMG holiday list v1.0-TEST (Nov 3, 2026): the "Which holiday?" drop-down only lists holidays coming up in the next 60 days (today up to the day),
+   so right now it shows Veterans Day through New Year's Day. It changes by itself as the year goes on. "Other" is always there.
+   If this script fails, the full list in the page stays. */
+(function () {
+  var sel = document.getElementById('holiday'); if (!sel) return;
+  function nth(y, m, n, wd) { var d = new Date(y, m, 1), add = (wd - d.getDay() + 7) % 7; return new Date(y, m, 1 + add + (n - 1) * 7); }
+  function last(y, m, wd) { var d = new Date(y, m + 1, 0); return new Date(y, m, d.getDate() - ((d.getDay() - wd + 7) % 7)); }
+  function easter(y) { var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mo = Math.floor((h + l - 7 * m + 114) / 31), da = ((h + l - 7 * m + 114) % 31) + 1; return new Date(y, mo - 1, da); }
+  function hanuk(y) { try { var f = new Intl.DateTimeFormat('en-u-ca-hebrew', { day: 'numeric', month: 'long' }); for (var d = new Date(y, 10, 20); d <= new Date(y, 11, 31); d = new Date(y, d.getMonth(), d.getDate() + 1)) { var p = f.formatToParts(d), dy = p.filter(function (x) { return x.type === 'day'; })[0], mo = p.filter(function (x) { return x.type === 'month'; })[0]; if (dy && mo && dy.value === '25' && /kislev/i.test(mo.value)) return new Date(y, d.getMonth(), d.getDate() - 1); } } catch (e) { /* no Hebrew calendar on this phone: skip it */ } return null; }   // first candle is the evening before Kislev 25
+  function list(y) { var hk = hanuk(y); return (hk ? [['Hanukkah', hk]] : []).concat([
+    ["New Year's Day", new Date(y, 0, 1)], ['Martin Luther King Jr. Day', nth(y, 0, 3, 1)], ["Valentine's Day", new Date(y, 1, 14)], ["Presidents' Day", nth(y, 1, 3, 1)],
+    ["St. Patrick's Day", new Date(y, 2, 17)], ['Easter', easter(y)], ["Mother's Day", nth(y, 4, 2, 0)], ['Memorial Day', last(y, 4, 1)], ["Father's Day", nth(y, 5, 3, 0)],
+    ['4th of July', new Date(y, 6, 4)], ['Labor Day', nth(y, 8, 1, 1)], ['Halloween', new Date(y, 9, 31)], ['Veterans Day', new Date(y, 10, 11)],
+    ['Thanksgiving', nth(y, 10, 4, 4)], ['Christmas', new Date(y, 11, 25)], ["New Year's Eve", new Date(y, 11, 31)] ]); }
+  try {
+    var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), y = now.getFullYear(), DAY = 86400000, WINDOW = 60;
+    var up = list(y).concat(list(y + 1)).filter(function (h) { var n = Math.round((h[1] - t0) / DAY); return n >= (h[0] === 'Hanukkah' ? -6 : 0) && n <= WINDOW; }).sort(function (a, b) { return a[1] - b[1]; });
+    var m0 = now.getMonth();
+    if (m0 === 10 || m0 === 11) up.unshift(["Season's greetings", null, 'for everyone']);   // neutral winter look (no religious symbols), Nov 1 to Dec 31
+    if (!up.length) return;
+    var M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    sel.innerHTML = '';
+    var o = document.createElement('option'); o.value = ''; o.textContent = 'Choose a holiday\u2026'; sel.appendChild(o);
+    up.forEach(function (h) { var x = document.createElement('option'); x.value = h[0]; x.textContent = h[0] + ' \u00b7 ' + (h[1] ? M[h[1].getMonth()] + ' ' + h[1].getDate() : h[2]); sel.appendChild(x); });
+    var z = document.createElement('option'); z.value = 'Other (put it in the title)'; z.textContent = 'Other (put it in the title)'; sel.appendChild(z);
+    // break the list out as big tap buttons (the drop-down stays hidden underneath and holds the value the order uses)
+    var wrap = document.createElement('div'); wrap.className = 'hgrid'; wrap.setAttribute('role', 'group'); wrap.setAttribute('aria-label', 'Which holiday?');
+    var btns = [];
+    function mk(val, name, date) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'hbtn'; b.setAttribute('aria-pressed', 'false');
+      var n = document.createElement('span'); n.textContent = name; b.appendChild(n);
+      if (date) { var d = document.createElement('small'); d.textContent = date; b.appendChild(d); }
+      b.addEventListener('click', function () {
+        var on = b.getAttribute('aria-pressed') === 'true';
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        sel.value = on ? '' : val; if (!on) b.setAttribute('aria-pressed', 'true');
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      btns.push(b); wrap.appendChild(b);
+    }
+    up.forEach(function (h) { mk(h[0], h[0], h[1] ? M[h[1].getMonth()] + ' ' + h[1].getDate() : h[2]); });
+    mk('Other (put it in the title)', 'Other', 'put it in the title');
+    sel.style.display = 'none'; sel.parentNode.insertBefore(wrap, sel.nextSibling);
+  } catch (e) { /* keep the full list */ }
+})();
+</script>
+<script>
+/* CPMG laptop camera v1.0-TEST (Nov 3, 2026): browsers ignore "capture" on laptops, so "Take a picture" only opened the file picker.
+   On a device with a mouse (not a phone) the button now opens a small camera window. The photo goes into the same Upload box,
+   so the rest of the form does not change. No camera, or the camera is blocked: it says so and Upload still works. Phones are not touched. */
+(function () {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
+  var labels = document.querySelectorAll('label.btn[for^="cam"]');
+  if (!labels.length) return;
+  var box = null, stream = null;
+  function stop() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+  function close() { stop(); if (box) { box.remove(); box = null; } document.removeEventListener('keydown', onKey); }
+  function onKey(e) { if (e.key === 'Escape') close(); }
+  function el(tag, css, txt) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (txt) e.textContent = txt; return e; }
+  var BTN = 'font:700 20px Arial,sans-serif;padding:14px 26px;border-radius:12px;cursor:pointer;margin:6px;border:2px solid #1f7a4d;';
+  function open(upId) {
+    close();
+    box = el('div', 'position:fixed;inset:0;z-index:2147483200;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:16px');
+    box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true');
+    var card = el('div', 'background:#fff;color:#1f2a24;border-radius:16px;padding:16px;max-width:560px;width:100%;text-align:center;font-family:Arial,sans-serif');
+    var msg = el('p', 'font-size:19px;margin:0 0 10px', 'Getting your camera ready…');
+    var vid = el('video', 'width:100%;max-height:60vh;border-radius:12px;background:#000;display:none'); vid.autoplay = true; vid.muted = true; vid.setAttribute('playsinline', '');
+    var row = el('div', 'margin-top:10px');
+    var go = el('button', BTN + 'background:#1f7a4d;color:#fff;display:none', 'Take photo'); go.type = 'button';
+    var no = el('button', BTN + 'background:#fff;color:#1f7a4d', 'Cancel'); no.type = 'button';
+    row.appendChild(go); row.appendChild(no); card.appendChild(msg); card.appendChild(vid); card.appendChild(row); box.appendChild(card); document.body.appendChild(box);
+    document.addEventListener('keydown', onKey);
+    no.addEventListener('click', close);
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (st) {
+      if (!box) { st.getTracks().forEach(function (t) { t.stop(); }); return; }
+      stream = st; vid.srcObject = st; vid.style.display = 'block'; go.style.display = 'inline-block'; msg.textContent = 'Smile! Tap Take photo.';
+      go.addEventListener('click', function () {
+        var w = vid.videoWidth || 1280, h = vid.videoHeight || 720, c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(vid, 0, 0, w, h);
+        c.toBlob(function (b) {
+          if (!b) { msg.textContent = 'That did not work. Please tap Cancel and use Upload.'; return; }
+          var file = new File([b], 'camera-photo.jpg', { type: 'image/jpeg' }), inp = document.getElementById(upId);
+          try { var dt = new DataTransfer(); dt.items.add(file); inp.files = dt.files; inp.dispatchEvent(new Event('change', { bubbles: true })); } catch (e) { msg.textContent = 'That did not work. Please tap Cancel and use Upload.'; return; }
+          close();
+        }, 'image/jpeg', 0.92);
+      });
+    }, function () { msg.textContent = 'We could not open your camera. Tap Cancel, then use Upload to pick a picture instead.'; });
+  }
+  [].forEach.call(labels, function (lb) {
+    lb.addEventListener('click', function (e) { e.preventDefault(); open((lb.getAttribute('for') || '').replace(/^cam/, 'up')); });
+  });
+})();
+</script>
+<script src="../../cpmg-order-config-test.js?v=1.0"></script>
+<script src="../../cpmg-order-test.js?v=1.8"></script>
+<script>
+(function () {
+  'use strict';
+  // ===== INDUSTRY PACKS (v3.0) — everything that changes by industry =====
+  // ===== PACKS START (built by tools/build-order-forms.py — edit tools/cpmg_packs.py, not here) =====
+  var PACKS = {
+ "real-estate": {
+  "industry": "Real estate",
+  "form": "Real estate",
+  "title": "Order a real estate graphic",
+  "foot": "CPMG Real Estate Order",
+  "about": "We make professional graphics for local businesses, fast. Real estate agents use us for just listed, open house, price drop and just sold posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Just listed",
+    "home"
+   ],
+   [
+    "Open house",
+    "door"
+   ],
+   [
+    "Just sold",
+    "home-check"
+   ],
+   [
+    "Price drop",
+    "tag"
+   ],
+   [
+    "Coming soon",
+    "calendar"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Luxury",
+    "diamond",
+    "High-end homes",
+    "luxury"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Sleek and simple",
+    "modern"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm neighborhood feel",
+    "friendly"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "Beach vibe",
+    "sun",
+    "Sunny Carolina beach house",
+    "beach-vibe"
+   ],
+   [
+    "Southern charm",
+    "trees",
+    "Classic Carolina porch and oaks",
+    "southern-charm"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Pick the holiday",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Brokerage",
+   "hint": "The real estate company you work under.",
+   "ph": "Main Street Realty",
+   "need": "Type your brokerage name.",
+   "key": "brokerage",
+   "note": "Brokerage",
+   "store": "cpmgExtra_real-estate"
+  },
+  "biz": "Smith Home Team",
+  "photo1": [
+   "House photo",
+   "Big background. Your words go on top.",
+   "The house",
+   "House"
+  ],
+  "ex": {
+   "": [
+    "Just Listed",
+    "123 Oak Street",
+    [
+     "3 beds, 2 baths",
+     "$425,000",
+     "1,850 sq. ft.",
+     "",
+     ""
+    ],
+    "Call me for a showing"
+   ],
+   "Just listed": [
+    "Just Listed",
+    "123 Oak Street",
+    [
+     "3 beds, 2 baths",
+     "$425,000",
+     "1,850 sq. ft.",
+     "Pool and big backyard",
+     "Near shops and schools"
+    ],
+    "Call me for a showing"
+   ],
+   "Open house": [
+    "Open House",
+    "123 Oak Street",
+    [
+     "Sunday 1 to 4 p.m.",
+     "3 beds, 2 baths",
+     "$425,000",
+     "Brand-new kitchen",
+     ""
+    ],
+    "Stop by and say hi"
+   ],
+   "Just sold": [
+    "Just Sold",
+    "123 Oak Street",
+    [
+     "Sold in 9 days",
+     "Over asking price",
+     "3 beds, 2 baths",
+     "",
+     ""
+    ],
+    "Thinking of selling? Call me"
+   ],
+   "Price drop": [
+    "New Price",
+    "123 Oak Street",
+    [
+     "Now $399,000",
+     "Was $425,000",
+     "3 beds, 2 baths",
+     "Move-in ready",
+     ""
+    ],
+    "Book a showing today"
+   ],
+   "Coming soon": [
+    "Coming Soon",
+    "123 Oak Street",
+    [
+     "3 beds, 2 baths",
+     "Big backyard",
+     "Quiet street",
+     "",
+     ""
+    ],
+    "Call me for early access"
+   ],
+   "Something else": [
+    "Happy Thanksgiving",
+    "From my family to yours",
+    [
+     "Thank you for your trust",
+     "Wishing you a warm holiday",
+     "",
+     "",
+     ""
+    ],
+    "Call me anytime"
+   ]
+  }
+ },
+ "restaurant": {
+  "industry": "Restaurant",
+  "form": "Restaurant",
+  "title": "Order a graphic for your restaurant",
+  "foot": "CPMG Restaurant Order",
+  "about": "We make professional graphics for local businesses, fast. Restaurants and bars use us for daily specials, happy hours, live music and events that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your restaurant. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your food, your bar or dining room, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Daily special",
+    "tools-kitchen-2"
+   ],
+   [
+    "Happy hour",
+    "glass-full"
+   ],
+   [
+    "Live music",
+    "music"
+   ],
+   [
+    "Event",
+    "calendar-event"
+   ],
+   [
+    "Holiday hours",
+    "clock"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "3D poster",
+    "cube",
+    "Bold 3D, Myrtle Beach vibe",
+    "3d-poster"
+   ],
+   [
+    "Chalkboard",
+    "chalkboard",
+    "Hand-drawn menu board",
+    "chalkboard"
+   ],
+   [
+    "Casual",
+    "mood-smile",
+    "Warm and friendly",
+    "casual"
+   ],
+   [
+    "Beach vibe",
+    "sun",
+    "Summer and sunny",
+    "beach-vibe"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Pick the holiday",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "What kind of place? (if you want)",
+   "hint": "A few words, like seafood restaurant, sports bar or cafe.",
+   "ph": "Seafood restaurant",
+   "need": "",
+   "key": "placeType",
+   "note": "Kind of place",
+   "store": "cpmgExtra_restaurant"
+  },
+  "biz": "Smith's Seafood Grill",
+  "photo1": [
+   "Food or place photo",
+   "Big background, like your dish, your bar or your dining room. Your words go on top.",
+   "Food or place photo",
+   "Food"
+  ],
+  "ex": {
+   "": [
+    "Tonight's Special",
+    "Shrimp and Grits",
+    [
+     "$14.99",
+     "Served 5 to 9 p.m.",
+     "Fresh local shrimp",
+     "",
+     ""
+    ],
+    "Come hungry!"
+   ],
+   "Daily special": [
+    "Tonight's Special",
+    "Shrimp and Grits",
+    [
+     "$14.99",
+     "Served 5 to 9 p.m.",
+     "Fresh local shrimp",
+     "",
+     ""
+    ],
+    "Come hungry!"
+   ],
+   "Happy hour": [
+    "Happy Hour",
+    "Every day 4 to 6 p.m.",
+    [
+     "$3 draft beer",
+     "$5 house wine",
+     "Half-price wings",
+     "",
+     ""
+    ],
+    "See you at the bar"
+   ],
+   "Live music": [
+    "Live Music Tonight",
+    "The Tide Riders",
+    [
+     "8 p.m. to 11 p.m.",
+     "No cover",
+     "Full dinner menu",
+     "",
+     ""
+    ],
+    "Grab a table early"
+   ],
+   "Event": [
+    "Trivia Night",
+    "Every Tuesday at 7",
+    [
+     "Prizes for the top 3 teams",
+     "Free to play",
+     "Kitchen open late",
+     "",
+     ""
+    ],
+    "Bring your team"
+   ],
+   "Holiday hours": [
+    "Holiday Hours",
+    "Thanksgiving Week",
+    [
+     "Wednesday: open till 9",
+     "Thursday: closed",
+     "Friday: back to normal",
+     "",
+     ""
+    ],
+    "Happy Thanksgiving!"
+   ],
+   "Something else": [
+    "Now Open for Lunch",
+    "Monday to Friday",
+    [
+     "11 a.m. to 2 p.m.",
+     "Fast and fresh",
+     "Call-in orders welcome",
+     "",
+     ""
+    ],
+    "Stop in today"
+   ]
+  }
+ },
+ "plumbing": {
+  "industry": "Plumbing",
+  "form": "Plumbing",
+  "title": "Order a graphic for your plumbing business",
+  "foot": "CPMG Plumbing Order",
+  "about": "We make professional graphics for local businesses, fast. Plumbers use us for freeze warnings, water heater specials and emergency service posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your plumbing business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your truck or your work, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Freeze warning",
+    "snowflake"
+   ],
+   [
+    "Water heater special",
+    "flame"
+   ],
+   [
+    "Emergency service",
+    "alarm"
+   ],
+   [
+    "Drain cleaning",
+    "droplet"
+   ],
+   [
+    "Seasonal checkup",
+    "calendar-check"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Cartoon mascot",
+    "mood-happy",
+    "Fun cartoon helper",
+    "cartoon"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "License number (if you want)",
+   "hint": "We can put it at the bottom, if you like.",
+   "ph": "SC #12345",
+   "need": "",
+   "key": "license",
+   "note": "License number",
+   "store": "cpmgExtra_plumbing"
+  },
+  "biz": "Smith Plumbing",
+  "photo1": [
+   "Truck or work photo",
+   "Big background, like your work truck or a job you did. Your words go on top.",
+   "Truck or work photo",
+   "Truck"
+  ],
+  "ex": {
+   "": [
+    "Freeze Warning",
+    "Protect Your Pipes",
+    [
+     "Pipes can freeze at 32°",
+     "Drip your faucets",
+     "Cover outdoor spigots",
+     "",
+     ""
+    ],
+    "Call before it bursts"
+   ],
+   "Freeze warning": [
+    "Freeze Warning",
+    "Protect Your Pipes",
+    [
+     "Pipes can freeze at 32°",
+     "Drip your faucets",
+     "Cover outdoor spigots",
+     "",
+     ""
+    ],
+    "Call before it bursts"
+   ],
+   "Water heater special": [
+    "Water Heater Special",
+    "$100 Off Installation",
+    [
+     "This month only",
+     "Same-day service",
+     "Free old tank removal",
+     "",
+     ""
+    ],
+    "Call to book today"
+   ],
+   "Emergency service": [
+    "24/7 Emergency Plumbing",
+    "Leaks, clogs, burst pipes",
+    [
+     "Fast response",
+     "No extra charge on weekends",
+     "Licensed and insured",
+     "",
+     ""
+    ],
+    "Call now"
+   ],
+   "Drain cleaning": [
+    "Slow Drains?",
+    "Drain Cleaning $89",
+    [
+     "Kitchen and bath",
+     "Done in under an hour",
+     "Clean, friendly techs",
+     "",
+     ""
+    ],
+    "Book your visit"
+   ],
+   "Seasonal checkup": [
+    "Fall Plumbing Checkup",
+    "Only $59",
+    [
+     "Check for leaks",
+     "Test your water heater",
+     "Avoid winter surprises",
+     "",
+     ""
+    ],
+    "Schedule today"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our crew to you",
+    [
+     "We appreciate your business",
+     "Proudly serving our town",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "hvac": {
+  "industry": "HVAC",
+  "form": "HVAC",
+  "title": "Order a graphic for your heating and air business",
+  "foot": "CPMG HVAC Order",
+  "about": "We make professional graphics for local businesses, fast. Heating and air companies use us for tune-up specials, new system sales and heat wave or cold snap posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your heating and air business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your truck or your work, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Tune-up special",
+    "tool"
+   ],
+   [
+    "New system sale",
+    "air-conditioning"
+   ],
+   [
+    "Emergency service",
+    "alarm"
+   ],
+   [
+    "Heat wave or cold snap",
+    "temperature"
+   ],
+   [
+    "Maintenance plan",
+    "calendar-check"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Cartoon mascot",
+    "mood-happy",
+    "Fun cartoon helper",
+    "cartoon"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "License number (if you want)",
+   "hint": "We can put it at the bottom, if you like.",
+   "ph": "SC #12345",
+   "need": "",
+   "key": "license",
+   "note": "License number",
+   "store": "cpmgExtra_hvac"
+  },
+  "biz": "Smith Heating and Air",
+  "photo1": [
+   "Truck or work photo",
+   "Big background, like your work truck or a unit you installed. Your words go on top.",
+   "Truck or work photo",
+   "Truck"
+  ],
+  "ex": {
+   "": [
+    "Fall Tune-Up Special",
+    "Only $79",
+    [
+     "Furnace safety check",
+     "Clean and test",
+     "Lower your bills",
+     "",
+     ""
+    ],
+    "Book your tune-up"
+   ],
+   "Tune-up special": [
+    "Fall Tune-Up Special",
+    "Only $79",
+    [
+     "Furnace safety check",
+     "Clean and test",
+     "Lower your bills",
+     "",
+     ""
+    ],
+    "Book your tune-up"
+   ],
+   "New system sale": [
+    "New AC System Sale",
+    "Up to $1,500 Off",
+    [
+     "Energy-saving units",
+     "Easy financing",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call for your quote"
+   ],
+   "Emergency service": [
+    "No Heat? No Problem.",
+    "24/7 Emergency Service",
+    [
+     "Fast response",
+     "Licensed techs",
+     "Fair, upfront prices",
+     "",
+     ""
+    ],
+    "Call now"
+   ],
+   "Heat wave or cold snap": [
+    "Cold Snap Coming",
+    "Is Your Heat Ready?",
+    [
+     "Change your filter",
+     "Test your system now",
+     "Beat the rush",
+     "",
+     ""
+    ],
+    "Call for a checkup"
+   ],
+   "Maintenance plan": [
+    "Comfort Club",
+    "$12 a Month",
+    [
+     "2 tune-ups a year",
+     "Priority service",
+     "15% off repairs",
+     "",
+     ""
+    ],
+    "Join today"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our team to you",
+    [
+     "We appreciate your business",
+     "Proudly serving our town",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "lawn-care": {
+  "industry": "Lawn care",
+  "form": "Lawn care",
+  "title": "Order a graphic for your lawn care business",
+  "foot": "CPMG Lawn Care Order",
+  "about": "We make professional graphics for local businesses, fast. Lawn care companies use us for spring and fall cleanups, weekly mowing and seasonal specials that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your lawn care business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like a yard you did, your truck, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Spring cleanup",
+    "plant"
+   ],
+   [
+    "Fall cleanup",
+    "leaf"
+   ],
+   [
+    "Weekly mowing",
+    "grass"
+   ],
+   [
+    "Seasonal special",
+    "tag"
+   ],
+   [
+    "Now booking",
+    "calendar"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Cartoon mascot",
+    "mood-happy",
+    "Fun cartoon helper",
+    "cartoon"
+   ],
+   [
+    "Fresh and green",
+    "plant-2",
+    "Bright green and clean",
+    "fresh-green"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Areas you serve (if you want)",
+   "hint": "A few town names, like Conway and Myrtle Beach.",
+   "ph": "Conway, Myrtle Beach",
+   "need": "",
+   "key": "areas",
+   "note": "Areas served",
+   "store": "cpmgExtra_lawn-care"
+  },
+  "biz": "Smith Lawn Care",
+  "photo1": [
+   "Yard or truck photo",
+   "Big background, like a yard you did or your work truck. Your words go on top.",
+   "Yard or truck photo",
+   "Yard"
+  ],
+  "ex": {
+   "": [
+    "Fall Cleanup",
+    "Leaves Gone in a Day",
+    [
+     "Leaf removal",
+     "Bed cleanup",
+     "Gutter check",
+     "",
+     ""
+    ],
+    "Call for a free quote"
+   ],
+   "Spring cleanup": [
+    "Spring Cleanup",
+    "Get Your Yard Ready",
+    [
+     "Mulch and edging",
+     "Weed control",
+     "First mow of the year",
+     "",
+     ""
+    ],
+    "Book your spot"
+   ],
+   "Fall cleanup": [
+    "Fall Cleanup",
+    "Leaves Gone in a Day",
+    [
+     "Leaf removal",
+     "Bed cleanup",
+     "Gutter check",
+     "",
+     ""
+    ],
+    "Call for a free quote"
+   ],
+   "Weekly mowing": [
+    "Weekly Mowing",
+    "Starting at $35",
+    [
+     "Mow, edge and blow",
+     "Same day every week",
+     "No contracts",
+     "",
+     ""
+    ],
+    "Sign up today"
+   ],
+   "Seasonal special": [
+    "Aeration Special",
+    "$20 Off This Month",
+    [
+     "Thicker, greener grass",
+     "Done in one visit",
+     "",
+     "",
+     ""
+    ],
+    "Call to book"
+   ],
+   "Now booking": [
+    "Now Booking",
+    "Spring Lawn Service",
+    [
+     "Spots filling fast",
+     "Free estimates",
+     "",
+     "",
+     ""
+    ],
+    "Call or text today"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our crew to you",
+    [
+     "We appreciate your business",
+     "Proudly serving our town",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "cpa": {
+  "industry": "CPA and tax",
+  "form": "CPA and tax",
+  "title": "Order a graphic for your tax and accounting office",
+  "foot": "CPMG CPA Order",
+  "about": "We make professional graphics for local businesses, fast. CPAs and tax offices use us for tax season, deadline reminders and new client specials that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your office. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your office, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Tax season",
+    "file-invoice"
+   ],
+   [
+    "Deadline reminder",
+    "calendar-due"
+   ],
+   [
+    "New client special",
+    "user-plus"
+   ],
+   [
+    "Business services",
+    "building"
+   ],
+   [
+    "Holiday hours",
+    "clock"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Credentials (if you want)",
+   "hint": "Like CPA, EA or enrolled agent.",
+   "ph": "CPA",
+   "need": "",
+   "key": "credentials",
+   "note": "Credentials",
+   "store": "cpmgExtra_cpa"
+  },
+  "biz": "Smith Tax and Accounting",
+  "photo1": [
+   "Office photo",
+   "Big background, like your office or front desk. Your words go on top.",
+   "Office photo",
+   "Office"
+  ],
+  "ex": {
+   "": [
+    "Tax Season Is Here",
+    "Smith Tax and Accounting",
+    [
+     "Personal and small business",
+     "Open Saturdays in March",
+     "Fast, friendly, accurate",
+     "",
+     ""
+    ],
+    "Book your appointment today"
+   ],
+   "Tax season": [
+    "Tax Season Is Here",
+    "Smith Tax and Accounting",
+    [
+     "Personal and small business",
+     "Open Saturdays in March",
+     "Fast, friendly, accurate",
+     "",
+     ""
+    ],
+    "Book your appointment today"
+   ],
+   "Deadline reminder": [
+    "Don't Miss It",
+    "Taxes Due April 15",
+    [
+     "Need more time?",
+     "We can file an extension",
+     "",
+     "",
+     ""
+    ],
+    "Call us this week"
+   ],
+   "New client special": [
+    "New Clients",
+    "$25 Off Your Tax Return",
+    [
+     "First visit only",
+     "Bring last year's return",
+     "",
+     "",
+     ""
+    ],
+    "Book today"
+   ],
+   "Business services": [
+    "Small Business Help",
+    "Bookkeeping and Payroll",
+    [
+     "Monthly plans",
+     "Clear, simple reports",
+     "Local and friendly",
+     "",
+     ""
+    ],
+    "Call for a free chat"
+   ],
+   "Holiday hours": [
+    "Holiday Hours",
+    "Thanksgiving Week",
+    [
+     "Wednesday: 9 a.m. to 3 p.m.",
+     "Thursday and Friday: closed",
+     "Back Monday at 9",
+     "",
+     ""
+    ],
+    "Happy Thanksgiving!"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our office to you",
+    [
+     "We appreciate your trust",
+     "Proudly serving our town",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "home-inspector": {
+  "industry": "Home inspector",
+  "form": "Home inspector",
+  "title": "Order a graphic for your home inspection business",
+  "foot": "CPMG Home Inspector Order",
+  "about": "We make professional graphics for local businesses, fast. Home inspectors use us for book-an-inspection, pre-listing and special offer posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your inspection business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like a home you inspected, your truck, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Book an inspection",
+    "clipboard-check"
+   ],
+   [
+    "Pre-listing inspection",
+    "home-search"
+   ],
+   [
+    "Special offer",
+    "tag"
+   ],
+   [
+    "New service",
+    "sparkles"
+   ],
+   [
+    "Thank you",
+    "heart"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "License number (if you want)",
+   "hint": "We can put it at the bottom, if you like.",
+   "ph": "SC #12345",
+   "need": "",
+   "key": "license",
+   "note": "License number",
+   "store": "cpmgExtra_home-inspector"
+  },
+  "biz": "Smith Home Inspections",
+  "photo1": [
+   "Home or work photo",
+   "Big background, like a home you inspected or your truck. Your words go on top.",
+   "Home or work photo",
+   "Home"
+  ],
+  "ex": {
+   "": [
+    "Buying a Home?",
+    "Get It Inspected First",
+    [
+     "Full report in 24 hours",
+     "Photos of every issue",
+     "Licensed and insured",
+     "",
+     ""
+    ],
+    "Book your inspection"
+   ],
+   "Book an inspection": [
+    "Buying a Home?",
+    "Get It Inspected First",
+    [
+     "Full report in 24 hours",
+     "Photos of every issue",
+     "Licensed and insured",
+     "",
+     ""
+    ],
+    "Book your inspection"
+   ],
+   "Pre-listing inspection": [
+    "Selling Soon?",
+    "Pre-Listing Inspection",
+    [
+     "Find problems early",
+     "Sell faster",
+     "No surprises at closing",
+     "",
+     ""
+    ],
+    "Call to schedule"
+   ],
+   "Special offer": [
+    "$50 Off",
+    "Your Home Inspection",
+    [
+     "This month only",
+     "Mention this post",
+     "",
+     "",
+     ""
+    ],
+    "Book today"
+   ],
+   "New service": [
+    "Now Offering",
+    "Mold and Radon Testing",
+    [
+     "Fast results",
+     "Peace of mind",
+     "",
+     "",
+     ""
+    ],
+    "Ask about it today"
+   ],
+   "Thank you": [
+    "Thank You",
+    "To all our agents and buyers",
+    [
+     "We appreciate your trust",
+     "Proudly serving our town",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ],
+   "Something else": [
+    "Happy Thanksgiving",
+    "From our team to you",
+    [
+     "Thank you for your trust",
+     "Wishing you a warm holiday",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "concrete": {
+  "industry": "Concrete",
+  "form": "Concrete",
+  "title": "Order a graphic for your concrete business",
+  "foot": "CPMG Concrete Order",
+  "about": "We make professional graphics for local businesses, fast. Concrete contractors use us for driveway and patio specials, free estimates and job updates that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your concrete business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like a driveway or patio you poured, your truck, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Driveway special",
+    "road"
+   ],
+   [
+    "Patio or sidewalk",
+    "layout-grid"
+   ],
+   [
+    "Free estimate",
+    "calculator"
+   ],
+   [
+    "New concrete care",
+    "info-circle"
+   ],
+   [
+    "Now hiring",
+    "users"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "Before and after",
+    "arrows-left-right",
+    "Show the old and new",
+    "before-after"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Areas you serve (if you want)",
+   "hint": "A few town names, like Conway and Myrtle Beach.",
+   "ph": "Conway, Myrtle Beach",
+   "need": "",
+   "key": "areas",
+   "note": "Areas served",
+   "store": "cpmgExtra_concrete"
+  },
+  "biz": "ABC Concrete",
+  "photo1": [
+   "Job photo",
+   "Big background, like a driveway or patio you poured. Your words go on top.",
+   "Job photo",
+   "Job"
+  ],
+  "ex": {
+   "": [
+    "Driveway Special",
+    "New Driveways from $6 a sq. ft.",
+    [
+     "Old concrete torn out",
+     "Smooth, strong finish",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call for your quote"
+   ],
+   "Driveway special": [
+    "Driveway Special",
+    "New Driveways from $6 a sq. ft.",
+    [
+     "Old concrete torn out",
+     "Smooth, strong finish",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call for your quote"
+   ],
+   "Patio or sidewalk": [
+    "Backyard Patios",
+    "Built to Last",
+    [
+     "Plain or stamped",
+     "Done in about a week",
+     "Free estimate",
+     "",
+     ""
+    ],
+    "Call to get started"
+   ],
+   "Free estimate": [
+    "Free Estimates",
+    "Driveways, Patios, Slabs",
+    [
+     "We come to you",
+     "Written quote in 48 hours",
+     "Licensed and insured",
+     "",
+     ""
+    ],
+    "Call or text today"
+   ],
+   "New concrete care": [
+    "Your New Concrete",
+    "How to Care for It",
+    [
+     "Walk on it after 1 day",
+     "Drive on it after 7 days",
+     "Keep it damp the first week",
+     "",
+     ""
+    ],
+    "Questions? Call us"
+   ],
+   "Now hiring": [
+    "Now Hiring",
+    "Concrete Finishers",
+    [
+     "Full time, steady work",
+     "Good pay",
+     "Experience a plus",
+     "",
+     ""
+    ],
+    "Call us to apply"
+   ],
+   "Something else": [
+    "Rain Delay",
+    "Your Pour Is Moved",
+    [
+     "New date coming soon",
+     "Thank you for your patience",
+     "",
+     "",
+     ""
+    ],
+    "Call with questions"
+   ]
+  }
+ },
+ "business": {
+  "industry": "Small business",
+  "form": "Small business",
+  "title": "Order a graphic for your business",
+  "foot": "CPMG Business Order",
+  "about": "We make professional graphics for local businesses, fast. Shops, offices, salons and restaurants use us for specials, events, announcements and holiday hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shop, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Special or sale",
+    "tag"
+   ],
+   [
+    "Event",
+    "calendar-event"
+   ],
+   [
+    "Announcement",
+    "speakerphone"
+   ],
+   [
+    "Holiday hours",
+    "clock"
+   ],
+   [
+    "Now hiring",
+    "users"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Bold and bright",
+    "bolt",
+    "Grabs attention",
+    "bold"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "What kind of business?",
+   "hint": "A few words, like bookkeeping, bakery or hair salon.",
+   "ph": "Bookkeeping",
+   "need": "Type what kind of business you have.",
+   "key": "businessType",
+   "note": "Kind of business",
+   "store": "cpmgExtra_business"
+  },
+  "biz": "Smith Bookkeeping",
+  "photo1": [
+   "Main photo",
+   "Big background, like your shop, your food or your product. Your words go on top.",
+   "Main photo",
+   "Main"
+  ],
+  "ex": {
+   "": [
+    "Fall Special",
+    "20% Off All Services",
+    [
+     "This week only",
+     "Ends Saturday",
+     "Walk-ins welcome",
+     "",
+     ""
+    ],
+    "Call to book today"
+   ],
+   "Special or sale": [
+    "Fall Special",
+    "20% Off All Services",
+    [
+     "This week only",
+     "Ends Saturday",
+     "Walk-ins welcome",
+     "",
+     ""
+    ],
+    "Call to book today"
+   ],
+   "Event": [
+    "Customer Thank-You Day",
+    "Saturday, Nov 8 · 2 to 5 p.m.",
+    [
+     "Free snacks and drinks",
+     "Meet our team",
+     "Bring a friend",
+     "",
+     ""
+    ],
+    "Stop by and say hi"
+   ],
+   "Announcement": [
+    "Now Open Saturdays",
+    "Starting November 1",
+    [
+     "9 a.m. to 1 p.m.",
+     "Same friendly service",
+     "",
+     "",
+     ""
+    ],
+    "Call to make an appointment"
+   ],
+   "Holiday hours": [
+    "Holiday Hours",
+    "Thanksgiving Week",
+    [
+     "Wednesday: 9 a.m. to 3 p.m.",
+     "Thursday and Friday: closed",
+     "Back Monday at 9",
+     "",
+     ""
+    ],
+    "Happy Thanksgiving!"
+   ],
+   "Now hiring": [
+    "Now Hiring",
+    "Front Desk Help",
+    [
+     "Part time, flexible hours",
+     "Friendly team",
+     "Apply in person or online",
+     "",
+     ""
+    ],
+    "Call us to apply"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our team to you",
+    [
+     "We appreciate your business",
+     "Proudly serving our town",
+     "",
+     "",
+     ""
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "insurance": {
+  "industry": "Insurance agent",
+  "form": "Insurance agent",
+  "title": "Order a graphic for your insurance agency",
+  "foot": "CPMG Insurance Order",
+  "about": "We make professional graphics for local businesses, fast. Independent insurance agents use us for open enrollment, free quotes and reminders that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your agency. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your office, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Open enrollment",
+    "file-invoice"
+   ],
+   [
+    "Free quote",
+    "calendar-due"
+   ],
+   [
+    "Policy review",
+    "user-plus"
+   ],
+   [
+    "Renewal reminder",
+    "clock"
+   ],
+   [
+    "Community news",
+    "building"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Carrier or agency name (if you want)",
+   "hint": "Like the company you write for.",
+   "ph": "Smith Insurance Group",
+   "need": "",
+   "key": "agency",
+   "note": "Agency",
+   "store": "cpmgExtra_insurance"
+  },
+  "biz": "Smith Insurance Agency",
+  "photo1": [
+   "Office photo",
+   "Big background, like your office or front desk. Your words go on top.",
+   "Office photo",
+   "Office"
+  ],
+  "ex": {
+   "": [
+    "Open Enrollment Is Here",
+    "Smith Insurance Agency",
+    [
+     "Health, home and auto",
+     "We shop the rates for you",
+     "Friendly local help"
+    ],
+    "Call for a free quote"
+   ],
+   "Open enrollment": [
+    "Open Enrollment Is Here",
+    "Smith Insurance Agency",
+    [
+     "Health, home and auto",
+     "We shop the rates for you",
+     "Friendly local help"
+    ],
+    "Call for a free quote"
+   ],
+   "Free quote": [
+    "Free Quote",
+    "Home and Auto Bundle",
+    [
+     "Takes about 10 minutes",
+     "No pressure",
+     "Local and independent"
+    ],
+    "Call us today"
+   ],
+   "Policy review": [
+    "Policy Review",
+    "Is Your Coverage Still Right?",
+    [
+     "Free 15-minute check-up",
+     "See if you can save",
+     "Bring your current policy"
+    ],
+    "Book your review"
+   ],
+   "Renewal reminder": [
+    "Renewal Reminder",
+    "Your Policy Is Coming Up",
+    [
+     "Call before it renews",
+     "We can compare rates",
+     "Quick and easy"
+    ],
+    "Call us this week"
+   ],
+   "Community news": [
+    "Thank You, Neighbors",
+    "From Smith Insurance Agency",
+    [
+     "Proudly serving our town",
+     "We appreciate your trust"
+    ],
+    "Stop by and say hi"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our agency to you",
+    [
+     "We appreciate your trust",
+     "Proudly serving our town"
+    ],
+    "Call us anytime"
+   ]
+  }
+ },
+ "mountain-cabin": {
+  "industry": "Mountain cabin",
+  "form": "Mountain cabin",
+  "title": "Order a graphic for your cabin or mountain business",
+  "foot": "CPMG Mountain Cabin Order",
+  "about": "We make professional graphics for local businesses, fast. Cabin rental managers and mountain businesses use us for open dates, holiday specials and seasonal events that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your cabins. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your cabin, your view or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Open dates",
+    "calendar-due"
+   ],
+   [
+    "Holiday special",
+    "gift"
+   ],
+   [
+    "Last-minute deal",
+    "clock"
+   ],
+   [
+    "Event",
+    "building"
+   ],
+   [
+    "New listing",
+    "user-plus"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "extra": {
+   "label": "Booking website (if you want)",
+   "hint": "Where guests book.",
+   "ph": "smithcabins.com",
+   "need": "",
+   "key": "booking",
+   "note": "Booking site",
+   "store": "cpmgExtra_mountain-cabin"
+  },
+  "biz": "Smith Mountain Cabins",
+  "photo1": [
+   "Office photo",
+   "Big background, like your office or front desk. Your words go on top.",
+   "Office photo",
+   "Office"
+  ],
+  "ex": {
+   "": [
+    "Christmas Dates Open",
+    "Smith Mountain Cabins",
+    [
+     "Dec 20 to Dec 27",
+     "Hot tub and fireplace",
+     "Sleeps 6"
+    ],
+    "Book your stay today"
+   ],
+   "Open dates": [
+    "Christmas Dates Open",
+    "Smith Mountain Cabins",
+    [
+     "Dec 20 to Dec 27",
+     "Hot tub and fireplace",
+     "Sleeps 6"
+    ],
+    "Book your stay today"
+   ],
+   "Holiday special": [
+    "Holiday Getaway",
+    "Stay 3 Nights, Save 15%",
+    [
+     "Through Dec 30",
+     "Fireplace and mountain view",
+     "Pets welcome"
+    ],
+    "Book now"
+   ],
+   "Last-minute deal": [
+    "Last-Minute Deal",
+    "This Weekend Only",
+    [
+     "Cabins still open",
+     "Save 20%",
+     "Mountain views"
+    ],
+    "Call to book today"
+   ],
+   "Event": [
+    "Christmas Lights Weekend",
+    "Dec 12 and 13",
+    [
+     "Hot cocoa on the porch",
+     "Close to town",
+     "Great for families"
+    ],
+    "Reserve your cabin"
+   ],
+   "New listing": [
+    "New Cabin",
+    "Just Added This Season",
+    [
+     "Sleeps 8",
+     "Game room and hot tub",
+     "Mountain view"
+    ],
+    "See it and book"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our cabins to you",
+    [
+     "We appreciate your stay",
+     "See you in the mountains"
+    ],
+    "Call us anytime"
+   ]
+  }
+ }
+};
+  // ===== PACKS END =====
+  var PACK_FIXED = 'mountain-cabin';   // set by the build script on each industry page
+  var PACK_NAME = PACK_FIXED || (/[?&]for=([\w-]+)/.exec(location.search) || [])[1] || 'business';
+  var LOOK_BASE = PACK_FIXED ? 'looks/' : PACK_NAME + '/looks/';
+  if (!PACKS[PACK_NAME]) PACK_NAME = 'business';
+  var PACK = PACKS[PACK_NAME];
+  (function applyPack() {
+    function el(id) { return document.getElementById(id); }
+    document.title = PACK.title + ' · CPMG';
+    el('pkTitle').textContent = PACK.title; el('pkAbout').textContent = PACK.about; el('pkHow').textContent = PACK.how;
+    el('pkFoot').textContent = PACK.foot; el('pkXl').textContent = PACK.extra.label; el('pkXh').textContent = PACK.extra.hint;
+    el('brok').placeholder = PACK.extra.ph; el('biz').placeholder = PACK.biz;
+    el('pkP1').textContent = PACK.photo1[0] + ' (1 photo)'; el('pkP1d').textContent = PACK.photo1[1]; el('imHouse').alt = 'Your ' + PACK.photo1[0].toLowerCase();
+    function tap(name, value, icon, sub, checked) {
+      var lb = document.createElement('label'); lb.className = 'opt';
+      var i = document.createElement('input'); i.type = 'radio'; i.name = name; i.value = value; if (checked) i.checked = true;
+      var pic = document.createElement('span'); pic.className = 'pic'; pic.setAttribute('aria-hidden', 'true');
+      var ic = document.createElement('i'); ic.className = 'ti ti-' + icon; pic.appendChild(ic);
+      var t = document.createElement('span'); t.textContent = value;
+      lb.appendChild(i); lb.appendChild(pic); lb.appendChild(t);
+      if (sub) { var z = document.createElement('span'); z.className = 'szn'; z.textContent = sub; lb.appendChild(z); }
+      return lb;
+    }
+    PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
+    PACK.looks.concat([['You pick for me', 'wand', 'We pick the look', 'you-pick']]).forEach(function (k) { el('lookTaps').appendChild(tap('look', k[0], k[1], k[2], k[0] === 'You pick for me')); });
+    // v3.0 item 5: East Coast time line, plus how far ahead of the client that is
+    var tz = "We're on East Coast time.";
+    try {
+      var now = new Date();
+      var ny = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var here = new Date(now.toLocaleString('en-US'));
+      var diff = Math.round((ny - here) / 3600000);
+      if (diff > 0) tz += " That's " + diff + ' hour' + (diff === 1 ? '' : 's') + ' ahead of you.';
+      else if (diff < 0) tz += " That's " + (-diff) + ' hour' + (diff === -1 ? '' : 's') + ' behind you.';
+    } catch (e) { /* old phone: plain line */ }
+    [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
+  })();
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.35-TEST (Nov 4, 2026) · ' + PACK_NAME;
+  var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
+  var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
+  var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
+  var TEST_NEW = /[?&]new=1(&|#|$)/.test(location.search);   // test link: always a brand-new client
+  var key = TEST_NEW ? '' : (C.param('k') || C.savedKey()), client = null, sending = false;
+
+  C.watchOpts(document);
+  // v2.28: 3 labeled photo spots (house, headshot, logo), each with its own buttons.
+  var SLOTS = [['House', PACK.photo1[2], PACK.photo1[3]], ['Headshot', 'My headshot'], ['Logo', 'My logo']], slotPic = {};
+  function bigPic(src) {   // v3.22: full-size look at the picture the client added
+    var o = document.createElement('div'); o.className = 'bigPic'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'Your picture');
+    o.innerHTML = '<img alt="Your picture, big"><button type="button" class="bigX">Close</button>';
+    o.querySelector('img').src = src;
+    function shut() { o.remove(); document.removeEventListener('keydown', esc); }
+    function esc(e) { if (e.key === 'Escape') shut(); }
+    o.addEventListener('click', shut); document.addEventListener('keydown', esc); document.body.appendChild(o);
+    o.querySelector('.bigX').focus();
+  }
+  function showSlot(k) {
+    var ph = slotPic[k];
+    $('pv' + k).hidden = !ph; $('pv' + k).style.display = ph ? 'flex' : 'none';
+    $('bt' + k).style.display = ph ? 'none' : '';
+    if (ph) $('im' + k).src = ph.url;
+  }
+  function addSlot(k, input) {
+    var f = input.files && input.files[0]; input.value = '';
+    if (!f) return;
+    var m = $('ePic'); m.textContent = 'Getting your photo ready…'; m.hidden = false;
+    C.shrinkPhoto(f).then(function (ph) { slotPic[k] = ph; m.hidden = true; showSlot(k); },
+      function () { m.textContent = 'That photo could not be opened. Please try a JPG or PNG.'; m.hidden = false; });
+  }
+  SLOTS.forEach(function (sl) {
+    var k = sl[0];
+    $('cam' + k).addEventListener('change', function () { addSlot(k, this); });
+    $('up' + k).addEventListener('change', function () { addSlot(k, this); });
+    $('rm' + k).addEventListener('click', function () { delete slotPic[k]; showSlot(k); });
+    $('rp' + k).addEventListener('click', function () { $('up' + k).click(); });   // v3.22: swap the picture without deleting first
+    $('im' + k).addEventListener('click', function () { bigPic(this.src); });      // v3.22: tap the small picture to see it big
+    $('im' + k).setAttribute('title', 'Tap the picture to see it big'); $('im' + k).setAttribute('tabindex', '0'); $('im' + k).setAttribute('role', 'button'); $('im' + k).setAttribute('aria-label', 'See your picture big');
+    $('im' + k).addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); bigPic(this.src); } });
+    showSlot(k);
+  });
+  var photos = {
+    picked: function () { return SLOTS.filter(function (sl) { return slotPic[sl[0]]; }); },
+    list: function () { return this.picked().map(function (sl, i) { var ph = slotPic[sl[0]]; return { name: 'Photo' + (i + 1) + '_' + (sl[2] || sl[0]) + '_' + ph.name, mimeType: ph.mimeType, dataBase64: ph.dataBase64 }; }); },
+    note: function () { return this.picked().map(function (sl, i) { return 'Photo ' + (i + 1) + ': ' + sl[1]; }).join(' · '); },
+    count: function () { return this.picked().length; },
+    clear: function () { slotPic = {}; SLOTS.forEach(function (sl) { showSlot(sl[0]); }); }
+  };
+
+  function fill(c) {
+    $('biz').value = c.business || ''; $('nm').value = c.name || '';
+    if (PACK.extra.key === 'brokerage' && c.brokerage) $('brok').value = c.brokerage;
+    if (PACK.extra.key === 'businessType' && c.businessType) $('brok').value = c.businessType;
+    $('em').value = c.email || ''; $('ph').value = C.fmtPhone(c.phone || '');
+    $('welcome').textContent = 'Welcome back' + (c.name ? ', ' + String(c.name).split(' ')[0] : '') + '! Your info is filled in.';
+    $('welcome').hidden = false;
+  }
+  var BROK_STORE = PACK.extra.store;
+  if (!TEST_NEW) try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
+  if (key) {
+    $('looking').hidden = false;
+    C.lookupClient(key).then(function (c) {
+      $('looking').hidden = true;
+      if (c && (c.email || c.business)) { client = c; fill(c); C.keyInLink(key); try { showPrice(); } catch (e) { /* ok */ } }
+      else if (c === false) { C.forgetKey(); key = ''; }
+    });
+  }
+
+  function err(id, msg) { C.showErr($(id), msg); return !!msg; }
+  ['biz', 'brok', 'nm', 'em', 'ph', 'ttl', 'b1', 'b2', 'b3', 'b4', 'b5', 'cta'].forEach(function (id) {
+    $(id).addEventListener('input', function () { err(/^b\d$/.test(id) ? 'eBdy' : 'e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
+  });
+
+  $('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (sending) return;
+    var brok = $('brok').value.trim(), biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
+    var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = ['b1', 'b2', 'b3', 'b4', 'b5'].map(function (id) { return $(id).value.trim(); }).filter(Boolean), cta = $('cta').value.trim();
+    var bad = [];
+    if (err('eBiz', biz ? '' : 'Type your business name.')) bad.push('biz');
+    if (err('eBrok', brok ? '' : PACK.extra.need)) bad.push('brok');
+    if (err('eNm', nm ? '' : 'Type your name.')) bad.push('nm');
+    if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
+    if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
+    if (err('eTtl', ttl ? '' : 'Type a title, like the gray example.')) bad.push('ttl');
+    if (err('eBdy', bdy.length ? '' : 'Type at least one line, like the gray examples.')) bad.push('b1');
+    if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
+    if (err('eSize', places().length ? '' : 'Tap at least one place.')) bad.unshift('sizeTaps');
+    if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
+    if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
+
+    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var picked = places();
+    var changed = !client || client.business !== biz || client.name !== nm || client.email !== em || C.digits(client.phone) !== C.digits(ph);
+    var payload = {
+      kind: 'quick',
+      formVersion: FORM_VERSION,
+      clientKey: client ? key : '',
+      customer: { name: nm, business: biz, brokerage: PACK.extra.key === 'brokerage' ? brok : '', businessType: PACK.extra.key === 'businessType' ? brok : '', email: em, phone: ph, industry: PACK.industry, edited: !!client && changed,
+        more: { showPhone: $('showPh').checked, showBusiness: $('showBiz').checked, website: socials(), site: $('site').value.trim(), facebook: $('fb').value.trim(), instagram: $('ig').value.trim() } },
+      graphics: graphicsFor(picked, { look: lookText(), promo: false, ttl: ttl, bdy: bdy, cta: cta, brok: brok, what: what, hdg: hdg }),
+      rush: $('rush').checked,
+      website: C.honeypot()
+    };
+
+    sending = true; $('sendErr').hidden = true;
+    C.busy($('sendBtn'), true, 'Sending…');
+    C.sendOrder(payload).then(function (res) {
+      sending = false;
+      if (res && res.ok) {
+        C.busy($('sendBtn'), false, 'Send my order');
+        try { window.localStorage.setItem(BROK_STORE, brok); } catch (e) { /* blocked: fine */ }
+        if (res.clientKey) { key = res.clientKey; C.rememberKey(key); C.keyInLink(key); }
+        client = { name: nm, business: biz, email: em, phone: ph };
+        $('orderCode').textContent = res.orderCode || '';
+        $('orderCode').hidden = $('codeLbl').hidden = !res.orderCode;
+        $('f').hidden = true; $('sendBar').hidden = true; $('ok').hidden = false; window.scrollTo(0, 0);
+      } else {
+        C.busy($('sendBtn'), false, 'Try sending again');
+        $('sendErrText').textContent = C.failText(res); $('sendErr').hidden = false;
+        try { $('sendErr').scrollIntoView({ block: 'center' }); } catch (e) { /* old phone */ }
+      }
+    });
+  });
+
+  // v1.2: gray examples match the picture tapped in question 3
+  var EX = {
+    '': ['Just Listed', '123 Oak Street', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', 'Near shops and schools'], 'Call me for a showing'],
+    'Just listed': ['Just Listed', '123 Oak Street', ['3 beds, 2 baths', '$425,000', '1,850 sq. ft.', 'Pool and big backyard', 'Near shops and schools'], 'Call me for a showing'],
+    'Open house': ['Open House', '123 Oak Street', ['Sunday 1 to 4 p.m.', '3 beds, 2 baths', '$425,000', 'Brand-new kitchen', 'Snacks and drinks'], 'Stop by and take a look'],
+    'Just sold': ['Just Sold', '123 Oak Street', ['Sold in 9 days', 'Over asking price', '3 beds, 2 baths', 'Multiple offers', 'Happy new owners'], 'Thinking of selling? Call me'],
+    'Price drop': ['New Price', '123 Oak Street', ['Now $399,000', 'Was $425,000', '3 beds, 2 baths', 'Move-in ready', 'Going fast'], 'Book a showing today'],
+    'Coming soon': ['Coming Soon', '456 Maple Lane', ['4 beds, 3 baths', 'On the market Nov. 15', 'About $500,000', 'Big corner lot', 'Ask for a sneak peek'], 'Call me for a sneak peek'],
+    'Something else': ['Happy Thanksgiving', 'From my family to yours', ['Wishing you the best', 'Thank you for your trust', 'Free home value check', 'Serving our neighborhood', 'Ready when you are'], 'Call me anytime']
+  };
+  if (PACK.ex) EX = PACK.ex;
+  function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; $('xTtl').textContent = '"' + e[0] + '"'; $('xHdg').textContent = '"' + e[1] + '"'; $('xBdy').textContent = '"' + e[2][0] + '" or "' + e[2][1] + '"'; $('xCta').textContent = '"' + e[3] + '"'; }
+  examples('');
+  setTimeout(function () { try { showPrice(); } catch (e) { /* ok */ } }, 0);
+
+  // v2.4: more than one place. Phone + (TV or Website) = one $40 pair; TV and Website share one wide graphic;
+  // Social media is its own $25 graphic. Prices stay the order system's (first one free is taken off there).
+  // v2.16: the look they picked (Holiday adds which holiday)
+  function lookText() {
+    var l = document.querySelector('input[name="look"]:checked'), v = l ? l.value : 'You pick for me', h = $('holiday').value.trim();
+    return v === 'Holiday' && h ? 'Holiday: ' + h : v;
+  }
+  // v2.19: example picture for the look they tap (pictures made in the CPMG Gem, Oct 29, 2026)
+  var LOOK_IMG = { 'You pick for me': 'you-pick' }; PACK.looks.forEach(function (l) { if (l[3]) LOOK_IMG[l[0]] = l[3]; });   // v3.2: neutral sample for You pick for me
+  // v2.21: the example pops up big on top of the page; "Use this look" keeps it, "Pick a different look" un-picks it
+  var lastFocus = null;
+  try { document.getElementById('lookImg').onerror = function () { this.hidden = true; document.getElementById('lookSoon').hidden = false; }; } catch (e) { /* ok */ }
+  function showLook(v) {
+    var f = LOOK_IMG[v];
+    if (!f) return;
+    $('lookImg').hidden = false; $('lookSoon').hidden = true;
+    $('lookImg').src = LOOK_BASE + f + '.jpg?v=4'; $('lookImg').alt = 'Example of the ' + v + ' look';
+    $('lookCap').textContent = v;
+    lastFocus = document.activeElement;
+    $('lookPop').hidden = false; document.body.style.overflow = 'hidden'; $('sendBar').style.visibility = 'hidden';
+    try { $('lookOk').focus(); } catch (e) { /* ok */ }
+  }
+  function closeLook(keep) {
+    $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = '';
+    if (!keep) {
+      var d = document.querySelector('input[name="look"][value="You pick for me"]');
+      if (d) { d.checked = true; d.dispatchEvent(new Event('change', { bubbles: true })); }
+      $('holidayBox').hidden = true;
+    }
+    try { (lastFocus || $('lookTaps')).focus(); } catch (e) { /* ok */ }
+    if (keep && !$('holidayBox').hidden) { try { $('holiday').focus(); } catch (e) { /* ok */ } }
+  }
+  $('lookOk').addEventListener('click', function () { closeLook(true); });
+  $('lookNo').addEventListener('click', function () { closeLook(false); });
+  $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(true); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(true); });
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
+  function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
+  function groups(p) {
+    var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
+    var wideName = wide.map(function (v) { return SHOWN[v]; }).join(' + ');
+    var one = 25, pair = 40;   // v2.23: Promo look taken off; every look is $25 ($40 pair)
+    if (tall && wide.length) out.push({ use: 'both', shown: 'Phone + ' + wideName, size: 'Phone + Wide', price: pair });
+    else if (tall) out.push({ use: 'phone', shown: 'Phone', size: SIZE.Phone, price: one });
+    else if (wide.length) out.push({ use: 'tv', shown: wideName, size: 'Wide 16:9', price: one });
+    if (p.indexOf('Social') > -1) out.push({ use: 'social', shown: 'Social media', size: SIZE.Social, price: one });
+    return out;
+  }
+  function graphicsFor(p, t) {
+    var list = photos.list(), photoNote = photos.note();
+    return groups(p).map(function (g) {
+      return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
+        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
+        photos: list, promo: !!t.promo };
+    });
+  }
+  function socials() {
+    var out = [], v;
+    if ((v = $('site').value.trim())) out.push('Website: ' + v);
+    if ((v = $('fb').value.trim())) out.push('Facebook: ' + v);
+    if ((v = $('ig').value.trim())) out.push('Instagram: ' + v);
+    return out.join(' · ');
+  }
+  function showPrice() {
+    var g = groups(places()), rush = $('rush').checked ? 10 : 0, rows = [];
+    $('priceBox').hidden = false;
+    if (!g.length) {
+      $('priceLine').innerHTML = '<div class="prow msg"><span>Pick where you\'ll show it to see your price.</span></div>';
+      $('barTot').textContent = client ? '$25 each' : '$25 each · your first one is free';
+      return;
+    }
+    var total = g.reduce(function (n, x) { return n + x.price; }, 0);
+    g.forEach(function (x) { rows.push([x.shown, '$' + x.price]); });
+    if (rush) rows.push(['Rush', '+$10']);
+    // v2.8: new clients (no saved record on this phone) see the free first graphic taken off. The order system
+    // checks for real (one free graphic per business) and takes the same $25 off line 1.
+    var off = client ? 0 : Math.min(25, total);
+    if (off) rows.push(['First graphic free (new clients)', '−$' + off]);
+    rows.push(['You pay', '$' + (total - off + rush)]);
+    $('barTot').textContent = 'You pay $' + (total - off + rush) + (off ? ' · first one free' : '');
+    var box = $('priceLine'); box.innerHTML = '';
+    rows.forEach(function (r, i) {
+      var d = document.createElement('div'); d.className = 'prow' + (i === rows.length - 1 ? ' ptot' : '');
+      var a = document.createElement('span'); a.textContent = r[0]; var b = document.createElement('span'); b.textContent = r[1];
+      d.appendChild(a); d.appendChild(b); box.appendChild(d);
+    });
+  }
+  document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'size' || e.target.id === 'rush')) { err('eSize', ''); showPrice(); } });
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
+
+  $('again').addEventListener('click', function () {
+    $('ttl').value = $('hdg').value = $('cta').value = ''; ['b1', 'b2', 'b3', 'b4', 'b5'].forEach(function (id) { $(id).value = ''; }); photos.clear();
+    if (client) fill(client);
+    $('ok').hidden = true; $('f').hidden = false; $('sendBar').hidden = false; window.scrollTo(0, 0);
+  });
+})();
+</script>
+<script>
+/* v3.33-TEST fitToWindow: on wide screens, find the biggest zoom (up to 1.3) where the whole form fits the window with no scrolling, in or out of full screen. */
+(function () {
+  var busy = false, t = 0;
+  function fit() {
+    if (busy) return; busy = true;
+    try {
+      var w = document.querySelector('.wrap.narrow'), de = document.documentElement;
+      if (!w || !document.body.classList.contains('lite')) return;
+      if (!window.matchMedia('(min-width:1100px)').matches) { w.style.zoom = ''; w.style.paddingBottom = ''; return; }
+      var bar = document.getElementById('sendBar'), barH = (bar && !bar.hidden) ? bar.offsetHeight : 0;
+      function ok(z) { w.style.zoom = z; w.style.paddingBottom = Math.ceil((barH + 8) / z) + 'px'; return de.scrollHeight <= window.innerHeight + 1 && de.scrollWidth <= window.innerWidth + 1; }
+      var best = 0.4;
+      for (var z = 1.3; z >= 0.4; z -= 0.02) { if (ok(z)) { best = z; break; } }
+      ok(best);
+    } catch (e) { /* ok */ } finally { busy = false; }
+  }
+  function later() { clearTimeout(t); t = setTimeout(fit, 60); }
+  window.addEventListener('resize', later);
+  window.addEventListener('load', later);
+  document.addEventListener('fullscreenchange', later);
+  document.addEventListener('click', later);
+  document.addEventListener('change', later);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+  setTimeout(fit, 0); setTimeout(fit, 400); setTimeout(fit, 1200);
+})();
+</script>
+</body>
+</html>

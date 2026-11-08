@@ -1,4 +1,5 @@
-# CPMG industry packs v1.3 (Nov 3, 2026)
+# CPMG industry packs v1.6 (Nov 8, 2026)
+# v1.6 (Nov 8, 2026) Added insurance (independent insurance agents) and mountain-cabin (NC High Country / Smoky Mountains cabin and resort managers), test forms only. Copied from the cpa entry, words changed.
 # v1.5 (Nov 3, 2026) Real estate looks grow to 9 plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (Carolina beach house), Southern charm, Holiday.
 # v1.4 (Nov 3, 2026) Real estate and restaurant (lean) get two more looks: Beach vibe (summer) and Holiday (pick from a list of major holidays).
 # v1.3 (Nov 3, 2026) Restaurant is now "lean" too: 3 looks (3D poster with the Myrtle Beach vibe, Chalkboard, Casual) plus You pick for me; same trims as real estate.
@@ -135,3 +136,46 @@ PACKS = {
        'Now hiring': E('Now Hiring','Front Desk Help',['Part time, flexible hours','Friendly team','Apply in person or online'],'Call us to apply'),
        'Something else': E('Thank You','From our team to you',['We appreciate your business','Proudly serving our town'],'Call us anytime')}),
 }
+
+# ---- v1.6 (Nov 8, 2026): two new industries, built from the cpa entry with new words ----
+import copy as _copy
+def _clone(base, **over):
+    p = _copy.deepcopy(PACKS[base]); p.update(over); return p
+PACKS['insurance'] = _clone('cpa',
+    name='Insurance agent',
+    title='Order a graphic for your insurance agency',
+    foot='CPMG Insurance Order',
+    who='Independent insurance agents',
+    uses='open enrollment, free quotes and reminders',
+    what='agency',
+    photos='your office, your headshot or your logo',
+    kinds=[['Open enrollment','file-invoice'],['Free quote','calendar-due'],['Policy review','user-plus'],['Renewal reminder','clock'],['Community news','building'],['Something else','pencil']],
+    extra={'label':'Carrier or agency name (if you want)','hint':'Like the company you write for.','ph':'Smith Insurance Group','need':'','key':'agency','note':'Agency'},
+    biz='Smith Insurance Agency',
+    scene='a bright, welcoming small-town insurance office with a desk and a friendly handshake',
+    ex={'':['Open Enrollment Is Here','Smith Insurance Agency',['Health, home and auto','We shop the rates for you','Friendly local help'],'Call for a free quote'],
+        'Open enrollment':['Open Enrollment Is Here','Smith Insurance Agency',['Health, home and auto','We shop the rates for you','Friendly local help'],'Call for a free quote'],
+        'Free quote':['Free Quote','Home and Auto Bundle',['Takes about 10 minutes','No pressure','Local and independent'],'Call us today'],
+        'Policy review':['Policy Review','Is Your Coverage Still Right?',['Free 15-minute check-up','See if you can save','Bring your current policy'],'Book your review'],
+        'Renewal reminder':['Renewal Reminder','Your Policy Is Coming Up',['Call before it renews','We can compare rates','Quick and easy'],'Call us this week'],
+        'Community news':['Thank You, Neighbors','From Smith Insurance Agency',['Proudly serving our town','We appreciate your trust'],'Stop by and say hi'],
+        'Something else':['Thank You','From our agency to you',['We appreciate your trust','Proudly serving our town'],'Call us anytime']})
+PACKS['mountain-cabin'] = _clone('cpa',
+    name='Mountain cabin',
+    title='Order a graphic for your cabin or mountain business',
+    foot='CPMG Mountain Cabin Order',
+    who='Cabin rental managers and mountain businesses',
+    uses='open dates, holiday specials and seasonal events',
+    what='cabins',
+    photos='your cabin, your view or your logo',
+    kinds=[['Open dates','calendar-due'],['Holiday special','gift'],['Last-minute deal','clock'],['Event','building'],['New listing','user-plus'],['Something else','pencil']],
+    extra={'label':'Booking website (if you want)','hint':'Where guests book.','ph':'smithcabins.com','need':'','key':'booking','note':'Booking site'},
+    biz='Smith Mountain Cabins',
+    scene='a cozy log cabin in the mountains with warm lights, evening snow and pine trees',
+    ex={'':['Christmas Dates Open','Smith Mountain Cabins',['Dec 20 to Dec 27','Hot tub and fireplace','Sleeps 6'],'Book your stay today'],
+        'Open dates':['Christmas Dates Open','Smith Mountain Cabins',['Dec 20 to Dec 27','Hot tub and fireplace','Sleeps 6'],'Book your stay today'],
+        'Holiday special':['Holiday Getaway','Stay 3 Nights, Save 15%',['Through Dec 30','Fireplace and mountain view','Pets welcome'],'Book now'],
+        'Last-minute deal':['Last-Minute Deal','This Weekend Only',['Cabins still open','Save 20%','Mountain views'],'Call to book today'],
+        'Event':['Christmas Lights Weekend','Dec 12 and 13',['Hot cocoa on the porch','Close to town','Great for families'],'Reserve your cabin'],
+        'New listing':['New Cabin','Just Added This Season',['Sleeps 8','Game room and hot tub','Mountain view'],'See it and book'],
+        'Something else':['Thank You','From our cabins to you',['We appreciate your stay','See you in the mountains'],'Call us anytime']})
