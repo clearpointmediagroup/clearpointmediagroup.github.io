@@ -2,13 +2,14 @@
 <!--
   CPMG Lawn care Order — test/order/lawn-care/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.36-TEST (Nov 9, 2026, 11:50 PM)
+  v3.37-TEST (Nov 10, 2026, 12:35 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.37-TEST (Nov 10, 2026, 12:35 AM) CC-071: restaurant form asks Bar, Restaurant, or Bar and restaurant first, then shows only the graphic buttons that fit. Other industries: version label only.
     v3.36-TEST (Nov 9, 2026, 11:50 PM) CC-070: restaurant form now fits bars too (title, Drink special and Game day buttons). Other industries: version label only.
     v3.35-TEST (Nov 4, 2026) Randy: the version number now shows on the form itself (small, top right of the header).
     v3.34-TEST (Nov 4, 2026) Randy: the Send my order button is smaller and sits in the exact center of the page, with the price line centered just above it (wide screens). Test copy only.
@@ -622,7 +623,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.36-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.37-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -641,6 +642,11 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 
     <fieldset class="field">
       <legend class="ql"><span class="qn">1</span>What kind of graphic?</legend>
+      <div id="placeBox" style="display:none;margin-bottom:12px">
+        <p class="hint">First, what kind of place are you?</p>
+        <div class="taps three" id="placeTaps" tabindex="-1"></div>
+        <p class="err" id="ePlace" hidden></p>
+      </div>
       <p class="hint">Tap one picture.</p>
       <div class="taps" id="whatTaps" tabindex="-1"></div>
       <p class="err" id="eWhat" hidden></p>
@@ -1156,6 +1162,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "Brokerage",
    "hint": "The real estate company you work under.",
@@ -1332,9 +1339,50 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [
+   [
+    "Bar",
+    "beer",
+    [
+     "Happy hour",
+     "Drink special",
+     "Game day",
+     "Live music",
+     "Event",
+     "Holiday hours",
+     "Something else"
+    ]
+   ],
+   [
+    "Restaurant",
+    "tools-kitchen-2",
+    [
+     "Daily special",
+     "Happy hour",
+     "Live music",
+     "Event",
+     "Holiday hours",
+     "Something else"
+    ]
+   ],
+   [
+    "Bar and restaurant",
+    "building-store",
+    [
+     "Daily special",
+     "Happy hour",
+     "Drink special",
+     "Game day",
+     "Live music",
+     "Event",
+     "Holiday hours",
+     "Something else"
+    ]
+   ]
+  ],
   "extra": {
-   "label": "What kind of place? (if you want)",
-   "hint": "A few words, like seafood restaurant, sports bar, nightclub or cafe.",
+   "label": "More about your place (if you want)",
+   "hint": "A few words, like seafood, sports bar, nightclub or cafe.",
    "ph": "Seafood restaurant",
    "need": "",
    "key": "placeType",
@@ -1530,6 +1578,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "License number (if you want)",
    "hint": "We can put it at the bottom, if you like.",
@@ -1704,6 +1753,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "License number (if you want)",
    "hint": "We can put it at the bottom, if you like.",
@@ -1878,6 +1928,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "Areas you serve (if you want)",
    "hint": "A few town names, like Conway and Myrtle Beach.",
@@ -2052,6 +2103,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "Credentials (if you want)",
    "hint": "Like CPA, EA or enrolled agent.",
@@ -2226,6 +2278,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "License number (if you want)",
    "hint": "We can put it at the bottom, if you like.",
@@ -2400,6 +2453,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "Areas you serve (if you want)",
    "hint": "A few town names, like Conway and Myrtle Beach.",
@@ -2574,6 +2628,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "What kind of business?",
    "hint": "A few words, like bookkeeping, bakery or hair salon.",
@@ -2748,6 +2803,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "Carrier or agency name (if you want)",
    "hint": "Like the company you write for.",
@@ -2906,6 +2962,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "holiday"
    ]
   ],
+  "places": [],
   "extra": {
    "label": "Booking website (if you want)",
    "hint": "Where guests book.",
@@ -3019,6 +3076,21 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       return lb;
     }
     PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
+    // v3.37 CC-071: some packs ask the kind of place first (Bar / Restaurant / Both) and show only the graphic buttons that fit
+    if (PACK.places && PACK.places.length) {
+      el('placeBox').style.display = '';
+      setTimeout(function () { var bx = el('placeBox'), fs = bx.parentNode, lh = fs.querySelector('.liteHint'); if (lh) fs.insertBefore(lh, bx.nextSibling); }, 0);   // "Tap one." sits under the place buttons, above the graphic buttons
+      PACK.places.forEach(function (p) { el('placeTaps').appendChild(tap('place', p[0], p[1], '', false)); });
+      var showKinds = function (pl) {
+        var allow = null; PACK.places.forEach(function (p) { if (p[0] === pl) allow = p[2]; });
+        Array.prototype.forEach.call(el('whatTaps').querySelectorAll('label.opt'), function (lb) {
+          var i = lb.querySelector('input'), ok = !allow || allow.indexOf(i.value) >= 0;
+          lb.style.display = ok ? '' : 'none';
+          if (!ok && i.checked) { i.checked = false; lb.classList.remove('on'); }
+        });
+      };
+      document.addEventListener('change', function (e) { if (e.target && e.target.name === 'place') { var ep = el('ePlace'); ep.hidden = true; ep.textContent = ''; showKinds(e.target.value); } });
+    }
     PACK.looks.concat([['You pick for me', 'wand', 'We pick the look', 'you-pick']]).forEach(function (k) { el('lookTaps').appendChild(tap('look', k[0], k[1], k[2], k[0] === 'You pick for me')); });
     // v3.0 item 5: East Coast time line, plus how far ahead of the client that is
     var tz = "We're on East Coast time.";
@@ -3032,7 +3104,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.36-TEST (Nov 9, 2026, 11:50 PM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.37-TEST (Nov 10, 2026, 12:35 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3123,6 +3195,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
     if (err('eSize', places().length ? '' : 'Tap at least one place.')) bad.unshift('sizeTaps');
     if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
+    if (PACK.places && PACK.places.length && err('ePlace', document.querySelector('input[name="place"]:checked') ? '' : 'Tap Bar, Restaurant, or Bar and restaurant.')) bad.unshift('placeTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
     var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
@@ -3226,7 +3299,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     var list = photos.list(), photoNote = photos.note();
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
-        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: t.brok, 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
+        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: (function () { var pp = document.querySelector('input[name="place"]:checked'); return pp ? pp.value + (t.brok ? ' · ' + t.brok : '') : t.brok; })(), 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
         photos: list, promo: !!t.promo };
     });
   }

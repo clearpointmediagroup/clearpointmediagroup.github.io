@@ -1,4 +1,5 @@
-# CPMG industry packs v1.7 (Nov 8, 2026)
+# CPMG industry packs v1.8 (Nov 10, 2026, 12:35 AM)
+# v1.8 (Nov 10, 2026, 12:35 AM) CC-071: restaurant pack asks Bar / Restaurant / Bar and restaurant first; the extra box becomes "More about your place".
 # v1.7 (Nov 8, 2026) Randy: no dark forms anywhere. Every industry pack is now lean (which also turns on the light tan and light green look).
 # v1.6 (Nov 8, 2026) Added insurance (independent insurance agents) and mountain-cabin (NC High Country / Smoky Mountains cabin and resort managers), test forms only. Copied from the cpa entry, words changed.
 # v1.5 (Nov 3, 2026) Real estate looks grow to 9 plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (Carolina beach house), Southern charm, Holiday.
@@ -37,7 +38,10 @@ PACKS = {
    who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant or bar', photos='your food, your bar or dining room, your headshot or your logo',
    kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Drink special','beer'),('Game day','ball-football'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
    looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
-   extra=dict(label='What kind of place? (if you want)', hint='A few words, like seafood restaurant, sports bar, nightclub or cafe.', ph='Seafood restaurant', need='', key='placeType', note='Kind of place'),
+   places=[('Bar','beer',['Happy hour','Drink special','Game day','Live music','Event','Holiday hours','Something else']),
+           ('Restaurant','tools-kitchen-2',['Daily special','Happy hour','Live music','Event','Holiday hours','Something else']),
+           ('Bar and restaurant','building-store',['Daily special','Happy hour','Drink special','Game day','Live music','Event','Holiday hours','Something else'])],
+   extra=dict(label='More about your place (if you want)', hint='A few words, like seafood, sports bar, nightclub or cafe.', ph='Seafood restaurant', need='', key='placeType', note='Kind of place'),
    biz="Smith's Seafood Grill", photo1=('Food or place photo','Big background, like your dish, your bar or your dining room. Your words go on top.','Food or place photo','Food'), scene='a plate of shrimp and grits on a rustic wooden table in a cozy coastal restaurant',
    ex={'': E("Tonight's Special",'Shrimp and Grits',['$14.99','Served 5 to 9 p.m.','Fresh local shrimp'],'Come hungry!'),
        'Daily special': E("Tonight's Special",'Shrimp and Grits',['$14.99','Served 5 to 9 p.m.','Fresh local shrimp'],'Come hungry!'),

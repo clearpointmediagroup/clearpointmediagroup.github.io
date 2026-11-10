@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""build-order-forms.py v1.2 (Nov 3, 2026)
+"""build-order-forms.py v1.3 (Nov 10, 2026, 12:35 AM)
 Builds every industry order form from ONE master form.
   master: test/order/index.html  (works with ?for=<industry>)
   output: test/order/<industry>/index.html  (one page per industry, same code, words from tools/cpmg_packs.py)
 Run after ANY change to the master form or the packs:  python3 tools/build-order-forms.py
 REVISION LOG
+  v1.3 (Nov 10, 2026, 12:35 AM) CC-071: packs may list places (kind of place first, then only the graphic buttons that fit).
   v1.2 (Nov 3, 2026) Lean pages are also built with the light 3-step look (body class "lean lite").
   v1.1 (Nov 3, 2026) A pack with lean=True gets <body class="lean"> (fewer boxes: see tools/cpmg_packs.py).
   v1.0 (Oct 30, 2026) First version: 8 industries.
@@ -22,7 +23,7 @@ def js_packs():
         out[k] = dict(industry=p['name'], form=p['name'], title=p['title'], foot=p['foot'],
                       about=ABOUT.format(who=p['who'], uses=p['uses']), how=HOW.format(what=p['what'], photos=p['photos']),
                       kinds=[list(x) for x in p['kinds']], looks=[list(x) for x in p['looks']],
-                      extra=dict(p['extra'], store='cpmgExtra_' + k), biz=p['biz'], photo1=list(p['photo1']), ex=p['ex'])
+                      places=[[x[0], x[1], list(x[2])] for x in p.get('places', [])], extra=dict(p['extra'], store='cpmgExtra_' + k), biz=p['biz'], photo1=list(p['photo1']), ex=p['ex'])
     return '  var PACKS = ' + json.dumps(out, ensure_ascii=False, indent=1) + ';\n'
 
 s = open(MASTER).read()
