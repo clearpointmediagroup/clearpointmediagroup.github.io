@@ -2,6 +2,7 @@
 # v1.7 (Nov 8, 2026) Randy: no dark forms anywhere. Every industry pack is now lean (which also turns on the light tan and light green look).
 # v1.6 (Nov 8, 2026) Added insurance (independent insurance agents) and mountain-cabin (NC High Country / Smoky Mountains cabin and resort managers), test forms only. Copied from the cpa entry, words changed.
 # v1.5 (Nov 3, 2026) Real estate looks grow to 9 plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (Carolina beach house), Southern charm, Holiday.
+# v1.5 (Nov 9, 2026, 11:50 PM) CC-070: restaurant pack fits bars too: title 'restaurant or bar', new Drink special and Game day kinds with examples.
 # v1.4 (Nov 3, 2026) Real estate and restaurant (lean) get two more looks: Beach vibe (summer) and Holiday (pick from a list of major holidays).
 # v1.3 (Nov 3, 2026) Restaurant is now "lean" too: 3 looks (3D poster with the Myrtle Beach vibe, Chalkboard, Casual) plus You pick for me; same trims as real estate.
 # v1.2 (Nov 3, 2026) Real estate is now "lean" (Randy: too many things to fill): 3 looks plus You pick for me, no website/Facebook/Instagram boxes,
@@ -32,15 +33,17 @@ PACKS = {
        'Price drop': E('New Price','123 Oak Street',['Now $399,000','Was $425,000','3 beds, 2 baths','Move-in ready'],'Book a showing today'),
        'Coming soon': E('Coming Soon','123 Oak Street',['3 beds, 2 baths','Big backyard','Quiet street'],'Call me for early access'),
        'Something else': E('Happy Thanksgiving','From my family to yours',['Thank you for your trust','Wishing you a warm holiday'],'Call me anytime')}),
- 'restaurant': dict(lean=True, name='Restaurant', title='Order a graphic for your restaurant', foot='CPMG Restaurant Order',
-   who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant', photos='your food, your bar or dining room, your headshot or your logo',
-   kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
+ 'restaurant': dict(lean=True, name='Restaurant', title='Order a graphic for your restaurant or bar', foot='CPMG Restaurant and Bar Order',
+   who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant or bar', photos='your food, your bar or dining room, your headshot or your logo',
+   kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Drink special','beer'),('Game day','ball-football'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
    looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
-   extra=dict(label='What kind of place? (if you want)', hint='A few words, like seafood restaurant, sports bar or cafe.', ph='Seafood restaurant', need='', key='placeType', note='Kind of place'),
+   extra=dict(label='What kind of place? (if you want)', hint='A few words, like seafood restaurant, sports bar, nightclub or cafe.', ph='Seafood restaurant', need='', key='placeType', note='Kind of place'),
    biz="Smith's Seafood Grill", photo1=('Food or place photo','Big background, like your dish, your bar or your dining room. Your words go on top.','Food or place photo','Food'), scene='a plate of shrimp and grits on a rustic wooden table in a cozy coastal restaurant',
    ex={'': E("Tonight's Special",'Shrimp and Grits',['$14.99','Served 5 to 9 p.m.','Fresh local shrimp'],'Come hungry!'),
        'Daily special': E("Tonight's Special",'Shrimp and Grits',['$14.99','Served 5 to 9 p.m.','Fresh local shrimp'],'Come hungry!'),
        'Happy hour': E('Happy Hour','Every day 4 to 6 p.m.',['$3 draft beer','$5 house wine','Half-price wings'],'See you at the bar'),
+       'Drink special': E('Drink Special','Tonight Only',['$5 margaritas','$4 local craft pints','Served all night'],'Come see us'),
+       'Game day': E('Game Day','Watch the big game here',['Every game on our TVs','$15 wing and beer combo','Doors open at noon'],'Grab your seat early'),
        'Live music': E('Live Music Tonight','The Tide Riders',['8 p.m. to 11 p.m.','No cover','Full dinner menu'],'Grab a table early'),
        'Event': E('Trivia Night','Every Tuesday at 7',['Prizes for the top 3 teams','Free to play','Kitchen open late'],'Bring your team'),
        'Holiday hours': E('Holiday Hours','Thanksgiving Week',['Wednesday: open till 9','Thursday: closed','Friday: back to normal'],'Happy Thanksgiving!'),

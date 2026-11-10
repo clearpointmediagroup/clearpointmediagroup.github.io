@@ -2,13 +2,14 @@
 <!--
   CPMG Mountain cabin Order — test/order/mountain-cabin/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.35-TEST (Nov 4, 2026)
+  v3.36-TEST (Nov 9, 2026, 11:50 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.36-TEST (Nov 9, 2026, 11:50 PM) CC-070: restaurant form now fits bars too (title, Drink special and Game day buttons). Other industries: version label only.
     v3.35-TEST (Nov 4, 2026) Randy: the version number now shows on the form itself (small, top right of the header).
     v3.34-TEST (Nov 4, 2026) Randy: the Send my order button is smaller and sits in the exact center of the page, with the price line centered just above it (wide screens). Test copy only.
     v3.33-TEST (Nov 4, 2026) Randy: the v3.32 fix only made the form tiny and left empty space. Now the form uses the whole window width and a small script picks the biggest size that still fits the window with no scrolling (in or out of full screen). The Your price box no longer runs into the Details box, and its words are plainer (no 'question 5'). Test copy only.
@@ -621,7 +622,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.35-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.36-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -1261,10 +1262,10 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
  "restaurant": {
   "industry": "Restaurant",
   "form": "Restaurant",
-  "title": "Order a graphic for your restaurant",
-  "foot": "CPMG Restaurant Order",
+  "title": "Order a graphic for your restaurant or bar",
+  "foot": "CPMG Restaurant and Bar Order",
   "about": "We make professional graphics for local businesses, fast. Restaurants and bars use us for daily specials, happy hours, live music and events that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your restaurant. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your food, your bar or dining room, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post graphic for your restaurant or bar. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your food, your bar or dining room, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
   "kinds": [
    [
     "Daily special",
@@ -1273,6 +1274,14 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
    [
     "Happy hour",
     "glass-full"
+   ],
+   [
+    "Drink special",
+    "beer"
+   ],
+   [
+    "Game day",
+    "ball-football"
    ],
    [
     "Live music",
@@ -1325,7 +1334,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   ],
   "extra": {
    "label": "What kind of place? (if you want)",
-   "hint": "A few words, like seafood restaurant, sports bar or cafe.",
+   "hint": "A few words, like seafood restaurant, sports bar, nightclub or cafe.",
    "ph": "Seafood restaurant",
    "need": "",
    "key": "placeType",
@@ -1375,6 +1384,30 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
      ""
     ],
     "See you at the bar"
+   ],
+   "Drink special": [
+    "Drink Special",
+    "Tonight Only",
+    [
+     "$5 margaritas",
+     "$4 local craft pints",
+     "Served all night",
+     "",
+     ""
+    ],
+    "Come see us"
+   ],
+   "Game day": [
+    "Game Day",
+    "Watch the big game here",
+    [
+     "Every game on our TVs",
+     "$15 wing and beer combo",
+     "Doors open at noon",
+     "",
+     ""
+    ],
+    "Grab your seat early"
    ],
    "Live music": [
     "Live Music Tonight",
@@ -2999,7 +3032,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.35-TEST (Nov 4, 2026) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.36-TEST (Nov 9, 2026, 11:50 PM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
