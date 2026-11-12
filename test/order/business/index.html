@@ -2,13 +2,14 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.37-TEST (Nov 10, 2026, 12:35 AM)
+  v3.38-TEST (Nov 11, 2026, 11:33 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.38-TEST (Nov 11, 2026, 11:33 PM) CC-095: restaurant form adds the Cartoon poster look (professional cartoon-style 3D poster). Other industries: version label only.
     v3.37-TEST (Nov 10, 2026, 12:35 AM) CC-071: restaurant form asks Bar, Restaurant, or Bar and restaurant first, then shows only the graphic buttons that fit. Other industries: version label only.
     v3.36-TEST (Nov 9, 2026, 11:50 PM) CC-070: restaurant form now fits bars too (title, Drink special and Game day buttons). Other industries: version label only.
     v3.35-TEST (Nov 4, 2026) Randy: the version number now shows on the form itself (small, top right of the header).
@@ -623,7 +624,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.37-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.38-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -1325,6 +1326,12 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     "mood-smile",
     "Warm and friendly",
     "casual"
+   ],
+   [
+    "Cartoon poster",
+    "mood-happy",
+    "Pro cartoon-style 3D poster",
+    "cartoon-poster"
    ],
    [
     "Beach vibe",
@@ -3104,7 +3111,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.37-TEST (Nov 10, 2026, 12:35 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.38-TEST (Nov 11, 2026, 11:33 PM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
