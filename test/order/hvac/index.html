@@ -2,13 +2,14 @@
 <!--
   CPMG HVAC Order — test/order/hvac/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.54-TEST (Nov 13, 2026, 8:10 AM)
+  v3.55-TEST (Nov 13, 2026, 8:30 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.55-TEST (Nov 13, 2026, 8:30 AM) CC-123 form cleanup: one look question (picture tiles under Pick a look, See big on each), Details and the last line optional, step numbers in order, Help list matches, clear one-at-a-time error messages, footer says Call or email.
     v3.54-TEST (Nov 13, 2026, 8:10 AM) CC-122: Text me button hidden until the garbled text is explained. Call me and Email me stay.
     v3.53-TEST (Nov 13, 2026, 8:20 AM) CC-121: Text me starts with a clear first line (Hi, I'm interested in a graphic from ClearPoint Media Group.).
     v3.52-TEST (Nov 13, 2026, 8:05 AM) CC-120: the look pictures box moves up under Pick a look.
@@ -324,9 +325,10 @@
 #skNote{color:#fff;font:700 15px/1.35 var(--display);text-align:center;margin:12px 4px}
 #skX{display:block;width:100%;min-height:52px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
 #visionBox .eg{margin:2px 0 6px;font-size:14px;color:#5f6b61}
-#likeTiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 8px}
+#likeTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 8px}
+#likeTiles .zm{position:absolute;top:10px;right:10px;min-height:34px;padding:4px 12px;border:0;border-radius:17px;background:rgba(0,0,0,.72);color:#fff;font:800 14px var(--display);cursor:pointer}
 #likeTiles .opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:84px;padding:6px 4px;font-size:14px;font-weight:600;text-align:center;border-width:2px}
-#likeTiles .opt img{width:100%;height:64px;object-fit:cover;border-radius:6px}
+#likeTiles .opt img{width:100%;height:130px;object-fit:cover;border-radius:6px}
 #likeTiles .opt input,#chooseTap input{position:absolute;opacity:0;pointer-events:none}
 #feelTaps .opt{position:relative}
 #feelTaps .opt{padding-right:44px;padding-left:44px}
@@ -698,15 +700,11 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   <details id="helpBox">
     <summary>Help: how to fill this out</summary>
     <ol>
-      <li><b>What kind of graphic:</b> tap one picture.</li>
-      <li><b>Pick a look:</b> tap one. Not sure? Tap You pick for me.</li>
-      <li><b>What should it say:</b> type a few words in each box. The gray words are only examples. Title is the big words at the top.</li>
-      <li><b>Add photos:</b> only if you want. Each photo has its own spot. Skip any you don't have.</li>
-      <li><b>Where will you show it:</b> tap all that you want. The shape shows the size.</li>
-      <li><b>More choices, What do you picture:</b> only if you want. Not sure? Skip it and we pick for you.</li>
-      <li><b>Need it faster:</b> tap the Rush box. Tap again to take it off.</li>
-      <li><b>Business name:</b> type your business name.</li>
-      <li><b>Your name, email, phone:</b> so we can send your preview. We save it for next time.</li>
+      <li><b>1 What kind of graphic:</b> tap one picture.</li>
+      <li><b>2 What should it say:</b> type a few words. Only the title is needed. Leave the rest empty and we write it for you. The gray words are only examples.</li>
+      <li><b>3 Need it faster:</b> tap the Rush box. Tap again to take it off.</li>
+      <li><b>4 About you:</b> your business name, your name, email and phone, so we can send your preview. We save it for next time.</li>
+      <li><b>More choices:</b> tap it to open. All optional. Pick a look (tap up to 3 pictures, or You choose), add photos, pick where you will show it, and tell us how it should feel. Not sure? Skip it and we pick for you.</li>
     </ol>
     <p>Last: tap the big button at the bottom to send. Nothing to pay now. We email a preview first.</p>
   </details>
@@ -761,7 +759,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
         <label class="opt"><input type="checkbox" name="feel" value="Elegant"><span>Elegant</span></label>
       </div>
       <div id="moodPop" aria-live="polite"></div>
-      <label class="sl">Tap up to 3 that look like what you want</label>
+      <label class="sl" id="likeLbl">Tap up to 3 that look like what you want</label>
       <div id="likeTiles"></div>
       <label class="opt" id="chooseTap"><input type="checkbox" name="youchoose" value="You choose"><span>You choose, surprise me</span></label>
       <label class="sl" for="leaveOut">Anything to leave out?</label>
@@ -771,7 +769,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 
     <div class="field">
       <p class="ql"><span class="qn">3</span>What should it say?</p>
-      <p class="hint">Fill in the parts of your graphic. A few words each. The gray words in each box are only examples. Type your own.</p>
+      <p class="hint">Fill in the parts of your graphic. A few words each. The gray words in each box are only examples. Only the title is needed. Not sure what to say? Leave the rest empty and we write it for you.</p>
       <label class="sl" for="ttl">Title</label>
       <p class="hint">The big words at the top. Example: <b id="xTtl"></b></p>
       <input type="text" id="ttl" autocomplete="off">
@@ -779,7 +777,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       <label class="sl" for="hdg">Second line (if you want)</label>
       <p class="hint">A smaller line under the title. Example: <b id="xHdg"></b></p>
       <input type="text" id="hdg" autocomplete="off">
-      <label class="sl" for="b1">Details</label>
+      <label class="sl" for="b1">Details (if you want)</label>
       <p class="hint">Up to 5 short lines, a few words each. Example: <b id="xBdy"></b></p>
       <div class="bl"><b>1</b><input type="text" id="b1" autocomplete="off" aria-label="Details line 1"></div>
       <div class="bl"><b>2</b><input type="text" id="b2" autocomplete="off" aria-label="Details line 2"></div>
@@ -787,7 +785,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       <div class="bl lh"><b>4</b><input type="text" id="b4" autocomplete="off" aria-label="Details line 4"></div>
       <div class="bl lh"><b>5</b><input type="text" id="b5" autocomplete="off" aria-label="Details line 5"></div>
       <p class="err" id="eBdy" hidden></p>
-      <label class="sl" for="cta">What should people do?</label>
+      <label class="sl" for="cta">What should people do? (if you want)</label>
       <p class="hint">One short line telling people what to do next. Example: <b id="xCta"></b></p>
       <input type="text" id="cta" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
@@ -899,7 +897,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     <div class="code" id="orderCode"></div>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot"><span id="pkFoot">CPMG Order</span> · Questions? Call or text <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
+  <div class="foot"><span id="pkFoot">CPMG Order</span> · Questions? Call <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
 </div>
 <div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
 
@@ -935,7 +933,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   // step 3 = business + contact together: "About you"
   if (biz && contact) {
     var cq = contact.querySelector('.ql'); if (cq && cq.lastChild && cq.lastChild.nodeType === 3) cq.lastChild.nodeValue = 'About you';
-    num(contact, 3);
+    num(contact, 4);
     var bq = biz.querySelector('.ql'); if (bq) { var bl = bq.querySelector('label'); if (bl) { bl.className = 'sl'; bl.style.display = 'block'; biz.insertBefore(bl, bq); } bq.remove(); }
     biz.style.cssText = 'border:0;box-shadow:none;margin:0;padding:0;background:none';
     contact.insertBefore(biz, cq.nextSibling);
@@ -945,13 +943,16 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   var d = document.createElement('details'); d.className = 'more';
   d.innerHTML = '<summary>More choices</summary>';
   var mb = document.createElement('div'); mb.className = 'morebody'; d.appendChild(mb);
-  [look, photos, size, gbw, document.getElementById('visionBox')].forEach(function (x) { if (x) mb.appendChild(x); });
+  var vbx = document.getElementById('visionBox');
+  [look, vbx, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });   // v3.55 CC-123: the picture box sits right after Pick a look
+  [look, vbx, photos, size, gbw].forEach(function (x) { var q = x && x.querySelector('.qn'); if (q) q.textContent = '+'; });   // extras are not numbered
+  var rushF = up('rush', '.field'); num(rushF, 3);
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
   if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
   d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
   // short help under each question, in plain words
   function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
-  hint(what, 'Tap one.'); hint(say, 'A few words each. The gray words are examples.');
+  hint(what, 'Tap one.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
   if (look) { var lq = look.querySelector('.ql'); if (lq) lq.lastChild.nodeValue = 'Pick a look'; }
 })();
 </script>
@@ -3239,7 +3240,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.54-TEST (Nov 13, 2026, 8:10 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.55-TEST (Nov 13, 2026, 8:30 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3326,7 +3327,24 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       var sp = document.createElement('span'); sp.textContent = l[0]; lb.appendChild(sp);
       lt.appendChild(lb);
     });
-    document.getElementById('visionBox').addEventListener('change', function (ev) {
+    // v3.55 CC-123: the picture tiles ARE the look question (one question, not two). They sit under "Pick a look"; the one-pick buttons stay hidden and follow the tiles.
+    var lk = document.getElementById('lookTaps'), lookFs = lk.closest('fieldset');
+    lk.hidden = true; document.getElementById('likeLbl').hidden = true;
+    lookFs.insertBefore(lt, lk); lookFs.insertBefore(document.getElementById('chooseTap'), lk);
+    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Tap up to 3. Tap See big to look closer. Not sure? Tap You choose.'; lh.className = 'hint liteHint'; }
+    [].forEach.call(lt.querySelectorAll('label.opt'), function (lab) {
+      var nm = lab.querySelector('input').value;
+      if (!lab.querySelector('img')) return;
+      var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'See big'; zb.setAttribute('aria-label', 'See the ' + nm + ' picture big');
+      zb.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); if (window.cpmgShowTile) window.cpmgShowTile(nm); });
+      lab.appendChild(zb);
+    });
+    function syncLook() {
+      var first = document.querySelector('input[name="likes"]:checked'), v = first ? first.value : 'You pick for me';
+      var r = document.querySelector('input[name="look"][value="' + v + '"]') || document.querySelector('input[name="look"][value="You pick for me"]');
+      if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+    }
+    var onVis = function (ev) {
       var t = ev.target, yc = document.querySelector('input[name="youchoose"]');
       if (t.name === 'likes' && t.checked) {
         if (document.querySelectorAll('input[name="likes"]:checked').length > 3) t.checked = false;
@@ -3335,7 +3353,10 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
         [].forEach.call(document.querySelectorAll('input[name="feel"]'), function (i) { if (i !== t) i.checked = false; });
         if (yc) yc.checked = false;
       } else if (t.name === 'youchoose' && t.checked) [].forEach.call(document.querySelectorAll('input[name="likes"],input[name="feel"]'), function (i) { i.checked = false; });
-    });
+      if (t.name === 'likes' || t.name === 'youchoose') syncLook();
+    };
+    document.getElementById('visionBox').addEventListener('change', onVis);
+    lookFs.addEventListener('change', onVis);
   }
   if (!TEST_NEW) try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
   if (key) {
@@ -3357,18 +3378,20 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     if (sending) return;
     var brok = $('brok').value.trim(), biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
     var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = ['b1', 'b2', 'b3', 'b4', 'b5'].map(function (id) { return $(id).value.trim(); }).filter(Boolean), cta = $('cta').value.trim();
-    var bad = [];
-    if (err('eBiz', biz ? '' : 'Type your business name.')) bad.push('biz');
-    if (err('eBrok', brok ? '' : PACK.extra.need)) bad.push('brok');
-    if (err('eNm', nm ? '' : 'Type your name.')) bad.push('nm');
-    if (err('eEm', C.emailOk(em) ? '' : 'Type your email, like you@yourbusiness.com.')) bad.push('em');
-    if (err('ePh', C.digits(ph).length >= 10 ? '' : 'Type your phone number.')) bad.push('ph');
-    if (err('eTtl', ttl ? '' : 'Type a title, like the gray example.')) bad.push('ttl');
-    if (err('eBdy', bdy.length ? '' : 'Type at least one line, like the gray examples.')) bad.push('b1');
-    if (err('eCta', cta ? '' : 'Type what people should do.')) bad.push('cta');
-    if (err('eSize', places().length ? '' : 'Tap at least one place.')) bad.unshift('sizeTaps');
-    if (err('eWhat', document.querySelector('input[name="what"]:checked') ? '' : 'Tap one picture.')) bad.unshift('whatTaps');
-    if (PACK.places && PACK.places.length && err('ePlace', document.querySelector('input[name="place"]:checked') ? '' : 'Tap Bar, Restaurant, or Bar and restaurant.')) bad.unshift('placeTaps');
+    var bad = [], fails = [], emOk = C.emailOk(em), phN = C.digits(ph).length;
+    // v3.55 CC-123: checks run top to bottom and only the FIRST problem shows, in plain words. Details and the last line are optional.
+    if (PACK.places && PACK.places.length) fails.push(['ePlace', !document.querySelector('input[name="place"]:checked'), 'Tap Bar, Restaurant, or Bar and restaurant.', 'placeTaps']);
+    fails.push(['eWhat', !document.querySelector('input[name="what"]:checked'), 'Tap one picture.', 'whatTaps']);
+    fails.push(['eTtl', !ttl, 'Type a title, like the gray example.', 'ttl']);
+    fails.push(['eBiz', !biz, 'Type your business name.', 'biz']);
+    fails.push(['eBrok', !brok && !!PACK.extra.need, PACK.extra.need, 'brok']);
+    fails.push(['eNm', !nm, 'Type your name.', 'nm']);
+    fails.push(['eEm', !emOk, em ? 'That email looks wrong. It needs an @ and an ending like .com.' : 'Type your email, like you@yourbusiness.com.', 'em']);
+    fails.push(['ePh', phN < 10, ph ? 'Your phone needs 10 numbers, like 843 555 1212.' : 'Type your phone number.', 'ph']);
+    fails.push(['eSize', !places().length, 'Tap at least one place.', 'sizeTaps']);
+    fails.forEach(function (c) { var show = c[1] && !bad.length; err(c[0], show ? c[2] : ''); if (show) bad.push(c[3]); });
+    if (!bdy.length) bdy = ['(Left for us to write)'];   // v3.55 CC-123: client left it empty, so we write it
+    if (!cta) cta = '(We choose)';
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
     var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else'; if (PACK.vision && what === 'Something else') { var ot = (document.getElementById('whatOtherTxt') || {}).value || ''; ot = ot.trim().slice(0, 80); if (ot) what = 'Something else: ' + ot; }
@@ -3442,7 +3465,10 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     $('lookPop').hidden = false; document.body.style.overflow = 'hidden'; $('sendBar').style.visibility = 'hidden';
     try { $('lookOk').focus(); } catch (e) { /* ok */ }
   }
+  var tileView = false, okText = $('lookOk').textContent;
+  window.cpmgShowTile = function (v) { tileView = true; $('lookNo').hidden = true; $('lookOk').textContent = 'Close'; showLook(v); };   // v3.55 CC-123: See big on a picture tile
   function closeLook(keep) {
+    if (tileView) { tileView = false; $('lookNo').hidden = false; $('lookOk').textContent = okText; $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = ''; return; }
     $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = '';
     if (!keep) {
       var d = document.querySelector('input[name="look"][value="You pick for me"]');
