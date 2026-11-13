@@ -2,13 +2,14 @@
 <!--
   CPMG Lawn care Order — test/order/lawn-care/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.51-TEST (Nov 13, 2026, 7:50 AM)
+  v3.52-TEST (Nov 13, 2026, 8:05 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.52-TEST (Nov 13, 2026, 8:05 AM) CC-120: the look pictures box moves up under Pick a look.
     v3.51-TEST (Nov 13, 2026, 7:50 AM) CC-119: "See a quick sketch" button in section 3 shows the typed words on a colorful rough sketch. Sends nothing.
     v3.50-TEST (Nov 13, 2026, 8:30 AM) CC-117 and CC-118: every form gets Call me, Text me, Email me buttons under the title (Call or text me anytime) and a Help button that opens a numbered guide to every section. All industries.
     v3.49-TEST (Nov 13, 2026, 8:12 AM) CC-116: restaurant form adds the Mountain town look (snowy Colorado ski-town picture, no food).
@@ -745,6 +746,27 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       </div>
     </fieldset>
 
+    <fieldset class="field" id="visionBox" hidden>
+      <legend class="ql"><span class="qn">+</span>What do you picture? (if you want)</legend>
+      <p class="hint"><b>Not sure? Skip this and we'll pick for you.</b> Everything here is optional.</p>
+      <label class="sl">How should it feel?</label>
+      <p class="eg">Warm = cozy and friendly. Bold = stands out. Calm = quiet and clean. Exciting = lively. Elegant = fancy.</p>
+      <div class="taps" id="feelTaps">
+        <label class="opt"><input type="checkbox" name="feel" value="Warm"><span>Warm</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Bold"><span>Bold</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Calm"><span>Calm</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Exciting"><span>Exciting</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Elegant"><span>Elegant</span></label>
+      </div>
+      <div id="moodPop" aria-live="polite"></div>
+      <label class="sl">Tap up to 3 that look like what you want</label>
+      <div id="likeTiles"></div>
+      <label class="opt" id="chooseTap"><input type="checkbox" name="youchoose" value="You choose"><span>You choose, surprise me</span></label>
+      <label class="sl" for="leaveOut">Anything to leave out?</label>
+      <p class="eg">Example: no neon, no clip art.</p>
+      <input type="text" id="leaveOut" autocomplete="off" maxlength="120">
+    </fieldset>
+
     <div class="field">
       <p class="ql"><span class="qn">3</span>What should it say?</p>
       <p class="hint">Fill in the parts of your graphic. A few words each. The gray words in each box are only examples. Type your own.</p>
@@ -822,26 +844,6 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       <p class="err" id="eSize" hidden></p>
     </fieldset>
 
-    <fieldset class="field" id="visionBox" hidden>
-      <legend class="ql"><span class="qn">+</span>What do you picture? (if you want)</legend>
-      <p class="hint"><b>Not sure? Skip this and we'll pick for you.</b> Everything here is optional.</p>
-      <label class="sl">How should it feel?</label>
-      <p class="eg">Warm = cozy and friendly. Bold = stands out. Calm = quiet and clean. Exciting = lively. Elegant = fancy.</p>
-      <div class="taps" id="feelTaps">
-        <label class="opt"><input type="checkbox" name="feel" value="Warm"><span>Warm</span></label>
-        <label class="opt"><input type="checkbox" name="feel" value="Bold"><span>Bold</span></label>
-        <label class="opt"><input type="checkbox" name="feel" value="Calm"><span>Calm</span></label>
-        <label class="opt"><input type="checkbox" name="feel" value="Exciting"><span>Exciting</span></label>
-        <label class="opt"><input type="checkbox" name="feel" value="Elegant"><span>Elegant</span></label>
-      </div>
-      <div id="moodPop" aria-live="polite"></div>
-      <label class="sl">Tap up to 3 that look like what you want</label>
-      <div id="likeTiles"></div>
-      <label class="opt" id="chooseTap"><input type="checkbox" name="youchoose" value="You choose"><span>You choose, surprise me</span></label>
-      <label class="sl" for="leaveOut">Anything to leave out?</label>
-      <p class="eg">Example: no neon, no clip art.</p>
-      <input type="text" id="leaveOut" autocomplete="off" maxlength="120">
-    </fieldset>
 
     <div class="field lh">
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
@@ -3235,7 +3237,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.51-TEST (Nov 13, 2026, 7:50 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.52-TEST (Nov 13, 2026, 8:05 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
