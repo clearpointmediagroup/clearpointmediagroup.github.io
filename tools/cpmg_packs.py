@@ -1,4 +1,5 @@
-# CPMG industry packs v1.9 (Nov 11, 2026, 11:31 PM)
+# CPMG industry packs v2.0 (Nov 13, 2026, 7:50 AM)
+# v2.0 (Nov 13, 2026, 7:50 AM) Randy: restaurant pack drops the Cartoon poster look (picture rejected).
 # v1.9 (Nov 11, 2026, 11:31 PM) CC-095: restaurant pack adds the Cartoon poster look (professional cartoon-style 3D poster). Test copy only.
 # v1.8 (Nov 10, 2026, 12:35 AM) CC-071: restaurant pack asks Bar / Restaurant / Bar and restaurant first; the extra box becomes "More about your place".
 # v1.7 (Nov 8, 2026) Randy: no dark forms anywhere. Every industry pack is now lean (which also turns on the light tan and light green look).
@@ -38,7 +39,7 @@ PACKS = {
  'restaurant': dict(lean=True, vision=True, name='Restaurant', title='Order a graphic for your restaurant or bar', foot='CPMG Restaurant and Bar Order',
    who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant or bar', photos='your food, your bar or dining room, your headshot or your logo',
    kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Drink special','beer'),('Game day','ball-football'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
-   looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual'),('Cartoon poster','mood-happy','Pro cartoon-style 3D poster','cartoon-poster'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
+   looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
    places=[('Bar','beer',['Happy hour','Drink special','Game day','Live music','Event','Holiday hours','Something else']),
            ('Restaurant','tools-kitchen-2',['Daily special','Happy hour','Live music','Event','Holiday hours','Something else']),
            ('Bar and restaurant','building-store',['Daily special','Happy hour','Drink special','Game day','Live music','Event','Holiday hours','Something else'])],
