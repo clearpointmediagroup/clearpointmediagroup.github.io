@@ -1,6 +1,7 @@
 <!doctype html>
 <!--
-  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.57 (Nov 13, 2026, 8:44 AM)
+  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.59 (Nov 13, 2026, 8:59 AM)
+  v3.59 LIVE (Nov 13, 2026, 8:59 AM): CC-126 name, phone and email under the buttons; CC-128 big print, one column on laptops (Randy's go-live OK)
   v3.57 LIVE (Nov 13, 2026, 8:44 AM): CC-124 new flow (Pick a look is step 2), CC-125 Text me back (Randy's go-live OK)
   v3.56 LIVE: skipped, went live together with v3.57
   v3.55 LIVE (Nov 13, 2026, 8:30 AM): CC-123 form cleanup (Randy's go-live OK)
@@ -9,101 +10,103 @@
   v3.52 LIVE (Nov 13, 2026, 8:05 AM): CC-120 look pictures box moved up under Pick a look (Randy's go-live OK)
   v3.51 LIVE (Nov 13, 2026, 7:50 AM)
   v3.50 LIVE (Nov 13, 2026, 8:40 AM): CC-116 Mountain town look, CC-117 Help button, CC-118 Call/Text/Email buttons (Randy's go-live OK, 8:38 AM). Undo: put back v3.48 from git (commit c0da19a).
-  Copied from test/order/restaurant/ (v3.57-TEST) and pointed at the LIVE order system (assets/cpmg-order-config.js).
+  Copied from test/order/restaurant/ (v3.59) and pointed at the LIVE order system (assets/cpmg-order-config.js).
   To change it: change the test copy, rebuild, then copy here again.
-  v3.57 (Nov 13, 2026, 8:44 AM)
+  v3.59 (Nov 13, 2026, 8:59 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.59 (Nov 13, 2026, 8:59 AM) CC-128 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
+    v3.58 (Nov 13, 2026, 8:48 AM) CC-126: under Call me, Text me, Email me: Randy Turner, ClearPoint Media Group, phone, email, and Call or text me anytime.
     v3.57 (Nov 13, 2026, 8:44 AM) CC-125: Text me button is back (first line filled in), the line says Call or text me anytime, footer says Call or text.
     v3.56 (Nov 13, 2026, 8:40 AM) CC-124 new flow: Pick a look is step 2 right after the kind of graphic (not hidden in More choices), step numbers follow what the client sees, tidier top (shorter title, version small under it).
     v3.55 (Nov 13, 2026, 8:30 AM) CC-123 form cleanup: one look question (picture tiles under Pick a look, See big on each), Details and the last line optional, step numbers in order, Help list matches, clear one-at-a-time error messages, footer says Call or email.
-    v3.54 (Nov 13, 2026, 8:10 AM) CC-122: Text me button hidden. Call me and Email me stay.
-    v3.53 (Nov 13, 2026, 8:20 AM) CC-121: Text me starts with a clear first line.
+    v3.54 (Nov 13, 2026, 8:10 AM) CC-122: Text me button hidden until the garbled text is explained. Call me and Email me stay.
+    v3.53 (Nov 13, 2026, 8:20 AM) CC-121: Text me starts with a clear first line (Hi, I'm interested in a graphic from ClearPoint Media Group.).
     v3.52 (Nov 13, 2026, 8:05 AM) CC-120: the look pictures box moves up under Pick a look.
     v3.51 (Nov 13, 2026, 7:50 AM) CC-119: "See a quick sketch" button in section 3 shows the typed words on a colorful rough sketch. Sends nothing.
-    v3.50 (Nov 13, 2026, 8:40 AM) CC-117 and CC-118: every form gets Call me, Text me, Email me buttons under the title (Call or text me anytime) and a Help button that opens a numbered guide to every section. All industries.
-    v3.49-TEST (Nov 13, 2026, 8:12 AM) CC-116: restaurant form adds the Mountain town look (snowy Colorado ski-town picture, no food).
-    v3.48-TEST (Nov 13, 2026, 7:52 AM) CC-115: restaurant form drops the Cartoon poster look (Randy: picture rejected).
-    v3.47-TEST (Nov 13, 2026, 7:40 AM) CC-115: the little i no longer sits on top of the mood words (Exciting, Elegant).
-    v3.46-TEST (Nov 13, 2026, 7:30 AM) CC-115: Randy: mood pictures are bigger and the colors toned down; Where will you show it? now draws each shape (phone, TV, social post, website) with its size (9:16, 16:9, 4:5). All industries (test).
-    v3.45-TEST (Nov 13, 2026, 7:20 AM) CC-115: each mood button gets a little i. Tap it to see a color picture and one plain line (Warm = sunset tones). Tap again to close.
-    v3.44-TEST (Nov 13, 2026, 7:10 AM) CC-115: Randy: the mood buttons (Warm, Bold, Calm, Exciting, Elegant) now pick ONE only; tapping another switches it.
-    v3.43-TEST (Nov 13, 2026, 7:00 AM) CC-115: Randy: the One you like box made no sense next to the picture tiles, so it is taken out. Order still sends Feel, Like these, You choose, Leave out.
-    v3.42-TEST (Nov 13, 2026, 6:55 AM) CC-115: the What do you picture box gets a top line (Not sure? Skip this and we will pick for you), short plain examples, tap-a-picture tiles (up to 3) and a You choose button. Sent as Like these / You choose. Tiles show the look pictures when they exist, else a label. Restaurant and real estate only.
-    v3.41-TEST (Nov 13, 2026, 6:35 AM) CC-114: on the restaurant and real estate forms, tapping Something else opens a box right under the kind buttons (Tell us what it is for). The words are sent with the order as Kind of graphic: Something else: <words>. Other industries: unchanged.
-    v3.40-TEST (Nov 13, 2026, 6:20 AM) CC-113: the 'What do you picture?' box is now ON for the restaurant and bar form too (real estate stays on, parked). Other industries: unchanged.
-    v3.39-TEST (Nov 13, 2026, 5:50 AM) CC-111: real estate form only gets a 'What do you picture?' box in More choices: Feel (Warm, Bold, Calm, Exciting, Elegant), One you like (link or name), Anything to leave out. All optional. Sent in the order notes as Feel / Example they like / Leave out. Other industries: unchanged (box hidden).
-    v3.38-TEST (Nov 11, 2026, 11:33 PM) CC-095: restaurant form adds the Cartoon poster look (professional cartoon-style 3D poster). Other industries: version label only.
-    v3.37-TEST (Nov 10, 2026, 12:35 AM) CC-071: restaurant form asks Bar, Restaurant, or Bar and restaurant first, then shows only the graphic buttons that fit. Other industries: version label only.
-    v3.36-TEST (Nov 9, 2026, 11:50 PM) CC-070: restaurant form now fits bars too (title, Drink special and Game day buttons). Other industries: version label only.
-    v3.35-TEST (Nov 4, 2026) Randy: the version number now shows on the form itself (small, top right of the header).
-    v3.34-TEST (Nov 4, 2026) Randy: the Send my order button is smaller and sits in the exact center of the page, with the price line centered just above it (wide screens). Test copy only.
-    v3.33-TEST (Nov 4, 2026) Randy: the v3.32 fix only made the form tiny and left empty space. Now the form uses the whole window width and a small script picks the biggest size that still fits the window with no scrolling (in or out of full screen). The Your price box no longer runs into the Details box, and its words are plainer (no 'question 5'). Test copy only.
-    v3.32-TEST (Nov 3, 2026) Randy: when the window is not full screen, What should people do? was hidden under the Send bar. Send bar is now one short row on wide screens, the form shrinks in smaller steps for short windows (down to 470 px tall), and the bottom padding is smaller. Test copy only.
-    v3.31-TEST (Nov 3, 2026) Fit after v3.30: with 9 looks the form scrolled again. On wide screens (1300 px+) More choices is a wider 4th column with 3 small columns inside; on 1100-1299 px the bottom-of-graphic box moves under the look. Same photo changes as before (merged with v3.30): ONE photo per spot, tap the picture to see it big, Replace button. Original note: could not open the picture he added, only delete it, and did not know how many photos were allowed. Each photo spot is ONE photo and says so ("House photo (1 photo)"). Tap the small picture to see it big (Close button, or tap anywhere). New Replace button next to Remove swaps it without deleting first. A small line under it says "Tap the picture to see it big."
-    v3.30-TEST (Nov 3, 2026) Randy: more looks to pick from. Real estate now has 9 looks plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (a sunny Carolina beach house), Southern charm, Holiday. New looks show "Sample picture coming soon" until their pictures are made. Words come from tools/cpmg_packs.py v1.5.
-    v3.29-TEST (Nov 3, 2026) Randy: how to do holidays without leaving anyone out. A neutral "Season's greetings" button (for everyone: winter colors, snowflakes and lights, no religious symbols) is first in the holiday buttons in November and December. Every other holiday keeps its own button, in date order.
-    v3.28-TEST (Nov 3, 2026) Randy: the holiday graphic has to match the holiday (like Hanukkah). Hanukkah is now in the holiday buttons (date worked out from the Hebrew calendar, first candle the evening before Kislev 25). The pick is sent as "Look: Holiday: <name>" in the order notes and the Gemini file, so the graphic is made for that holiday.
-    v3.27-TEST (Nov 3, 2026) With the holiday buttons open the More choices panel was too tall. Look now has the whole left column; photos, where, and bottom of the graphic stack in the right column, so it still fits one screen.
-    v3.26-TEST (Nov 3, 2026) Randy: tapping Holiday now breaks the holidays out as tap buttons (Veterans Day, Thanksgiving, Christmas, New Year's Eve, New Year's Day, Other) instead of a drop-down. Same list rules as v3.25 (next 60 days, updates itself); the hidden drop-down still holds the value, so the order is sent the same way.
-    v3.25-TEST (Nov 3, 2026) Randy: the holiday drop-down shows only the holidays coming up now (next 60 days). Today that is Veterans Day, Thanksgiving, Christmas, New Year's Eve and New Year's Day. It updates itself through the year (the full list is built in), and Other is always there.
-    v3.24-TEST (Nov 3, 2026) Randy: Pick a look gets a Beach vibe (summer) and a Holiday look in the real estate and restaurant forms. Holiday opens a drop-down of the major holidays (New Year's Day through New Year's Eve, plus Other) in place of the old free-text box; sent the same way ("Holiday: Christmas").
-    v3.23-TEST (Nov 3, 2026) Randy: "Take a picture" did nothing on his laptop (browsers ignore the camera request on computers). On a computer with a mouse it now opens a small camera window with Take photo and Cancel; the photo goes into the same Upload box. No camera or blocked: says so, Upload still works. Phones untouched.
-    v3.22-TEST (Nov 3, 2026) Randy: in full screen a big "Exit full screen" button sits in the top-right corner, so nobody needs to know the Esc key. (Another session made v3.21 at the same time; merged.)
-    v3.21-TEST (Nov 3, 2026) Randy: More choices is not optional, show it, and fit the whole form on the screen. On a wide screen More choices is always open (no fold, no + sign, the word optional is gone) and its four boxes sit in two small columns (look and where on the left, photos and bottom of graphic on the right) with a wider 4th column, so the whole form fits with no scrolling. Phones still fold it.
-    v3.20-TEST (Nov 3, 2026) Randy: use the empty space. On a wide screen the form is 4 columns side by side: kind (price under it) | what it says | about you | More choices (optional), which starts open there since it fits. No scrolling. Tap More choices to fold it. Phones keep it folded.
-    v3.19-TEST (Nov 3, 2026) (replaced by v3.20) Randy: opening More choices pushed the page down and made it scroll. On a wide screen the price sits under step 1 and More choices is one full-width strip along the bottom that opens into 4 columns (look, photos, where, bottom of graphic) so everything stays on one screen.
-    v3.18-TEST (Nov 3, 2026) Randy did not see the full screen button: it now shows on any window 700 px wide or more (was 1100), so a smaller laptop window still gets it.
-    v3.17-TEST (Nov 3, 2026) Randy: the whole form on one screen. On a wide screen the light form puts the 3 steps side by side (kind | what it says | about you), with More choices and the price under them, and shrinks a little on short screens. Phones unchanged.
-    v3.16-TEST (Nov 3, 2026) Randy: a big green "Click here for full screen" button at the top of the light form on wide screens (browsers need a tap to go full screen). It goes away once full screen is on and comes back if they leave it. Phones do not see it.
-    v3.15-TEST (Nov 3, 2026) Randy: dark green felt like an old computer and had too many buttons. New LITE look for lean pages (body class lite): light cream and white,
+    v3.50 (Nov 13, 2026, 8:30 AM) CC-117 and CC-118: every form gets Call me, Text me, Email me buttons under the title (Call or text me anytime) and a Help button that opens a numbered guide to every section. All industries.
+    v3.49 (Nov 13, 2026, 8:12 AM) CC-116: restaurant form adds the Mountain town look (snowy Colorado ski-town picture, no food).
+    v3.48 (Nov 13, 2026, 7:52 AM) CC-115: restaurant form drops the Cartoon poster look (Randy: picture rejected).
+    v3.47 (Nov 13, 2026, 7:40 AM) CC-115: the little i no longer sits on top of the mood words (Exciting, Elegant).
+    v3.46 (Nov 13, 2026, 7:30 AM) CC-115: Randy: mood pictures are bigger and the colors toned down; Where will you show it? now draws each shape (phone, TV, social post, website) with its size (9:16, 16:9, 4:5). All industries (test).
+    v3.45 (Nov 13, 2026, 7:20 AM) CC-115: each mood button gets a little i. Tap it to see a color picture and one plain line (Warm = sunset tones). Tap again to close.
+    v3.44 (Nov 13, 2026, 7:10 AM) CC-115: Randy: the mood buttons (Warm, Bold, Calm, Exciting, Elegant) now pick ONE only; tapping another switches it.
+    v3.43 (Nov 13, 2026, 7:00 AM) CC-115: Randy: the One you like box made no sense next to the picture tiles, so it is taken out. Order still sends Feel, Like these, You choose, Leave out.
+    v3.42 (Nov 13, 2026, 6:55 AM) CC-115: the What do you picture box gets a top line (Not sure? Skip this and we will pick for you), short plain examples, tap-a-picture tiles (up to 3) and a You choose button. Sent as Like these / You choose. Tiles show the look pictures when they exist, else a label. Restaurant and real estate only.
+    v3.41 (Nov 13, 2026, 6:35 AM) CC-114: on the restaurant and real estate forms, tapping Something else opens a box right under the kind buttons (Tell us what it is for). The words are sent with the order as Kind of graphic: Something else: <words>. Other industries: unchanged.
+    v3.40 (Nov 13, 2026, 6:20 AM) CC-113: the 'What do you picture?' box is now ON for the restaurant and bar form too (real estate stays on, parked). Other industries: unchanged.
+    v3.39 (Nov 13, 2026, 5:50 AM) CC-111: real estate form only gets a 'What do you picture?' box in More choices: Feel (Warm, Bold, Calm, Exciting, Elegant), One you like (link or name), Anything to leave out. All optional. Sent in the order notes as Feel / Example they like / Leave out. Other industries: unchanged (box hidden).
+    v3.38 (Nov 11, 2026, 11:33 PM) CC-095: restaurant form adds the Cartoon poster look (professional cartoon-style 3D poster). Other industries: version label only.
+    v3.37 (Nov 10, 2026, 12:35 AM) CC-071: restaurant form asks Bar, Restaurant, or Bar and restaurant first, then shows only the graphic buttons that fit. Other industries: version label only.
+    v3.36 (Nov 9, 2026, 11:50 PM) CC-070: restaurant form now fits bars too (title, Drink special and Game day buttons). Other industries: version label only.
+    v3.35 (Nov 4, 2026) Randy: the version number now shows on the form itself (small, top right of the header).
+    v3.34 (Nov 4, 2026) Randy: the Send my order button is smaller and sits in the exact center of the page, with the price line centered just above it (wide screens). Test copy only.
+    v3.33 (Nov 4, 2026) Randy: the v3.32 fix only made the form tiny and left empty space. Now the form uses the whole window width and a small script picks the biggest size that still fits the window with no scrolling (in or out of full screen). The Your price box no longer runs into the Details box, and its words are plainer (no 'question 5'). Test copy only.
+    v3.32 (Nov 3, 2026) Randy: when the window is not full screen, What should people do? was hidden under the Send bar. Send bar is now one short row on wide screens, the form shrinks in smaller steps for short windows (down to 470 px tall), and the bottom padding is smaller. Test copy only.
+    v3.31 (Nov 3, 2026) Fit after v3.30: with 9 looks the form scrolled again. On wide screens (1300 px+) More choices is a wider 4th column with 3 small columns inside; on 1100-1299 px the bottom-of-graphic box moves under the look. Same photo changes as before (merged with v3.30): ONE photo per spot, tap the picture to see it big, Replace button. Original note: could not open the picture he added, only delete it, and did not know how many photos were allowed. Each photo spot is ONE photo and says so ("House photo (1 photo)"). Tap the small picture to see it big (Close button, or tap anywhere). New Replace button next to Remove swaps it without deleting first. A small line under it says "Tap the picture to see it big."
+    v3.30 (Nov 3, 2026) Randy: more looks to pick from. Real estate now has 9 looks plus You pick for me: Professional, Luxury, Modern, Friendly, 3D poster, Bold and bright, Beach vibe (a sunny Carolina beach house), Southern charm, Holiday. New looks show "Sample picture coming soon" until their pictures are made. Words come from tools/cpmg_packs.py v1.5.
+    v3.29 (Nov 3, 2026) Randy: how to do holidays without leaving anyone out. A neutral "Season's greetings" button (for everyone: winter colors, snowflakes and lights, no religious symbols) is first in the holiday buttons in November and December. Every other holiday keeps its own button, in date order.
+    v3.28 (Nov 3, 2026) Randy: the holiday graphic has to match the holiday (like Hanukkah). Hanukkah is now in the holiday buttons (date worked out from the Hebrew calendar, first candle the evening before Kislev 25). The pick is sent as "Look: Holiday: <name>" in the order notes and the Gemini file, so the graphic is made for that holiday.
+    v3.27 (Nov 3, 2026) With the holiday buttons open the More choices panel was too tall. Look now has the whole left column; photos, where, and bottom of the graphic stack in the right column, so it still fits one screen.
+    v3.26 (Nov 3, 2026) Randy: tapping Holiday now breaks the holidays out as tap buttons (Veterans Day, Thanksgiving, Christmas, New Year's Eve, New Year's Day, Other) instead of a drop-down. Same list rules as v3.25 (next 60 days, updates itself); the hidden drop-down still holds the value, so the order is sent the same way.
+    v3.25 (Nov 3, 2026) Randy: the holiday drop-down shows only the holidays coming up now (next 60 days). Today that is Veterans Day, Thanksgiving, Christmas, New Year's Eve and New Year's Day. It updates itself through the year (the full list is built in), and Other is always there.
+    v3.24 (Nov 3, 2026) Randy: Pick a look gets a Beach vibe (summer) and a Holiday look in the real estate and restaurant forms. Holiday opens a drop-down of the major holidays (New Year's Day through New Year's Eve, plus Other) in place of the old free-text box; sent the same way ("Holiday: Christmas").
+    v3.23 (Nov 3, 2026) Randy: "Take a picture" did nothing on his laptop (browsers ignore the camera request on computers). On a computer with a mouse it now opens a small camera window with Take photo and Cancel; the photo goes into the same Upload box. No camera or blocked: says so, Upload still works. Phones untouched.
+    v3.22 (Nov 3, 2026) Randy: in full screen a big "Exit full screen" button sits in the top-right corner, so nobody needs to know the Esc key. (Another session made v3.21 at the same time; merged.)
+    v3.21 (Nov 3, 2026) Randy: More choices is not optional, show it, and fit the whole form on the screen. On a wide screen More choices is always open (no fold, no + sign, the word optional is gone) and its four boxes sit in two small columns (look and where on the left, photos and bottom of graphic on the right) with a wider 4th column, so the whole form fits with no scrolling. Phones still fold it.
+    v3.20 (Nov 3, 2026) Randy: use the empty space. On a wide screen the form is 4 columns side by side: kind (price under it) | what it says | about you | More choices (optional), which starts open there since it fits. No scrolling. Tap More choices to fold it. Phones keep it folded.
+    v3.19 (Nov 3, 2026) (replaced by v3.20) Randy: opening More choices pushed the page down and made it scroll. On a wide screen the price sits under step 1 and More choices is one full-width strip along the bottom that opens into 4 columns (look, photos, where, bottom of graphic) so everything stays on one screen.
+    v3.18 (Nov 3, 2026) Randy did not see the full screen button: it now shows on any window 700 px wide or more (was 1100), so a smaller laptop window still gets it.
+    v3.17 (Nov 3, 2026) Randy: the whole form on one screen. On a wide screen the light form puts the 3 steps side by side (kind | what it says | about you), with More choices and the price under them, and shrinks a little on short screens. Phones unchanged.
+    v3.16 (Nov 3, 2026) Randy: a big green "Click here for full screen" button at the top of the light form on wide screens (browsers need a tap to go full screen). It goes away once full screen is on and comes back if they leave it. Phones do not see it.
+    v3.15 (Nov 3, 2026) Randy: dark green felt like an old computer and had too many buttons. New LITE look for lean pages (body class lite): light cream and white,
                              3 steps (kind, what it says, about you), no icons on tiles, and the look, photos, where-shown and bottom-of-graphic boxes sit behind one "More choices (optional)" tap
                              (defaults: You pick for me, Phone, show name and phone). No desktop poster, no start screen. Same ids and same order sent.
-    v3.14-TEST (Nov 3, 2026) Randy: restaurants next. The restaurant pack is lean too (3 looks: 3D poster with the Myrtle Beach vibe, Chalkboard, Casual; no Website/Facebook/Instagram,
+    v3.14 (Nov 3, 2026) Randy: restaurants next. The restaurant pack is lean too (3 looks: 3D poster with the Myrtle Beach vibe, Chalkboard, Casual; no Website/Facebook/Instagram,
                              headshot or logo spots, or Rush). Look tiles have room for the check mark; a hair smaller on 720 px screens so nothing scrolls.
-    v3.13-TEST (Nov 3, 2026) Randy: one form per market, real estate first (too many things to fill). A pack with lean=True (real estate) hides the extra look choices,
+    v3.13 (Nov 3, 2026) Randy: one form per market, real estate first (too many things to fill). A pack with lean=True (real estate) hides the extra look choices,
                              the Website/Facebook/Instagram boxes, the headshot and logo photo spots, Rush, and detail lines 4 and 5, and renumbers the steps. The code is the same
                              for every market; only the pack words and this switch change. Restaurants are next.
-    v3.12-TEST (Nov 3, 2026) Randy: most clients will not find the small Full screen button. On a wide screen the form now opens with a start screen: one big
+    v3.12 (Nov 3, 2026) Randy: most clients will not find the small Full screen button. On a wide screen the form now opens with a start screen: one big
                              "Start my order" button. That one tap goes full screen and shows the form. If full screen is blocked the form still opens. Phones skip the start screen.
-    v3.11-TEST (Nov 3, 2026) Randy's laptop screen is 1440 x 720 (CSS pixels) in full screen, so on screens 740 px tall or less the whole poster shrinks a bit more
+    v3.11 (Nov 3, 2026) Randy's laptop screen is 1440 x 720 (CSS pixels) in full screen, so on screens 740 px tall or less the whole poster shrinks a bit more
                              (zoom .70) so the Send button and the bottom strip are visible without scrolling. Desktop poster only.
-    v3.10-TEST (Nov 3, 2026) Randy: go full screen when the client comes to the form. Browsers only allow it after a tap, so the first tap on a wide screen goes full screen,
+    v3.10 (Nov 3, 2026) Randy: go full screen when the client comes to the form. Browsers only allow it after a tap, so the first tap on a wide screen goes full screen,
                              and a Full screen / Exit full screen button sits in the top-right corner. Esc still leaves full screen and it does not come back by itself. Desktop only.
-    v3.9-TEST (Nov 3, 2026) Randy: the Send bar at the very bottom was hidden behind his Windows taskbar. On desktop the Send my order button and the
+    v3.9 (Nov 3, 2026) Randy: the Send bar at the very bottom was hidden behind his Windows taskbar. On desktop the Send my order button and the
                              "You pay" line now sit in the right panel under the price, and the fixed bottom bar is not used. Phones keep the bottom bar.
-    v3.8-TEST (Nov 3, 2026) Randy: the labels above the poster boxes were too small to read. They are now 17 px, bold, bright green (Title, Second line,
+    v3.8 (Nov 3, 2026) Randy: the labels above the poster boxes were too small to read. They are now 17 px, bold, bright green (Title, Second line,
                              Details, What should people do?), with bigger helper words next to them, and the Website / Facebook / Instagram labels are 14 px bold. Desktop poster only.
-    v3.7-TEST (Nov 3, 2026) Randy: the what-to-do box was too bright and the cursor was hard to see. It is now dark with a green outline like the
+    v3.7 (Nov 3, 2026) Randy: the what-to-do box was too bright and the cursor was hard to see. It is now dark with a green outline like the
                              other boxes; every poster box has a bright green cursor and a green glow while you type in it. Desktop poster only.
-    v3.6-TEST (Nov 3, 2026) Randy: the form flows like filling in the infographic. On a wide screen a small script moves the same boxes
+    v3.6 (Nov 3, 2026) Randy: the form flows like filling in the infographic. On a wide screen a small script moves the same boxes
                              into a poster in the middle (photo spots across the top, Title, Second line, Details, the what-to-do button, and a
                              bottom strip with business name, phone, website, Facebook and Instagram), with kind/look on the left and where/rush/
                              contact/price on the right. Same ids and values, so ordering is unchanged. Phones never run it. Edited here only.
-    v3.5-TEST (Nov 3, 2026) Randy picked look A: same dark green, easier to read. Brighter gray example words and small text,
+    v3.5 (Nov 3, 2026) Randy picked look A: same dark green, easier to read. Brighter gray example words and small text,
                              slightly bigger small text on desktop, stronger borders on boxes and inputs. Colors only; applies to phones too.
-    v3.4-TEST (Nov 3, 2026) Randy: desktop one-screen layout. On a laptop or desktop (1100 px wide or more) the form flows into 4 columns so
+    v3.4 (Nov 3, 2026) Randy: desktop one-screen layout. On a laptop or desktop (1100 px wide or more) the form flows into 4 columns so
                              it fits on one screen: [1 kind, 2 look] [3 what it says] [bottom of the graphic, 4 photos] [5 where, 6 rush, 7 business,
                              8 contact, price]. Phones keep the one-column form in the same order. The Bottom of the graphic box moved out of
                              question 3 into its own block right after it (same boxes, same ids, same place on a phone). Layout only: same questions,
                              same words, same order sent. Edited here only; tools/build-order-forms.py copies it to every industry page.
-    v3.3-TEST (Oct 30, 2026) Added the concrete industry (demo for Michael, ABC Concrete). Words only; no code change.
-    v3.2-TEST (Oct 30, 2026) Randy: "You pick for me" shows a plain, neutral sample picture (looks/you-pick.jpg) in every industry.
-    v3.1-TEST (Oct 30, 2026) 8 industries: real-estate, restaurant, plumbing, hvac, lawn-care, cpa, home-inspector,
+    v3.3 (Oct 30, 2026) Added the concrete industry (demo for Michael, ABC Concrete). Words only; no code change.
+    v3.2 (Oct 30, 2026) Randy: "You pick for me" shows a plain, neutral sample picture (looks/you-pick.jpg) in every industry.
+    v3.1 (Oct 30, 2026) 8 industries: real-estate, restaurant, plumbing, hvac, lawn-care, cpa, home-inspector,
                              business. Words now live in tools/cpmg_packs.py; tools/build-order-forms.py builds one page
                              per industry at test/order/<industry>/ (same code). Extra question can be optional.
                              Every look has a sample picture spot; a missing picture shows "Sample picture coming soon".
-    v3.0-TEST (Oct 30, 2026) Randy approved: built from Real Estate Order v2.29-TEST. Adds industry packs
+    v3.0 (Oct 30, 2026) Randy approved: built from Real Estate Order v2.29. Adds industry packs
                              (real-estate, business) and the East Coast time line ("We're on East Coast time",
                              plus "That's N hours ahead of you" when the client is in another time zone).
                              Sends to the same CPMG Orders TEST script as before (kind 'quick'); no script change.
   ---- history of the real estate form this was built from ----
   CPMG Real Estate Order — test/real-estate/index.html
-  v2.29-TEST (Oct 30, 2026)
+  v2.29 (Oct 30, 2026)
   Real estate version of the one simple form (one form per group of clients).
   TEST COPY: sends to the CPMG Orders TEST script. Not for clients.
   One short form that replaces both Detail Order and Quick Order: 6 questions.
@@ -113,118 +116,118 @@
   Returning clients: their saved info is filled in for them (same saved link as Quick Order).
   How the words are sent: first line = headline, next 3 lines = extra lines, anything more = notes.
   REVISION LOG
-    RE v2.29-TEST (Oct 30, 2026) Randy (tester review fixes 2, 3, 6, 7): (2) each part of question 3 shows a plain
+    RE v2.29 (Oct 30, 2026) Randy (tester review fixes 2, 3, 6, 7): (2) each part of question 3 shows a plain
                              "Example:" line that changes with the kind of graphic, plus "the gray words are only examples".
                              (3) plain words: Heading -> "Second line", Body -> "Details", Call to action -> "What should
                              people do?", proof -> "preview", "Wide 16:9" -> "Wide", Rush explained. (6) new "Show my business
                              name" box (on to start) in Bottom of the graphic; sent in the order notes ("Bottom of graphic").
                              (7) price box says how paying works: nothing now, preview by email, pay by card with a secure
                              Square link once they OK it. Labels only; field names and the order system are unchanged.
-    RE v2.28-TEST (Oct 30, 2026) Randy: photo question rebuilt as 3 labeled spots, each with its own Take a picture /
+    RE v2.28 (Oct 30, 2026) Randy: photo question rebuilt as 3 labeled spots, each with its own Take a picture /
                              Upload buttons and a Remove button: House photo (big background, words on top), Your headshot
                              (small circle by your name, no words on your face), Your logo (small, in a corner). All optional.
                              Replaces the v2.27 "What is this?" question. Still sent in the order notes ("Photos") and in
                              each file name (Photo1_House_...), so no script change.
-    RE v2.27-TEST (Oct 30, 2026) Randy: each photo now asks "What is this?" with 3 taps: The house (big background,
+    RE v2.27 (Oct 30, 2026) Randy: each photo now asks "What is this?" with 3 taps: The house (big background,
                              words on top), My headshot (small circle by your name, no words on your face), My logo
                              (small, in a corner). Required for each photo before sending. Sent in the order notes
                              ("Photos": Photo 1: The house ...) and in each photo's file name (Photo1_House_...), so
                              no script change. Real estate form only; the shared photo picker is unchanged.
-    RE v2.26-TEST (Oct 30, 2026) Randy: (1) Bottom of the graphic now has 3 boxes: Website, Facebook page, Instagram
+    RE v2.26 (Oct 30, 2026) Randy: (1) Bottom of the graphic now has 3 boxes: Website, Facebook page, Instagram
                              (all optional). Sent to the order system joined in the same website field it reads now
                              ("Website: ... · Facebook: ... · Instagram: ..."), plus each one on its own, so no script change.
                              (2) "Your price" box moved to the bottom, right above Send my order, and always shown
                              (asks them to tap a place until they do). The Send bar shows the total too
                              ("You pay $0 · first one free" for new clients).
-    RE v2.25-TEST (Oct 30, 2026) CC-030: Casual and Pool and summer example pictures fixed (address boxes no longer run into
+    RE v2.25 (Oct 30, 2026) CC-030: Casual and Pool and summer example pictures fixed (address boxes no longer run into
                              the title; Casual details on two clean lines with one wood edge; Pool Call me button no longer
                              runs into the details box). Picture link bumped to ?v=3.
-    RE v2.24-TEST (Oct 30, 2026) CC-030: Professional example picture fixed (address box no longer runs into the
+    RE v2.24 (Oct 30, 2026) CC-030: Professional example picture fixed (address box no longer runs into the
                              JUST LISTED banner; clear gap added). Picture link bumped to ?v=2 so phones show the new one.
-    RE v2.23-TEST (Oct 29, 2026) CC-027: Promo look ($45) taken off (Randy: confusing next to Pick a look; every look is $25).
+    RE v2.23 (Oct 29, 2026) CC-027: Promo look ($45) taken off (Randy: confusing next to Pick a look; every look is $25).
                              Question 6 is now "Need it faster? (if you want)" with only the Rush box (+$10).
-    RE v2.22-TEST (Oct 29, 2026) CC-030: Send my order bar hidden while the look pop-up is open.
-    RE v2.21-TEST (Oct 29, 2026) CC-030: example pops up big on top of the page when a look is tapped (Randy: it was hidden
+    RE v2.22 (Oct 29, 2026) CC-030: Send my order bar hidden while the look pop-up is open.
+    RE v2.21 (Oct 29, 2026) CC-030: example pops up big on top of the page when a look is tapped (Randy: it was hidden
                              below the buttons). "Use this look" keeps it; "Pick a different look" goes back to You pick for me.
-    RE v2.20-TEST (Oct 29, 2026) CC-030: example picture loads right away when a look is tapped (lazy loading removed).
-    RE v2.19-TEST (Oct 29, 2026) CC-030: tapping a look shows an example picture under the buttons (6 pictures made in
+    RE v2.20 (Oct 29, 2026) CC-030: example picture loads right away when a look is tapped (lazy loading removed).
+    RE v2.19 (Oct 29, 2026) CC-030: tapping a look shows an example picture under the buttons (6 pictures made in
                              the CPMG Gem v4.0, Randy approved), with "Example: ... look. Yours uses your own words and photos."
                              You pick for me shows none. Pictures in test/real-estate/looks/.
-    RE v2.18-TEST (Oct 29, 2026) CC-027: "You pick for me" spans the full row when the look count is odd.
-    RE v2.17-TEST (Oct 29, 2026) CC-027: Pick a look adds "3D poster" (Bold, professional 3D). 7 looks.
-    RE v2.16-TEST (Oct 29, 2026) CC-027: new question 2 "Pick a look": Professional, Casual, Luxury, Pool and summer,
+    RE v2.18 (Oct 29, 2026) CC-027: "You pick for me" spans the full row when the look count is odd.
+    RE v2.17 (Oct 29, 2026) CC-027: Pick a look adds "3D poster" (Bold, professional 3D). 7 looks.
+    RE v2.16 (Oct 29, 2026) CC-027: new question 2 "Pick a look": Professional, Casual, Luxury, Pool and summer,
                              Holiday (opens "Which holiday?"), You pick for me (picked to start). Sent as Look (goes to Notes and the
                              Gemini file). Questions now 1-8.
-    RE v2.15-TEST (Oct 29, 2026) CC-027: website box hint shortened so it isn't cut off on a phone; "if you want" moved
+    RE v2.15 (Oct 29, 2026) CC-027: website box hint shortened so it isn't cut off on a phone; "if you want" moved
                              to a small line above the box.
-    RE v2.14-TEST (Oct 29, 2026) CC-027: regroup (Randy approved): "Bottom of the graphic" (show phone, website) is a
+    RE v2.14 (Oct 29, 2026) CC-027: regroup (Randy approved): "Bottom of the graphic" (show phone, website) is a
                              green box inside question 2; the rush note is inside the Rush box; the price is its own "Your price"
                              box, one line per item and You pay at the bottom. Questions now 1-7.
-    RE v2.13-TEST (Oct 29, 2026) CC-027: question 5 redone (Randy found it confusing): "Want it faster or fancier?"
+    RE v2.13 (Oct 29, 2026) CC-027: question 5 redone (Randy found it confusing): "Want it faster or fancier?"
                              with 2 big tap boxes (Rush: proof in 1 hour, Adds $10; Promo look: $45 instead of $25, pair $60
                              instead of $40), picked box gets a green border and "Picked"; price line moved under these boxes.
-    RE v2.12-TEST (Oct 29, 2026) CC-027: About us and How this works boxes folded up; each opens with a tap
+    RE v2.12 (Oct 29, 2026) CC-027: About us and How this works boxes folded up; each opens with a tap
                              ("Tap to read"), so question 1 shows on the first screen.
-    RE v2.11-TEST (Oct 29, 2026) CC-027: "About ClearPoint Media Group" box above "How this works" (Randy approved
+    RE v2.11 (Oct 29, 2026) CC-027: "About ClearPoint Media Group" box above "How this works" (Randy approved
                              the wording): what CPMG does, the 4 listing posts, every screen, checked word for word, no contracts.
-    RE v2.10-TEST (Oct 29, 2026) CC-027: price line says "First graphic FREE for new clients" (a returning client
+    RE v2.10 (Oct 29, 2026) CC-027: price line says "First graphic FREE for new clients" (a returning client
                              without their saved link still pays full price; the order system checks).
-    RE v2.9-TEST (Oct 29, 2026) CC-027: new question 5 "Make it special": Rush (+$10, proof within 1 hour) and Promo look
+    RE v2.9 (Oct 29, 2026) CC-027: new question 5 "Make it special": Rush (+$10, proof within 1 hour) and Promo look
                              ($45, $60 pair) as one-tap choices; price line adds them. Questions now 1-8.
-    RE v2.8-TEST (Oct 29, 2026) CC-027: price line shows "First graphic FREE −$25 · You pay $X" for new clients
+    RE v2.8 (Oct 29, 2026) CC-027: price line shows "First graphic FREE −$25 · You pay $X" for new clients
                              (returning clients see the plain total).
-    RE v2.7-TEST (Oct 29, 2026) CC-027: no office hours shown. New promise (Randy picked): "Most proofs come back within
+    RE v2.7 (Oct 29, 2026) CC-027: no office hours shown. New promise (Randy picked): "Most proofs come back within
                              5 hours. Late-night and weekend orders are ready the next business morning." (title line, intro,
                              thank-you screen, page description).
-    RE v2.6-TEST (Oct 29, 2026) CC-027: Need it by box (day and time) taken off: the 5 hours start when they send it.
+    RE v2.6 (Oct 29, 2026) CC-027: Need it by box (day and time) taken off: the 5 hours start when they send it.
                              Question 5 is now just "Bottom of your graphic" (Show my phone, Website or Facebook page).
-    RE v2.5-TEST (Oct 29, 2026) CC-027: Need it by has a time box next to the day; sent as "Fri, Nov 7, 2026, 2:00 PM".
-    RE v2.4-TEST (Oct 29, 2026) CC-027: (1) photos: up to 3, the house, headshot and logo; (2) Where: tap more than one,
+    RE v2.5 (Oct 29, 2026) CC-027: Need it by has a time box next to the day; sent as "Fri, Nov 7, 2026, 2:00 PM".
+    RE v2.4 (Oct 29, 2026) CC-027: (1) photos: up to 3, the house, headshot and logo; (2) Where: tap more than one,
                              today's prices (Phone + TV/Website = one $40 pair, Social +$25), price line shows the total;
                              (3) Need it by date; (4) Bottom of graphic: Show my phone (on), Website or Facebook page.
-    RE v2.3-TEST (Oct 29, 2026) CC-027: short "How this works" intro box under the title (Randy approved the wording):
+    RE v2.3 (Oct 29, 2026) CC-027: short "How this works" intro box under the title (Randy approved the wording):
                              what the form does, the parts to fill in, proof in 5 hours, pay once approved, $25, first free.
-    RE v2.2-TEST (Oct 29, 2026) CC-028: sends all 5 body lines (nothing to notes), 'Where shown' (Phone, Big-screen TV,
+    RE v2.2 (Oct 29, 2026) CC-028: sends all 5 body lines (nothing to notes), 'Where shown' (Phone, Big-screen TV,
                              Social media, Website), Social media as use 'social' (Size 'Social post (4:5)'). Needs
-                             CPMG_OrderSystem.gs v4.7-TEST + CPMG_OrderReceiver.gs v2.1-TEST (TEST deployment version 2).
-    RE v2.1-TEST (Oct 29, 2026) CC-027: question 4 gets a 4th button, Social media (Facebook, Instagram), sent as a
+                             CPMG_OrderSystem.gs v4.7 + CPMG_OrderReceiver.gs v2.1 (TEST deployment version 2).
+    RE v2.1 (Oct 29, 2026) CC-027: question 4 gets a 4th button, Social media (Facebook, Instagram), sent as a
                              4:5 social post (1080 x 1350). Buttons back to 2 across: Phone, Big-screen TV, Social media, Website.
-    RE v2.0-TEST (Oct 29, 2026) CC-027: photo question has 2 buttons: "Take a picture" opens the phone camera
+    RE v2.0 (Oct 29, 2026) CC-027: photo question has 2 buttons: "Take a picture" opens the phone camera
                              (capture), "Upload a picture" opens their photos. Many Android phones skipped the
                              camera on the old single button. Both feed the same photo list.
-    RE v1.9-TEST (Oct 29, 2026) CC-027: red TEST COPY banner taken off the top (Randy's request). Still sends
+    RE v1.9 (Oct 29, 2026) CC-027: red TEST COPY banner taken off the top (Randy's request). Still sends
                              only to the CPMG Orders TEST script.
-    RE v1.8-TEST (Oct 29, 2026) CC-027: Business name and Brokerage examples changed from Coastal Homes Team /
+    RE v1.8 (Oct 29, 2026) CC-027: Business name and Brokerage examples changed from Coastal Homes Team /
                              Coastal Realty Group to Smith Home Team / Main Street Realty (fits any city).
-    RE v1.7-TEST (Oct 29, 2026) CC-027: Big-screen TV button uses our own modern picture (Randy picked C): a wide,
+    RE v1.7 (Oct 29, 2026) CC-027: Big-screen TV button uses our own modern picture (Randy picked C): a wide,
                              thin flat screen on the wall, drawn in green, in place of the stock monitor icon.
-    RE v1.6-TEST (Oct 29, 2026) CC-027: Myrtle Beach wording taken out of the examples (123 Oak Street, 456 Maple Lane,
+    RE v1.6 (Oct 29, 2026) CC-027: Myrtle Beach wording taken out of the examples (123 Oak Street, 456 Maple Lane,
                              Serving our neighborhood). Question 4 has 3 buttons: Phone (tall), Big-screen TV (wide 16:9,
                              flat-screen picture), Website (wide 16:9). Website is sent as a wide graphic like the TV.
-    RE v1.5-TEST (Oct 29, 2026) CC-027: new order: 1 What kind of graphic, 2 What should it say, 3 Photo,
+    RE v1.5 (Oct 29, 2026) CC-027: new order: 1 What kind of graphic, 2 What should it say, 3 Photo,
                              4 Phone or TV, 5 Business name + Brokerage, 6 Your name, email, phone (info moved to the end).
-    RE v1.4-TEST (Oct 29, 2026) CC-027: cartoon emoji pictures swapped for clean green line icons (Tabler):
+    RE v1.4 (Oct 29, 2026) CC-027: cartoon emoji pictures swapped for clean green line icons (Tabler):
                              house, door, house with check, price tag, calendar, pencil; phone, TV, camera too.
-    RE v1.3-TEST (Oct 29, 2026) CC-027: Body is 5 short line boxes, each with its own gray example that
+    RE v1.3 (Oct 29, 2026) CC-027: Body is 5 short line boxes, each with its own gray example that
                              matches the picture tapped (price, day, size, what's special). Sent as lines = first 3
                              body lines, the rest in notes; Heading is sent in its own Heading spot.
-    RE v1.2-TEST (Oct 29, 2026) CC-027: test link (?new=1) always starts as a brand-new client (it was filling in
+    RE v1.2 (Oct 29, 2026) CC-027: test link (?new=1) always starts as a brand-new client (it was filling in
                              an old test client's info).
-    RE v1.1-TEST (Oct 29, 2026) CC-027: new Brokerage box under Business name (real estate ads must show it).
+    RE v1.1 (Oct 29, 2026) CC-027: new Brokerage box under Business name (real estate ads must show it).
                              Filled in from the client's saved record when it has one, and remembered on the
                              phone, so they type it once. Sent as Brokerage.
-    RE v1.0-TEST (Oct 29, 2026) CC-027: made from CPMG Order v1.2. Question 3 buttons are all real estate
+    RE v1.0 (Oct 29, 2026) CC-027: made from CPMG Order v1.2. Question 3 buttons are all real estate
                              (Just listed, Open house, Just sold, Price drop, Coming soon, Something else) with
                              real estate examples. Title says "Order a real estate graphic".
-    v1.2-TEST (Oct 29, 2026) CC-027: question 4 follows the graphic's format: Title, Heading (optional), Body,
+    v1.2 (Oct 29, 2026) CC-027: question 4 follows the graphic's format: Title, Heading (optional), Body,
                              Call to action, each in its own box. Gray examples change to match the picture
                              tapped in question 3. Sent as headline = Title, lines = Heading + Body lines,
                              cta = Call to action.
-    v1.1-TEST (Oct 29, 2026) CC-027: question 3 is now "What kind of graphic? Tap one picture." with 6 big
+    v1.1 (Oct 29, 2026) CC-027: question 3 is now "What kind of graphic? Tap one picture." with 6 big
                              picture buttons (food or drink special, live music or band, event, sale or coupon,
                              open house, something else). Nothing is picked until they tap; the picked one turns
                              green and says "Picked". Phone and TV buttons got pictures too.
-    v1.0-TEST (Oct 29, 2026) First version (change card for the one simple form).
+    v1.0 (Oct 29, 2026) First version (change card for the one simple form).
 -->
 <html lang="en">
 <head>
@@ -305,7 +308,7 @@
 .bl input{flex:1;min-width:0}
 .sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
 
-/* ===== v3.39-TEST (Nov 13, 2026) CC-111: "What do you picture?" box. Hidden unless the pack has vision=True. ===== */
+/* ===== v3.39 (Nov 13, 2026) CC-111: "What do you picture?" box. Hidden unless the pack has vision=True. ===== */
 #feelTaps .opt{min-height:44px;padding:6px 8px;font-size:16px}
 #visionBox .sl{display:block;margin:10px 0 4px;font-weight:700}
 #cbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0 4px}
@@ -356,17 +359,17 @@ body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11p
 body.lite #sizeTaps .opt .pic,body.lite #sizeTaps .opt .szn{display:block}
 body.lite #sizeTaps .opt .szn{margin:0;text-align:center;font-size:14px}
 #chooseTap .opt{min-height:44px;font-size:16px;padding:6px 8px;width:100%;box-sizing:border-box}
-/* ===== v3.41-TEST (Nov 13, 2026) CC-114: box under the kind buttons when Something else is tapped ===== */
+/* ===== v3.41 (Nov 13, 2026) CC-114: box under the kind buttons when Something else is tapped ===== */
 .whatOther{margin:10px 0 0}
 .whatOther .sl{display:block;margin:0 0 4px;font-weight:700}
-/* ===== v3.5-TEST (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
+/* ===== v3.5 (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
 :root{--muted:#cfe0d5;--line:#4a6656;--card:#1d2b24;--deep:#244034}
 input::placeholder,textarea::placeholder{color:#a9c0b2;opacity:1}
 input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;background:#1d2b24}
 .taps .opt,.xcard,.gbox{border-color:#5d7f68}
 .taps .opt .szn{color:#cfe0d5}
 .hint{color:#cfe0d5}
-/* ===== v3.4-TEST (Nov 3, 2026) desktop one-screen layout. Phones are not changed. ===== */
+/* ===== v3.4 (Nov 3, 2026) desktop one-screen layout. Phones are not changed. ===== */
 @media (min-width:1100px){
   body{font-size:16px}
   .wrap.narrow{max-width:1700px;padding:4px 28px 66px;gap:6px 22px;display:grid;grid-template-columns:1.1fr 1fr 1fr auto;align-items:start}
@@ -434,7 +437,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 @media (min-width:1100px) and (max-height:860px){.wrap.narrow{zoom:.86}}
 @media (min-width:1100px) and (max-height:780px){.wrap.narrow{zoom:.77}}
 @media (min-width:1100px) and (max-height:740px){.wrap.narrow{zoom:.7}}
-/* ===== v3.6-TEST (Nov 3, 2026) poster-style form on desktop. Switched on by the script just before the main script (adds class "dz" to the page). Phones are not changed. ===== */
+/* ===== v3.6 (Nov 3, 2026) poster-style form on desktop. Switched on by the script just before the main script (adds class "dz" to the page). Phones are not changed. ===== */
 @media (min-width:1100px){
   body.dz #f.stack{display:grid;column-count:auto;grid-template-columns:350px minmax(0,1fr) 350px;gap:0 26px;align-items:start;max-width:1500px;margin:0 auto}
   body.dz #f>*{margin:0;break-before:auto;break-inside:auto}
@@ -509,7 +512,7 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 @media (min-width:1100px) and (max-height:860px){body.lean .wrap.narrow{zoom:.95}}
 @media (min-width:1100px) and (max-height:780px){body.lean .wrap.narrow{zoom:.9}}
 @media (min-width:1100px) and (max-height:740px){body.lean .wrap.narrow{zoom:.8}}
-/* ===== v3.12-TEST start screen (wide screens only, made by the poster script) ===== */
+/* ===== v3.12 start screen (wide screens only, made by the poster script) ===== */
 #pzStart{position:fixed;inset:0;z-index:2147482000;background:radial-gradient(ellipse at 50% 35%,#1f3a2e 0%,#12211a 55%,#0f1712 100%);display:flex;align-items:center;justify-content:center;padding:24px}
 #pzStart .pzs-card{max-width:680px;text-align:center}
 #pzStart .pzs-logo{width:84px;height:84px;margin:0 auto 18px;border-radius:50%;border:3px solid var(--green);background:var(--deep);color:var(--green);font:800 30px var(--display);display:flex;align-items:center;justify-content:center}
@@ -519,11 +522,11 @@ input[type=text],input[type=email],input[type=tel]{border-color:#5d7f68;backgrou
 #pzStart .pzs-go{font:800 30px var(--display);background:var(--green);color:var(--ink);border:0;border-radius:18px;padding:20px 64px;min-width:400px;cursor:pointer}
 #pzStart .pzs-go:focus-visible{outline:4px solid #fac775;outline-offset:4px}
 #pzStart .pzs-s{font-size:15px;color:#a9c0b2;margin:18px 0 0}
-/* ===== v3.13-TEST (Nov 3, 2026) lean forms: pages built from a pack with lean=True get <body class="lean"> and hide the pieces marked "lh" ===== */
+/* ===== v3.13 (Nov 3, 2026) lean forms: pages built from a pack with lean=True get <body class="lean"> and hide the pieces marked "lh" ===== */
 body.lean .lh{display:none!important}
 body.lean .pz-photos{grid-template-columns:1fr}
 body.lean .poster label[for=b1]::after{content:" \2014  up to 3 short lines, a few words each"}
-/* ===== v3.15-TEST (Nov 3, 2026) LITE: light, calm, 3 steps. Only on pages built with lite (body.lean.lite). Everything else about the form is unchanged. ===== */
+/* ===== v3.15 (Nov 3, 2026) LITE: light, calm, 3 steps. Only on pages built with lite (body.lean.lite). Everything else about the form is unchanged. ===== */
 body.lite{--bg:#f7f5ef;--card:#ffffff;--fg:#1f2a24;--muted:#5b6b62;--line:#cdd6cf;--green:#1f7a4d;--deep:#e8f3ec;--ink:#ffffff;--err:#a12a2a;--errbg:#fdeaea;color-scheme:light;background:var(--bg);color:var(--fg)}
 body.lite .wrap.narrow{display:block;max-width:720px;margin:0 auto;padding:16px 20px 130px;zoom:1}
 body.lite #f.stack{display:block;column-count:1}
@@ -580,7 +583,7 @@ body.lite .foot{color:var(--muted)}
 body.lite .lookcard{background:#fff;border-color:var(--green);color:var(--fg)}
 body.lite .code{background:var(--deep);color:var(--green)}
 body.lite .card.g{background:#fff;border-color:var(--green);color:var(--fg)}
-/* v3.17-TEST lite on a wide screen: 3 steps side by side so the whole form is on one screen */
+/* v3.17 lite on a wide screen: 3 steps side by side so the whole form is on one screen */
 @media (min-width:1100px){
 body.lite .wrap.narrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1fr) minmax(0,1.9fr);gap:0 14px;max-width:1500px;padding:8px 24px 76px;align-items:start}
 body.lite .wrap.narrow>.fsbtn,body.lite .wrap.narrow>.top,body.lite .wrap.narrow>.liteline,body.lite .wrap.narrow>.loading,body.lite .wrap.narrow>#ok,body.lite .wrap.narrow>.foot{grid-column:1/-1}
@@ -640,12 +643,12 @@ body.lite .foot{display:none}
 @media (min-width:1100px) and (max-height:800px){body.lite .wrap.narrow{zoom:.9}}
 @media (min-width:1100px) and (max-height:740px){body.lite .wrap.narrow{zoom:.8}}
 @media (min-width:1100px) and (max-height:660px){body.lite .wrap.narrow{zoom:.74}}
-/* v3.33-TEST: use the whole window. No width cap; a small script (fitToWindow, near the end) makes the form as big as it can be while still fitting the window with no scrolling. */
+/* v3.33: use the whole window. No width cap; a small script (fitToWindow, near the end) makes the form as big as it can be while still fitting the window with no scrolling. */
 @media (min-width:1100px){
 body.lite .wrap.narrow,body.lite #f.stack{max-width:none}
 body.lite .wrap.narrow{padding-left:20px;padding-right:20px}
 }
-/* v3.32-TEST: window NOT in full screen is short (browser bar + taskbar), so What should people do? sat under the Send bar. Smaller steps for short windows + a one-row Send bar (total beside the button) so the whole form shows without scrolling. */
+/* v3.32: window NOT in full screen is short (browser bar + taskbar), so What should people do? sat under the Send bar. Smaller steps for short windows + a one-row Send bar (total beside the button) so the whole form shows without scrolling. */
 @media (min-width:1100px){
 body.lite .bar.narrow{display:block;text-align:center;padding:5px 20px}
 body.lite .bar.narrow #barTot{display:block;width:100%;max-width:none;margin:0 0 3px!important;font-size:15px;text-align:center}
@@ -678,14 +681,14 @@ body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
 body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 body.lite .morebody>.field:nth-child(4){grid-column:2;grid-row:3}
 }
-/* v3.22-TEST photo box: tap the picture to see it big, Replace button, one-photo label */
+/* v3.22 photo box: tap the picture to see it big, Replace button, one-photo label */
 .slotPic img{cursor:zoom-in}
 .slotPic .rm{min-height:34px;padding:4px 12px;font-size:14px}
 .slotPic .pvTip{flex-basis:100%;font-size:13px;color:var(--muted,#5f6f66)}
 .bigPic{position:fixed;inset:0;z-index:99999;background:rgba(10,20,14,.88);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
 .bigPic img{max-width:94vw;max-height:84vh;object-fit:contain;border-radius:12px;background:#fff}
 .bigPic .bigX{position:absolute;top:14px;right:14px;background:#fff;color:#1f6b45;border:2px solid #1f6b45;border-radius:12px;padding:10px 18px;font:700 18px sans-serif;cursor:pointer}
-/* v3.31-TEST fit: with 9 looks + holidays the More choices column got too tall. Wide (1300 px+): the 4th column is wider and its boxes sit in 3 small columns (look | photos over bottom of graphic | where). Narrower (1100-1299): look over bottom of graphic on the left, photos over where on the right. */
+/* v3.31 fit: with 9 looks + holidays the More choices column got too tall. Wide (1300 px+): the 4th column is wider and its boxes sit in 3 small columns (look | photos over bottom of graphic | where). Narrower (1100-1299): look over bottom of graphic on the left, photos over where on the right. */
 @media (min-width:1300px){
 body.lite .wrap.narrow,body.lite #f.stack{grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,.9fr) minmax(0,2.3fr)}
 body.lite .morebody{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -702,14 +705,36 @@ body.lite .morebody>.field:nth-child(4){grid-column:1;grid-row:2}
 body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
 body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 }
+/* v3.59 CC-128 BIG PRINT: one readable column at every screen size (no shrunk 4-column laptop layout), bigger words and boxes */
+body.lite{font-size:20px}
+body.lite .ql{font-size:25px}
+body.lite .sl{font-size:20px}
+body.lite .hint,body.lite .liteHint{font-size:18px}
+body.lite input[type=text],body.lite input[type=email],body.lite input[type=tel],body.lite select{font-size:20px;min-height:54px}
+body.lite .taps .opt{font-size:19px;min-height:56px}
+body.lite #cbar a{font-size:19px;min-height:54px}
+body.lite #cbarNote{font-size:18px}
+body.lite .wrap.narrow>.top .sub{font-size:17px}
+body.lite details.more>summary{font-size:21px}
+body.lite #likeTiles .opt{font-size:19px}
+body.lite #likeTiles .opt span{font-size:19px;font-weight:700}
+body.lite #likeTiles .zm{font-size:16px;min-height:38px}
+body.lite #chooseTap .opt{font-size:19px}
+@media (min-width:700px){
+body.lite .wrap.narrow{display:block!important;max-width:760px!important;margin:0 auto!important;padding:16px 20px 160px!important;zoom:1!important}
+body.lite #f.stack{display:block!important;grid-template-columns:none!important;grid-template-rows:none!important;column-count:1!important}
+body.lite #f>*{grid-column:auto!important;grid-row:auto!important}
+body.lite .wrap.narrow>.top h1#pkTitle{font-size:30px!important}
+body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
+}
 </style>
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.57 (Nov 13, 2026, 8:44 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.59 (Nov 13, 2026, 8:59 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
-  <p id="cbarNote">Call or text me anytime.</p>
+  <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
 
   <details id="helpBox">
     <summary>Help: how to fill this out</summary>
@@ -916,7 +941,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 <div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
 
 <script>
-/* CPMG lite layout v1.0-TEST (Nov 3, 2026): only runs when <body class="lite">. Moves the same boxes (same ids) into 3 steps + "More choices". */
+/* CPMG lite layout v1.0 (Nov 3, 2026): only runs when <body class="lite">. Moves the same boxes (same ids) into 3 steps + "More choices". */
 (function () {
   var b = document.body; if (!b.classList.contains('lite')) return;
   var f = document.getElementById('f'); if (!f) return;
@@ -964,8 +989,9 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   var SW = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']; line.textContent = SW[steps.length - 1] + ' quick steps. About 2 minutes.';
 
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
-  if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
-  d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
+  // v3.59 CC-128: More choices stays closed on wide screens too (one big column)
+  if (false) d.open = true;   // wide screen: there is room, so show them
+  // v3.59 CC-128: no forced open on wide screens
   // short help under each question, in plain words
   function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
   hint(what, 'Tap one.'); hint(look, 'Tap one. Not sure? We will pick for you.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
@@ -973,7 +999,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 })();
 </script>
 <script>
-/* CPMG poster layout v1.0-TEST (Nov 3, 2026)
+/* CPMG poster layout v1.0 (Nov 3, 2026)
    On a wide screen (1100 px or more) this moves the boxes of the form into a "poster" in the middle with a left and a right side panel.
    It only MOVES the same boxes (same ids, same values), and puts them back when the window gets narrow. Phones never run it.
    If anything here fails, the normal form still works. */
@@ -1098,7 +1124,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 })();
 </script>
 <script>
-/* CPMG holiday list v1.0-TEST (Nov 3, 2026): the "Which holiday?" drop-down only lists holidays coming up in the next 60 days (today up to the day),
+/* CPMG holiday list v1.0 (Nov 3, 2026): the "Which holiday?" drop-down only lists holidays coming up in the next 60 days (today up to the day),
    so right now it shows Veterans Day through New Year's Day. It changes by itself as the year goes on. "Other" is always there.
    If this script fails, the full list in the page stays. */
 (function () {
@@ -1145,7 +1171,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 })();
 </script>
 <script>
-/* CPMG laptop camera v1.0-TEST (Nov 3, 2026): browsers ignore "capture" on laptops, so "Take a picture" only opened the file picker.
+/* CPMG laptop camera v1.0 (Nov 3, 2026): browsers ignore "capture" on laptops, so "Take a picture" only opened the file picker.
    On a device with a mouse (not a phone) the button now opens a small camera window. The photo goes into the same Upload box,
    so the rest of the form does not change. No camera, or the camera is blocked: it says so and Upload still works. Phones are not touched. */
 (function () {
@@ -3220,7 +3246,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       return lb;
     }
     PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
-    if (PACK.vision) {   // v3.41-TEST CC-114: Something else opens a typing box right under the buttons
+    if (PACK.vision) {   // v3.41 CC-114: Something else opens a typing box right under the buttons
       var wt = el('whatTaps'), ob = document.createElement('div'); ob.id = 'whatOther'; ob.hidden = true; ob.className = 'whatOther';
       ob.innerHTML = '<label class="sl" for="whatOtherTxt">Tell us what it\u2019s for (a few words)</label><input type="text" id="whatOtherTxt" autocomplete="off" maxlength="80" placeholder="Example: Grand opening">';
       wt.parentNode.insertBefore(ob, wt.nextSibling);
@@ -3256,7 +3282,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.57 (Nov 13, 2026, 8:44 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.59 (Nov 13, 2026, 8:59 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3316,13 +3342,13 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     $('welcome').hidden = false;
   }
   var BROK_STORE = PACK.extra.store;
-  if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
-  if (PACK.vision) {   // v3.42-TEST CC-115: tap-a-picture tiles, up to 3, plus You choose
+  if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39 CC-111
+  if (PACK.vision) {   // v3.42 CC-115: tap-a-picture tiles, up to 3, plus You choose
     var MOOD = { Warm: ['linear-gradient(180deg,#f3dcb0,#e3ae7e,#c98a6a)', 'Warm: cozy and friendly, like golden sunset light.'],
       Bold: ['linear-gradient(135deg,#b05a50 50%,#4a4a4a 50%)', 'Bold: strong, confident colors that stand out.'],
       Calm: ['linear-gradient(180deg,#dcebe7,#bcd5d1,#9bbab7)', 'Calm: soft, quiet and clean.'],
       Exciting: ['linear-gradient(135deg,#ecb27a,#dd8f9e,#9d8cc4)', 'Exciting: bright and lively, like a party.'],
-      Elegant: ['linear-gradient(135deg,#34445f,#4a5a7d 60%,#c4ad7a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45-TEST CC-115
+      Elegant: ['linear-gradient(135deg,#34445f,#4a5a7d 60%,#c4ad7a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45 CC-115
     var pop = document.getElementById('moodPop'), popFor = '';
     [].forEach.call(document.querySelectorAll('#feelTaps .opt'), function (lab) {
       var nm = lab.querySelector('input').value, ib = document.createElement('button');
@@ -3365,7 +3391,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       if (t.name === 'likes' && t.checked) {
         if (document.querySelectorAll('input[name="likes"]:checked').length > 3) t.checked = false;
         else if (yc) yc.checked = false;
-      } else if (t.name === 'feel' && t.checked) {   // v3.44-TEST: mood is pick ONE
+      } else if (t.name === 'feel' && t.checked) {   // v3.44: mood is pick ONE
         [].forEach.call(document.querySelectorAll('input[name="feel"]'), function (i) { if (i !== t) i.checked = false; });
         if (yc) yc.checked = false;
       } else if (t.name === 'youchoose' && t.checked) [].forEach.call(document.querySelectorAll('input[name="likes"],input[name="feel"]'), function (i) { i.checked = false; });
@@ -3499,7 +3525,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(true); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(true); });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
-  function visionNote(k) {   // v3.39-TEST CC-111: what the client pictures. Empty = None.
+  function visionNote(k) {   // v3.39 CC-111: what the client pictures. Empty = None.
     if (!PACK.vision) return 'None';
     if (k === 'likes') { var lv = [].map.call(document.querySelectorAll('input[name="likes"]:checked'), function (i) { return i.value; }); return lv.length ? lv.join(', ') : 'None'; }
     if (k === 'choose') { var yc2 = document.querySelector('input[name="youchoose"]'); return yc2 && yc2.checked ? 'Yes' : 'None'; }
@@ -3582,7 +3608,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 })();
 </script>
 <script>
-/* v3.33-TEST fitToWindow: on wide screens, find the biggest zoom (up to 1.3) where the whole form fits the window with no scrolling, in or out of full screen. */
+/* v3.33 fitToWindow: on wide screens, find the biggest zoom (up to 1.3) where the whole form fits the window with no scrolling, in or out of full screen. */
 (function () {
   var busy = false, t = 0;
   function fit() {
