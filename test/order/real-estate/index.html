@@ -2,13 +2,14 @@
 <!--
   CPMG Real estate Order — test/order/real-estate/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.43-TEST (Nov 13, 2026, 7:00 AM)
+  v3.44-TEST (Nov 13, 2026, 7:10 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.44-TEST (Nov 13, 2026, 7:10 AM) CC-115: Randy: the mood buttons (Warm, Bold, Calm, Exciting, Elegant) now pick ONE only; tapping another switches it.
     v3.43-TEST (Nov 13, 2026, 7:00 AM) CC-115: Randy: the One you like box made no sense next to the picture tiles, so it is taken out. Order still sends Feel, Like these, You choose, Leave out.
     v3.42-TEST (Nov 13, 2026, 6:55 AM) CC-115: the What do you picture box gets a top line (Not sure? Skip this and we will pick for you), short plain examples, tap-a-picture tiles (up to 3) and a You choose button. Sent as Like these / You choose. Tiles show the look pictures when they exist, else a label. Restaurant and real estate only.
     v3.41-TEST (Nov 13, 2026, 6:35 AM) CC-114: on the restaurant and real estate forms, tapping Something else opens a box right under the kind buttons (Tell us what it is for). The words are sent with the order as Kind of graphic: Something else: <words>. Other industries: unchanged.
@@ -642,7 +643,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.43-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.44-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -3168,7 +3169,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.43-TEST (Nov 13, 2026, 7:00 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.44-TEST (Nov 13, 2026, 7:10 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3244,8 +3245,10 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       if (t.name === 'likes' && t.checked) {
         if (document.querySelectorAll('input[name="likes"]:checked').length > 3) t.checked = false;
         else if (yc) yc.checked = false;
-      } else if (t.name === 'feel' && t.checked && yc) yc.checked = false;
-      else if (t.name === 'youchoose' && t.checked) [].forEach.call(document.querySelectorAll('input[name="likes"],input[name="feel"]'), function (i) { i.checked = false; });
+      } else if (t.name === 'feel' && t.checked) {   // v3.44-TEST: mood is pick ONE
+        [].forEach.call(document.querySelectorAll('input[name="feel"]'), function (i) { if (i !== t) i.checked = false; });
+        if (yc) yc.checked = false;
+      } else if (t.name === 'youchoose' && t.checked) [].forEach.call(document.querySelectorAll('input[name="likes"],input[name="feel"]'), function (i) { i.checked = false; });
     });
   }
   if (!TEST_NEW) try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
