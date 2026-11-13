@@ -22,7 +22,7 @@ ABOUT = ("We make professional graphics for local businesses, fast. {who} use us
          "No contracts and no design work on your end. Just tell us what to say.")
 def E(t, h, lines, cta): return [t, h, (lines + ['', '', '', '', ''])[:5], cta]
 PACKS = {
- 'real-estate': dict(lean=True, name='Real estate', title='Order a real estate graphic', foot='CPMG Real Estate Order',
+ 'real-estate': dict(lean=True, vision=True, name='Real estate', title='Order a real estate graphic', foot='CPMG Real Estate Order',
    who='Real estate agents', uses='just listed, open house, price drop and just sold posts', what='listing', photos='the house, your headshot or your logo',
    kinds=[('Just listed','home'),('Open house','door'),('Just sold','home-check'),('Price drop','tag'),('Coming soon','calendar'),('Something else','pencil')],
    looks=[('Professional','briefcase','Clean and polished','professional'),('Luxury','diamond','High-end homes','luxury'),('Modern','layout-grid','Sleek and simple','modern'),('Friendly','mood-smile','Warm neighborhood feel','friendly'),('3D poster','cube','Bold, professional 3D','3d-poster'),('Bold and bright','bolt','Grabs attention','bold'),('Beach vibe','sun','Sunny Carolina beach house','beach-vibe'),('Southern charm','trees','Classic Carolina porch and oaks','southern-charm'),('Holiday','gift','Pick the holiday','holiday')],

@@ -2,13 +2,14 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.38-TEST (Nov 11, 2026, 11:33 PM)
+  v3.39-TEST (Nov 13, 2026, 5:50 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.39-TEST (Nov 13, 2026, 5:50 AM) CC-111: real estate form only gets a 'What do you picture?' box in More choices: Feel (Warm, Bold, Calm, Exciting, Elegant), One you like (link or name), Anything to leave out. All optional. Sent in the order notes as Feel / Example they like / Leave out. Other industries: unchanged (box hidden).
     v3.38-TEST (Nov 11, 2026, 11:33 PM) CC-095: restaurant form adds the Cartoon poster look (professional cartoon-style 3D poster). Other industries: version label only.
     v3.37-TEST (Nov 10, 2026, 12:35 AM) CC-071: restaurant form asks Bar, Restaurant, or Bar and restaurant first, then shows only the graphic buttons that fit. Other industries: version label only.
     v3.36-TEST (Nov 9, 2026, 11:50 PM) CC-070: restaurant form now fits bars too (title, Drink special and Game day buttons). Other industries: version label only.
@@ -277,6 +278,9 @@
 .bl input{flex:1;min-width:0}
 .sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
 
+/* ===== v3.39-TEST (Nov 13, 2026) CC-111: "What do you picture?" box. Hidden unless the pack has vision=True. ===== */
+#feelTaps .opt{min-height:44px;padding:6px 8px;font-size:16px}
+#visionBox .sl{display:block;margin:10px 0 4px;font-weight:700}
 /* ===== v3.5-TEST (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
 :root{--muted:#cfe0d5;--line:#4a6656;--card:#1d2b24;--deep:#244034}
 input::placeholder,textarea::placeholder{color:#a9c0b2;opacity:1}
@@ -738,6 +742,22 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       <p class="err" id="eSize" hidden></p>
     </fieldset>
 
+    <fieldset class="field" id="visionBox" hidden>
+      <legend class="ql"><span class="qn">+</span>What do you picture? (if you want)</legend>
+      <p class="hint">Skip any you like. It helps us match what you have in mind.</p>
+      <div class="taps" id="feelTaps">
+        <label class="opt"><input type="checkbox" name="feel" value="Warm"><span>Warm</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Bold"><span>Bold</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Calm"><span>Calm</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Exciting"><span>Exciting</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Elegant"><span>Elegant</span></label>
+      </div>
+      <label class="sl" for="likeEx">One you like (paste a link or name it)</label>
+      <input type="text" id="likeEx" autocomplete="off" maxlength="200">
+      <label class="sl" for="leaveOut">Anything to leave out?</label>
+      <input type="text" id="leaveOut" autocomplete="off" maxlength="120">
+    </fieldset>
+
     <div class="field lh">
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
       <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
@@ -836,7 +856,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   var d = document.createElement('details'); d.className = 'more';
   d.innerHTML = '<summary>More choices</summary>';
   var mb = document.createElement('div'); mb.className = 'morebody'; d.appendChild(mb);
-  [look, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });
+  [look, photos, size, gbw, document.getElementById('visionBox')].forEach(function (x) { if (x) mb.appendChild(x); });
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
   if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
   d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
@@ -1265,7 +1285,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call me anytime"
    ]
-  }
+  },
+  "vision": true
  },
  "restaurant": {
   "industry": "Restaurant",
@@ -1512,7 +1533,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Stop in today"
    ]
-  }
+  },
+  "vision": false
  },
  "plumbing": {
   "industry": "Plumbing",
@@ -1687,7 +1709,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "hvac": {
   "industry": "HVAC",
@@ -1862,7 +1885,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "lawn-care": {
   "industry": "Lawn care",
@@ -2037,7 +2061,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "cpa": {
   "industry": "CPA and tax",
@@ -2212,7 +2237,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "home-inspector": {
   "industry": "Home inspector",
@@ -2387,7 +2413,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "concrete": {
   "industry": "Concrete",
@@ -2562,7 +2589,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call with questions"
    ]
-  }
+  },
+  "vision": false
  },
  "business": {
   "industry": "Small business",
@@ -2737,7 +2765,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "insurance": {
   "industry": "Insurance agent",
@@ -2896,7 +2925,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "mountain-cabin": {
   "industry": "Mountain cabin",
@@ -3056,7 +3086,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -3111,7 +3142,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.38-TEST (Nov 11, 2026, 11:33 PM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.39-TEST (Nov 13, 2026, 5:50 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3171,6 +3202,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     $('welcome').hidden = false;
   }
   var BROK_STORE = PACK.extra.store;
+  if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
   if (!TEST_NEW) try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
   if (key) {
     $('looking').hidden = false;
@@ -3291,6 +3323,11 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(true); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(true); });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
+  function visionNote(k) {   // v3.39-TEST CC-111: what the client pictures. Empty = None.
+    if (!PACK.vision) return 'None';
+    if (k === 'feel') { var v = [].map.call(document.querySelectorAll('input[name="feel"]:checked'), function (i) { return i.value; }); return v.length ? v.join(', ') : 'None'; }
+    var t = (document.getElementById(k === 'like' ? 'likeEx' : 'leaveOut') || {}).value || ''; t = t.trim().slice(0, 200); return t || 'None';
+  }
   function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
@@ -3306,7 +3343,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     var list = photos.list(), photoNote = photos.note();
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
-        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: (function () { var pp = document.querySelector('input[name="place"]:checked'); return pp ? pp.value + (t.brok ? ' · ' + t.brok : '') : t.brok; })(), 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
+        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: (function () { var pp = document.querySelector('input[name="place"]:checked'); return pp ? pp.value + (t.brok ? ' · ' + t.brok : '') : t.brok; })(), 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Feel': visionNote('feel'), 'Example they like': visionNote('like'), 'Leave out': visionNote('out'), 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
         photos: list, promo: !!t.promo };
     });
   }

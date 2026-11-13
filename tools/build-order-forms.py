@@ -23,7 +23,7 @@ def js_packs():
         out[k] = dict(industry=p['name'], form=p['name'], title=p['title'], foot=p['foot'],
                       about=ABOUT.format(who=p['who'], uses=p['uses']), how=HOW.format(what=p['what'], photos=p['photos']),
                       kinds=[list(x) for x in p['kinds']], looks=[list(x) for x in p['looks']],
-                      places=[[x[0], x[1], list(x[2])] for x in p.get('places', [])], extra=dict(p['extra'], store='cpmgExtra_' + k), biz=p['biz'], photo1=list(p['photo1']), ex=p['ex'])
+                      places=[[x[0], x[1], list(x[2])] for x in p.get('places', [])], extra=dict(p['extra'], store='cpmgExtra_' + k), biz=p['biz'], photo1=list(p['photo1']), ex=p['ex'], vision=bool(p.get('vision')))
     return '  var PACKS = ' + json.dumps(out, ensure_ascii=False, indent=1) + ';\n'
 
 s = open(MASTER).read()
