@@ -2,13 +2,14 @@
 <!--
   CPMG Insurance agent Order — test/order/insurance/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.52-TEST (Nov 13, 2026, 8:05 AM)
+  v3.53-TEST (Nov 13, 2026, 8:20 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.53-TEST (Nov 13, 2026, 8:20 AM) CC-121: Text me starts with a clear first line (Hi, I'm interested in a graphic from ClearPoint Media Group.).
     v3.52-TEST (Nov 13, 2026, 8:05 AM) CC-120: the look pictures box moves up under Pick a look.
     v3.51-TEST (Nov 13, 2026, 7:50 AM) CC-119: "See a quick sketch" button in section 3 shows the typed words on a colorful rough sketch. Sends nothing.
     v3.50-TEST (Nov 13, 2026, 8:30 AM) CC-117 and CC-118: every form gets Call me, Text me, Email me buttons under the title (Call or text me anytime) and a Help button that opens a numbered guide to every section. All industries.
@@ -690,7 +691,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 <div class="wrap narrow">
   <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.50-TEST</span></div>
 
-  <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518" aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
+  <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote">Call or text me anytime.</p>
 
   <details id="helpBox">
@@ -3237,7 +3238,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.52-TEST (Nov 13, 2026, 8:05 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.53-TEST (Nov 13, 2026, 8:20 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
