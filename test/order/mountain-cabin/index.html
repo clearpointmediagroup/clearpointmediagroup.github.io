@@ -2,13 +2,14 @@
 <!--
   CPMG Mountain cabin Order — test/order/mountain-cabin/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.50-TEST (Nov 13, 2026, 8:30 AM)
+  v3.51-TEST (Nov 13, 2026, 7:50 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.51-TEST (Nov 13, 2026, 7:50 AM) CC-119: "See a quick sketch" button in section 3 shows the typed words on a colorful rough sketch. Sends nothing.
     v3.50-TEST (Nov 13, 2026, 8:30 AM) CC-117 and CC-118: every form gets Call me, Text me, Email me buttons under the title (Call or text me anytime) and a Help button that opens a numbered guide to every section. All industries.
     v3.49-TEST (Nov 13, 2026, 8:12 AM) CC-116: restaurant form adds the Mountain town look (snowy Colorado ski-town picture, no food).
     v3.48-TEST (Nov 13, 2026, 7:52 AM) CC-115: restaurant form drops the Cartoon poster look (Randy: picture rejected).
@@ -302,6 +303,23 @@
 #helpBox ol{margin:10px 14px 12px 34px;padding:0;font-size:17px;line-height:1.4;color:#1d2b21}
 #helpBox li{margin:0 0 8px}
 #helpBox p{margin:0 14px 12px;font-size:17px;font-weight:700;color:#1d2b21}
+#skBtn{display:block;width:100%;min-height:52px;margin:12px 0 4px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
+#skWrap{position:fixed;inset:0;z-index:9999;background:rgba(10,20,40,.85);display:none;overflow:auto;padding:14px}
+#skWrap.on{display:block}
+#skBox{max-width:420px;margin:0 auto}
+#skArt{position:relative;aspect-ratio:9/14;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#ff5e62 0%,#ff9966 38%,#ffd452 70%,#2ec4b6 100%);color:#fff;text-align:center;padding:9% 7%;display:flex;flex-direction:column;justify-content:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#skArt:before,#skArt:after{content:"";position:absolute;border-radius:50%;opacity:.22;background:#fff}
+#skArt:before{width:70%;aspect-ratio:1;left:-22%;top:-12%}
+#skArt:after{width:55%;aspect-ratio:1;right:-18%;bottom:-10%;background:#1b2a6b}
+#skArt>*{position:relative;z-index:1}
+#skT{font:900 clamp(30px,9vw,46px)/1.05 var(--display);text-transform:uppercase;text-shadow:3px 3px 0 #1b2a6b;word-break:break-word}
+#skH{font:800 clamp(18px,5vw,24px)/1.15 var(--display);background:#1b2a6b;display:inline-block;align-self:center;padding:6px 14px;border-radius:30px}
+#skB{list-style:none;margin:6px 0;padding:0;font:700 clamp(15px,4.4vw,19px)/1.3 var(--display);text-shadow:1px 1px 0 rgba(0,0,0,.35)}
+#skB li{margin:5px 0}
+#skB li:before{content:"\2605 ";color:#ffe45e}
+#skC{align-self:center;background:#fff;color:#c2261f;font:900 clamp(17px,5vw,22px) var(--display);padding:12px 22px;border-radius:40px;box-shadow:0 4px 0 #1b2a6b;word-break:break-word}
+#skNote{color:#fff;font:700 15px/1.35 var(--display);text-align:center;margin:12px 4px}
+#skX{display:block;width:100%;min-height:52px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
 #visionBox .eg{margin:2px 0 6px;font-size:14px;color:#5f6b61}
 #likeTiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 8px}
 #likeTiles .opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:84px;padding:6px 4px;font-size:14px;font-weight:600;text-align:center;border-width:2px}
@@ -749,6 +767,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       <p class="hint">One short line telling people what to do next. Example: <b id="xCta"></b></p>
       <input type="text" id="cta" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
+      <button type="button" id="skBtn">See a quick sketch</button>
+      <div id="skWrap" role="dialog" aria-label="Quick sketch"><div id="skBox"><div id="skArt"><div id="skT"></div><div id="skH"></div><ul id="skB"></ul><div id="skC"></div></div><p id="skNote">Rough sketch only. Your real graphic is checked and made by us.</p><button type="button" id="skX">Close and keep typing</button></div></div>
     </div>
 
     <div class="field gbwrap">
@@ -3215,7 +3235,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.50-TEST (Nov 13, 2026, 8:30 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.51-TEST (Nov 13, 2026, 7:50 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3498,6 +3518,21 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     if (client) fill(client);
     $('ok').hidden = true; $('f').hidden = false; $('sendBar').hidden = false; window.scrollTo(0, 0);
   });
+})();
+(function () {
+  var $ = function (i) { return document.getElementById(i); };
+  function esc(t) { return t; }
+  $('skBtn').addEventListener('click', function () {
+    var ph = function (id, d) { var v = $(id).value.trim(); return v || d; };
+    $('skT').textContent = ph('ttl', 'Your title here');
+    var h = $('hdg').value.trim(); $('skH').textContent = h; $('skH').style.display = h ? '' : 'none';
+    var ul = $('skB'); ul.innerHTML = ''; var any = false;
+    ['b1', 'b2', 'b3', 'b4', 'b5'].forEach(function (id) { var v = $(id).value.trim(); if (v) { any = true; var li = document.createElement('li'); li.textContent = v; ul.appendChild(li); } });
+    if (!any) { var li = document.createElement('li'); li.textContent = 'Your details show here'; ul.appendChild(li); }
+    $('skC').textContent = ph('cta', 'Come see us!');
+    $('skWrap').className = 'on'; $('skWrap').scrollTop = 0;
+  });
+  $('skX').addEventListener('click', function () { $('skWrap').className = ''; });
 })();
 </script>
 <script>
