@@ -2,13 +2,14 @@
 <!--
   CPMG Insurance agent Order — test/order/insurance/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.58-TEST (Nov 13, 2026, 8:48 AM)
+  v3.59-TEST (Nov 13, 2026, 8:59 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.59-TEST (Nov 13, 2026, 8:59 AM) CC-127 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
     v3.58-TEST (Nov 13, 2026, 8:48 AM) CC-126: under Call me, Text me, Email me: Randy Turner, ClearPoint Media Group, phone, email, and Call or text me anytime.
     v3.57-TEST (Nov 13, 2026, 8:44 AM) CC-125: Text me button is back (first line filled in), the line says Call or text me anytime, footer says Call or text.
     v3.56-TEST (Nov 13, 2026, 8:40 AM) CC-124 new flow: Pick a look is step 2 right after the kind of graphic (not hidden in More choices), step numbers follow what the client sees, tidier top (shorter title, version small under it).
@@ -694,11 +695,33 @@ body.lite .morebody>.field:nth-child(4){grid-column:1;grid-row:2}
 body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
 body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 }
+/* v3.59 CC-127 BIG PRINT: one readable column at every screen size (no shrunk 4-column laptop layout), bigger words and boxes */
+body.lite{font-size:20px}
+body.lite .ql{font-size:25px}
+body.lite .sl{font-size:20px}
+body.lite .hint,body.lite .liteHint{font-size:18px}
+body.lite input[type=text],body.lite input[type=email],body.lite input[type=tel],body.lite select{font-size:20px;min-height:54px}
+body.lite .taps .opt{font-size:19px;min-height:56px}
+body.lite #cbar a{font-size:19px;min-height:54px}
+body.lite #cbarNote{font-size:18px}
+body.lite .wrap.narrow>.top .sub{font-size:17px}
+body.lite details.more>summary{font-size:21px}
+body.lite #likeTiles .opt{font-size:19px}
+body.lite #likeTiles .opt span{font-size:19px;font-weight:700}
+body.lite #likeTiles .zm{font-size:16px;min-height:38px}
+body.lite #chooseTap .opt{font-size:19px}
+@media (min-width:700px){
+body.lite .wrap.narrow{display:block!important;max-width:760px!important;margin:0 auto!important;padding:16px 20px 160px!important;zoom:1!important}
+body.lite #f.stack{display:block!important;grid-template-columns:none!important;grid-template-rows:none!important;column-count:1!important}
+body.lite #f>*{grid-column:auto!important;grid-row:auto!important}
+body.lite .wrap.narrow>.top h1#pkTitle{font-size:30px!important}
+body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
+}
 </style>
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.58-TEST (Nov 13, 2026, 8:48 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.59-TEST (Nov 13, 2026, 8:59 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -956,8 +979,9 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   var SW = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']; line.textContent = SW[steps.length - 1] + ' quick steps. About 2 minutes.';
 
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
-  if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
-  d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
+  // v3.59 CC-127: More choices stays closed on wide screens too (one big column)
+  if (false) d.open = true;   // wide screen: there is room, so show them
+  // v3.59 CC-127: no forced open on wide screens
   // short help under each question, in plain words
   function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
   hint(what, 'Tap one.'); hint(look, 'Tap one. Not sure? We will pick for you.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
@@ -3248,7 +3272,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.58-TEST (Nov 13, 2026, 8:48 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.59-TEST (Nov 13, 2026, 8:59 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
