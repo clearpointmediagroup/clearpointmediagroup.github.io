@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Standard Order Form — test/order/index.html
-  v3.46-TEST (Nov 13, 2026, 7:30 AM)
+  v3.47-TEST (Nov 13, 2026, 7:40 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.47-TEST (Nov 13, 2026, 7:40 AM) CC-115: the little i no longer sits on top of the mood words (Exciting, Elegant).
     v3.46-TEST (Nov 13, 2026, 7:30 AM) CC-115: Randy: mood pictures are bigger and the colors toned down; Where will you show it? now draws each shape (phone, TV, social post, website) with its size (9:16, 16:9, 4:5). All industries (test).
     v3.45-TEST (Nov 13, 2026, 7:20 AM) CC-115: each mood button gets a little i. Tap it to see a color picture and one plain line (Warm = sunset tones). Tap again to close.
     v3.44-TEST (Nov 13, 2026, 7:10 AM) CC-115: Randy: the mood buttons (Warm, Bold, Calm, Exciting, Elegant) now pick ONE only; tapping another switches it.
@@ -293,7 +294,8 @@
 #likeTiles .opt img{width:100%;height:64px;object-fit:cover;border-radius:6px}
 #likeTiles .opt input,#chooseTap input{position:absolute;opacity:0;pointer-events:none}
 #feelTaps .opt{position:relative}
-#feelTaps .mi{position:absolute;top:6px;right:6px;width:32px;height:32px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 16px/1 inherit;padding:0;cursor:pointer}
+#feelTaps .opt{padding-right:44px;padding-left:44px}
+#feelTaps .mi{position:absolute;top:50%;transform:translateY(-50%);right:6px;width:32px;height:32px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 16px/1 inherit;padding:0;cursor:pointer}
 #moodPop{display:none;margin:8px 0 6px;border:2px solid #1f7a4a;border-radius:12px;overflow:hidden;background:#fff}
 #moodPop.on{display:block}
 #moodPop .sw{height:190px}
@@ -653,7 +655,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.46-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.47-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -3180,7 +3182,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.46-TEST (Nov 13, 2026, 7:30 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.47-TEST (Nov 13, 2026, 7:40 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
