@@ -2,13 +2,14 @@
 <!--
   CPMG Mountain cabin Order — test/order/mountain-cabin/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.40-TEST (Nov 13, 2026, 6:20 AM)
+  v3.41-TEST (Nov 13, 2026, 6:35 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.41-TEST (Nov 13, 2026, 6:35 AM) CC-114: on the restaurant and real estate forms, tapping Something else opens a box right under the kind buttons (Tell us what it is for). The words are sent with the order as Kind of graphic: Something else: <words>. Other industries: unchanged.
     v3.40-TEST (Nov 13, 2026, 6:20 AM) CC-113: the 'What do you picture?' box is now ON for the restaurant and bar form too (real estate stays on, parked). Other industries: unchanged.
     v3.39-TEST (Nov 13, 2026, 5:50 AM) CC-111: real estate form only gets a 'What do you picture?' box in More choices: Feel (Warm, Bold, Calm, Exciting, Elegant), One you like (link or name), Anything to leave out. All optional. Sent in the order notes as Feel / Example they like / Leave out. Other industries: unchanged (box hidden).
     v3.38-TEST (Nov 11, 2026, 11:33 PM) CC-095: restaurant form adds the Cartoon poster look (professional cartoon-style 3D poster). Other industries: version label only.
@@ -282,6 +283,9 @@
 /* ===== v3.39-TEST (Nov 13, 2026) CC-111: "What do you picture?" box. Hidden unless the pack has vision=True. ===== */
 #feelTaps .opt{min-height:44px;padding:6px 8px;font-size:16px}
 #visionBox .sl{display:block;margin:10px 0 4px;font-weight:700}
+/* ===== v3.41-TEST (Nov 13, 2026) CC-114: box under the kind buttons when Something else is tapped ===== */
+.whatOther{margin:10px 0 0}
+.whatOther .sl{display:block;margin:0 0 4px;font-weight:700}
 /* ===== v3.5-TEST (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
 :root{--muted:#cfe0d5;--line:#4a6656;--card:#1d2b24;--deep:#244034}
 input::placeholder,textarea::placeholder{color:#a9c0b2;opacity:1}
@@ -629,7 +633,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.40-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.41-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -3115,6 +3119,14 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       return lb;
     }
     PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
+    if (PACK.vision) {   // v3.41-TEST CC-114: Something else opens a typing box right under the buttons
+      var wt = el('whatTaps'), ob = document.createElement('div'); ob.id = 'whatOther'; ob.hidden = true; ob.className = 'whatOther';
+      ob.innerHTML = '<label class="sl" for="whatOtherTxt">Tell us what it\u2019s for (a few words)</label><input type="text" id="whatOtherTxt" autocomplete="off" maxlength="80" placeholder="Example: Grand opening">';
+      wt.parentNode.insertBefore(ob, wt.nextSibling);
+      document.addEventListener('change', function (e) {
+        if (e.target && e.target.name === 'what') { ob.hidden = e.target.value !== 'Something else'; if (!ob.hidden) { try { document.getElementById('whatOtherTxt').focus({ preventScroll: false }); } catch (x) { /* ok */ } } }
+      });
+    }
     // v3.37 CC-071: some packs ask the kind of place first (Bar / Restaurant / Both) and show only the graphic buttons that fit
     if (PACK.places && PACK.places.length) {
       el('placeBox').style.display = '';
@@ -3143,7 +3155,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.40-TEST (Nov 13, 2026, 6:20 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.41-TEST (Nov 13, 2026, 6:35 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3238,7 +3250,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     if (PACK.places && PACK.places.length && err('ePlace', document.querySelector('input[name="place"]:checked') ? '' : 'Tap Bar, Restaurant, or Bar and restaurant.')) bad.unshift('placeTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
-    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else'; if (PACK.vision && what === 'Something else') { var ot = (document.getElementById('whatOtherTxt') || {}).value || ''; ot = ot.trim().slice(0, 80); if (ot) what = 'Something else: ' + ot; }
     var picked = places();
     var changed = !client || client.business !== biz || client.name !== nm || client.email !== em || C.digits(client.phone) !== C.digits(ph);
     var payload = {
