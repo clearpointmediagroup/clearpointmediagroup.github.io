@@ -9,7 +9,7 @@
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
-    v3.59-TEST (Nov 13, 2026, 8:59 AM) CC-127 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
+    v3.59-TEST (Nov 13, 2026, 8:59 AM) CC-128 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
     v3.58-TEST (Nov 13, 2026, 8:48 AM) CC-126: under Call me, Text me, Email me: Randy Turner, ClearPoint Media Group, phone, email, and Call or text me anytime.
     v3.57-TEST (Nov 13, 2026, 8:44 AM) CC-125: Text me button is back (first line filled in), the line says Call or text me anytime, footer says Call or text.
     v3.56-TEST (Nov 13, 2026, 8:40 AM) CC-124 new flow: Pick a look is step 2 right after the kind of graphic (not hidden in More choices), step numbers follow what the client sees, tidier top (shorter title, version small under it).
@@ -695,7 +695,7 @@ body.lite .morebody>.field:nth-child(4){grid-column:1;grid-row:2}
 body.lite .morebody>.field:nth-child(2){grid-column:2;grid-row:1}
 body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 }
-/* v3.59 CC-127 BIG PRINT: one readable column at every screen size (no shrunk 4-column laptop layout), bigger words and boxes */
+/* v3.59 CC-128 BIG PRINT: one readable column at every screen size (no shrunk 4-column laptop layout), bigger words and boxes */
 body.lite{font-size:20px}
 body.lite .ql{font-size:25px}
 body.lite .sl{font-size:20px}
@@ -979,9 +979,9 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
   var SW = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']; line.textContent = SW[steps.length - 1] + ' quick steps. About 2 minutes.';
 
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
-  // v3.59 CC-127: More choices stays closed on wide screens too (one big column)
+  // v3.59 CC-128: More choices stays closed on wide screens too (one big column)
   if (false) d.open = true;   // wide screen: there is room, so show them
-  // v3.59 CC-127: no forced open on wide screens
+  // v3.59 CC-128: no forced open on wide screens
   // short help under each question, in plain words
   function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
   hint(what, 'Tap one.'); hint(look, 'Tap one. Not sure? We will pick for you.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
