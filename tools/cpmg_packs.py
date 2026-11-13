@@ -35,7 +35,7 @@ PACKS = {
        'Price drop': E('New Price','123 Oak Street',['Now $399,000','Was $425,000','3 beds, 2 baths','Move-in ready'],'Book a showing today'),
        'Coming soon': E('Coming Soon','123 Oak Street',['3 beds, 2 baths','Big backyard','Quiet street'],'Call me for early access'),
        'Something else': E('Happy Thanksgiving','From my family to yours',['Thank you for your trust','Wishing you a warm holiday'],'Call me anytime')}),
- 'restaurant': dict(lean=True, name='Restaurant', title='Order a graphic for your restaurant or bar', foot='CPMG Restaurant and Bar Order',
+ 'restaurant': dict(lean=True, vision=True, name='Restaurant', title='Order a graphic for your restaurant or bar', foot='CPMG Restaurant and Bar Order',
    who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant or bar', photos='your food, your bar or dining room, your headshot or your logo',
    kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Drink special','beer'),('Game day','ball-football'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
    looks=[('3D poster','cube','Bold 3D, Myrtle Beach vibe','3d-poster'),('Chalkboard','chalkboard','Hand-drawn menu board','chalkboard'),('Casual','mood-smile','Warm and friendly','casual'),('Cartoon poster','mood-happy','Pro cartoon-style 3D poster','cartoon-poster'),('Beach vibe','sun','Summer and sunny','beach-vibe'),('Holiday','gift','Pick the holiday','holiday')],
