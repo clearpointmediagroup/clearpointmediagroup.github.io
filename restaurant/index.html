@@ -1,6 +1,7 @@
 <!doctype html>
 <!--
-  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.37 (Nov 10, 2026, 12:50 AM)
+  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.41 (Nov 13, 2026, 6:45 AM)
+  v3.41 LIVE (Nov 13, 2026, 6:45 AM): CC-113 'What do you picture?' box and CC-114 'Something else' typing box added (Randy's go-live OK, 6:37 AM). Cartoon poster look (CC-095) NOT included. Undo: put back v3.37 from git.
   Copied from test/order/restaurant/ (v3.37-TEST) and pointed at the LIVE order system (assets/cpmg-order-config.js).
   Go live: CC-070 + CC-071 (Randy's standing OK, Nov 10, 12:26 AM). To change it: change the test copy, rebuild, then copy here again.
   CPMG Restaurant Order — test/order/restaurant/index.html
@@ -279,6 +280,12 @@
 .bl input{flex:1;min-width:0}
 .sl{display:block;font-size:18px;font-weight:700;color:var(--green);margin:14px 0 2px}
 
+/* ===== v3.39-TEST (Nov 13, 2026) CC-111: "What do you picture?" box. Hidden unless the pack has vision=True. ===== */
+#feelTaps .opt{min-height:44px;padding:6px 8px;font-size:16px}
+#visionBox .sl{display:block;margin:10px 0 4px;font-weight:700}
+/* ===== v3.41-TEST (Nov 13, 2026) CC-114: box under the kind buttons when Something else is tapped ===== */
+.whatOther{margin:10px 0 0}
+.whatOther .sl{display:block;margin:0 0 4px;font-weight:700}
 /* ===== v3.5-TEST (Nov 3, 2026) easier-to-read colors (Randy picked look A). Brighter example words and small text, stronger borders. ===== */
 :root{--muted:#cfe0d5;--line:#4a6656;--card:#1d2b24;--deep:#244034}
 input::placeholder,textarea::placeholder{color:#a9c0b2;opacity:1}
@@ -626,7 +633,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.37</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.41</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -740,6 +747,22 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       <p class="err" id="eSize" hidden></p>
     </fieldset>
 
+    <fieldset class="field" id="visionBox" hidden>
+      <legend class="ql"><span class="qn">+</span>What do you picture? (if you want)</legend>
+      <p class="hint">Skip any you like. It helps us match what you have in mind.</p>
+      <div class="taps" id="feelTaps">
+        <label class="opt"><input type="checkbox" name="feel" value="Warm"><span>Warm</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Bold"><span>Bold</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Calm"><span>Calm</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Exciting"><span>Exciting</span></label>
+        <label class="opt"><input type="checkbox" name="feel" value="Elegant"><span>Elegant</span></label>
+      </div>
+      <label class="sl" for="likeEx">One you like (paste a link or name it)</label>
+      <input type="text" id="likeEx" autocomplete="off" maxlength="200">
+      <label class="sl" for="leaveOut">Anything to leave out?</label>
+      <input type="text" id="leaveOut" autocomplete="off" maxlength="120">
+    </fieldset>
+
     <div class="field lh">
       <p class="ql"><span class="qn">6</span>Need it faster? (if you want)</p>
       <p class="hint">Tap the box to add Rush. Tap again to take it off.</p>
@@ -838,7 +861,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   var d = document.createElement('details'); d.className = 'more';
   d.innerHTML = '<summary>More choices</summary>';
   var mb = document.createElement('div'); mb.className = 'morebody'; d.appendChild(mb);
-  [look, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });
+  [look, photos, size, gbw, document.getElementById('visionBox')].forEach(function (x) { if (x) mb.appendChild(x); });
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
   if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
   d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
@@ -1267,7 +1290,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call me anytime"
    ]
-  }
+  },
+  "vision": true
  },
  "restaurant": {
   "industry": "Restaurant",
@@ -1508,7 +1532,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Stop in today"
    ]
-  }
+  },
+  "vision": true
  },
  "plumbing": {
   "industry": "Plumbing",
@@ -1683,7 +1708,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "hvac": {
   "industry": "HVAC",
@@ -1858,7 +1884,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "lawn-care": {
   "industry": "Lawn care",
@@ -2033,7 +2060,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "cpa": {
   "industry": "CPA and tax",
@@ -2208,7 +2236,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "home-inspector": {
   "industry": "Home inspector",
@@ -2383,7 +2412,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "concrete": {
   "industry": "Concrete",
@@ -2558,7 +2588,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call with questions"
    ]
-  }
+  },
+  "vision": false
  },
  "business": {
   "industry": "Small business",
@@ -2733,7 +2764,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "insurance": {
   "industry": "Insurance agent",
@@ -2892,7 +2924,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  },
  "mountain-cabin": {
   "industry": "Mountain cabin",
@@ -3052,7 +3085,8 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     ],
     "Call us anytime"
    ]
-  }
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -3079,6 +3113,14 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
       return lb;
     }
     PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
+    if (PACK.vision) {   // v3.41-TEST CC-114: Something else opens a typing box right under the buttons
+      var wt = el('whatTaps'), ob = document.createElement('div'); ob.id = 'whatOther'; ob.hidden = true; ob.className = 'whatOther';
+      ob.innerHTML = '<label class="sl" for="whatOtherTxt">Tell us what it\u2019s for (a few words)</label><input type="text" id="whatOtherTxt" autocomplete="off" maxlength="80" placeholder="Example: Grand opening">';
+      wt.parentNode.insertBefore(ob, wt.nextSibling);
+      document.addEventListener('change', function (e) {
+        if (e.target && e.target.name === 'what') { ob.hidden = e.target.value !== 'Something else'; if (!ob.hidden) { try { document.getElementById('whatOtherTxt').focus({ preventScroll: false }); } catch (x) { /* ok */ } } }
+      });
+    }
     // v3.37 CC-071: some packs ask the kind of place first (Bar / Restaurant / Both) and show only the graphic buttons that fit
     if (PACK.places && PACK.places.length) {
       el('placeBox').style.display = '';
@@ -3107,7 +3149,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.37-TEST (Nov 10, 2026, 12:35 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.41 (Nov 13, 2026, 6:45 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3167,6 +3209,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     $('welcome').hidden = false;
   }
   var BROK_STORE = PACK.extra.store;
+  if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
   if (!TEST_NEW) try { $('brok').value = window.localStorage.getItem(BROK_STORE) || ''; } catch (e) { /* blocked: fine */ }
   if (key) {
     $('looking').hidden = false;
@@ -3201,7 +3244,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     if (PACK.places && PACK.places.length && err('ePlace', document.querySelector('input[name="place"]:checked') ? '' : 'Tap Bar, Restaurant, or Bar and restaurant.')) bad.unshift('placeTaps');
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
 
-    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else'; if (PACK.vision && what === 'Something else') { var ot = (document.getElementById('whatOtherTxt') || {}).value || ''; ot = ot.trim().slice(0, 80); if (ot) what = 'Something else: ' + ot; }
     var picked = places();
     var changed = !client || client.business !== biz || client.name !== nm || client.email !== em || C.digits(client.phone) !== C.digits(ph);
     var payload = {
@@ -3287,6 +3330,11 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(true); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(true); });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
+  function visionNote(k) {   // v3.39-TEST CC-111: what the client pictures. Empty = None.
+    if (!PACK.vision) return 'None';
+    if (k === 'feel') { var v = [].map.call(document.querySelectorAll('input[name="feel"]:checked'), function (i) { return i.value; }); return v.length ? v.join(', ') : 'None'; }
+    var t = (document.getElementById(k === 'like' ? 'likeEx' : 'leaveOut') || {}).value || ''; t = t.trim().slice(0, 200); return t || 'None';
+  }
   function places() { return [].map.call(document.querySelectorAll('input[name="size"]:checked'), function (i) { return i.value; }); }
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
@@ -3302,7 +3350,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     var list = photos.list(), photoNote = photos.note();
     return groups(p).map(function (g) {
       return { headline: t.ttl, lines: t.bdy, cta: t.cta, use: g.use, colors: { mode: 'cpmg', main: '', second: '' }, notes: '',
-        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: (function () { var pp = document.querySelector('input[name="place"]:checked'); return pp ? pp.value + (t.brok ? ' · ' + t.brok : '') : t.brok; })(), 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
+        more: { 'Form': PACK.form, 'Order link': PACK_NAME, [PACK.extra.note]: (function () { var pp = document.querySelector('input[name="place"]:checked'); return pp ? pp.value + (t.brok ? ' · ' + t.brok : '') : t.brok; })(), 'Kind of graphic': t.what, 'Heading': t.hdg, 'Where shown': g.shown, 'Size': g.size, 'Look': t.look, 'Photos': photoNote || 'None', 'Feel': visionNote('feel'), 'Example they like': visionNote('like'), 'Leave out': visionNote('out'), 'Bottom of graphic': ($('showBiz').checked ? 'Business name' : 'No business name') + ' · ' + ($('showPh').checked ? 'Phone' : 'No phone') + (socials() ? ' · ' + socials() : '') },
         photos: list, promo: !!t.promo };
     });
   }
