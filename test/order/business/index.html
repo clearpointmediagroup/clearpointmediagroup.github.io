@@ -2,13 +2,14 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.45-TEST (Nov 13, 2026, 7:20 AM)
+  v3.46-TEST (Nov 13, 2026, 7:30 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.46-TEST (Nov 13, 2026, 7:30 AM) CC-115: Randy: mood pictures are bigger and the colors toned down; Where will you show it? now draws each shape (phone, TV, social post, website) with its size (9:16, 16:9, 4:5). All industries (test).
     v3.45-TEST (Nov 13, 2026, 7:20 AM) CC-115: each mood button gets a little i. Tap it to see a color picture and one plain line (Warm = sunset tones). Tap again to close.
     v3.44-TEST (Nov 13, 2026, 7:10 AM) CC-115: Randy: the mood buttons (Warm, Bold, Calm, Exciting, Elegant) now pick ONE only; tapping another switches it.
     v3.43-TEST (Nov 13, 2026, 7:00 AM) CC-115: Randy: the One you like box made no sense next to the picture tiles, so it is taken out. Order still sends Feel, Like these, You choose, Leave out.
@@ -296,9 +297,12 @@
 #feelTaps .mi{position:absolute;top:6px;right:6px;width:32px;height:32px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 16px/1 inherit;padding:0;cursor:pointer}
 #moodPop{display:none;margin:8px 0 6px;border:2px solid #1f7a4a;border-radius:12px;overflow:hidden;background:#fff}
 #moodPop.on{display:block}
-#moodPop .sw{height:96px}
+#moodPop .sw{height:190px}
 #moodPop .tx{padding:10px 12px;font-size:16px;line-height:1.35}
 #chooseTap{display:block;margin-top:6px}
+#sizeTaps .szpic{width:44px;height:44px;display:block}
+body.lite #sizeTaps .opt .pic,body.lite #sizeTaps .opt .szn{display:block}
+body.lite #sizeTaps .opt .szn{margin:0;text-align:center;font-size:14px}
 #chooseTap .opt{min-height:44px;font-size:16px;padding:6px 8px;width:100%;box-sizing:border-box}
 /* ===== v3.41-TEST (Nov 13, 2026) CC-114: box under the kind buttons when Something else is tapped ===== */
 .whatOther{margin:10px 0 0}
@@ -650,7 +654,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.45-TEST</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.46-TEST</span></div>
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
@@ -754,12 +758,12 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 
     <fieldset class="field">
       <legend class="ql"><span class="qn">5</span>Where will you show it?</legend>
-      <p class="hint">Tap all that you want.</p>
+      <p class="hint">Tap all that you want. The shape shows the size of your picture.</p>
       <div class="taps" id="sizeTaps" tabindex="-1">
-        <label class="opt"><input type="checkbox" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><i class="ti ti-device-mobile"></i></span><span>Phone</span><span class="szn">Tall</span></label>
-        <label class="opt"><input type="checkbox" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="tvpic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="5" width="21" height="11.8" rx="1"/><path d="M8 19.5h8"/></svg></span><span>Big-screen TV</span><span class="szn">Wide</span></label>
-        <label class="opt"><input type="checkbox" name="size" value="Social"><span class="pic" aria-hidden="true"><i class="ti ti-share"></i></span><span>Social media</span><span class="szn">Facebook, Instagram</span></label>
-        <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><i class="ti ti-world-www"></i></span><span>Website</span><span class="szn">Wide</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Phone" checked><span class="pic" aria-hidden="true"><svg class="szpic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="8" width="18" height="32" rx="3"/><path d="M22 36h4"/></svg></span><span>Phone</span><span class="szn">Tall, 9:16</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="TV"><span class="pic" aria-hidden="true"><svg class="szpic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="40" height="22.5" rx="2"/><path d="M17 40h14M24 33.5V40"/></svg></span><span>Big-screen TV</span><span class="szn">Wide, 16:9</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Social"><span class="pic" aria-hidden="true"><svg class="szpic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="28" height="35" rx="3"/><circle cx="24" cy="20" r="6"/><path d="M16 34h16"/></svg></span><span>Social media</span><span class="szn">Post, 4:5</span></label>
+        <label class="opt"><input type="checkbox" name="size" value="Website"><span class="pic" aria-hidden="true"><svg class="szpic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="40" height="30" rx="3"/><path d="M4 17h40M9 13h.01M13 13h.01M17 13h.01"/></svg></span><span>Website</span><span class="szn">Wide, 16:9</span></label>
       </div>
       <p class="err" id="eSize" hidden></p>
     </fieldset>
@@ -3177,7 +3181,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.45-TEST (Nov 13, 2026, 7:20 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.46-TEST (Nov 13, 2026, 7:30 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3239,11 +3243,11 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   var BROK_STORE = PACK.extra.store;
   if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
   if (PACK.vision) {   // v3.42-TEST CC-115: tap-a-picture tiles, up to 3, plus You choose
-    var MOOD = { Warm: ['linear-gradient(180deg,#ffd27a,#ff8a4c,#b8433a)', 'Warm: cozy and friendly, like golden sunset light.'],
-      Bold: ['linear-gradient(135deg,#d00000 50%,#111 50%)', 'Bold: strong colors that stand out from across the room.'],
-      Calm: ['linear-gradient(180deg,#cfe9e4,#8fc5c3,#5f9ea0)', 'Calm: soft, quiet and clean.'],
-      Exciting: ['linear-gradient(135deg,#ff7a00,#ff2d95,#7b2cff)', 'Exciting: bright and lively, like a party.'],
-      Elegant: ['linear-gradient(135deg,#0b1d3a,#1c3566 60%,#c9a24a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45-TEST CC-115
+    var MOOD = { Warm: ['linear-gradient(180deg,#f3dcb0,#e3ae7e,#c98a6a)', 'Warm: cozy and friendly, like golden sunset light.'],
+      Bold: ['linear-gradient(135deg,#b05a50 50%,#4a4a4a 50%)', 'Bold: strong, confident colors that stand out.'],
+      Calm: ['linear-gradient(180deg,#dcebe7,#bcd5d1,#9bbab7)', 'Calm: soft, quiet and clean.'],
+      Exciting: ['linear-gradient(135deg,#ecb27a,#dd8f9e,#9d8cc4)', 'Exciting: bright and lively, like a party.'],
+      Elegant: ['linear-gradient(135deg,#34445f,#4a5a7d 60%,#c4ad7a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45-TEST CC-115
     var pop = document.getElementById('moodPop'), popFor = '';
     [].forEach.call(document.querySelectorAll('#feelTaps .opt'), function (lab) {
       var nm = lab.querySelector('input').value, ib = document.createElement('button');
