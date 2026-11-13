@@ -1,21 +1,25 @@
 <!doctype html>
 <!--
-  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.55 (Nov 13, 2026, 8:30 AM)
+  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.57 (Nov 13, 2026, 8:44 AM)
+  v3.57 LIVE (Nov 13, 2026, 8:44 AM): CC-124 new flow (Pick a look is step 2), CC-125 Text me back (Randy's go-live OK)
+  v3.56 LIVE: skipped, went live together with v3.57
   v3.55 LIVE (Nov 13, 2026, 8:30 AM): CC-123 form cleanup (Randy's go-live OK)
   v3.54 LIVE (Nov 13, 2026, 8:10 AM): CC-122 Text me button hidden (Randy's go-live OK)
   v3.53 LIVE (Nov 13, 2026, 8:20 AM): CC-121 Text me starts with a clear first line (Randy's go-live OK)
   v3.52 LIVE (Nov 13, 2026, 8:05 AM): CC-120 look pictures box moved up under Pick a look (Randy's go-live OK)
   v3.51 LIVE (Nov 13, 2026, 7:50 AM)
   v3.50 LIVE (Nov 13, 2026, 8:40 AM): CC-116 Mountain town look, CC-117 Help button, CC-118 Call/Text/Email buttons (Randy's go-live OK, 8:38 AM). Undo: put back v3.48 from git (commit c0da19a).
-  Copied from test/order/restaurant/ (v3.55-TEST) and pointed at the LIVE order system (assets/cpmg-order-config.js).
+  Copied from test/order/restaurant/ (v3.57-TEST) and pointed at the LIVE order system (assets/cpmg-order-config.js).
   To change it: change the test copy, rebuild, then copy here again.
-  v3.55 (Nov 13, 2026, 8:30 AM)
+  v3.57 (Nov 13, 2026, 8:44 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.57 (Nov 13, 2026, 8:44 AM) CC-125: Text me button is back (first line filled in), the line says Call or text me anytime, footer says Call or text.
+    v3.56 (Nov 13, 2026, 8:40 AM) CC-124 new flow: Pick a look is step 2 right after the kind of graphic (not hidden in More choices), step numbers follow what the client sees, tidier top (shorter title, version small under it).
     v3.55 (Nov 13, 2026, 8:30 AM) CC-123 form cleanup: one look question (picture tiles under Pick a look, See big on each), Details and the last line optional, step numbers in order, Help list matches, clear one-at-a-time error messages, footer says Call or email.
     v3.54 (Nov 13, 2026, 8:10 AM) CC-122: Text me button hidden. Call me and Email me stay.
     v3.53 (Nov 13, 2026, 8:20 AM) CC-121: Text me starts with a clear first line.
@@ -331,6 +335,9 @@
 #skC{align-self:center;background:#fff;color:#c2261f;font:900 clamp(17px,5vw,22px) var(--display);padding:12px 22px;border-radius:40px;box-shadow:0 4px 0 #1b2a6b;word-break:break-word}
 #skNote{color:#fff;font:700 15px/1.35 var(--display);text-align:center;margin:12px 4px}
 #skX{display:block;width:100%;min-height:52px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
+body.lite .wrap.narrow>.top{flex-wrap:wrap}
+body.lite .wrap.narrow>.top h1#pkTitle{font-size:23px;line-height:1.15}
+body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11px;white-space:normal}
 #visionBox .eg{margin:2px 0 6px;font-size:14px;color:#5f6b61}
 #likeTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 8px}
 #likeTiles .zm{position:absolute;top:10px;right:10px;min-height:34px;padding:4px 12px;border:0;border-radius:17px;background:rgba(0,0,0,.72);color:#fff;font:800 14px var(--display);cursor:pointer}
@@ -699,7 +706,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.55 (Nov 13, 2026, 8:30 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.57 (Nov 13, 2026, 8:44 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote">Call me or email me anytime.</p>
@@ -904,7 +911,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     <div class="code" id="orderCode"></div>
     <button type="button" class="ghost" id="again">Order another</button>
   </div>
-  <div class="foot"><span id="pkFoot">CPMG Order</span> · Questions? Call <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
+  <div class="foot"><span id="pkFoot">CPMG Order</span> · Questions? Call or text <a href="tel:+18433219518" style="color:inherit;font-weight:700;white-space:nowrap">(843) 321-9518</a> or email <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit;white-space:nowrap">randy.turner@cpmgdata.com</a></div>
 </div>
 <div class="bar narrow" id="sendBar"><p id="barTot" style="margin:0 0 8px;text-align:center;font-size:17px;font-weight:700;color:var(--green)"></p><button type="submit" form="f" class="big" id="sendBtn">Send my order</button></div>
 
@@ -932,15 +939,13 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   function paintX() { xb.classList.toggle('show', inFs()); }
   document.addEventListener('fullscreenchange', paintX); document.addEventListener('webkitfullscreenchange', paintX);
   var wrapEl = document.querySelector('.wrap.narrow'); if (wrapEl) wrapEl.insertBefore(fb, wrapEl.firstChild);
-  var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Three quick steps. About 2 minutes.';
+  var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Quick steps. About 2 minutes.';
   var top = document.querySelector('.top'); if (top && top.parentNode) top.parentNode.insertBefore(line, top.nextSibling);
   function num(field, n, text) { var q = field && field.querySelector('.qn'); if (q) q.textContent = String(n); if (text) { var l = field.querySelector('.ql'); if (l) { var t = l.lastChild; if (t && t.nodeType === 3) t.nodeValue = text; } } }
-  num(what, 1); num(say, 2);
   if (what) what.classList.add('lite-what'); if (say) say.classList.add('lite-say'); if (contact) contact.classList.add('lite-you');
   // step 3 = business + contact together: "About you"
   if (biz && contact) {
     var cq = contact.querySelector('.ql'); if (cq && cq.lastChild && cq.lastChild.nodeType === 3) cq.lastChild.nodeValue = 'About you';
-    num(contact, 4);
     var bq = biz.querySelector('.ql'); if (bq) { var bl = bq.querySelector('label'); if (bl) { bl.className = 'sl'; bl.style.display = 'block'; biz.insertBefore(bl, bq); } bq.remove(); }
     biz.style.cssText = 'border:0;box-shadow:none;margin:0;padding:0;background:none';
     contact.insertBefore(biz, cq.nextSibling);
@@ -951,15 +956,19 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
   d.innerHTML = '<summary>More choices</summary>';
   var mb = document.createElement('div'); mb.className = 'morebody'; d.appendChild(mb);
   var vbx = document.getElementById('visionBox');
-  [look, vbx, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });   // v3.55 CC-123: the picture box sits right after Pick a look
-  [look, vbx, photos, size, gbw].forEach(function (x) { var q = x && x.querySelector('.qn'); if (q) q.textContent = '+'; });   // extras are not numbered
-  var rushF = up('rush', '.field'); num(rushF, 3);
+  [vbx, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });   // v3.55 CC-123
+  if (look && say) say.parentNode.insertBefore(look, say);   // v3.56 CC-124: Pick a look is step 2, right after the kind of graphic
+  [vbx, photos, size, gbw].forEach(function (x) { var q = x && x.querySelector('.qn'); if (q) q.textContent = '+'; });   // extras are not numbered
+  var rushF = up('rush', '.field'), steps = [what, look, say, (rushF && getComputedStyle(rushF).display !== 'none') ? rushF : null, contact].filter(Boolean);
+  steps.forEach(function (fl, i) { num(fl, i + 1); });   // v3.56 CC-124: numbers follow what the client sees
+  var SW = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']; line.textContent = SW[steps.length - 1] + ' quick steps. About 2 minutes.';
+
   var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
   if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) d.open = true;   // wide screen: there is room, so show them
   d.querySelector('summary').addEventListener('click', function (e) { if (window.matchMedia && window.matchMedia('(min-width:1100px)').matches) { e.preventDefault(); d.open = true; } });   // v3.21: on a wide screen it is always open (no fold)
   // short help under each question, in plain words
   function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
-  hint(what, 'Tap one.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
+  hint(what, 'Tap one.'); hint(look, 'Tap one. Not sure? We will pick for you.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
   if (look) { var lq = look.querySelector('.ql'); if (lq) lq.lastChild.nodeValue = 'Pick a look'; }
 })();
 </script>
@@ -3247,7 +3256,7 @@ body.lite .morebody>.field:nth-child(3){grid-column:2;grid-row:2}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.55 (Nov 13, 2026, 8:30 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.57 (Nov 13, 2026, 8:44 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
