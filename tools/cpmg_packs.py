@@ -1,4 +1,5 @@
-# CPMG industry packs v2.1 (Nov 13, 2026, 8:10 AM)
+# CPMG industry packs v2.2 (Nov 14, 2026, 7:30 AM)
+# v2.2 (Nov 14, 2026, 7:30 AM) CC-138: new ski-shop pack (ski shops, rental shops, outdoor stores). Test form only.
 # v2.1 (Nov 13, 2026, 8:10 AM) Randy: restaurant pack adds the Mountain town look (snowy Colorado ski-town street picture).
 # v2.0 (Nov 13, 2026, 7:50 AM) Randy: restaurant pack drops the Cartoon poster look (picture rejected).
 # v1.9 (Nov 11, 2026, 11:31 PM) CC-095: restaurant pack adds the Cartoon poster look (professional cartoon-style 3D poster). Test copy only.
@@ -191,6 +192,27 @@ PACKS['mountain-cabin'] = _clone('cpa',
         'Event':['Christmas Lights Weekend','Dec 12 and 13',['Hot cocoa on the porch','Close to town','Great for families'],'Reserve your cabin'],
         'New listing':['New Cabin','Just Added This Season',['Sleeps 8','Game room and hot tub','Mountain view'],'See it and book'],
         'Something else':['Thank You','From our cabins to you',['We appreciate your stay','See you in the mountains'],'Call us anytime']})
+
+PACKS['ski-shop'] = _clone('cpa',
+    name='Ski shop',
+    title='Order a graphic for your ski or outdoor shop',
+    foot='CPMG Ski Shop Order',
+    who='Ski shops, rental shops and outdoor stores',
+    uses='rental deals, sales, hours and events',
+    what='shop',
+    photos='your shop, your gear or your logo',
+    kinds=[['Rental deal','calendar-due'],['Sale','gift'],['New gear','user-plus'],['Hours','clock'],['Event','building'],['Something else','pencil']],
+    extra={'label':'Rentals or booking website (if you want)','hint':'Where people reserve gear.','ph':'smithskishop.com','need':'','key':'booking','note':'Website'},
+    biz='Smith Ski and Board',
+    photo1=['Shop photo','Big background, like your shop or your gear. Your words go on top.','Shop photo','Shop'],
+    scene='a cozy ski shop with racks of skis and snowboards, warm lights and snow outside the window',
+    ex={'':['Ski Rentals','Smith Ski and Board',['Full day from $45','Skis, boards and boots','Reserve ahead and save'],'Reserve your gear'],
+        'Rental deal':['Ski Rentals','Smith Ski and Board',['Full day from $45','Skis, boards and boots','Reserve ahead and save'],'Reserve your gear'],
+        'Sale':['Season Sale','Up to 30% Off',['Jackets, goggles and gloves','This weekend only','While supplies last'],'Stop in today'],
+        'New gear':['New Gear In','Just Landed This Week',['Skis and boards','Helmets and goggles','Ask us for a fit'],'Come see it'],
+        'Hours':['Holiday Hours','Smith Ski and Board',['Open daily 8 to 6','Closed Christmas Day','Early open Dec 26'],'See you on the slopes'],
+        'Event':['Demo Day','Saturday at the Base',['Try the new skis free','Hot cocoa on us','All ages welcome'],'Stop by and ride'],
+        'Something else':['Thank You','From our shop to you',['We appreciate you','See you on the mountain'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:

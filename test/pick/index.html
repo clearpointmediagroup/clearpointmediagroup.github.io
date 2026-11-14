@@ -1,9 +1,10 @@
 <!doctype html>
 <!--
-  CPMG order picker - v1.1-TEST (Nov 14, 2026, 6:40 AM)   CC-136
+  CPMG order picker - v1.3-TEST (Nov 14, 2026, 7:35 AM)   CC-136, CC-138
   The ONE order link for website, Facebook, Instagram, emails and QR codes will be /order/.
   This test copy shows 3 big buttons. Each opens that business type's order form.
   REVISION LOG
+    v1.3-TEST (Nov 14, 2026, 7:35 AM) CC-138: second section "Not a restaurant or bar?" with 5 buttons (cabin and rental managers, ski shop and rentals, real estate, insurance agent, any other business).
     v1.1-TEST (Nov 14, 2026, 6:40 AM) Randy: list all 30 Colorado templates (15 business types x Casual / Upscale) instead of 3 buttons. Links pass ?template=<type>-<look>.
     v1.0-TEST (Nov 14, 2026, 6:30 AM) CC-136: first version. Test copy only; live /order/ still opens the restaurant form (v3.59).
 -->
@@ -23,7 +24,7 @@ p{margin:0 0 22px;color:#b8cfc2}
 .row{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;align-items:center;margin:0 0 12px}.nm{text-align:left;font-weight:700;font-size:21px;color:#fff}
 a.btn{display:block;padding:14px 8px;border:3px solid #5fc48c;border-radius:14px;background:#10301d;color:#fff;font-weight:700;font-size:19px;text-decoration:none}
 a.btn:hover,a.btn:focus-visible{background:#1a4a2d;outline:none}
-.foot{font-size:16px;color:#8fa89b;margin-top:26px}
+h2{font-size:24px;margin:30px 0 14px;color:#fff}a.btn.wide{margin:0 0 12px;padding:16px 10px;font-size:21px}.foot{font-size:16px;color:#8fa89b;margin-top:26px}
 </style>
 </head>
 <body>
@@ -45,6 +46,12 @@ a.btn:hover,a.btn:focus-visible{background:#1a4a2d;outline:none}
 <div class="row"><div class="nm">Tiki bar</div><a class="btn" href="../order/restaurant/?template=tiki-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=tiki-bar-upscale">Upscale</a></div>
 <div class="row"><div class="nm">Restaurant</div><a class="btn" href="../order/restaurant/?template=upscale-restaurant-casual">Casual</a><a class="btn" href="../order/restaurant/?template=upscale-restaurant-upscale">Upscale</a></div>
 <div class="row"><div class="nm">Wine bar</div><a class="btn" href="../order/restaurant/?template=wine-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=wine-bar-upscale">Upscale</a></div>
+<h2>Not a restaurant or bar?</h2>
+<a class="btn wide" href="../order/mountain-cabin/">Cabin and rental managers</a>
+<a class="btn wide" href="../order/ski-shop/">Ski shop and rentals</a>
+<a class="btn wide" href="../order/real-estate/">Real estate</a>
+<a class="btn wide" href="../order/insurance/">Insurance agent</a>
+<a class="btn wide" href="../order/business/">Any other business</a>
 <div class="foot">Orders in by 5:30 p.m. Eastern. Later orders are ready the next business morning.</div>
 </main>
 </body>
