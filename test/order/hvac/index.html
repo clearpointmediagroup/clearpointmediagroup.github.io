@@ -2,13 +2,14 @@
 <!--
   CPMG HVAC Order — test/order/hvac/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.68-TEST (Nov 14, 2026, 3:20 AM)
+  v3.69-TEST (Nov 14, 2026, 4:10 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.69-TEST (Nov 14, 2026, 4:10 AM) CC-131: the look pictures now come from the finished blueprint pictures and match the place and kind picked above (Bar, Restaurant or Bar and restaurant, then Happy hour, Daily special and so on). Tap one to see it big, then Use this look.
     v3.68-TEST (Nov 14, 2026, 3:20 AM) CC-131: flow is now kind of graphic, then look and feel (feel buttons and Anything to leave out moved out from under More choices into step 2), then the words, then the sketch. The sketch uses everything picked before it: the kind, the feel, and the looks.
     v3.67-TEST (Nov 14, 2026, 2:55 AM) CC-131: sketch colors follow the kind of graphic picked above (Happy hour, Game day, Live music, Freeze warning, Fall cleanup, Tax season, etc.); unknown kinds keep the fall/ski parchment look. A feel for the mood only, not the real design.
     v3.66-TEST (Nov 14, 2026, 2:35 AM) CC-131: sketch back to a conservative fall/ski-lodge look (parchment, earth tones, thin gold border). The How should it feel? buttons (Warm, Bold, Calm, Exciting, Elegant) now each have a small graphic, and Bold is bright (sunburst, starburst, bolt) instead of black and red.
@@ -373,6 +374,7 @@ body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11p
 #likeTiles .zm{position:absolute;top:10px;right:10px;min-height:34px;padding:4px 12px;border:0;border-radius:17px;background:rgba(0,0,0,.72);color:#fff;font:800 14px var(--display);cursor:pointer}
 #likeTiles .opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:84px;padding:6px 4px;font-size:14px;font-weight:600;text-align:center;border-width:2px}
 #likeTiles .opt img{width:100%;height:130px;object-fit:cover;border-radius:6px}
+#likeTiles .opt img[src*="looks2"]{height:210px;object-position:top center}
 #likeTiles .opt input,#chooseTap input{position:absolute;opacity:0;pointer-events:none}
 #feelTaps .opt{position:relative}
 #feelTaps .opt{padding-right:44px;padding-left:44px}
@@ -763,7 +765,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.68-TEST (Nov 14, 2026, 3:20 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.69-TEST (Nov 14, 2026, 4:10 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3315,7 +3317,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.68-TEST (Nov 14, 2026, 3:20 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.69-TEST (Nov 14, 2026, 4:10 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3423,6 +3425,31 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
       lab.appendChild(zb);
       lab.addEventListener('click', function (e) { e.preventDefault(); if (window.cpmgShowTile) window.cpmgShowTile(nm); });   // v3.61 CC-127: the whole picture opens big
     });
+var BP = {"m":[["Cocktail bar","Casual","New Menu"],["Dive bar","Upscale","New Menu"],["Sports bar","Casual","New Menu"],["Tiki bar","Upscale","New Menu"],["Wine bar","Casual","New Menu"],["Cocktail bar","Upscale","New Menu"],["Cocktail bar","Casual","Happy Hour"],["Wine bar","Casual","Happy Hour"],["Cocktail bar","Upscale","Happy Hour"],["Cocktail bar","Casual","Signature Cocktail"],["Dive bar","Upscale","Old Fashioned"],["Sports bar","Casual","Burger And Beer"],["Tiki bar","Upscale","Craft Rum Cocktails"],["Wine bar","Casual","Wine Flight"],["Cocktail bar","Upscale","Signature Cocktail"],["Cocktail bar","Casual","Trivia Night"],["Dive bar","Casual","Darts League"],["Sports bar","Casual","Wing Night"],["Sports bar","Casual","Game Day"],["Sports bar","Casual","Pool And Darts"],["Dive bar","Casual","Jukebox Night"],["Tiki bar","Casual","Live Music"],["Wine bar","Casual","Live Music"],["Cocktail bar","Casual","Private Event"],["Dive bar","Upscale","Private Event"],["Sports bar","Upscale","Private Event"],["Tiki bar","Upscale","Private Event"],["Wine bar","Casual","Private Event"],["Cocktail bar","Upscale","Private Event"],["Cocktail bar","Casual","Holiday Hours"],["Dive bar","Upscale","Holiday Hours"],["Sports bar","Casual","Holiday Hours"],["Tiki bar","Upscale","Holiday Hours"],["Wine bar","Casual","Holiday Hours"],["Cocktail bar","Upscale","Holiday Hours"],["Barbecue","Casual","New Menu"],["Chinese","Upscale","New Menu"],["Diner","Casual","New Menu"],["Italian","Upscale","New Menu"],["Mexican","Casual","New Menu"],["Pizza","Upscale","New Menu"],["Barbecue","Casual","Happy Hour"],["Chinese","Casual","Happy Hour"],["Italian","Casual","Happy. Hour"],["Mexican","Casual","Margarita Hour"],["Seafood","Casual","Oyster Happy Hour"],["Steakhouse","Casual","Happy Hour"],["Italian","Upscale","Wine And Cheese"],["Mexican","Upscale","Mezcal Flight"],["Steakhouse","Upscale","Wine Dinner"],["Fine dining","Upscale","Cheese And Wine"],["Mexican","Upscale","Wine Pairing"],["Fine dining","Casual","Wine Night"],["Pizza","Casual","Game Day"],["Barbecue","Casual","Live Blues"],["Italian","Casual","Live Music"],["Mexican","Casual","Guitar And Trumpet On Ourstage"],["Pizza","Upscale","Live Piano"],["Steakhouse","Casual","Dinner Show"],["Barbecue","Upscale","Live Country Music"],["Barbecue","Casual","Private Event"],["Chinese","Upscale","Private Dining"],["Diner","Casual","Private Party"],["Italian","Upscale","Private Event"],["Mexican","Casual","Private Event"],["Pizza","Upscale","Private Event"],["Barbecue","Casual","Holiday Hours"],["Chinese","Upscale","Holiday Hours"],["Diner","Casual","Holiday Hours"],["Italian","Upscale","Holiday Hours"],["Mexican","Casual","Holiday Hours"],["Pizza","Upscale","Holiday Hours"],["Diner","Upscale","New Menu"],["Dive bar","Casual","New Menu"],["Italian","Upscale","Cocktail Hour"],["Pizza","Casual","Live Music"],["Diner","Upscale","Private Dining"],["Dive bar","Casual","Private Event"],["Diner","Upscale","Holiday Hours"],["Dive bar","Casual","Holiday Hours"]],"s":{"Bar|Daily special":[0,1,2,3,4,5],"Bar|Happy hour":[6,7,8],"Bar|Drink special":[9,10,11,12,13,14],"Bar|Game day":[15,16,17,18,19],"Bar|Live music":[20,21,22],"Bar|Event":[23,24,25,26,27,28],"Bar|Holiday hours":[29,30,31,32,33,34],"Bar|Something else":[0,1,2,3,4,5],"Restaurant|Daily special":[35,36,37,38,39,40],"Restaurant|Happy hour":[41,42,43,44,45,46],"Restaurant|Drink special":[47,48,49,50,51,52],"Restaurant|Game day":[53],"Restaurant|Live music":[54,55,56,57,58,59],"Restaurant|Event":[60,61,62,63,64,65],"Restaurant|Holiday hours":[66,67,68,69,70,71],"Restaurant|Something else":[35,36,37,38,39,40],"Bar and restaurant|Daily special":[35,36,0,72,73,38],"Bar and restaurant|Happy hour":[41,42,6,74,44,45],"Bar and restaurant|Drink special":[9,10,47,48,11,49],"Bar and restaurant|Game day":[15,16,53,17,18,19],"Bar and restaurant|Live music":[54,20,55,56,75,58],"Bar and restaurant|Event":[60,61,23,76,77,63],"Bar and restaurant|Holiday hours":[66,67,29,78,79,69],"Bar and restaurant|Something else":[35,36,0,72,73,38]}};
+    // v3.69 CC-131: restaurant look tiles are the finished blueprint pictures, matched to the place and kind picked above
+    if (PACK_NAME === 'restaurant') {
+      var BPB = PACK_FIXED ? '../looks2/' : 'looks2/'; window.BPFULL = {};
+      var renderBP = function () {
+        var pp = document.querySelector('input[name="place"]:checked'), ww = document.querySelector('input[name="what"]:checked');
+        var key = (pp ? pp.value : 'Bar and restaurant') + '|' + (ww && BP.s[(pp ? pp.value : 'Bar and restaurant') + '|' + ww.value] ? ww.value : 'Something else');
+        var ids = BP.s[key] || [], keep = {};
+        [].forEach.call(lt.querySelectorAll('input[name="likes"]:checked'), function (i) { keep[i.value] = 1; });
+        lt.innerHTML = '';
+        ids.forEach(function (id) {
+          var m = BP.m[id], nm = m[0] + ' ' + m[1] + ' · ' + m[2]; window.BPFULL[nm] = BPB + 'b' + id + '.jpg';
+          var lb = document.createElement('label'); lb.className = 'opt';
+          var inp = document.createElement('input'); inp.type = 'checkbox'; inp.name = 'likes'; inp.value = nm; inp.checked = !!keep[nm]; lb.appendChild(inp);
+          var im = document.createElement('img'); im.alt = 'Example: ' + nm; im.loading = 'lazy'; im.src = BPB + 't' + id + '.jpg'; lb.appendChild(im);
+          var sp = document.createElement('span'); sp.textContent = m[0] + ' · ' + m[1]; lb.appendChild(sp);
+          var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'Tap to see big'; zb.setAttribute('aria-label', 'See ' + nm + ' big');
+          zb.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); window.cpmgShowTile(nm); }); lb.appendChild(zb);
+          lb.addEventListener('click', function (e) { e.preventDefault(); window.cpmgShowTile(nm); });
+          lt.appendChild(lb);
+        });
+      };
+      document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'place' || e.target.name === 'what')) renderBP(); });
+      renderBP();
+    }
     function syncLook() {
       var first = document.querySelector('input[name="likes"]:checked'), v = first ? first.value : 'You pick for me';
       var r = document.querySelector('input[name="look"][value="' + v + '"]') || document.querySelector('input[name="look"][value="You pick for me"]');
@@ -3540,10 +3567,10 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   var lastFocus = null;
   try { document.getElementById('lookImg').onerror = function () { this.hidden = true; document.getElementById('lookSoon').hidden = false; }; } catch (e) { /* ok */ }
   function showLook(v) {
-    var f = LOOK_IMG[v];
-    if (!f) return;
+    var f = LOOK_IMG[v], bpu = window.BPFULL && window.BPFULL[v];
+    if (!f && !bpu) return;
     $('lookImg').hidden = false; $('lookSoon').hidden = true;
-    $('lookImg').src = LOOK_BASE + f + '.jpg?v=4'; $('lookImg').alt = 'Example of the ' + v + ' look';
+    $('lookImg').src = bpu || (LOOK_BASE + f + '.jpg?v=4'); $('lookImg').alt = 'Example of the ' + v + ' look';
     $('lookCap').textContent = v;
     lastFocus = document.activeElement;
     $('lookPop').hidden = false; document.body.style.overflow = 'hidden'; $('sendBar').style.visibility = 'hidden';
