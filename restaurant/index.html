@@ -1,16 +1,17 @@
 <!doctype html>
 <!--
   CPMG Restaurant Order — restaurant/index.html (LIVE)
-  Copied from test/order/restaurant/ (v3.93) and pointed at the LIVE order system (assets/cpmg-order-config.js).
-  To change it: change the test copy, rebuild, then copy here again. Live go-live OK from Randy Nov 14, 2026 (CC-136, CC-137).
-  v3.93 (Nov 14, 2026, 7:10 AM)
+  Copied from test/order/restaurant/ (v3.94) and pointed at the LIVE order system (assets/cpmg-order-config.js).
+  To change it: change the test copy, rebuild, then copy here again. Live go-live OK from Randy Nov 14, 2026 (CC-138, CC-139).
+  v3.94 (Nov 14, 2026, 7:50 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
-    v3.93 (Nov 14, 2026, 7:10 AM) CC-137: opens with the template picked on the order picker (?template=pizza-upscale). A green line at the top names it, and it is sent in the order notes as Template: Pizza, Upscale. No template in the link = form works as before.
+    v3.94 (Nov 14, 2026, 7:50 AM) CC-139: the restaurant form asks the kind of place (15 types) and Casual or Upscale inside the form; ?template=pizza-upscale still preselects. Sent in the order notes as Template: Pizza, Upscale. Other industries: unchanged.
+    v3.93 (Nov 14, 2026, 6:55 AM) CC-137: opens with the template picked on the order picker (?template=pizza-upscale). A green line at the top names it, and it is sent in the order notes as Template: Pizza, Upscale. No template in the link = form works as before.
     v3.92 (Nov 14, 2026, 4:00 AM) CC-131: a line under the feel buttons says the color is just a preview and we make the real graphic to match.
     v3.91 (Nov 14, 2026, 4:20 AM) CC-131: natural colors on the feel buttons and sketch (brick red, leaf green, muted gold, navy and gold); the See how my words will fit button is deep green with a gold edge.
     v3.90 (Nov 14, 2026, 4:05 AM) CC-131: the gaps and dots shrink with the words too, so a long list fits.
@@ -825,7 +826,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.93 (Nov 14, 2026, 7:10 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.94 (Nov 14, 2026, 7:50 AM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -3320,6 +3321,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "ski-shop": {
+  "industry": "Ski shop",
+  "form": "Ski shop",
+  "title": "Order a graphic for your ski or outdoor shop",
+  "foot": "CPMG Ski Shop Order",
+  "about": "We make professional graphics for local businesses, fast. Ski shops, rental shops and outdoor stores use us for rental deals, sales, hours and events that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shop, your gear or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Rental deal",
+    "calendar-due"
+   ],
+   [
+    "Sale",
+    "gift"
+   ],
+   [
+    "New gear",
+    "user-plus"
+   ],
+   [
+    "Hours",
+    "clock"
+   ],
+   [
+    "Event",
+    "building"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "Rentals or booking website (if you want)",
+   "hint": "Where people reserve gear.",
+   "ph": "smithskishop.com",
+   "need": "",
+   "key": "booking",
+   "note": "Website",
+   "store": "cpmgExtra_ski-shop"
+  },
+  "biz": "Smith Ski and Board",
+  "photo1": [
+   "Shop photo",
+   "Big background, like your shop or your gear. Your words go on top.",
+   "Shop photo",
+   "Shop"
+  ],
+  "ex": {
+   "": [
+    "Ski Rentals",
+    "Smith Ski and Board",
+    [
+     "Full day from $45",
+     "Skis, boards and boots",
+     "Reserve ahead and save"
+    ],
+    "Reserve your gear"
+   ],
+   "Rental deal": [
+    "Ski Rentals",
+    "Smith Ski and Board",
+    [
+     "Full day from $45",
+     "Skis, boards and boots",
+     "Reserve ahead and save"
+    ],
+    "Reserve your gear"
+   ],
+   "Sale": [
+    "Season Sale",
+    "Up to 30% Off",
+    [
+     "Jackets, goggles and gloves",
+     "This weekend only",
+     "While supplies last"
+    ],
+    "Stop in today"
+   ],
+   "New gear": [
+    "New Gear In",
+    "Just Landed This Week",
+    [
+     "Skis and boards",
+     "Helmets and goggles",
+     "Ask us for a fit"
+    ],
+    "Come see it"
+   ],
+   "Hours": [
+    "Holiday Hours",
+    "Smith Ski and Board",
+    [
+     "Open daily 8 to 6",
+     "Closed Christmas Day",
+     "Early open Dec 26"
+    ],
+    "See you on the slopes"
+   ],
+   "Event": [
+    "Demo Day",
+    "Saturday at the Base",
+    [
+     "Try the new skis free",
+     "Hot cocoa on us",
+     "All ages welcome"
+    ],
+    "Stop by and ride"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our shop to you",
+    [
+     "We appreciate you",
+     "See you on the mountain"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -3382,7 +3544,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.93 (Nov 14, 2026, 7:10 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.94 (Nov 14, 2026, 7:50 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3648,15 +3810,39 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     var l = document.querySelector('input[name="look"]:checked'), v = l ? l.value : 'You pick for me', h = $('holiday').value.trim();
     return (v === 'Holiday' && h ? 'Holiday: ' + h : v) + (TEMPLATE ? ' | Template: ' + TEMPLATE : '');
   }
-  // v3.93 CC-137: template picked on the order picker, like ?template=pizza-upscale
-  var TEMPLATE = (function () {
+  // v3.94 CC-139: the restaurant form asks the kind of place and Casual or Upscale itself (no 30 buttons on the picker).
+  // ?template=pizza-upscale still works and preselects both.
+  var TPL_TYPES = [['barbecue','Barbecue'],['chinese','Chinese'],['cocktail-bar','Cocktail bar'],['diner','Diner'],['dive-bar','Dive bar'],['hotel-and-lodge','Hotel and lodge'],['italian','Italian'],['mexican','Mexican'],['pizza','Pizza'],['seafood','Seafood'],['sports-bar','Sports bar'],['steakhouse','Steakhouse'],['tiki-bar','Tiki bar'],['upscale-restaurant','Restaurant'],['wine-bar','Wine bar']];
+  var TEMPLATE = '';
+  (function () {
     try {
-      var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search); if (!m) return '';
-      var name = m[1].replace(/-/g, ' '); name = name.charAt(0).toUpperCase() + name.slice(1);
-      return name + ', ' + (m[2] === 'upscale' ? 'Upscale' : 'Casual');
-    } catch (e) { return ''; }
+      if (PACK_NAME !== 'restaurant') return;
+      var tb = document.getElementById('tplBar'); if (!tb) return;
+      var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';
+      tb.hidden = false; tb.textContent = '';
+      var lab = document.createElement('div'); lab.textContent = 'What kind of place is it?'; tb.appendChild(lab);
+      var sel = document.createElement('select'); sel.id = 'tplType'; sel.setAttribute('aria-label', 'Kind of place');
+      sel.style.cssText = 'width:100%;margin:8px 0;padding:12px;font-size:18px;border-radius:10px;border:2px solid #5fc48c;background:#0f1712;color:#fff';
+      var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Pick one (or skip)'; sel.appendChild(o0);
+      TPL_TYPES.forEach(function (t) { var o = document.createElement('option'); o.value = t[0]; o.textContent = t[1]; if (t[0] === selType) o.selected = true; sel.appendChild(o); });
+      tb.appendChild(sel);
+      var row = document.createElement('div'); row.style.cssText = 'display:flex;gap:10px'; tb.appendChild(row);
+      var btns = {};
+      ['casual', 'upscale'].forEach(function (k) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = k === 'casual' ? 'Casual' : 'Upscale'; b.dataset.look = k; b.setAttribute('aria-pressed', 'false');
+        b.style.cssText = 'flex:1;padding:12px;font-size:18px;font-weight:700;border-radius:10px;border:2px solid #5fc48c;background:#10301d;color:#fff;cursor:pointer';
+        b.addEventListener('click', function () { selLook = (selLook === k) ? '' : k; refresh(); });
+        row.appendChild(b); btns[k] = b;
+      });
+      function refresh() {
+        selType = sel.value;
+        ['casual', 'upscale'].forEach(function (k) { var on = selLook === k; btns[k].setAttribute('aria-pressed', on ? 'true' : 'false'); btns[k].style.background = on ? '#2f8f57' : '#10301d'; });
+        var nm = ''; TPL_TYPES.forEach(function (t) { if (t[0] === selType) nm = t[1]; });
+        TEMPLATE = nm ? nm + (selLook ? ', ' + (selLook === 'upscale' ? 'Upscale' : 'Casual') : '') : '';
+      }
+      sel.addEventListener('change', refresh); refresh();
+    } catch (e) { /* the form still works without it */ }
   })();
-  if (TEMPLATE) { var tb = document.getElementById('tplBar'); if (tb) { tb.textContent = 'Your template: ' + TEMPLATE; tb.hidden = false; } }
   // v2.19: example picture for the look they tap (pictures made in the CPMG Gem, Oct 29, 2026)
   var LOOK_IMG = { 'You pick for me': 'you-pick' }; PACK.looks.forEach(function (l) { if (l[3]) LOOK_IMG[l[0]] = l[3]; });   // v3.2: neutral sample for You pick for me
   // v2.21: the example pops up big on top of the page; "Use this look" keeps it, "Pick a different look" un-picks it
