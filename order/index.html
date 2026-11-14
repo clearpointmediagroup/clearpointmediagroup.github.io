@@ -1,12 +1,13 @@
 <!doctype html>
 <!--
-  CPMG order link (single point) - v1.0 (Oct 31, 2026)
+  CPMG order link (single point) - v1.1 (Nov 14, 2026, 6:05 AM)
   This is the ONE order link for the website, Facebook, Instagram, emails, handouts and QR codes:
       https://clearpointmediagroup.github.io/order/
   It opens the current standard order form. To point every site at a different form later
   (for example a cloned form for another business type), change FORM below. Nothing else needs to change.
   REVISION LOG
     v1.0 (Oct 31, 2026) CC-033: first version. Opens the live real estate form (real-estate/ v3.1).
+    v1.1 (Nov 14, 2026, 6:05 AM) Randy: the standard form for the Colorado groups. Now opens the live standard order form (restaurant/ v3.59). Real estate is shelved.
 -->
 <html lang="en">
 <head>
@@ -14,12 +15,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Order a graphic - ClearPoint Media Group</title>
 <link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
-<meta http-equiv="refresh" content="0; url=../real-estate/">
+<meta http-equiv="refresh" content="0; url=../restaurant/">
 <style>body{margin:0;background:#0f1712;color:#e4ede8;font:18px "Segoe UI",Arial,sans-serif;padding:24px 16px}a{color:#5fc48c;font-weight:700}</style>
 <script>
-  var FORM = '../real-estate/';   // <- the current standard order form (change only this line)
+  var FORM = '../restaurant/';   // <- the current standard order form (change only this line)
   location.replace(FORM + location.search + location.hash);
 </script>
 </head>
-<body><p>Opening the ClearPoint Media Group order form… <a href="../real-estate/">Tap here if it doesn't open.</a></p></body>
+<body><p>Opening the ClearPoint Media Group order form… <a href="../restaurant/">Tap here if it doesn't open.</a></p></body>
 </html>
