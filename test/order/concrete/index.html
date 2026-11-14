@@ -2,13 +2,14 @@
 <!--
   CPMG Concrete Order — test/order/concrete/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.86-TEST (Nov 14, 2026, 11:10 AM)
+  v3.87-TEST (Nov 14, 2026, 11:30 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.87-TEST (Nov 14, 2026, 11:30 AM) CC-131: pick ONE look, not three: picking a new look un-picks the old one, and the words say so.
     v3.86-TEST (Nov 14, 2026, 11:10 AM) CC-131: Randy approved: look pictures show the whole picture (3 across, not cropped to the headline) and each set mixes different headlines (no row of NEW MENU). Pick buttons say Pick this look / Picked.
     v3.85-TEST (Nov 14, 2026, 10:40 AM) CC-131: on a laptop the three sample pictures at the top are small (72 px wide, beside the words) so the form itself shows on the first screen.
     v3.84-TEST (Nov 14, 2026, 10:05 AM) CC-131: the three sample pictures at the top load right away (no blank boxes while waiting).
@@ -808,7 +809,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.86-TEST (Nov 14, 2026, 11:10 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.87-TEST (Nov 14, 2026, 11:30 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3363,7 +3364,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.86-TEST (Nov 14, 2026, 11:10 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.87-TEST (Nov 14, 2026, 11:30 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3468,7 +3469,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     var lk = document.getElementById('lookTaps'), lookFs = lk.closest('fieldset');
     lk.hidden = true; document.getElementById('likeLbl').hidden = true;
     lookFs.insertBefore(lt, lk); lookFs.insertBefore(document.getElementById('chooseTap'), lk); document.getElementById('chooseTap').hidden = true;   // v3.81: one way to pick, skip and we pick
-    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Style examples. Yours will say your words. Tap a picture to see it big. Tap Pick this look to choose up to 3 (tap Picked to undo). Skip this and we pick for you.'; lh.className = 'hint liteHint'; }
+    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Style examples. Yours will say your words. Tap a picture to see it big. Tap Pick this look to choose one (tap Picked to undo). Skip this and we pick for you.'; lh.className = 'hint liteHint'; }
     [].forEach.call(lt.querySelectorAll('label.opt'), function (lab) {
       var nm = lab.querySelector('input').value;
       if (!lab.querySelector('img')) return;
@@ -3526,8 +3527,8 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     var onVis = function (ev) {
       var t = ev.target, yc = document.querySelector('input[name="youchoose"]');
       if (t.name === 'likes' && t.checked) {
-        if (document.querySelectorAll('input[name="likes"]:checked').length > 3) t.checked = false;
-        else if (yc) yc.checked = false;
+        [].forEach.call(document.querySelectorAll('input[name="likes"]:checked'), function (i) { if (i !== t) { i.checked = false; i.dispatchEvent(new Event('change', { bubbles: true })); } });   // v3.87: pick ONE look
+        if (yc) yc.checked = false;
       } else if (t.name === 'feel' && t.checked) {   // v3.44-TEST: mood is pick ONE
         [].forEach.call(document.querySelectorAll('input[name="feel"]'), function (i) { if (i !== t) i.checked = false; });
         if (yc) yc.checked = false;
