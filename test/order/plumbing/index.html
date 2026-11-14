@@ -2,13 +2,14 @@
 <!--
   CPMG Plumbing Order — test/order/plumbing/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.87-TEST (Nov 14, 2026, 11:30 AM)
+  v3.88-TEST (Nov 14, 2026, 11:50 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.88-TEST (Nov 14, 2026, 11:50 AM) CC-131: the picked look is easy to see: a thick green frame, a green tint, a green PICKED ribbon on the picture, and the other pictures fade back. Only one can be picked at a time.
     v3.87-TEST (Nov 14, 2026, 11:30 AM) CC-131: pick ONE look, not three: picking a new look un-picks the old one, and the words say so.
     v3.86-TEST (Nov 14, 2026, 11:10 AM) CC-131: Randy approved: look pictures show the whole picture (3 across, not cropped to the headline) and each set mixes different headlines (no row of NEW MENU). Pick buttons say Pick this look / Picked.
     v3.85-TEST (Nov 14, 2026, 10:40 AM) CC-131: on a laptop the three sample pictures at the top are small (72 px wide, beside the words) so the form itself shows on the first screen.
@@ -414,7 +415,10 @@ body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11p
 @media (min-width:700px){.trustBox{display:flex;align-items:center;gap:14px}.trustBox p{flex:1;margin:0}.trustBox .tr{flex:none;width:auto}.trustBox .tr a{flex:none;width:72px}}   /* v3.85: small samples on a laptop so the form stays on the first screen */
 #likeTiles .pk{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:44px;margin-top:2px;border:2px solid #1f7a4a;border-radius:10px;background:#fff;color:#1f7a4a;font:800 15px var(--display);cursor:pointer}
 #likeTiles .opt:has(input:checked) .pk{background:#1f7a4a;color:#fff}
-#likeTiles .opt:has(input:checked){border-color:#1f7a4a;box-shadow:0 0 0 3px rgba(31,122,74,.35)}
+#likeTiles .opt:has(input:checked){border:4px solid #1f7a4a!important;box-shadow:0 0 0 3px rgba(31,122,74,.35);background:#d9f0e1}
+#likeTiles .opt:has(input:checked)::before{content:'\2713  PICKED';position:absolute;top:8px;left:8px;z-index:3;background:#1f7a4a;color:#fff;font:800 13px/1 system-ui,sans-serif;letter-spacing:.04em;padding:6px 9px;border-radius:6px}
+#likeTiles:has(input:checked) .opt:not(:has(input:checked)) img{opacity:.4}
+#likeTiles .opt:has(input:checked) .pk{font-size:15px}
 #lookImg{cursor:zoom-out}
 #likeTiles .opt input,#chooseTap input{position:absolute;opacity:0;pointer-events:none}
 #feelTaps .opt{position:relative}
@@ -809,7 +813,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.87-TEST (Nov 14, 2026, 11:30 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.88-TEST (Nov 14, 2026, 11:50 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3364,7 +3368,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.87-TEST (Nov 14, 2026, 11:30 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.88-TEST (Nov 14, 2026, 11:50 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
