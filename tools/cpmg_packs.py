@@ -1,4 +1,5 @@
-# CPMG industry packs v2.2 (Nov 14, 2026, 7:30 AM)
+# CPMG industry packs v2.3-TEST (Nov 14, 2026)
+# v2.3-TEST (Nov 14, 2026) CC-141: new brewery pack (brewery, cidery, distillery, winery). Test form only; Casual and Upscale chosen inside the form.
 # v2.2 (Nov 14, 2026, 7:30 AM) CC-138: new ski-shop pack (ski shops, rental shops, outdoor stores). Test form only.
 # v2.1 (Nov 13, 2026, 8:10 AM) Randy: restaurant pack adds the Mountain town look (snowy Colorado ski-town street picture).
 # v2.0 (Nov 13, 2026, 7:50 AM) Randy: restaurant pack drops the Cartoon poster look (picture rejected).
@@ -213,6 +214,27 @@ PACKS['ski-shop'] = _clone('cpa',
         'Hours':['Holiday Hours','Smith Ski and Board',['Open daily 8 to 6','Closed Christmas Day','Early open Dec 26'],'See you on the slopes'],
         'Event':['Demo Day','Saturday at the Base',['Try the new skis free','Hot cocoa on us','All ages welcome'],'Stop by and ride'],
         'Something else':['Thank You','From our shop to you',['We appreciate you','See you on the mountain'],'Call us anytime']})
+
+PACKS['brewery'] = _clone('cpa',
+    name='Brewery, cidery, distillery or winery',
+    title='Order a graphic for your brewery, cidery, distillery or winery',
+    foot='CPMG Brewery Order',
+    who='Breweries, cideries, distilleries and wineries',
+    uses='new releases, tasting flights, happy hours, tours, live music and hours',
+    what='taproom',
+    photos='your taproom, your tanks or barrels, or your logo',
+    kinds=[['Tasting flight','gift'],['New release','tag'],['Happy hour','clock'],['Live music or event','calendar-due'],['Hours','building'],['Something else','pencil']],
+    extra={'label':'What do you make? (if you want)','hint':'A few words, like beer, cider, whiskey or wine.','ph':'Beer and cider','need':'','key':'placeType','note':'What we make'},
+    biz='Smith Mountain Brewing',
+    photo1=['Taproom photo','Big background, like your taproom, tanks or barrels. Your words go on top.','Taproom photo','Taproom'],
+    scene='a warm mountain taproom with a stone fireplace, a brass tap rail and copper tanks, snow outside the window',
+    ex={'':['Beer Flight','Smith Mountain Brewing',['Four tasters of our house beers','4 pours for $12','Open daily at noon'],'Stop in tonight'],
+        'Tasting flight':['Beer Flight','Smith Mountain Brewing',['Four tasters of our house beers','4 pours for $12','Open daily at noon'],'Stop in tonight'],
+        'New release':['New Release','A Small Batch Just Tapped',['Now pouring','Ask for a free taster','While it lasts'],'Come try it'],
+        'Happy hour':['Happy Hour','Cold Pints and Warm Hellos',['Daily 3 to 6 PM','$2 off every pour','Pretzels and snacks'],'Stop in tonight'],
+        'Live music or event':['Live Music','Acoustic Sets by the Fire',['Fridays and Saturdays','7 PM','No cover'],'Join us tonight'],
+        'Hours':['Holiday Hours','Smith Mountain Brewing',['Open daily at noon','Early close Christmas Eve','Closed Christmas Day'],'Check before you go'],
+        'Something else':['Thank You','From our taproom to you',['We appreciate you','See you by the fire'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
