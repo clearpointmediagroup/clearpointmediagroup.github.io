@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Standard Order Form — test/order/index.html
-  v3.65-TEST (Nov 14, 2026, 2:10 AM)
+  v3.66-TEST (Nov 14, 2026, 2:35 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.66-TEST (Nov 14, 2026, 2:35 AM) CC-131: sketch back to a conservative fall/ski-lodge look (parchment, earth tones, thin gold border). The How should it feel? buttons (Warm, Bold, Calm, Exciting, Elegant) now each have a small graphic, and Bold is bright (sunburst, starburst, bolt) instead of black and red.
     v3.65-TEST (Nov 14, 2026, 2:10 AM) CC-131: sketch is now bright and bold (sunburst rays, hot pink and yellow, ribbon subject, star bullets, starburst call-to-action) instead of dark navy boxes.
     v3.64-TEST (Nov 14, 2026, 1:55 AM) CC-131: sketch uses what they typed; any empty spot shows that business type's own example words (dashed) instead of generic text.
     v3.63-TEST (Nov 14, 2026, 1:40 AM) CC-131: sketch shows labeled spots (Title, Subject, 3 details with bullets, Call to action); empty spots show a dashed example so people see where their words go.
@@ -339,20 +340,24 @@
 #skB li{margin:5px 0}
 #skC{align-self:center;margin-top:auto;background:#fff;color:#c2261f;font:900 clamp(17px,5vw,22px) var(--display);padding:12px 22px;border-radius:40px;box-shadow:0 4px 0 #1b2a6b;word-break:break-word}
 #skNote{color:#fff;font:700 15px/1.35 var(--display);text-align:center;margin:12px 4px}
-/* v3.65 bright and bold sketch */
-#skArt{background:repeating-conic-gradient(from 0deg at 50% 38%,#ffe600 0 10deg,#ffb300 10deg 20deg)!important;color:#fff}
-#skArt:before{background:#ff1f8e!important;opacity:.9!important;width:78%!important;left:11%!important;top:-6%!important;clip-path:polygon(100.0% 50.0%,89.2% 57.8%,96.2% 69.1%,83.3% 72.2%,85.4% 85.4%,72.2% 83.3%,69.1% 96.2%,57.8% 89.2%,50.0% 100.0%,42.2% 89.2%,30.9% 96.2%,27.8% 83.3%,14.6% 85.4%,16.7% 72.2%,3.8% 69.1%,10.8% 57.8%,0.0% 50.0%,10.8% 42.2%,3.8% 30.9%,16.7% 27.8%,14.6% 14.6%,27.8% 16.7%,30.9% 3.8%,42.2% 10.8%,50.0% 0.0%,57.8% 10.8%,69.1% 3.8%,72.2% 16.7%,85.4% 14.6%,83.3% 27.8%,96.2% 30.9%,89.2% 42.2%);border-radius:0!important}
-#skArt:after{background:#00c2ff!important;opacity:.95!important;width:60%!important;right:-16%!important;bottom:-8%!important;clip-path:polygon(100.0% 50.0%,89.2% 57.8%,96.2% 69.1%,83.3% 72.2%,85.4% 85.4%,72.2% 83.3%,69.1% 96.2%,57.8% 89.2%,50.0% 100.0%,42.2% 89.2%,30.9% 96.2%,27.8% 83.3%,14.6% 85.4%,16.7% 72.2%,3.8% 69.1%,10.8% 57.8%,0.0% 50.0%,10.8% 42.2%,3.8% 30.9%,16.7% 27.8%,14.6% 14.6%,27.8% 16.7%,30.9% 3.8%,42.2% 10.8%,50.0% 0.0%,57.8% 10.8%,69.1% 3.8%,72.2% 16.7%,85.4% 14.6%,83.3% 27.8%,96.2% 30.9%,89.2% 42.2%);border-radius:0!important}
-#skT{color:#fff!important;text-shadow:-3px -3px 0 #d10068,3px -3px 0 #d10068,-3px 3px 0 #d10068,3px 3px 0 #d10068,0 6px 0 #7a0040!important}
-#skH{background:#00a8e8!important;color:#fff!important;border-radius:0!important;padding:8px 26px!important;clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%);text-shadow:2px 2px 0 #005f8a}
+/* v3.66 conservative fall / ski lodge sketch */
+#skArt{background:linear-gradient(180deg,#f6ebd0 0%,#ecd9ad 100%)!important;color:#4a2c17;border:3px solid #d4a017;box-shadow:inset 0 0 0 7px #f6ebd0,inset 0 0 0 8px #8a5a2b,0 8px 30px rgba(0,0,0,.5)!important}
+#skArt:before{background:#d4a017!important;opacity:.28!important;width:34%!important;left:auto!important;right:10%!important;top:5%!important;border-radius:50%!important;clip-path:none!important}
+#skArt:after{background:#2f4a2f!important;opacity:.22!important;width:100%!important;aspect-ratio:auto!important;height:24%!important;left:0!important;right:auto!important;bottom:0!important;border-radius:0!important;clip-path:polygon(0 100%,0 62%,14% 30%,26% 58%,42% 8%,58% 54%,72% 26%,86% 56%,100% 36%,100% 100%)!important}
+#skT{color:#4a2c17!important;text-shadow:1px 1px 0 rgba(255,255,255,.55)!important;letter-spacing:.01em}
+#skH{background:transparent!important;color:#8a3b17!important;border-radius:0!important;padding:6px 18px!important;border-top:2px solid #d4a017;border-bottom:2px solid #d4a017;text-shadow:none!important;clip-path:none!important;font-style:italic}
 #skH.ex,#skT.ex,#skC.ex{outline:0!important}
-#skT.ex,#skH.ex,#skC.ex,#skB li.ex{opacity:.92}
-.skL{background:#ff1f8e!important;color:#fff!important;border-radius:20px!important;padding:3px 10px!important}
+#skT.ex,#skH.ex,#skC.ex,#skB li.ex{opacity:.8}
+.skL{background:#2f4a2f!important;color:#f6ebd0!important;border-radius:20px!important;padding:3px 10px!important}
 #skB{gap:8px}
-#skB li{background:transparent!important;border:0!important;padding:0 4px!important;color:#fff;text-shadow:-2px -2px 0 #d10068,2px -2px 0 #d10068,-2px 2px 0 #d10068,2px 2px 0 #d10068;font-weight:900!important}
-#skB li:before{content:"\2605"!important;flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#ff1f8e;color:#ffe600;text-shadow:none;font-size:20px;box-shadow:0 3px 0 #7a0040}
-#skB li.ex{font-style:italic;font-weight:800!important}
-#skC{background:#ff1f8e!important;color:#ffe600!important;border-radius:0!important;box-shadow:none!important;clip-path:polygon(100.0% 50.0%,89.2% 57.8%,96.2% 69.1%,83.3% 72.2%,85.4% 85.4%,72.2% 83.3%,69.1% 96.2%,57.8% 89.2%,50.0% 100.0%,42.2% 89.2%,30.9% 96.2%,27.8% 83.3%,14.6% 85.4%,16.7% 72.2%,3.8% 69.1%,10.8% 57.8%,0.0% 50.0%,10.8% 42.2%,3.8% 30.9%,16.7% 27.8%,14.6% 14.6%,27.8% 16.7%,30.9% 3.8%,42.2% 10.8%,50.0% 0.0%,57.8% 10.8%,69.1% 3.8%,72.2% 16.7%,85.4% 14.6%,83.3% 27.8%,96.2% 30.9%,89.2% 42.2%);padding:26px 34px!important;text-shadow:2px 2px 0 #7a0040;min-width:62%}
+#skB li{background:transparent!important;border:0!important;padding:0 4px!important;color:#4a2c17;text-shadow:none!important;font-weight:800!important}
+#skB li:before{content:"\25C6"!important;flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#2f4a2f;color:#e8c24a;text-shadow:none;font-size:13px;box-shadow:none}
+#skB li.ex{font-style:italic;font-weight:700!important}
+#skC{background:#2f4a2f!important;color:#f6ebd0!important;border-radius:40px!important;border:2px solid #d4a017;box-shadow:none!important;clip-path:none!important;padding:12px 26px!important;text-shadow:none!important;min-width:0}
+/* v3.66 feel buttons get a graphic */
+#feelTaps .opt .fi{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:30px;height:30px}
+#moodPop .sw{display:flex;align-items:center;justify-content:center}
+#moodPop .sw svg{width:120px;height:120px}
 #skX{display:block;width:100%;min-height:52px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
 body.lite .wrap.narrow>.top{flex-wrap:wrap}
 body.lite .wrap.narrow>.top h1#pkTitle{font-size:23px;line-height:1.15}
@@ -752,7 +757,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.65-TEST (Nov 14, 2026, 2:10 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.66-TEST (Nov 14, 2026, 2:35 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3303,7 +3308,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.65-TEST (Nov 14, 2026, 2:10 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.66-TEST (Nov 14, 2026, 2:35 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3366,18 +3371,26 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
   if (PACK.vision) {   // v3.42-TEST CC-115: tap-a-picture tiles, up to 3, plus You choose
     var MOOD = { Warm: ['linear-gradient(180deg,#f3dcb0,#e3ae7e,#c98a6a)', 'Warm: cozy and friendly, like golden sunset light.'],
-      Bold: ['linear-gradient(135deg,#b05a50 50%,#4a4a4a 50%)', 'Bold: strong, confident colors that stand out.'],
+      Bold: ['repeating-conic-gradient(#ffe600 0 10deg,#ffb300 10deg 20deg)', 'Bold: strong, confident colors that stand out.'],
       Calm: ['linear-gradient(180deg,#dcebe7,#bcd5d1,#9bbab7)', 'Calm: soft, quiet and clean.'],
       Exciting: ['linear-gradient(135deg,#ecb27a,#dd8f9e,#9d8cc4)', 'Exciting: bright and lively, like a party.'],
       Elegant: ['linear-gradient(135deg,#34445f,#4a5a7d 60%,#c4ad7a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45-TEST CC-115
     var pop = document.getElementById('moodPop'), popFor = '';
+    var ICON = {
+      Warm: '<svg viewBox="0 0 32 32"><g stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round"><path d="M16 2v4M16 26v4M2 16h4M26 16h4M6 6l3 3M23 23l3 3M26 6l-3 3M9 23l-3 3"/></g><circle cx="16" cy="16" r="7" fill="#f59e0b"/></svg>',
+      Bold: '<svg viewBox="0 0 32 32"><polygon points="16,1 19,8 26,4 24,12 31,14 25,19 29,26 21,24 19,31 16,25 13,31 11,24 3,26 7,19 1,14 8,12 6,4 13,8" fill="#ff1f8e"/><polygon points="18,6 9,18 15,18 13,27 23,13 17,13" fill="#ffe600"/></svg>',
+      Calm: '<svg viewBox="0 0 32 32"><g fill="none" stroke="#2a9d8f" stroke-width="3" stroke-linecap="round"><path d="M3 11q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 18q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 25q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/></g></svg>',
+      Exciting: '<svg viewBox="0 0 32 32"><polygon points="16,3 19,12 28,12 21,18 24,27 16,21 8,27 11,18 4,12 13,12" fill="#ff7a00"/><circle cx="5" cy="5" r="2.5" fill="#9b5de5"/><circle cx="27" cy="6" r="2.5" fill="#00bbf9"/><circle cx="27" cy="27" r="2.5" fill="#f15bb5"/></svg>',
+      Elegant: '<svg viewBox="0 0 32 32"><polygon points="16,3 28,13 16,29 4,13" fill="#34445f"/><polygon points="16,3 22,13 16,29 10,13" fill="#c4ad7a"/></svg>' };
+    
     [].forEach.call(document.querySelectorAll('#feelTaps .opt'), function (lab) {
       var nm = lab.querySelector('input').value, ib = document.createElement('button');
+      var fi = document.createElement('span'); fi.className = 'fi'; fi.innerHTML = ICON[nm]; lab.appendChild(fi);
       ib.type = 'button'; ib.className = 'mi'; ib.textContent = 'i'; ib.setAttribute('aria-label', 'See an example of ' + nm);
       ib.addEventListener('click', function (e) {
         e.preventDefault(); e.stopPropagation();
         if (popFor === nm && pop.classList.contains('on')) { pop.classList.remove('on'); popFor = ''; return; }
-        popFor = nm; pop.innerHTML = '<div class="sw" style="background:' + MOOD[nm][0] + '"></div><div class="tx">' + MOOD[nm][1] + '</div>'; pop.classList.add('on');
+        popFor = nm; pop.innerHTML = '<div class="sw" style="background:' + MOOD[nm][0] + '">' + ICON[nm] + '</div><div class="tx">' + MOOD[nm][1] + '</div>'; pop.classList.add('on');
       });
       lab.appendChild(ib);
     });
