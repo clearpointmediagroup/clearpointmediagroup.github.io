@@ -1,24 +1,49 @@
 <!doctype html>
 <!--
-  LIVE: CPMG Restaurant and Bar Order — restaurant/index.html  v3.59 (Nov 13, 2026, 8:59 AM)
-  v3.59 LIVE (Nov 13, 2026, 8:59 AM): CC-126 name, phone and email under the buttons; CC-128 big print, one column on laptops (Randy's go-live OK)
-  v3.57 LIVE (Nov 13, 2026, 8:44 AM): CC-124 new flow (Pick a look is step 2), CC-125 Text me back (Randy's go-live OK)
-  v3.56 LIVE: skipped, went live together with v3.57
-  v3.55 LIVE (Nov 13, 2026, 8:30 AM): CC-123 form cleanup (Randy's go-live OK)
-  v3.54 LIVE (Nov 13, 2026, 8:10 AM): CC-122 Text me button hidden (Randy's go-live OK)
-  v3.53 LIVE (Nov 13, 2026, 8:20 AM): CC-121 Text me starts with a clear first line (Randy's go-live OK)
-  v3.52 LIVE (Nov 13, 2026, 8:05 AM): CC-120 look pictures box moved up under Pick a look (Randy's go-live OK)
-  v3.51 LIVE (Nov 13, 2026, 7:50 AM)
-  v3.50 LIVE (Nov 13, 2026, 8:40 AM): CC-116 Mountain town look, CC-117 Help button, CC-118 Call/Text/Email buttons (Randy's go-live OK, 8:38 AM). Undo: put back v3.48 from git (commit c0da19a).
-  Copied from test/order/restaurant/ (v3.59) and pointed at the LIVE order system (assets/cpmg-order-config.js).
-  To change it: change the test copy, rebuild, then copy here again.
-  v3.59 (Nov 13, 2026, 8:59 AM)
+  CPMG Restaurant Order — restaurant/index.html (LIVE)
+  Copied from test/order/restaurant/ (v3.93) and pointed at the LIVE order system (assets/cpmg-order-config.js).
+  To change it: change the test copy, rebuild, then copy here again. Live go-live OK from Randy Nov 14, 2026 (CC-136, CC-137).
+  v3.93 (Nov 14, 2026, 7:10 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.93 (Nov 14, 2026, 7:10 AM) CC-137: opens with the template picked on the order picker (?template=pizza-upscale). A green line at the top names it, and it is sent in the order notes as Template: Pizza, Upscale. No template in the link = form works as before.
+    v3.92 (Nov 14, 2026, 4:00 AM) CC-131: a line under the feel buttons says the color is just a preview and we make the real graphic to match.
+    v3.91 (Nov 14, 2026, 4:20 AM) CC-131: natural colors on the feel buttons and sketch (brick red, leaf green, muted gold, navy and gold); the See how my words will fit button is deep green with a gold edge.
+    v3.90 (Nov 14, 2026, 4:05 AM) CC-131: the gaps and dots shrink with the words too, so a long list fits.
+    v3.89 (Nov 14, 2026, 3:50 AM) CC-131: the sketch words shrink to fit the picture: no word is split in the middle and nothing runs off the bottom.
+    v3.88 (Nov 14, 2026, 11:50 AM) CC-131: the picked look is easy to see: a thick green frame, a green tint, a green PICKED ribbon on the picture, and the other pictures fade back. Only one can be picked at a time.
+    v3.87 (Nov 14, 2026, 11:30 AM) CC-131: pick ONE look, not three: picking a new look un-picks the old one, and the words say so.
+    v3.86 (Nov 14, 2026, 11:10 AM) CC-131: Randy approved: look pictures show the whole picture (3 across, not cropped to the headline) and each set mixes different headlines (no row of NEW MENU). Pick buttons say Pick this look / Picked.
+    v3.85 (Nov 14, 2026, 10:40 AM) CC-131: on a laptop the three sample pictures at the top are small (72 px wide, beside the words) so the form itself shows on the first screen.
+    v3.84 (Nov 14, 2026, 10:05 AM) CC-131: the three sample pictures at the top load right away (no blank boxes while waiting).
+    v3.83 (Nov 14, 2026, 9:50 AM) CC-131: Randy approved four finish items: (1) hours wording uses 8 a.m. to 5:30 p.m. Eastern, and orders after 5:30 p.m. and on weekends are ready the next business morning (top line and thank-you screen); (2) a trust line and three sample pictures near the top of the restaurant and bar form; (3) look pictures are smaller so step 3 scrolls less on a phone; (4) change cards updated separately.
+    v3.82 (Nov 14, 2026, 9:20 AM) CC-131: the sketch now fits on one screen: the picture shrinks to whatever room there is, the Close and keep typing button always shows under it (never off the bottom), and there is a round X at the top too.
+    v3.81 (Nov 14, 2026, 9:00 AM) CC-131: Randy approved changes 2, 3, 5, 6 from the form review: pictures are labeled as style examples, one plain way to pick (tap picture, Pick this look; skip and we pick), the You choose box is gone, About 3 minutes, and See how my words will fit.
+    v3.80 (Nov 14, 2026, 8:25 AM) CC-131: no more hidden More choices box at all. The Bottom of the graphic choices (business name, phone, social) now show in plain view right after Where will you show it?, so nothing is tucked away.
+    v3.79 (Nov 14, 2026, 8:05 AM) CC-131: Add photos and Where will you show it? (phone, TV, social) are no longer behind More choices; they sit in plain view right under What should it say? Only the bottom-of-graphic choices stay behind More choices.
+    v3.78 (Nov 14, 2026, 7:50 AM) CC-131: new step order (Randy): 1 kind of graphic, 2 what it says, 3 look and feel, 4 about you. The quick sketch button moved to the end of the look and feel step, so the sketch is built from everything picked before it.
+    v3.77 (Nov 14, 2026, 6:55 AM) CC-131: on a phone the i button was covering the feel words and eating the tap. Each feel is now its own full-width row with the word clear in the middle; the i is smaller and sits at the right; tap the row to pick, tap the i to see the colors.
+    v3.76 (Nov 14, 2026, 6:35 AM) CC-131: the i button moved left so the check mark on a picked feel no longer sits on top of it.
+    v3.75 (Nov 14, 2026, 6:25 AM) CC-131: the feel color box can now always be closed: tap the color box itself, tap anywhere else, tap the same i again, or press Esc. Picking a feel button never opens it; only the i opens it. The i is bigger (44 px) and says 'see colors' so it is not mixed up with picking.
+    v3.74 (Nov 14, 2026, 6:00 AM) CC-131: look pictures: tapping the picture opens it big, tapping the big picture (or Close, or outside it) shrinks it back without changing anything; picking is its own big check button on each tile (Pick this look / Picked) and Use this look in the big view. No more mixing up the two.
+    v3.73 (Nov 14, 2026, 5:35 AM) CC-131: Elegant sketch is now a dark navy field with gold words, border and button (a helper check found it too pale).
+    v3.72 (Nov 14, 2026, 5:15 AM) CC-131: fix: when a feel is picked, the feel colors rule the whole sketch (Elegant was showing tan because a look picture overrode the background). The picture colors only apply when no feel is picked.
+    v3.71 (Nov 14, 2026, 4:55 AM) CC-131: each How should it feel? button now sets its own sketch tone, using the same colors as its button picture (Warm gold, Bold yellow and hot pink, Calm sage, Exciting orange-pink-purple, Elegant navy and gold). With a look picture picked, the picture sets the background and the feel sets the accents.
+    v3.70 (Nov 14, 2026, 4:35 AM) CC-131: the sketch colors now come from the look picture they tapped Use this look on (its main color), so the sketch matches the picture. No picture picked: kind and feel colors as before.
+    v3.69 (Nov 14, 2026, 4:10 AM) CC-131: the look pictures now come from the finished blueprint pictures and match the place and kind picked above (Bar, Restaurant or Bar and restaurant, then Happy hour, Daily special and so on). Tap one to see it big, then Use this look.
+    v3.68 (Nov 14, 2026, 3:20 AM) CC-131: flow is now kind of graphic, then look and feel (feel buttons and Anything to leave out moved out from under More choices into step 2), then the words, then the sketch. The sketch uses everything picked before it: the kind, the feel, and the looks.
+    v3.67 (Nov 14, 2026, 2:55 AM) CC-131: sketch colors follow the kind of graphic picked above (Happy hour, Game day, Live music, Freeze warning, Fall cleanup, Tax season, etc.); unknown kinds keep the fall/ski parchment look. A feel for the mood only, not the real design.
+    v3.66 (Nov 14, 2026, 2:35 AM) CC-131: sketch back to a conservative fall/ski-lodge look (parchment, earth tones, thin gold border). The How should it feel? buttons (Warm, Bold, Calm, Exciting, Elegant) now each have a small graphic, and Bold is bright (sunburst, starburst, bolt) instead of black and red.
+    v3.65 (Nov 14, 2026, 2:10 AM) CC-131: sketch is now bright and bold (sunburst rays, hot pink and yellow, ribbon subject, star bullets, starburst call-to-action) instead of dark navy boxes.
+    v3.64 (Nov 14, 2026, 1:55 AM) CC-131: sketch uses what they typed; any empty spot shows that business type's own example words (dashed) instead of generic text.
+    v3.63 (Nov 14, 2026, 1:40 AM) CC-131: sketch shows labeled spots (Title, Subject, 3 details with bullets, Call to action); empty spots show a dashed example so people see where their words go.
+    v3.62 (Nov 14, 2026, 1:20 AM) CC-131: quick sketch now follows the real graphic layout: title at the top, subject under it, details in the middle, call to action at the bottom (was all squeezed in the middle).
+    v3.61 (Nov 14, 2026, 1:05 AM) CC-127: tap anywhere on a look picture to open it big, with Use this look and Pick a different look. The small See big button stays as a cue.
+    v3.60 (Nov 14, 2026, 12:50 AM) CC-130: the Send bar no longer floats over the form. It sits at the end of the form as a white bar with the same green button, so it never covers a button.
     v3.59 (Nov 13, 2026, 8:59 AM) CC-128 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
     v3.58 (Nov 13, 2026, 8:48 AM) CC-126: under Call me, Text me, Email me: Randy Turner, ClearPoint Media Group, phone, email, and Call or text me anytime.
     v3.57 (Nov 13, 2026, 8:44 AM) CC-125: Text me button is back (first line filled in), the line says Call or text me anytime, footer says Call or text.
@@ -321,22 +346,63 @@
 #helpBox ol{margin:10px 14px 12px 34px;padding:0;font-size:17px;line-height:1.4;color:#1d2b21}
 #helpBox li{margin:0 0 8px}
 #helpBox p{margin:0 14px 12px;font-size:17px;font-weight:700;color:#1d2b21}
-#skBtn{display:block;width:100%;min-height:52px;margin:12px 0 4px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
+#skBtn{display:block;width:100%;min-height:52px;margin:12px 0 4px;border:0;border-radius:12px;background:#2f5a3f;color:#fbf3e0;border-bottom:4px solid #c4a65a;font:800 18px var(--display);cursor:pointer}
 #skWrap{position:fixed;inset:0;z-index:9999;background:rgba(10,20,40,.85);display:none;overflow:auto;padding:14px}
 #skWrap.on{display:block}
 #skBox{max-width:420px;margin:0 auto}
-#skArt{position:relative;aspect-ratio:9/14;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#ff5e62 0%,#ff9966 38%,#ffd452 70%,#2ec4b6 100%);color:#fff;text-align:center;padding:9% 7%;display:flex;flex-direction:column;justify-content:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+/* v3.82: whole sketch + button fit on one screen */
+#skWrap.on{display:flex;align-items:center;justify-content:center;padding:8px}
+#skBox{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-height:100dvh;max-height:100svh}
+#skArt{height:calc(100svh - 120px);max-height:calc(100svh - 120px);width:auto!important;max-width:100%;aspect-ratio:9/14;flex:none}
+#skNote{font-size:12px!important;line-height:1.25;margin:0!important;max-width:420px;color:#fff;text-align:center}
+#skX{flex:none;width:100%;max-width:420px;min-height:46px}
+#skTop{position:absolute;top:8px;right:8px;z-index:3;width:44px;height:44px;border-radius:50%;border:2px solid #fff;background:rgba(0,0,0,.65);color:#fff;font:800 22px/1 system-ui,sans-serif;cursor:pointer}
+#skArt{position:relative;aspect-ratio:9/14;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#ff5e62 0%,#ff9966 38%,#ffd452 70%,#2ec4b6 100%);color:#fff;text-align:center;padding:9% 7% 8%;display:flex;flex-direction:column;justify-content:flex-start;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 #skArt:before,#skArt:after{content:"";position:absolute;border-radius:50%;opacity:.22;background:#fff}
 #skArt:before{width:70%;aspect-ratio:1;left:-22%;top:-12%}
 #skArt:after{width:55%;aspect-ratio:1;right:-18%;bottom:-10%;background:#1b2a6b}
 #skArt>*{position:relative;z-index:1}
-#skT{font:900 clamp(30px,9vw,46px)/1.05 var(--display);text-transform:uppercase;text-shadow:3px 3px 0 #1b2a6b;word-break:break-word}
+#skArt .skS{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%}
+#skArt .skG{flex:1;justify-content:center}
+.skL{font:800 11px var(--display);letter-spacing:.08em;background:rgba(27,42,107,.85);color:#fff;border-radius:6px;padding:2px 8px;font-style:normal}
+#skB{width:100%;text-align:left}
+#skB li{display:flex;gap:8px;align-items:center;background:rgba(27,42,107,.28);border-radius:10px;padding:8px 12px}
+#skB li.ex{background:transparent;border:2px dashed rgba(255,255,255,.75);font-weight:600;opacity:.9}
+#skB li:before{content:"\25CF ";color:#ffe45e}
+#skT.ex,#skH.ex,#skC.ex{outline:2px dashed rgba(255,255,255,.8);outline-offset:4px}
+#skT{font:900 clamp(30px,9vw,46px)/1.05 var(--display);text-transform:uppercase;text-shadow:3px 3px 0 #1b2a6b;overflow-wrap:normal;word-break:normal;hyphens:none}
 #skH{font:800 clamp(18px,5vw,24px)/1.15 var(--display);background:#1b2a6b;display:inline-block;align-self:center;padding:6px 14px;border-radius:30px}
-#skB{list-style:none;margin:6px 0;padding:0;font:700 clamp(15px,4.4vw,19px)/1.3 var(--display);text-shadow:1px 1px 0 rgba(0,0,0,.35)}
-#skB li{margin:5px 0}
-#skB li:before{content:"\2605 ";color:#ffe45e}
-#skC{align-self:center;background:#fff;color:#c2261f;font:900 clamp(17px,5vw,22px) var(--display);padding:12px 22px;border-radius:40px;box-shadow:0 4px 0 #1b2a6b;word-break:break-word}
+#skB{flex:1;display:flex;flex-direction:column;justify-content:center;list-style:none;margin:0;padding:0;font:700 clamp(15px,4.4vw,19px)/1.3 var(--display);text-shadow:1px 1px 0 rgba(0,0,0,.35)}
+#skB li{margin:calc(5px*var(--k,1)) 0}
+#skArt{gap:calc(12px*var(--k,1))!important;padding-top:calc(9%*var(--k,1))!important;padding-bottom:calc(8%*var(--k,1))!important}
+#skArt .skS{gap:calc(4px*var(--k,1))}
+#skB{gap:calc(8px*var(--k,1))!important}
+#skB li:before{width:calc(28px*var(--k,1))!important;height:calc(28px*var(--k,1))!important;font-size:calc(13px*var(--k,1))!important}
+#skH{padding-top:calc(6px*var(--k,1))!important;padding-bottom:calc(6px*var(--k,1))!important}
+#skC{padding-top:calc(12px*var(--k,1))!important;padding-bottom:calc(12px*var(--k,1))!important}
+#skC{align-self:center;margin-top:auto;background:#fff;color:#c2261f;font:900 clamp(17px,5vw,22px) var(--display);padding:12px 22px;border-radius:40px;box-shadow:0 4px 0 #1b2a6b;overflow-wrap:normal;word-break:normal}
 #skNote{color:#fff;font:700 15px/1.35 var(--display);text-align:center;margin:12px 4px}
+/* v3.66 conservative fall / ski lodge sketch */
+#skArt{background:linear-gradient(180deg,var(--bg1,#f6ebd0) 0%,var(--bg2,#ecd9ad) 100%)!important;color:var(--ink,#4a2c17);border:3px solid var(--bd,#d4a017);box-shadow:inset 0 0 0 7px var(--bg1,#f6ebd0),inset 0 0 0 8px #8a5a2b,0 8px 30px rgba(0,0,0,.5)!important}
+#skArt:before{background:var(--bd,#d4a017)!important;opacity:.28!important;width:34%!important;left:auto!important;right:10%!important;top:5%!important;border-radius:50%!important;clip-path:none!important}
+#skArt:after{background:var(--acc,#2f4a2f)!important;opacity:.22!important;width:100%!important;aspect-ratio:auto!important;height:24%!important;left:0!important;right:auto!important;bottom:0!important;border-radius:0!important;clip-path:polygon(0 100%,0 62%,14% 30%,26% 58%,42% 8%,58% 54%,72% 26%,86% 56%,100% 36%,100% 100%)!important}
+#skT{color:var(--ink,#4a2c17)!important;text-shadow:1px 1px 0 rgba(255,255,255,.55)!important;letter-spacing:.01em}
+#skH{background:transparent!important;color:var(--sub,#8a3b17)!important;border-radius:0!important;padding:6px 18px!important;border-top:2px solid var(--bd,#d4a017);border-bottom:2px solid var(--bd,#d4a017);text-shadow:none!important;clip-path:none!important;font-style:italic}
+#skH.ex,#skT.ex,#skC.ex{outline:0!important}
+#skT.ex,#skH.ex,#skC.ex,#skB li.ex{opacity:.8}
+.skL{background:var(--acc,#2f4a2f)!important;color:var(--bg1,#f6ebd0)!important;border-radius:20px!important;padding:3px 10px!important}
+#skB{gap:8px}
+#skB li{background:transparent!important;border:0!important;padding:0 4px!important;color:var(--ink,#4a2c17);text-shadow:none!important;font-weight:800!important}
+#skB li:before{content:"\25C6"!important;flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--acc,#2f4a2f);color:var(--bd,#e8c24a);text-shadow:none;font-size:13px;box-shadow:none}
+#skB li.ex{font-style:italic;font-weight:700!important}
+#skC{background:var(--acc,#2f4a2f)!important;color:var(--bg1,#f6ebd0)!important;border-radius:40px!important;border:2px solid var(--bd,#d4a017);box-shadow:none!important;clip-path:none!important;padding:12px 26px!important;text-shadow:none!important;min-width:0}
+/* v3.68 feel box inside step 2 */
+#visionBox.vis2{border:0;box-shadow:none;background:none;margin:10px 0 0;padding:10px 0 0;border-top:1px solid var(--line)}
+#visionBox.vis2>legend{display:none}
+/* v3.66 feel buttons get a graphic */
+#feelTaps .opt .fi{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:30px;height:30px}
+#moodPop .sw{display:flex;align-items:center;justify-content:center}
+#moodPop .sw svg{width:120px;height:120px}
 #skX{display:block;width:100%;min-height:52px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
 body.lite .wrap.narrow>.top{flex-wrap:wrap}
 body.lite .wrap.narrow>.top h1#pkTitle{font-size:23px;line-height:1.15}
@@ -346,10 +412,33 @@ body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11p
 #likeTiles .zm{position:absolute;top:10px;right:10px;min-height:34px;padding:4px 12px;border:0;border-radius:17px;background:rgba(0,0,0,.72);color:#fff;font:800 14px var(--display);cursor:pointer}
 #likeTiles .opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:84px;padding:6px 4px;font-size:14px;font-weight:600;text-align:center;border-width:2px}
 #likeTiles .opt img{width:100%;height:130px;object-fit:cover;border-radius:6px}
+#likeTiles{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px}
+#likeTiles .opt img[src*="looks2"]{height:auto;aspect-ratio:9/16;object-fit:cover;object-position:top center}
+#likeTiles .opt span{font-size:13px;line-height:1.2}
+@media (min-width:700px){#likeTiles .opt img[src*="looks2"]{max-height:300px;object-fit:contain}}
+#likeTiles .pk{min-height:38px;font-size:13px}
+#likeTiles .zm{min-height:28px;padding:2px 9px;font-size:12px}
+#likeTiles .opt{min-height:0}
+.trustBox{margin:6px 0 14px;padding:12px 14px;border:1px solid var(--line);border-left:6px solid #1f7a4a;border-radius:12px;background:#fff}
+.trustBox p{margin:0 0 8px;font-size:16px;line-height:1.35}
+.trustBox .tr{display:flex;gap:8px}
+.trustBox .tr a{flex:1;display:block}
+.trustBox .tr img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+@media (min-width:700px){.trustBox{display:flex;align-items:center;gap:14px}.trustBox p{flex:1;margin:0}.trustBox .tr{flex:none;width:auto}.trustBox .tr a{flex:none;width:72px}}   /* v3.85: small samples on a laptop so the form stays on the first screen */
+#likeTiles .pk{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:44px;margin-top:2px;border:2px solid #1f7a4a;border-radius:10px;background:#fff;color:#1f7a4a;font:800 15px var(--display);cursor:pointer}
+#likeTiles .opt:has(input:checked) .pk{background:#1f7a4a;color:#fff}
+#likeTiles .opt:has(input:checked){border:4px solid #1f7a4a!important;box-shadow:0 0 0 3px rgba(31,122,74,.35);background:#d9f0e1}
+#likeTiles .opt:has(input:checked)::before{content:'\2713  PICKED';position:absolute;top:8px;left:8px;z-index:3;background:#1f7a4a;color:#fff;font:800 13px/1 system-ui,sans-serif;letter-spacing:.04em;padding:6px 9px;border-radius:6px}
+#likeTiles:has(input:checked) .opt:not(:has(input:checked)) img{opacity:.4}
+#likeTiles .opt:has(input:checked) .pk{font-size:15px}
+#lookImg{cursor:zoom-out}
 #likeTiles .opt input,#chooseTap input{position:absolute;opacity:0;pointer-events:none}
 #feelTaps .opt{position:relative}
-#feelTaps .opt{padding-right:44px;padding-left:44px}
-#feelTaps .mi{position:absolute;top:50%;transform:translateY(-50%);right:6px;width:32px;height:32px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 16px/1 inherit;padding:0;cursor:pointer}
+#feelTaps .opt{padding-right:92px;padding-left:44px;min-height:52px}
+#feelTaps{grid-template-columns:1fr!important}   /* v3.77: one feel per row so the words are never covered */
+#feelTaps .mi{position:absolute;top:50%;transform:translateY(-50%);right:44px;width:36px;height:36px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 18px/1 inherit;padding:0;cursor:pointer}
+#moodPop{cursor:pointer}
+#moodPop .cl{padding:8px 12px;text-align:center;font:800 15px var(--display);color:#1f7a4a;border-top:1px solid #cfe3d7}
 #moodPop{display:none;margin:8px 0 6px;border:2px solid #1f7a4a;border-radius:12px;overflow:hidden;background:#fff}
 #moodPop.on{display:block}
 #moodPop .sw{height:190px}
@@ -727,11 +816,17 @@ body.lite #f>*{grid-column:auto!important;grid-row:auto!important}
 body.lite .wrap.narrow>.top h1#pkTitle{font-size:30px!important}
 body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
 }
+/* v3.60 CC-130: Send bar is part of the page (not floating), white, same green button as the top */
+body.lite .bar,body.lite .bar.narrow{position:static!important;display:block;background:#fff;border:2px solid var(--line);border-radius:16px;max-width:760px;margin:8px auto 28px;padding:16px 20px;box-sizing:border-box;text-align:center}
+body.lite .bar #barTot,body.lite .bar.narrow #barTot{display:block;width:100%;max-width:none;margin:0 0 10px!important;font-size:20px;text-align:center;color:var(--green)}
+body.lite .bar .big,body.lite .bar.narrow .big{display:block;width:100%;max-width:none;min-width:0;margin:0;padding:16px;font-size:24px;border-radius:14px;background:var(--green);color:#fff}
+body.lite .wrap.narrow{padding-bottom:16px!important}
 </style>
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.59 (Nov 13, 2026, 8:59 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.93 (Nov 14, 2026, 7:10 AM)</span></div>
+  <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -798,6 +893,7 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
         <label class="opt"><input type="checkbox" name="feel" value="Elegant"><span>Elegant</span></label>
       </div>
       <div id="moodPop" aria-live="polite"></div>
+      <p class="hint" id="feelNote" style="margin:6px 0 2px;font-size:14px;color:#5a4a36">This color is just a preview. We make your real graphic to match.</p>
       <label class="sl" id="likeLbl">Tap up to 3 that look like what you want</label>
       <div id="likeTiles"></div>
       <label class="opt" id="chooseTap"><input type="checkbox" name="youchoose" value="You choose"><span>You choose, surprise me</span></label>
@@ -828,8 +924,8 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
       <p class="hint">One short line telling people what to do next. Example: <b id="xCta"></b></p>
       <input type="text" id="cta" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
-      <button type="button" id="skBtn">See a quick sketch</button>
-      <div id="skWrap" role="dialog" aria-label="Quick sketch"><div id="skBox"><div id="skArt"><div id="skT"></div><div id="skH"></div><ul id="skB"></ul><div id="skC"></div></div><p id="skNote">Rough sketch only. Your real graphic is checked and made by us.</p><button type="button" id="skX">Close and keep typing</button></div></div>
+      <button type="button" id="skBtn">See how my words will fit</button>
+      <div id="skWrap" role="dialog" aria-label="Quick sketch"><div id="skBox"><div id="skArt"><div class="skS"><i class="skL">1 · TITLE</i><div id="skT"></div></div><div class="skS"><i class="skL">2 · SUBJECT</i><div id="skH"></div></div><div class="skS skG"><i class="skL">3 · DETAILS</i><ul id="skB"></ul></div><div class="skS"><i class="skL">4 · WHAT TO DO</i><div id="skC"></div></div></div><button type="button" id="skTop" aria-label="Close the sketch">✕</button><p id="skNote">Rough sketch. Slanted words are examples; type your own to replace them. Your real graphic is checked and made by us.</p><button type="button" id="skX">Close and keep typing</button></div></div>
     </div>
 
     <div class="field gbwrap">
@@ -930,7 +1026,7 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Most previews come back by email within 5 hours. Late-night and weekend orders are ready the next business morning.</p>
+    <p>Most previews come back by email within 5 hours. Orders after 5:30 p.m. and on weekends are ready the next business morning.</p>
     <p class="sub tzLine"></p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
@@ -964,7 +1060,7 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
   function paintX() { xb.classList.toggle('show', inFs()); }
   document.addEventListener('fullscreenchange', paintX); document.addEventListener('webkitfullscreenchange', paintX);
   var wrapEl = document.querySelector('.wrap.narrow'); if (wrapEl) wrapEl.insertBefore(fb, wrapEl.firstChild);
-  var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Quick steps. About 2 minutes.';
+  var line = document.createElement('p'); line.className = 'liteline'; line.textContent = 'Quick steps. About 3 minutes.';
   var top = document.querySelector('.top'); if (top && top.parentNode) top.parentNode.insertBefore(line, top.nextSibling);
   function num(field, n, text) { var q = field && field.querySelector('.qn'); if (q) q.textContent = String(n); if (text) { var l = field.querySelector('.ql'); if (l) { var t = l.lastChild; if (t && t.nodeType === 3) t.nodeValue = text; } } }
   if (what) what.classList.add('lite-what'); if (say) say.classList.add('lite-say'); if (contact) contact.classList.add('lite-you');
@@ -981,14 +1077,18 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
   d.innerHTML = '<summary>More choices</summary>';
   var mb = document.createElement('div'); mb.className = 'morebody'; d.appendChild(mb);
   var vbx = document.getElementById('visionBox');
-  [vbx, photos, size, gbw].forEach(function (x) { if (x) mb.appendChild(x); });   // v3.55 CC-123
-  if (look && say) say.parentNode.insertBefore(look, say);   // v3.56 CC-124: Pick a look is step 2, right after the kind of graphic
-  [vbx, photos, size, gbw].forEach(function (x) { var q = x && x.querySelector('.qn'); if (q) q.textContent = '+'; });   // extras are not numbered
-  var rushF = up('rush', '.field'), steps = [what, look, say, (rushF && getComputedStyle(rushF).display !== 'none') ? rushF : null, contact].filter(Boolean);
+  // v3.80: nothing goes behind More choices any more   // v3.55 CC-123 (v3.68: feel/look box now sits in step 2)
+  if (look && say) say.parentNode.insertBefore(look, say.nextSibling);   // v3.78: words first, then look and feel
+  if (say) { if (gbw) say.parentNode.insertBefore(gbw, say.nextSibling); if (size) say.parentNode.insertBefore(size, say.nextSibling); if (photos) say.parentNode.insertBefore(photos, say.nextSibling); }   // v3.79: Add photos, then Where will you show it?, right under the words
+  if (look && vbx) { vbx.className = 'vis2'; look.appendChild(vbx); }   // v3.68 CC-131: feel + leave-out live in step 2, not behind More choices   // v3.56 CC-124: Pick a look is step 2, right after the kind of graphic
+  [photos, size, gbw].forEach(function (x) { var q = x && x.querySelector('.qn'); if (q) q.textContent = '+'; });   // unnumbered extras   // extras are not numbered
+  var rushF = up('rush', '.field'), steps = [what, say, look, (rushF && getComputedStyle(rushF).display !== 'none') ? rushF : null, contact].filter(Boolean);
   steps.forEach(function (fl, i) { num(fl, i + 1); });   // v3.56 CC-124: numbers follow what the client sees
-  var SW = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']; line.textContent = SW[steps.length - 1] + ' quick steps. About 2 minutes.';
+  var SW = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']; line.textContent = SW[steps.length - 1] + ' quick steps. About 3 minutes.';
 
-  var pb = document.getElementById('priceBox'); f.insertBefore(d, pb);
+  var skb = document.getElementById('skBtn'), skw = document.getElementById('skWrap');   // v3.78: the sketch comes after look and feel
+  if (look && skb) { look.appendChild(skb); if (skw) look.appendChild(skw); }
+  var pb = document.getElementById('priceBox'); if (mb.children.length) f.insertBefore(d, pb);   // v3.80: no empty More choices box
   // v3.59 CC-128: More choices stays closed on wide screens too (one big column)
   if (false) d.open = true;   // wide screen: there is room, so show them
   // v3.59 CC-128: no forced open on wide screens
@@ -3271,7 +3371,7 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
     }
     PACK.looks.concat([['You pick for me', 'wand', 'We pick the look', 'you-pick']]).forEach(function (k) { el('lookTaps').appendChild(tap('look', k[0], k[1], k[2], k[0] === 'You pick for me')); });
     // v3.0 item 5: East Coast time line, plus how far ahead of the client that is
-    var tz = "We're on East Coast time.";
+    var tz = "We're on East Coast time. Open 8 a.m. to 5:30 p.m.";
     try {
       var now = new Date();
       var ny = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
@@ -3282,7 +3382,7 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.59 (Nov 13, 2026, 8:59 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.93 (Nov 14, 2026, 7:10 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3345,21 +3445,35 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
   if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39 CC-111
   if (PACK.vision) {   // v3.42 CC-115: tap-a-picture tiles, up to 3, plus You choose
     var MOOD = { Warm: ['linear-gradient(180deg,#f3dcb0,#e3ae7e,#c98a6a)', 'Warm: cozy and friendly, like golden sunset light.'],
-      Bold: ['linear-gradient(135deg,#b05a50 50%,#4a4a4a 50%)', 'Bold: strong, confident colors that stand out.'],
+      Bold: ['linear-gradient(135deg,#e9c9a6,#c9885a 55%,#8f3a24)', 'Bold: strong, confident colors that stand out.'],
       Calm: ['linear-gradient(180deg,#dcebe7,#bcd5d1,#9bbab7)', 'Calm: soft, quiet and clean.'],
-      Exciting: ['linear-gradient(135deg,#ecb27a,#dd8f9e,#9d8cc4)', 'Exciting: bright and lively, like a party.'],
+      Exciting: ['linear-gradient(135deg,#dfe6c0,#b9c48a 55%,#b5652f)', 'Exciting: bright and lively, like a party.'],
       Elegant: ['linear-gradient(135deg,#34445f,#4a5a7d 60%,#c4ad7a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45 CC-115
     var pop = document.getElementById('moodPop'), popFor = '';
+    var ICON = {
+      Warm: '<svg viewBox="0 0 32 32"><g stroke="#c98a3a" stroke-width="2.4" stroke-linecap="round"><path d="M16 2v4M16 26v4M2 16h4M26 16h4M6 6l3 3M23 23l3 3M26 6l-3 3M9 23l-3 3"/></g><circle cx="16" cy="16" r="7" fill="#c98a3a"/></svg>',
+      Bold: '<svg viewBox="0 0 32 32"><polygon points="16,1 19,8 26,4 24,12 31,14 25,19 29,26 21,24 19,31 16,25 13,31 11,24 3,26 7,19 1,14 8,12 6,4 13,8" fill="#8f3a24"/><polygon points="18,6 9,18 15,18 13,27 23,13 17,13" fill="#e9d3a4"/></svg>',
+      Calm: '<svg viewBox="0 0 32 32"><g fill="none" stroke="#4f7f78" stroke-width="3" stroke-linecap="round"><path d="M3 11q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 18q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 25q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/></g></svg>',
+      Exciting: '<svg viewBox="0 0 32 32"><polygon points="16,3 19,12 28,12 21,18 24,27 16,21 8,27 11,18 4,12 13,12" fill="#b5652f"/><circle cx="5" cy="5" r="2.5" fill="#8fa05a"/><circle cx="27" cy="6" r="2.5" fill="#c98a3a"/><circle cx="27" cy="27" r="2.5" fill="#8fa05a"/></svg>',
+      Elegant: '<svg viewBox="0 0 32 32"><polygon points="16,3 28,13 16,29 4,13" fill="#27375c"/><polygon points="16,3 22,13 16,29 10,13" fill="#c4a65a"/></svg>' };
+    
     [].forEach.call(document.querySelectorAll('#feelTaps .opt'), function (lab) {
       var nm = lab.querySelector('input').value, ib = document.createElement('button');
-      ib.type = 'button'; ib.className = 'mi'; ib.textContent = 'i'; ib.setAttribute('aria-label', 'See an example of ' + nm);
+      var fi = document.createElement('span'); fi.className = 'fi'; fi.innerHTML = ICON[nm]; lab.appendChild(fi);
+      ib.type = 'button'; ib.className = 'mi'; ib.textContent = 'i'; ib.title = 'See the colors'; ib.setAttribute('aria-label', 'See the colors for ' + nm);
       ib.addEventListener('click', function (e) {
         e.preventDefault(); e.stopPropagation();
         if (popFor === nm && pop.classList.contains('on')) { pop.classList.remove('on'); popFor = ''; return; }
-        popFor = nm; pop.innerHTML = '<div class="sw" style="background:' + MOOD[nm][0] + '"></div><div class="tx">' + MOOD[nm][1] + '</div>'; pop.classList.add('on');
+        popFor = nm; pop.innerHTML = '<div class="sw" style="background:' + MOOD[nm][0] + '">' + ICON[nm] + '</div><div class="tx">' + MOOD[nm][1] + '</div><div class="cl">Tap here to close</div>'; pop.classList.add('on');
       });
       lab.appendChild(ib);
     });
+    // v3.75 CC-131: the color box always closes: tap it, tap anywhere else, or Esc. Picking a feel never opens it.
+    var closePop = function () { pop.classList.remove('on'); popFor = ''; };
+    pop.addEventListener('click', closePop);
+    document.addEventListener('click', function (e) { if (pop.classList.contains('on') && !e.target.closest('.mi') && !pop.contains(e.target)) closePop(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+    document.addEventListener('change', function (e) { if (e.target && e.target.name === 'feel') closePop(); });
     var lt = document.getElementById('likeTiles');
     PACK.looks.forEach(function (l) {
       var lb = document.createElement('label'); lb.className = 'opt';
@@ -3372,15 +3486,57 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
     // v3.55 CC-123: the picture tiles ARE the look question (one question, not two). They sit under "Pick a look"; the one-pick buttons stay hidden and follow the tiles.
     var lk = document.getElementById('lookTaps'), lookFs = lk.closest('fieldset');
     lk.hidden = true; document.getElementById('likeLbl').hidden = true;
-    lookFs.insertBefore(lt, lk); lookFs.insertBefore(document.getElementById('chooseTap'), lk);
-    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Tap up to 3. Tap See big to look closer. Not sure? Tap You choose.'; lh.className = 'hint liteHint'; }
+    lookFs.insertBefore(lt, lk); lookFs.insertBefore(document.getElementById('chooseTap'), lk); document.getElementById('chooseTap').hidden = true;   // v3.81: one way to pick, skip and we pick
+    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Style examples. Yours will say your words. Tap a picture to see it big. Tap Pick this look to choose one (tap Picked to undo). Skip this and we pick for you.'; lh.className = 'hint liteHint'; }
     [].forEach.call(lt.querySelectorAll('label.opt'), function (lab) {
       var nm = lab.querySelector('input').value;
       if (!lab.querySelector('img')) return;
-      var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'See big'; zb.setAttribute('aria-label', 'See the ' + nm + ' picture big');
+      var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'Tap to see big'; zb.setAttribute('aria-label', 'See the ' + nm + ' picture big');
       zb.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); if (window.cpmgShowTile) window.cpmgShowTile(nm); });
       lab.appendChild(zb);
+      lab.addEventListener('click', function (e) { e.preventDefault(); if (window.cpmgShowTile) window.cpmgShowTile(nm); });   // v3.61 CC-127: the whole picture opens big
     });
+var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New Menu"],["Tiki bar","Casual","Live Music"],["Cocktail bar","Casual","New Menu"],["Dive bar","Upscale","Smash Burger"],["Sports bar","Casual","Loaded Nachos"],["Tiki bar","Upscale","Seared Ahl Tuna"],["Wine bar","Casual","Cheese Board"],["Cocktail bar","Upscale","Winter Warmers"],["Cocktail bar","Upscale","Happy Hour"],["Wine bar","Casual","Happy Hour"],["Cocktail bar","Casual","Signature Cocktail"],["Dive bar","Upscale","Old Fashioned"],["Sports bar","Casual","Burger And Beer"],["Tiki bar","Upscale","Craft Rum Cocktails"],["Wine bar","Casual","Wine Flight"],["Cocktail bar","Upscale","Whiskey Flight"],["Cocktail bar","Casual","Trivia Night"],["Dive bar","Casual","Darts League"],["Sports bar","Casual","Wing Night"],["Sports bar","Casual","Game Day"],["Sports bar","Casual","Pool And Darts"],["Dive bar","Casual","Jukebox Night"],["Wine bar","Casual","Live Music"],["Cocktail bar","Casual","Private Event"],["Dive bar","Upscale","Private Booth"],["Tiki bar","Upscale","Date Night"],["Wine bar","Casual","Bring A Friend"],["Cocktail bar","Casual","Private Parties"],["Wine bar","Upscale","Private Table"],["Cocktail bar","Casual","Holiday Hours"],["Dive bar","Upscale","Snow Day Hours"],["Sports bar","Casual","Apres. Ski"],["Cocktail bar","Casual","Snow Day Hours"],["Dive bar","Upscale","Holiday Hours"],["Sports bar","Casual","Holiday Hours"],["Chinese","Upscale","Peking Duck"],["Diner","Casual","Meatloaf Dinner"],["Italian","Upscale","Winter Table"],["Mexican","Casual","Taco Tuesday"],["Pizza","Upscale","Wood-Fired Night"],["Barbecue","Casual","Happy Hour"],["Italian","Casual","Happy. Hour"],["Mexican","Casual","Margarita Hour"],["Seafood","Casual","Oyster Happy Hour"],["Italian","Upscale","Cocktail Hour"],["Chinese","Casual","Happy Hour"],["Italian","Upscale","Wine And Cheese"],["Mexican","Upscale","Mezcal Flight"],["Steakhouse","Upscale","Wine Dinner"],["Fine dining","Upscale","Cheese And Wine"],["Mexican","Upscale","Wine Pairing"],["Fine dining","Casual","Wine Night"],["Pizza","Casual","Game Day"],["Barbecue","Casual","Live Blues"],["Italian","Casual","Live Music"],["Mexican","Casual","Guitar And Trumpet On Ourstage"],["Pizza","Upscale","Live Piano"],["Steakhouse","Casual","Dinner Show"],["Barbecue","Upscale","Live Country Music"],["Barbecue","Casual","Private Event"],["Chinese","Upscale","Private Dining"],["Diner","Casual","Private Party"],["Italian","Upscale","Date Night"],["Mexican","Casual","Birthday Fiesta"],["Steakhouse","Upscale","Reservations"],["Barbecue","Casual","Holiday Hours"],["Chinese","Upscale","Snow Day Hours"],["Pizza","Casual","Season Break"],["Steakhouse","Upscale","Holiday Menu"],["Barbecue","Casual","Snow Day Hours"],["Chinese","Upscale","Holiday Hours"],["Cocktail bar","Casual","Winter Warmers"],["Diner","Upscale","Pot Roast Supper"],["Dive bar","Casual","Dive Burger"],["Pizza","Casual","Live Band Night"],["Diner","Upscale","Date Night"],["Italian","Upscale","Gift Cards"]],"s":{"Bar|Daily special":[3,4,5,6,7,8],"Bar|Happy hour":[0,9,10],"Bar|Drink special":[11,12,13,14,15,16],"Bar|Game day":[17,18,19,20,21],"Bar|Live music":[22,2,23],"Bar|Event":[24,25,26,27,28,29],"Bar|Holiday hours":[30,31,32,33,34,35],"Bar|Something else":[3,4,5,6,7,8],"Restaurant|Daily special":[1,36,37,38,39,40],"Restaurant|Happy hour":[41,42,43,44,45,46],"Restaurant|Drink special":[47,48,49,50,51,52],"Restaurant|Game day":[53],"Restaurant|Live music":[54,55,56,57,58,59],"Restaurant|Event":[60,61,62,63,64,65],"Restaurant|Holiday hours":[66,67,68,69,70,71],"Restaurant|Something else":[1,36,37,38,39,40],"Bar and restaurant|Daily special":[1,36,72,73,74,38],"Bar and restaurant|Happy hour":[41,45,43,44,42,46],"Bar and restaurant|Drink special":[11,12,47,48,13,49],"Bar and restaurant|Game day":[17,18,53,19,21,20],"Bar and restaurant|Live music":[54,22,55,56,75,58],"Bar and restaurant|Event":[60,61,28,76,25,77],"Bar and restaurant|Holiday hours":[66,67,68,32,69,70],"Bar and restaurant|Something else":[1,36,72,73,74,38]}};
+    // v3.74 CC-131: picking is its own big check button on the tile; tapping the picture only opens it big
+    window.cpmgAddPick = function (lb, inp) {
+      var pk = document.createElement('button'); pk.type = 'button'; pk.className = 'pk';
+      var up = function () { pk.textContent = inp.checked ? '\u2713 Picked' : 'Pick this look'; pk.setAttribute('aria-pressed', inp.checked ? 'true' : 'false'); };
+      pk.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); inp.checked = !inp.checked; inp.dispatchEvent(new Event('change', { bubbles: true })); up(); });
+      inp.addEventListener('change', up); up(); lb.appendChild(pk);
+    };
+    // v3.69 CC-131: restaurant look tiles are the finished blueprint pictures, matched to the place and kind picked above
+    if (PACK_NAME === 'restaurant') {
+      var BPB = PACK_FIXED ? '../looks2/' : 'looks2/'; window.BPFULL = {};
+      var renderBP = function () {
+        var pp = document.querySelector('input[name="place"]:checked'), ww = document.querySelector('input[name="what"]:checked');
+        var key = (pp ? pp.value : 'Bar and restaurant') + '|' + (ww && BP.s[(pp ? pp.value : 'Bar and restaurant') + '|' + ww.value] ? ww.value : 'Something else');
+        var ids = BP.s[key] || [], keep = {};
+        [].forEach.call(lt.querySelectorAll('input[name="likes"]:checked'), function (i) { keep[i.value] = 1; });
+        lt.innerHTML = '';
+        ids.forEach(function (id) {
+          var m = BP.m[id], nm = m[0] + ' ' + m[1] + ' · ' + m[2]; window.BPFULL[nm] = BPB + 'b' + id + '.jpg';
+          var lb = document.createElement('label'); lb.className = 'opt';
+          var inp = document.createElement('input'); inp.type = 'checkbox'; inp.name = 'likes'; inp.value = nm; inp.checked = !!keep[nm]; lb.appendChild(inp);
+          var im = document.createElement('img'); im.alt = 'Example: ' + nm; im.loading = 'lazy'; im.src = BPB + 't' + id + '.jpg'; lb.appendChild(im);
+          var sp = document.createElement('span'); sp.textContent = m[0] + ' · ' + m[1]; lb.appendChild(sp);
+          var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'See big'; zb.setAttribute('aria-label', 'See ' + nm + ' big');
+          zb.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); window.cpmgShowTile(nm); }); lb.appendChild(zb);
+          window.cpmgAddPick(lb, inp);
+          lb.addEventListener('click', function (e) { e.preventDefault(); window.cpmgShowTile(nm); });
+          lt.appendChild(lb);
+        });
+      };
+      document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'place' || e.target.name === 'what')) renderBP(); });
+      // v3.83 CC-131: trust line and real examples near the top
+      var tl = document.querySelector('.liteline');
+      if (tl && !document.getElementById('trustBox')) {
+        var tb = document.createElement('div'); tb.id = 'trustBox'; tb.className = 'trustBox';
+        tb.innerHTML = '<p><b>Made by a real person, for local restaurants and bars.</b> Here are three we made. Tap one to see it big.</p><div class="tr">' + [0, 1, 2].map(function (n) { return '<a href="' + BPB + 'b' + n + '.jpg" target="_blank" rel="noopener"><img src="' + BPB + 't' + n + '.jpg" alt="Example graphic"></a>'; }).join('') + '</div>';
+        tl.parentNode.insertBefore(tb, tl.nextSibling);
+      }
+      renderBP();
+    }
+    [].forEach.call(lt.querySelectorAll('label.opt'), function (lab) { if (lab.querySelector('img') && !lab.querySelector('.pk')) window.cpmgAddPick(lab, lab.querySelector('input')); });
     function syncLook() {
       var first = document.querySelector('input[name="likes"]:checked'), v = first ? first.value : 'You pick for me';
       var r = document.querySelector('input[name="look"][value="' + v + '"]') || document.querySelector('input[name="look"][value="You pick for me"]');
@@ -3389,8 +3545,8 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
     var onVis = function (ev) {
       var t = ev.target, yc = document.querySelector('input[name="youchoose"]');
       if (t.name === 'likes' && t.checked) {
-        if (document.querySelectorAll('input[name="likes"]:checked').length > 3) t.checked = false;
-        else if (yc) yc.checked = false;
+        [].forEach.call(document.querySelectorAll('input[name="likes"]:checked'), function (i) { if (i !== t) { i.checked = false; i.dispatchEvent(new Event('change', { bubbles: true })); } });   // v3.87: pick ONE look
+        if (yc) yc.checked = false;
       } else if (t.name === 'feel' && t.checked) {   // v3.44: mood is pick ONE
         [].forEach.call(document.querySelectorAll('input[name="feel"]'), function (i) { if (i !== t) i.checked = false; });
         if (yc) yc.checked = false;
@@ -3490,26 +3646,44 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
   // v2.16: the look they picked (Holiday adds which holiday)
   function lookText() {
     var l = document.querySelector('input[name="look"]:checked'), v = l ? l.value : 'You pick for me', h = $('holiday').value.trim();
-    return v === 'Holiday' && h ? 'Holiday: ' + h : v;
+    return (v === 'Holiday' && h ? 'Holiday: ' + h : v) + (TEMPLATE ? ' | Template: ' + TEMPLATE : '');
   }
+  // v3.93 CC-137: template picked on the order picker, like ?template=pizza-upscale
+  var TEMPLATE = (function () {
+    try {
+      var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search); if (!m) return '';
+      var name = m[1].replace(/-/g, ' '); name = name.charAt(0).toUpperCase() + name.slice(1);
+      return name + ', ' + (m[2] === 'upscale' ? 'Upscale' : 'Casual');
+    } catch (e) { return ''; }
+  })();
+  if (TEMPLATE) { var tb = document.getElementById('tplBar'); if (tb) { tb.textContent = 'Your template: ' + TEMPLATE; tb.hidden = false; } }
   // v2.19: example picture for the look they tap (pictures made in the CPMG Gem, Oct 29, 2026)
   var LOOK_IMG = { 'You pick for me': 'you-pick' }; PACK.looks.forEach(function (l) { if (l[3]) LOOK_IMG[l[0]] = l[3]; });   // v3.2: neutral sample for You pick for me
   // v2.21: the example pops up big on top of the page; "Use this look" keeps it, "Pick a different look" un-picks it
   var lastFocus = null;
   try { document.getElementById('lookImg').onerror = function () { this.hidden = true; document.getElementById('lookSoon').hidden = false; }; } catch (e) { /* ok */ }
   function showLook(v) {
-    var f = LOOK_IMG[v];
-    if (!f) return;
+    var f = LOOK_IMG[v], bpu = window.BPFULL && window.BPFULL[v];
+    if (!f && !bpu) return;
     $('lookImg').hidden = false; $('lookSoon').hidden = true;
-    $('lookImg').src = LOOK_BASE + f + '.jpg?v=4'; $('lookImg').alt = 'Example of the ' + v + ' look';
+    $('lookImg').src = bpu || (LOOK_BASE + f + '.jpg?v=4'); $('lookImg').alt = 'Example of the ' + v + ' look';
     $('lookCap').textContent = v;
+    if (tilePick) { var ti = [].filter.call(document.querySelectorAll('input[name="likes"]'), function (i) { return i.value === tilePick; })[0]; $('lookOk').textContent = ti && ti.checked ? '\u2713 Picked. Close' : 'Use this look'; $('lookNo').textContent = 'Close'; $('lookNo').hidden = false; } else { $('lookNo').textContent = 'Pick a different look'; }
     lastFocus = document.activeElement;
     $('lookPop').hidden = false; document.body.style.overflow = 'hidden'; $('sendBar').style.visibility = 'hidden';
     try { $('lookOk').focus(); } catch (e) { /* ok */ }
   }
   var tileView = false, okText = $('lookOk').textContent;
-  window.cpmgShowTile = function (v) { tileView = true; $('lookNo').hidden = true; $('lookOk').textContent = 'Close'; showLook(v); };   // v3.55 CC-123: See big on a picture tile
+  var tilePick = null;
+  window.cpmgShowTile = function (v) { tilePick = v; tileView = false; showLook(v); };   // v3.61 CC-127: tap a picture, see it big, then Use this look   // v3.55 CC-123: See big on a picture tile
   function closeLook(keep) {
+    if (tilePick) {
+      var tn = tilePick; tilePick = null;
+      $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = ''; $('lookOk').textContent = okText; $('lookNo').textContent = 'Pick a different look';
+      if (keep === 'close') return;   // v3.74: closing never changes the pick
+      [].forEach.call(document.querySelectorAll('input[name="likes"]'), function (i) { if (i.value === tn && !i.checked) { i.checked = true; i.dispatchEvent(new Event('change', { bubbles: true })); } });
+      return;
+    }
     if (tileView) { tileView = false; $('lookNo').hidden = false; $('lookOk').textContent = okText; $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = ''; return; }
     $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = '';
     if (!keep) {
@@ -3521,9 +3695,10 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
     if (keep && !$('holidayBox').hidden) { try { $('holiday').focus(); } catch (e) { /* ok */ } }
   }
   $('lookOk').addEventListener('click', function () { closeLook(true); });
-  $('lookNo').addEventListener('click', function () { closeLook(false); });
-  $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(true); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(true); });
+  $('lookNo').addEventListener('click', function () { closeLook(tilePick ? 'close' : false); });
+  $('lookImg').addEventListener('click', function () { closeLook(tilePick ? 'close' : true); });   // v3.74: tap the big picture to shrink it back
+  $('lookPop').addEventListener('click', function (e) { if (e.target === $('lookPop')) closeLook(tilePick ? 'close' : true); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(tilePick ? 'close' : true); });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
   function visionNote(k) {   // v3.39 CC-111: what the client pictures. Empty = None.
     if (!PACK.vision) return 'None';
@@ -3594,15 +3769,84 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
 (function () {
   var $ = function (i) { return document.getElementById(i); };
   function esc(t) { return t; }
+  $('skTop').addEventListener('click', function () { $('skX').click(); });
   $('skBtn').addEventListener('click', function () {
     var ph = function (id, d) { var v = $(id).value.trim(); return v || d; };
-    $('skT').textContent = ph('ttl', 'Your title here');
-    var h = $('hdg').value.trim(); $('skH').textContent = h; $('skH').style.display = h ? '' : 'none';
-    var ul = $('skB'); ul.innerHTML = ''; var any = false;
-    ['b1', 'b2', 'b3', 'b4', 'b5'].forEach(function (id) { var v = $(id).value.trim(); if (v) { any = true; var li = document.createElement('li'); li.textContent = v; ul.appendChild(li); } });
-    if (!any) { var li = document.createElement('li'); li.textContent = 'Your details show here'; ul.appendChild(li); }
-    $('skC').textContent = ph('cta', 'Come see us!');
+    var TH = [[/happy hour/i, ['#fde7b8','#f4b860','#4f2208','#7b1e3c','#c9791a','#7b1e3c']],
+      [/drink/i, ['#def3ee','#93d3c6','#0f3f3b','#0f5d57','#2a9d8f','#0f5d57']],
+      [/game day/i, ['#e2f2da','#a3d193','#17301c','#1b2f5a','#c9a227','#1b2f5a']],
+      [/live music/i, ['#ece3f5','#bda8da','#2d1a4d','#3b2466','#b08d3c','#3b2466']],
+      [/holiday|thank you/i, ['#f7e4df','#e5b9b0','#4a1a1a','#7a1f2a','#2f5a3a','#2f5a3a']],
+      [/freeze|cold snap|heat wave|winter/i, ['#e6f2fb','#b3d3ee','#13314f','#1d4e7a','#6aa6d6','#1d4e7a']],
+      [/emergency/i, ['#fbe6e2','#e9b3ab','#4a1414','#9b1c1c','#c9a227','#9b1c1c']],
+      [/spring|now booking|mowing/i, ['#e8f4d9','#b4d98a','#1f3a12','#2f6b1f','#c9a227','#2f6b1f']],
+      [/fall cleanup|fall/i, ['#fbe9cf','#eeb877','#4a2208','#8a3b17','#c9791a','#8a3b17']],
+      [/tax|deadline|business services|new client|announcement/i, ['#e8edf3','#b8c5d6','#1b2a45','#1b2a45','#c9a227','#34445f']],
+      [/just listed|open house|coming soon|inspection|special offer|new service/i, ['#e7f1f2','#b9d6d9','#1b3a3d','#1f5f66','#c9a227','#1f5f66']],
+      [/just sold/i, ['#f6ecd0','#e3c978','#4a3508','#7a5a10','#c9a227','#7a5a10']],
+      [/price drop|sale|special|free estimate/i, ['#fbe9d8','#f0b98a','#4a2008','#a3361a','#c9791a','#a3361a']]];
+    var whatEl = document.querySelector('input[name="what"]:checked'), what = whatEl ? whatEl.value : '', art = $('skArt'), tv = null;
+    TH.some(function (t) { if (t[0].test(what)) { tv = t[1]; return true; } });
+    ['--bg1', '--bg2', '--ink', '--acc', '--bd', '--sub'].forEach(function (k, n) { if (tv) art.style.setProperty(k, tv[n]); else art.style.removeProperty(k); });
+    var feelEl = document.querySelector('input[name="feel"]:checked'), feel = feelEl ? feelEl.value : '';
+    var FE = { Warm: { '--bg1': '#fbefd6', '--bg2': '#e3ae7e', '--ink': '#4a2a14', '--acc': '#a8603f', '--bd': '#e3ae7e', '--sub': '#8a3b17' },
+      Bold: { '--bg1': '#f3e2cf', '--bg2': '#c9885a', '--ink': '#2f1a10', '--acc': '#8f3a24', '--bd': '#b8774a', '--sub': '#8f3a24' },
+      Calm: { '--bg1': '#e8f3f0', '--bg2': '#bcd5d1', '--ink': '#173a37', '--acc': '#2a6f6a', '--bd': '#9bbab7', '--sub': '#2a6f6a' },
+      Exciting: { '--bg1': '#eef0dc', '--bg2': '#b9c48a', '--ink': '#26331a', '--acc': '#b5652f', '--bd': '#8fa05a', '--sub': '#8a4a1c' },
+      Elegant: { '--bg1': '#27375c', '--bg2': '#141f3a', '--ink': '#f3e4b4', '--acc': '#d4b25a', '--bd': '#f1dc9a', '--sub': '#e6d39a' } };
+    // v3.70 CC-131: colors come from the picked look picture (its main color), so the sketch matches it
+    var pickedImg = null, lkEl = document.querySelector('input[name="likes"]:checked');
+    if (lkEl && lkEl.parentNode) pickedImg = lkEl.parentNode.querySelector('img');
+    var fromPic = false;
+    if (!FE[feel] && pickedImg && pickedImg.complete && pickedImg.naturalWidth) {
+      try {
+        var cv = document.createElement('canvas'); cv.width = 40; cv.height = 40; var cx = cv.getContext('2d'); cx.drawImage(pickedImg, 0, 0, 40, 40);
+        var dd = cx.getImageData(0, 0, 40, 40).data, X = 0, Y = 0, W = 0;
+        for (var q = 0; q < dd.length; q += 4) {
+          var r = dd[q] / 255, g = dd[q + 1] / 255, b = dd[q + 2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), sat = mx ? (mx - mn) / mx : 0, wt = sat * mx;
+          if (wt < .08) continue;
+          var hh = mx === r ? ((g - b) / (mx - mn) + 6) % 6 : mx === g ? (b - r) / (mx - mn) + 2 : (r - g) / (mx - mn) + 4; hh *= 60 * Math.PI / 180;
+          X += Math.cos(hh) * wt; Y += Math.sin(hh) * wt; W += wt;
+        }
+        if (W > 0) {
+          var H = Math.round(((Math.atan2(Y, X) * 180 / Math.PI) + 360) % 360);
+          var hs = function (sa, li) { return 'hsl(' + H + ',' + sa + '%,' + li + '%)'; };
+          [['--bg1', hs(48, 92)], ['--bg2', hs(42, 78)], ['--ink', hs(55, 14)], ['--acc', hs(60, 30)], ['--bd', hs(70, 42)], ['--sub', hs(60, 30)]].forEach(function (c) { art.style.setProperty(c[0], c[1]); });
+          fromPic = true;
+        }
+      } catch (e) { /* ok: falls back to kind and feel colors */ }
+    }
+    if (FE[feel]) Object.keys(FE[feel]).forEach(function (k) { art.style.setProperty(k, FE[feel][k]); });   // v3.71: feel = its button colors; picture keeps the background
+    var lks = [].map.call(document.querySelectorAll('input[name="likes"]:checked'), function (i) { return i.value; });
+    var picked = [what, feel].concat(lks.length ? ['looks: ' + lks.join(', ')] : []).filter(Boolean);
+    $('skNote').textContent = 'Rough sketch. Slanted words are examples; type your own to replace them. ' + (picked.length ? 'Built from what you picked: ' + picked.join(' · ') + (fromPic ? ' (colors from your picture)' : '') + '. ' : '') + 'Your real graphic is checked and made by us.';
+    var put = function (el, v, d) { el.textContent = v || d; el.className = v ? '' : 'ex'; };
+    var exw = function (id, d) { return $(id).placeholder || d; };   // this business type's own example words
+    put($('skT'), $('ttl').value.trim(), exw('ttl', 'Your title'));
+    put($('skH'), $('hdg').value.trim(), exw('hdg', 'Your subject line'));
+    var ul = $('skB'); ul.innerHTML = '';
+    ['b1', 'b2', 'b3', 'b4', 'b5'].forEach(function (id, i) { var v = $(id).value.trim(); if (v || i < 3) { var li = document.createElement('li'); li.textContent = v || exw(id, 'Detail ' + (i + 1)); if (!v) li.className = 'ex'; ul.appendChild(li); } });
+    put($('skC'), $('cta').value.trim(), exw('cta', 'Call or visit us'));
     $('skWrap').className = 'on'; $('skWrap').scrollTop = 0;
+    /* v3.89: shrink the words until every line fits inside the picture and no word is split */
+    var fitSk = function () {
+      var els = ['skT', 'skH', 'skB', 'skC'].map($), lbs = [].slice.call(art.querySelectorAll('.skL')), all = els.concat(lbs);
+      all.forEach(function (e) { e.style.fontSize = ''; });
+      var base = all.map(function (e) { return parseFloat(getComputedStyle(e).fontSize) || 16; });
+      var okFit = function () {
+        if (art.scrollHeight > art.clientHeight + 1) return false;
+        var bad = false;
+        [].forEach.call(art.querySelectorAll('#skT,#skH,#skC,#skB li'), function (e) { if (e.scrollWidth > e.clientWidth + 1) bad = true; });
+        var w = $('skT'); if (w) { var f = parseFloat(getComputedStyle(w).fontSize), r = document.createRange(); r.selectNodeContents(w); var longest = 0; (w.textContent.split(/\s+/)).forEach(function (wd) { var sp = document.createElement('span'); sp.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + getComputedStyle(w).font + ';text-transform:uppercase;letter-spacing:' + getComputedStyle(w).letterSpacing; sp.textContent = wd; document.body.appendChild(sp); longest = Math.max(longest, sp.getBoundingClientRect().width); document.body.removeChild(sp); }); if (longest > w.clientWidth + 1) bad = true; }
+        return !bad;
+      };
+      art.style.setProperty('--k', 1);
+      for (var k = 1; k >= 0.3; k -= 0.03) {
+        art.style.setProperty('--k', k.toFixed(2)); all.forEach(function (e, i) { e.style.fontSize = (base[i] * k).toFixed(1) + 'px'; });
+        if (okFit()) break;
+      }
+    };
+    setTimeout(fitSk, 30); setTimeout(fitSk, 300);
   });
   $('skX').addEventListener('click', function () { $('skWrap').className = ''; });
 })();
