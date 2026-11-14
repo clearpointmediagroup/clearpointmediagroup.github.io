@@ -2,13 +2,14 @@
 <!--
   CPMG Concrete Order — test/order/concrete/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.74-TEST (Nov 14, 2026, 6:00 AM)
+  v3.75-TEST (Nov 14, 2026, 6:25 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.75-TEST (Nov 14, 2026, 6:25 AM) CC-131: the feel color box can now always be closed: tap the color box itself, tap anywhere else, tap the same i again, or press Esc. Picking a feel button never opens it; only the i opens it. The i is bigger (44 px) and says 'see colors' so it is not mixed up with picking.
     v3.74-TEST (Nov 14, 2026, 6:00 AM) CC-131: look pictures: tapping the picture opens it big, tapping the big picture (or Close, or outside it) shrinks it back without changing anything; picking is its own big check button on each tile (Pick this look / Picked) and Use this look in the big view. No more mixing up the two.
     v3.73-TEST (Nov 14, 2026, 5:35 AM) CC-131: Elegant sketch is now a dark navy field with gold words, border and button (a helper check found it too pale).
     v3.72-TEST (Nov 14, 2026, 5:15 AM) CC-131: fix: when a feel is picked, the feel colors rule the whole sketch (Elegant was showing tan because a look picture overrode the background). The picture colors only apply when no feel is picked.
@@ -387,7 +388,9 @@ body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11p
 #likeTiles .opt input,#chooseTap input{position:absolute;opacity:0;pointer-events:none}
 #feelTaps .opt{position:relative}
 #feelTaps .opt{padding-right:44px;padding-left:44px}
-#feelTaps .mi{position:absolute;top:50%;transform:translateY(-50%);right:6px;width:32px;height:32px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 16px/1 inherit;padding:0;cursor:pointer}
+#feelTaps .mi{position:absolute;top:50%;transform:translateY(-50%);right:6px;width:44px;height:44px;border-radius:50%;border:2px solid #1f7a4a;background:#fff;color:#1f7a4a;font:700 18px/1 inherit;padding:0;cursor:pointer}
+#moodPop{cursor:pointer}
+#moodPop .cl{padding:8px 12px;text-align:center;font:800 15px var(--display);color:#1f7a4a;border-top:1px solid #cfe3d7}
 #moodPop{display:none;margin:8px 0 6px;border:2px solid #1f7a4a;border-radius:12px;overflow:hidden;background:#fff}
 #moodPop.on{display:block}
 #moodPop .sw{height:190px}
@@ -774,7 +777,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.74-TEST (Nov 14, 2026, 6:00 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.75-TEST (Nov 14, 2026, 6:25 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3326,7 +3329,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.74-TEST (Nov 14, 2026, 6:00 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.75-TEST (Nov 14, 2026, 6:25 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3404,14 +3407,20 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     [].forEach.call(document.querySelectorAll('#feelTaps .opt'), function (lab) {
       var nm = lab.querySelector('input').value, ib = document.createElement('button');
       var fi = document.createElement('span'); fi.className = 'fi'; fi.innerHTML = ICON[nm]; lab.appendChild(fi);
-      ib.type = 'button'; ib.className = 'mi'; ib.textContent = 'i'; ib.setAttribute('aria-label', 'See an example of ' + nm);
+      ib.type = 'button'; ib.className = 'mi'; ib.textContent = 'i'; ib.title = 'See the colors'; ib.setAttribute('aria-label', 'See the colors for ' + nm);
       ib.addEventListener('click', function (e) {
         e.preventDefault(); e.stopPropagation();
         if (popFor === nm && pop.classList.contains('on')) { pop.classList.remove('on'); popFor = ''; return; }
-        popFor = nm; pop.innerHTML = '<div class="sw" style="background:' + MOOD[nm][0] + '">' + ICON[nm] + '</div><div class="tx">' + MOOD[nm][1] + '</div>'; pop.classList.add('on');
+        popFor = nm; pop.innerHTML = '<div class="sw" style="background:' + MOOD[nm][0] + '">' + ICON[nm] + '</div><div class="tx">' + MOOD[nm][1] + '</div><div class="cl">Tap here to close</div>'; pop.classList.add('on');
       });
       lab.appendChild(ib);
     });
+    // v3.75 CC-131: the color box always closes: tap it, tap anywhere else, or Esc. Picking a feel never opens it.
+    var closePop = function () { pop.classList.remove('on'); popFor = ''; };
+    pop.addEventListener('click', closePop);
+    document.addEventListener('click', function (e) { if (pop.classList.contains('on') && !e.target.closest('.mi') && !pop.contains(e.target)) closePop(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+    document.addEventListener('change', function (e) { if (e.target && e.target.name === 'feel') closePop(); });
     var lt = document.getElementById('likeTiles');
     PACK.looks.forEach(function (l) {
       var lb = document.createElement('label'); lb.className = 'opt';
