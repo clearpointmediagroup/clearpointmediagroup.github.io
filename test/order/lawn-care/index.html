@@ -2,13 +2,14 @@
 <!--
   CPMG Lawn care Order — test/order/lawn-care/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.90-TEST (Nov 14, 2026, 4:05 AM)
+  v3.91-TEST (Nov 14, 2026, 4:20 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.91-TEST (Nov 14, 2026, 4:20 AM) CC-131: natural colors on the feel buttons and sketch (brick red, leaf green, muted gold, navy and gold); the See how my words will fit button is deep green with a gold edge.
     v3.90-TEST (Nov 14, 2026, 4:05 AM) CC-131: the gaps and dots shrink with the words too, so a long list fits.
     v3.89-TEST (Nov 14, 2026, 3:50 AM) CC-131: the sketch words shrink to fit the picture: no word is split in the middle and nothing runs off the bottom.
     v3.88-TEST (Nov 14, 2026, 11:50 AM) CC-131: the picked look is easy to see: a thick green frame, a green tint, a green PICKED ribbon on the picture, and the other pictures fade back. Only one can be picked at a time.
@@ -342,7 +343,7 @@
 #helpBox ol{margin:10px 14px 12px 34px;padding:0;font-size:17px;line-height:1.4;color:#1d2b21}
 #helpBox li{margin:0 0 8px}
 #helpBox p{margin:0 14px 12px;font-size:17px;font-weight:700;color:#1d2b21}
-#skBtn{display:block;width:100%;min-height:52px;margin:12px 0 4px;border:0;border-radius:12px;background:#1f7a4a;color:#fff;font:800 18px var(--display);cursor:pointer}
+#skBtn{display:block;width:100%;min-height:52px;margin:12px 0 4px;border:0;border-radius:12px;background:#2f5a3f;color:#fbf3e0;border-bottom:4px solid #c4a65a;font:800 18px var(--display);cursor:pointer}
 #skWrap{position:fixed;inset:0;z-index:9999;background:rgba(10,20,40,.85);display:none;overflow:auto;padding:14px}
 #skWrap.on{display:block}
 #skBox{max-width:420px;margin:0 auto}
@@ -821,7 +822,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.90-TEST (Nov 14, 2026, 4:05 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.91-TEST (Nov 14, 2026, 4:20 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3376,7 +3377,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.90-TEST (Nov 14, 2026, 4:05 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.91-TEST (Nov 14, 2026, 4:20 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3439,17 +3440,17 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
   if (PACK.vision) {   // v3.42-TEST CC-115: tap-a-picture tiles, up to 3, plus You choose
     var MOOD = { Warm: ['linear-gradient(180deg,#f3dcb0,#e3ae7e,#c98a6a)', 'Warm: cozy and friendly, like golden sunset light.'],
-      Bold: ['repeating-conic-gradient(#ffe600 0 10deg,#ffb300 10deg 20deg)', 'Bold: strong, confident colors that stand out.'],
+      Bold: ['linear-gradient(135deg,#e9c9a6,#c9885a 55%,#8f3a24)', 'Bold: strong, confident colors that stand out.'],
       Calm: ['linear-gradient(180deg,#dcebe7,#bcd5d1,#9bbab7)', 'Calm: soft, quiet and clean.'],
-      Exciting: ['linear-gradient(135deg,#ecb27a,#dd8f9e,#9d8cc4)', 'Exciting: bright and lively, like a party.'],
+      Exciting: ['linear-gradient(135deg,#dfe6c0,#b9c48a 55%,#b5652f)', 'Exciting: bright and lively, like a party.'],
       Elegant: ['linear-gradient(135deg,#34445f,#4a5a7d 60%,#c4ad7a)', 'Elegant: deep navy and gold, like a nice dinner.'] };   // v3.45-TEST CC-115
     var pop = document.getElementById('moodPop'), popFor = '';
     var ICON = {
-      Warm: '<svg viewBox="0 0 32 32"><g stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round"><path d="M16 2v4M16 26v4M2 16h4M26 16h4M6 6l3 3M23 23l3 3M26 6l-3 3M9 23l-3 3"/></g><circle cx="16" cy="16" r="7" fill="#f59e0b"/></svg>',
-      Bold: '<svg viewBox="0 0 32 32"><polygon points="16,1 19,8 26,4 24,12 31,14 25,19 29,26 21,24 19,31 16,25 13,31 11,24 3,26 7,19 1,14 8,12 6,4 13,8" fill="#ff1f8e"/><polygon points="18,6 9,18 15,18 13,27 23,13 17,13" fill="#ffe600"/></svg>',
-      Calm: '<svg viewBox="0 0 32 32"><g fill="none" stroke="#2a9d8f" stroke-width="3" stroke-linecap="round"><path d="M3 11q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 18q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 25q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/></g></svg>',
-      Exciting: '<svg viewBox="0 0 32 32"><polygon points="16,3 19,12 28,12 21,18 24,27 16,21 8,27 11,18 4,12 13,12" fill="#ff7a00"/><circle cx="5" cy="5" r="2.5" fill="#9b5de5"/><circle cx="27" cy="6" r="2.5" fill="#00bbf9"/><circle cx="27" cy="27" r="2.5" fill="#f15bb5"/></svg>',
-      Elegant: '<svg viewBox="0 0 32 32"><polygon points="16,3 28,13 16,29 4,13" fill="#34445f"/><polygon points="16,3 22,13 16,29 10,13" fill="#c4ad7a"/></svg>' };
+      Warm: '<svg viewBox="0 0 32 32"><g stroke="#c98a3a" stroke-width="2.4" stroke-linecap="round"><path d="M16 2v4M16 26v4M2 16h4M26 16h4M6 6l3 3M23 23l3 3M26 6l-3 3M9 23l-3 3"/></g><circle cx="16" cy="16" r="7" fill="#c98a3a"/></svg>',
+      Bold: '<svg viewBox="0 0 32 32"><polygon points="16,1 19,8 26,4 24,12 31,14 25,19 29,26 21,24 19,31 16,25 13,31 11,24 3,26 7,19 1,14 8,12 6,4 13,8" fill="#8f3a24"/><polygon points="18,6 9,18 15,18 13,27 23,13 17,13" fill="#e9d3a4"/></svg>',
+      Calm: '<svg viewBox="0 0 32 32"><g fill="none" stroke="#4f7f78" stroke-width="3" stroke-linecap="round"><path d="M3 11q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 18q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/><path d="M3 25q3.25-4 6.5 0t6.5 0 6.5 0 6.5 0"/></g></svg>',
+      Exciting: '<svg viewBox="0 0 32 32"><polygon points="16,3 19,12 28,12 21,18 24,27 16,21 8,27 11,18 4,12 13,12" fill="#b5652f"/><circle cx="5" cy="5" r="2.5" fill="#8fa05a"/><circle cx="27" cy="6" r="2.5" fill="#c98a3a"/><circle cx="27" cy="27" r="2.5" fill="#8fa05a"/></svg>',
+      Elegant: '<svg viewBox="0 0 32 32"><polygon points="16,3 28,13 16,29 4,13" fill="#27375c"/><polygon points="16,3 22,13 16,29 10,13" fill="#c4a65a"/></svg>' };
     
     [].forEach.call(document.querySelectorAll('#feelTaps .opt'), function (lab) {
       var nm = lab.querySelector('input').value, ib = document.createElement('button');
@@ -3775,9 +3776,9 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     ['--bg1', '--bg2', '--ink', '--acc', '--bd', '--sub'].forEach(function (k, n) { if (tv) art.style.setProperty(k, tv[n]); else art.style.removeProperty(k); });
     var feelEl = document.querySelector('input[name="feel"]:checked'), feel = feelEl ? feelEl.value : '';
     var FE = { Warm: { '--bg1': '#fbefd6', '--bg2': '#e3ae7e', '--ink': '#4a2a14', '--acc': '#a8603f', '--bd': '#e3ae7e', '--sub': '#8a3b17' },
-      Bold: { '--bg1': '#fff6c2', '--bg2': '#ffd23f', '--ink': '#2b1020', '--acc': '#ff1f8e', '--bd': '#ffb300', '--sub': '#d4146f' },
+      Bold: { '--bg1': '#f3e2cf', '--bg2': '#c9885a', '--ink': '#2f1a10', '--acc': '#8f3a24', '--bd': '#b8774a', '--sub': '#8f3a24' },
       Calm: { '--bg1': '#e8f3f0', '--bg2': '#bcd5d1', '--ink': '#173a37', '--acc': '#2a6f6a', '--bd': '#9bbab7', '--sub': '#2a6f6a' },
-      Exciting: { '--bg1': '#fbe3d0', '--bg2': '#dd8f9e', '--ink': '#3a1d4d', '--acc': '#7b3fe4', '--bd': '#ecb27a', '--sub': '#7b3fe4' },
+      Exciting: { '--bg1': '#eef0dc', '--bg2': '#b9c48a', '--ink': '#26331a', '--acc': '#b5652f', '--bd': '#8fa05a', '--sub': '#8a4a1c' },
       Elegant: { '--bg1': '#27375c', '--bg2': '#141f3a', '--ink': '#f3e4b4', '--acc': '#d4b25a', '--bd': '#f1dc9a', '--sub': '#e6d39a' } };
     // v3.70 CC-131: colors come from the picked look picture (its main color), so the sketch matches it
     var pickedImg = null, lkEl = document.querySelector('input[name="likes"]:checked');
