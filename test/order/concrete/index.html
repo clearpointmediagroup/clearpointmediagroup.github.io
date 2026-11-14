@@ -2,13 +2,14 @@
 <!--
   CPMG Concrete Order — test/order/concrete/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.66-TEST (Nov 14, 2026, 2:35 AM)
+  v3.67-TEST (Nov 14, 2026, 2:55 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.67-TEST (Nov 14, 2026, 2:55 AM) CC-131: sketch colors follow the kind of graphic picked above (Happy hour, Game day, Live music, Freeze warning, Fall cleanup, Tax season, etc.); unknown kinds keep the fall/ski parchment look. A feel for the mood only, not the real design.
     v3.66-TEST (Nov 14, 2026, 2:35 AM) CC-131: sketch back to a conservative fall/ski-lodge look (parchment, earth tones, thin gold border). The How should it feel? buttons (Warm, Bold, Calm, Exciting, Elegant) now each have a small graphic, and Bold is bright (sunburst, starburst, bolt) instead of black and red.
     v3.65-TEST (Nov 14, 2026, 2:10 AM) CC-131: sketch is now bright and bold (sunburst rays, hot pink and yellow, ribbon subject, star bullets, starburst call-to-action) instead of dark navy boxes.
     v3.64-TEST (Nov 14, 2026, 1:55 AM) CC-131: sketch uses what they typed; any empty spot shows that business type's own example words (dashed) instead of generic text.
@@ -342,19 +343,19 @@
 #skC{align-self:center;margin-top:auto;background:#fff;color:#c2261f;font:900 clamp(17px,5vw,22px) var(--display);padding:12px 22px;border-radius:40px;box-shadow:0 4px 0 #1b2a6b;word-break:break-word}
 #skNote{color:#fff;font:700 15px/1.35 var(--display);text-align:center;margin:12px 4px}
 /* v3.66 conservative fall / ski lodge sketch */
-#skArt{background:linear-gradient(180deg,#f6ebd0 0%,#ecd9ad 100%)!important;color:#4a2c17;border:3px solid #d4a017;box-shadow:inset 0 0 0 7px #f6ebd0,inset 0 0 0 8px #8a5a2b,0 8px 30px rgba(0,0,0,.5)!important}
-#skArt:before{background:#d4a017!important;opacity:.28!important;width:34%!important;left:auto!important;right:10%!important;top:5%!important;border-radius:50%!important;clip-path:none!important}
-#skArt:after{background:#2f4a2f!important;opacity:.22!important;width:100%!important;aspect-ratio:auto!important;height:24%!important;left:0!important;right:auto!important;bottom:0!important;border-radius:0!important;clip-path:polygon(0 100%,0 62%,14% 30%,26% 58%,42% 8%,58% 54%,72% 26%,86% 56%,100% 36%,100% 100%)!important}
-#skT{color:#4a2c17!important;text-shadow:1px 1px 0 rgba(255,255,255,.55)!important;letter-spacing:.01em}
-#skH{background:transparent!important;color:#8a3b17!important;border-radius:0!important;padding:6px 18px!important;border-top:2px solid #d4a017;border-bottom:2px solid #d4a017;text-shadow:none!important;clip-path:none!important;font-style:italic}
+#skArt{background:linear-gradient(180deg,var(--bg1,#f6ebd0) 0%,var(--bg2,#ecd9ad) 100%)!important;color:var(--ink,#4a2c17);border:3px solid var(--bd,#d4a017);box-shadow:inset 0 0 0 7px var(--bg1,#f6ebd0),inset 0 0 0 8px #8a5a2b,0 8px 30px rgba(0,0,0,.5)!important}
+#skArt:before{background:var(--bd,#d4a017)!important;opacity:.28!important;width:34%!important;left:auto!important;right:10%!important;top:5%!important;border-radius:50%!important;clip-path:none!important}
+#skArt:after{background:var(--acc,#2f4a2f)!important;opacity:.22!important;width:100%!important;aspect-ratio:auto!important;height:24%!important;left:0!important;right:auto!important;bottom:0!important;border-radius:0!important;clip-path:polygon(0 100%,0 62%,14% 30%,26% 58%,42% 8%,58% 54%,72% 26%,86% 56%,100% 36%,100% 100%)!important}
+#skT{color:var(--ink,#4a2c17)!important;text-shadow:1px 1px 0 rgba(255,255,255,.55)!important;letter-spacing:.01em}
+#skH{background:transparent!important;color:var(--sub,#8a3b17)!important;border-radius:0!important;padding:6px 18px!important;border-top:2px solid var(--bd,#d4a017);border-bottom:2px solid var(--bd,#d4a017);text-shadow:none!important;clip-path:none!important;font-style:italic}
 #skH.ex,#skT.ex,#skC.ex{outline:0!important}
 #skT.ex,#skH.ex,#skC.ex,#skB li.ex{opacity:.8}
-.skL{background:#2f4a2f!important;color:#f6ebd0!important;border-radius:20px!important;padding:3px 10px!important}
+.skL{background:var(--acc,#2f4a2f)!important;color:var(--bg1,#f6ebd0)!important;border-radius:20px!important;padding:3px 10px!important}
 #skB{gap:8px}
-#skB li{background:transparent!important;border:0!important;padding:0 4px!important;color:#4a2c17;text-shadow:none!important;font-weight:800!important}
-#skB li:before{content:"\25C6"!important;flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#2f4a2f;color:#e8c24a;text-shadow:none;font-size:13px;box-shadow:none}
+#skB li{background:transparent!important;border:0!important;padding:0 4px!important;color:var(--ink,#4a2c17);text-shadow:none!important;font-weight:800!important}
+#skB li:before{content:"\25C6"!important;flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--acc,#2f4a2f);color:var(--bd,#e8c24a);text-shadow:none;font-size:13px;box-shadow:none}
 #skB li.ex{font-style:italic;font-weight:700!important}
-#skC{background:#2f4a2f!important;color:#f6ebd0!important;border-radius:40px!important;border:2px solid #d4a017;box-shadow:none!important;clip-path:none!important;padding:12px 26px!important;text-shadow:none!important;min-width:0}
+#skC{background:var(--acc,#2f4a2f)!important;color:var(--bg1,#f6ebd0)!important;border-radius:40px!important;border:2px solid var(--bd,#d4a017);box-shadow:none!important;clip-path:none!important;padding:12px 26px!important;text-shadow:none!important;min-width:0}
 /* v3.66 feel buttons get a graphic */
 #feelTaps .opt .fi{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:30px;height:30px}
 #moodPop .sw{display:flex;align-items:center;justify-content:center}
@@ -758,7 +759,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.66-TEST (Nov 14, 2026, 2:35 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.67-TEST (Nov 14, 2026, 2:55 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3309,7 +3310,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.66-TEST (Nov 14, 2026, 2:35 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.67-TEST (Nov 14, 2026, 2:55 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3639,6 +3640,23 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   function esc(t) { return t; }
   $('skBtn').addEventListener('click', function () {
     var ph = function (id, d) { var v = $(id).value.trim(); return v || d; };
+    var TH = [[/happy hour/i, ['#fde7b8','#f4b860','#4f2208','#7b1e3c','#c9791a','#7b1e3c']],
+      [/drink/i, ['#def3ee','#93d3c6','#0f3f3b','#0f5d57','#2a9d8f','#0f5d57']],
+      [/game day/i, ['#e2f2da','#a3d193','#17301c','#1b2f5a','#c9a227','#1b2f5a']],
+      [/live music/i, ['#ece3f5','#bda8da','#2d1a4d','#3b2466','#b08d3c','#3b2466']],
+      [/holiday|thank you/i, ['#f7e4df','#e5b9b0','#4a1a1a','#7a1f2a','#2f5a3a','#2f5a3a']],
+      [/freeze|cold snap|heat wave|winter/i, ['#e6f2fb','#b3d3ee','#13314f','#1d4e7a','#6aa6d6','#1d4e7a']],
+      [/emergency/i, ['#fbe6e2','#e9b3ab','#4a1414','#9b1c1c','#c9a227','#9b1c1c']],
+      [/spring|now booking|mowing/i, ['#e8f4d9','#b4d98a','#1f3a12','#2f6b1f','#c9a227','#2f6b1f']],
+      [/fall cleanup|fall/i, ['#fbe9cf','#eeb877','#4a2208','#8a3b17','#c9791a','#8a3b17']],
+      [/tax|deadline|business services|new client|announcement/i, ['#e8edf3','#b8c5d6','#1b2a45','#1b2a45','#c9a227','#34445f']],
+      [/just listed|open house|coming soon|inspection|special offer|new service/i, ['#e7f1f2','#b9d6d9','#1b3a3d','#1f5f66','#c9a227','#1f5f66']],
+      [/just sold/i, ['#f6ecd0','#e3c978','#4a3508','#7a5a10','#c9a227','#7a5a10']],
+      [/price drop|sale|special|free estimate/i, ['#fbe9d8','#f0b98a','#4a2008','#a3361a','#c9791a','#a3361a']]];
+    var whatEl = document.querySelector('input[name="what"]:checked'), what = whatEl ? whatEl.value : '', art = $('skArt'), tv = null;
+    TH.some(function (t) { if (t[0].test(what)) { tv = t[1]; return true; } });
+    ['--bg1', '--bg2', '--ink', '--acc', '--bd', '--sub'].forEach(function (k, n) { if (tv) art.style.setProperty(k, tv[n]); else art.style.removeProperty(k); });
+    $('skNote').textContent = 'Rough sketch. Slanted words are examples; type your own to replace them. ' + (tv ? 'The colors just give a feel for "' + what + '". ' : '') + 'Your real graphic is checked and made by us.';
     var put = function (el, v, d) { el.textContent = v || d; el.className = v ? '' : 'ex'; };
     var exw = function (id, d) { return $(id).placeholder || d; };   // this business type's own example words
     put($('skT'), $('ttl').value.trim(), exw('ttl', 'Your title'));
