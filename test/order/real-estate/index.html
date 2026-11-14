@@ -2,13 +2,14 @@
 <!--
   CPMG Real estate Order — test/order/real-estate/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.95-TEST (Nov 14, 2026, 11:00 AM)
+  v3.96-TEST (Nov 14, 2026, 12:50 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.96-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe form (?for=cafe, built to test/order/cafe/). Cafe, coffee shop or bakery; asks Casual or Upscale inside the form, sent as Template: Cafe, coffee shop or bakery, Casual. Brewery and others unchanged.
     v3.95-TEST (Nov 14, 2026, 11:00 AM) CC-141: new brewery form (?for=brewery, built to test/order/brewery/). Brewery, cidery, distillery or winery; it asks Casual or Upscale inside the form (same bar as the restaurant form), sent in the order notes as Template: Brewery, cidery, distillery or winery, Casual. Other industries: unchanged.
     v3.94-TEST (Nov 14, 2026, 7:50 AM) CC-139: the restaurant form asks the kind of place (15 types) and Casual or Upscale inside the form; ?template=pizza-upscale still preselects. Sent in the order notes as Template: Pizza, Upscale. Other industries: unchanged.
     v3.93-TEST (Nov 14, 2026, 6:55 AM) CC-137: opens with the template picked on the order picker (?template=pizza-upscale). A green line at the top names it, and it is sent in the order notes as Template: Pizza, Upscale. No template in the link = form works as before.
@@ -3643,6 +3644,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "cafe": {
+  "industry": "Cafe, coffee shop or bakery",
+  "form": "Cafe, coffee shop or bakery",
+  "title": "Order a graphic for your cafe, coffee shop or bakery",
+  "foot": "CPMG Cafe Order",
+  "about": "We make professional graphics for local businesses, fast. Cafes, coffee shops and bakeries use us for daily specials, fresh bakes, holiday hours, catering and cake orders that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your cafe. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your counter, your pastry case, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Daily special",
+    "gift"
+   ],
+   [
+    "Fresh baked",
+    "tag"
+   ],
+   [
+    "Coffee deal",
+    "clock"
+   ],
+   [
+    "Catering or cakes",
+    "calendar-due"
+   ],
+   [
+    "Hours",
+    "building"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "What do you make? (if you want)",
+   "hint": "A few words, like coffee, pastries, bread or cakes.",
+   "ph": "Coffee and pastries",
+   "need": "",
+   "key": "placeType",
+   "note": "What we make",
+   "store": "cpmgExtra_cafe"
+  },
+  "biz": "Smith Street Cafe",
+  "photo1": [
+   "Cafe photo",
+   "Big background, like your counter, pastry case or tables. Your words go on top.",
+   "Cafe photo",
+   "Cafe"
+  ],
+  "ex": {
+   "": [
+    "Fresh Baked Daily",
+    "Smith Street Cafe",
+    [
+     "Warm cinnamon rolls",
+     "Every morning from 7 AM",
+     "Coffee from $3"
+    ],
+    "Come get one warm"
+   ],
+   "Daily special": [
+    "Soup and Sandwich",
+    "Smith Street Cafe",
+    [
+     "Today's soup, half a sandwich",
+     "$11 lunch special",
+     "Until 2 PM"
+    ],
+    "Stop in for lunch"
+   ],
+   "Fresh baked": [
+    "Fresh Baked Daily",
+    "Warm Out of the Oven",
+    [
+     "Cinnamon rolls and fresh bread",
+     "Every morning from 7 AM",
+     "Sourdough from $7"
+    ],
+    "Come get one warm"
+   ],
+   "Coffee deal": [
+    "Coffee and Pastry",
+    "Any Latte, Any Pastry",
+    [
+     "$8 combo",
+     "Until 11 AM",
+     "Dine in or take out"
+    ],
+    "Stop in today"
+   ],
+   "Catering or cakes": [
+    "Cakes and Catering",
+    "Birthday Cakes and Party Trays",
+    [
+     "Order a week ahead",
+     "Cookies by the dozen",
+     "Pickup or delivery"
+    ],
+    "Call to order"
+   ],
+   "Hours": [
+    "Holiday Hours",
+    "Smith Street Cafe",
+    [
+     "Open daily at 7 AM",
+     "Early close Christmas Eve",
+     "Closed Christmas Day"
+    ],
+    "Check before you go"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our cafe to you",
+    [
+     "We appreciate you",
+     "See you soon"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -3705,7 +3867,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.94-TEST (Nov 14, 2026, 7:50 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.96-TEST (Nov 14, 2026, 12:50 PM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3977,17 +4139,18 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   var TEMPLATE = '';
   (function () {
     try {
-      if (PACK_NAME !== 'restaurant' && PACK_NAME !== 'brewery') return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
+      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';
       tb.hidden = false; tb.textContent = '';
       var lab = document.createElement('div'); lab.textContent = 'What kind of place is it?'; tb.appendChild(lab);
-      if (PACK_NAME === 'brewery') { TPL_TYPES = [['brewery','Brewery, cidery, distillery or winery']]; selType = 'brewery'; lab.textContent = 'Which look do you like?'; }
+      if (ONE_TYPE[PACK_NAME]) { TPL_TYPES = [ONE_TYPE[PACK_NAME]]; selType = ONE_TYPE[PACK_NAME][0]; lab.textContent = 'Which look do you like?'; }
       var sel = document.createElement('select'); sel.id = 'tplType'; sel.setAttribute('aria-label', 'Kind of place');
       sel.style.cssText = 'width:100%;margin:8px 0;padding:12px;font-size:18px;border-radius:10px;border:2px solid #5fc48c;background:#0f1712;color:#fff';
       var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Pick one (or skip)'; sel.appendChild(o0);
       TPL_TYPES.forEach(function (t) { var o = document.createElement('option'); o.value = t[0]; o.textContent = t[1]; if (t[0] === selType) o.selected = true; sel.appendChild(o); });
-      if (PACK_NAME === 'brewery') sel.hidden = true;
+      if (ONE_TYPE[PACK_NAME]) sel.hidden = true;
       tb.appendChild(sel);
       var row = document.createElement('div'); row.style.cssText = 'display:flex;gap:10px'; tb.appendChild(row);
       var btns = {};

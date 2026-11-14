@@ -1,4 +1,5 @@
-# CPMG industry packs v2.3-TEST (Nov 14, 2026)
+# CPMG industry packs v2.4-TEST (Nov 14, 2026, 12:50 PM)
+# v2.4-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe pack (cafe, coffee shop, bakery). Test form only; Casual and Upscale chosen inside the form.
 # v2.3-TEST (Nov 14, 2026) CC-141: new brewery pack (brewery, cidery, distillery, winery). Test form only; Casual and Upscale chosen inside the form.
 # v2.2 (Nov 14, 2026, 7:30 AM) CC-138: new ski-shop pack (ski shops, rental shops, outdoor stores). Test form only.
 # v2.1 (Nov 13, 2026, 8:10 AM) Randy: restaurant pack adds the Mountain town look (snowy Colorado ski-town street picture).
@@ -235,6 +236,27 @@ PACKS['brewery'] = _clone('cpa',
         'Live music or event':['Live Music','Acoustic Sets by the Fire',['Fridays and Saturdays','7 PM','No cover'],'Join us tonight'],
         'Hours':['Holiday Hours','Smith Mountain Brewing',['Open daily at noon','Early close Christmas Eve','Closed Christmas Day'],'Check before you go'],
         'Something else':['Thank You','From our taproom to you',['We appreciate you','See you by the fire'],'Call us anytime']})
+
+PACKS['cafe'] = _clone('cpa',
+    name='Cafe, coffee shop or bakery',
+    title='Order a graphic for your cafe, coffee shop or bakery',
+    foot='CPMG Cafe Order',
+    who='Cafes, coffee shops and bakeries',
+    uses='daily specials, fresh bakes, holiday hours, catering and cake orders',
+    what='cafe',
+    photos='your counter, your pastry case, or your logo',
+    kinds=[['Daily special','gift'],['Fresh baked','tag'],['Coffee deal','clock'],['Catering or cakes','calendar-due'],['Hours','building'],['Something else','pencil']],
+    extra={'label':'What do you make? (if you want)','hint':'A few words, like coffee, pastries, bread or cakes.','ph':'Coffee and pastries','need':'','key':'placeType','note':'What we make'},
+    biz='Smith Street Cafe',
+    photo1=['Cafe photo','Big background, like your counter, pastry case or tables. Your words go on top.','Cafe photo','Cafe'],
+    scene='a warm cafe with a wooden counter, a glass pastry case, hanging lamps and snow outside the window',
+    ex={'':['Fresh Baked Daily','Smith Street Cafe',['Warm cinnamon rolls','Every morning from 7 AM','Coffee from $3'],'Come get one warm'],
+        'Daily special':['Soup and Sandwich','Smith Street Cafe',['Today\'s soup, half a sandwich','$11 lunch special','Until 2 PM'],'Stop in for lunch'],
+        'Fresh baked':['Fresh Baked Daily','Warm Out of the Oven',['Cinnamon rolls and fresh bread','Every morning from 7 AM','Sourdough from $7'],'Come get one warm'],
+        'Coffee deal':['Coffee and Pastry','Any Latte, Any Pastry',['$8 combo','Until 11 AM','Dine in or take out'],'Stop in today'],
+        'Catering or cakes':['Cakes and Catering','Birthday Cakes and Party Trays',['Order a week ahead','Cookies by the dozen','Pickup or delivery'],'Call to order'],
+        'Hours':['Holiday Hours','Smith Street Cafe',['Open daily at 7 AM','Early close Christmas Eve','Closed Christmas Day'],'Check before you go'],
+        'Something else':['Thank You','From our cafe to you',['We appreciate you','See you soon'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
