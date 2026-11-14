@@ -2,13 +2,14 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.69-TEST (Nov 14, 2026, 4:10 AM)
+  v3.70-TEST (Nov 14, 2026, 4:35 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.70-TEST (Nov 14, 2026, 4:35 AM) CC-131: the sketch colors now come from the look picture they tapped Use this look on (its main color), so the sketch matches the picture. No picture picked: kind and feel colors as before.
     v3.69-TEST (Nov 14, 2026, 4:10 AM) CC-131: the look pictures now come from the finished blueprint pictures and match the place and kind picked above (Bar, Restaurant or Bar and restaurant, then Happy hour, Daily special and so on). Tap one to see it big, then Use this look.
     v3.68-TEST (Nov 14, 2026, 3:20 AM) CC-131: flow is now kind of graphic, then look and feel (feel buttons and Anything to leave out moved out from under More choices into step 2), then the words, then the sketch. The sketch uses everything picked before it: the kind, the feel, and the looks.
     v3.67-TEST (Nov 14, 2026, 2:55 AM) CC-131: sketch colors follow the kind of graphic picked above (Happy hour, Game day, Live music, Freeze warning, Fall cleanup, Tax season, etc.); unknown kinds keep the fall/ski parchment look. A feel for the mood only, not the real design.
@@ -765,7 +766,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.69-TEST (Nov 14, 2026, 4:10 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.70-TEST (Nov 14, 2026, 4:35 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3317,7 +3318,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.69-TEST (Nov 14, 2026, 4:10 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.70-TEST (Nov 14, 2026, 4:35 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3691,10 +3692,32 @@ var BP = {"m":[["Cocktail bar","Casual","New Menu"],["Dive bar","Upscale","New M
     var feelEl = document.querySelector('input[name="feel"]:checked'), feel = feelEl ? feelEl.value : '';
     var FE = { Elegant: { '--acc': '#1f2a44', '--bd': '#c9a227', '--sub': '#1f2a44' }, Calm: { '--bg1': '#e8f1ef', '--bg2': '#bcd5d1', '--acc': '#2a6f6a', '--sub': '#2a6f6a' },
       Warm: { '--bg1': '#fde9c8', '--bg2': '#efb97d', '--sub': '#8a3b17' }, Bold: { '--acc': '#c2185b', '--ink': '#2b1020', '--bd': '#ffb300', '--sub': '#c2185b' }, Exciting: { '--acc': '#7b3fe4', '--bd': '#ff7a00', '--sub': '#7b3fe4' } };
-    if (FE[feel]) Object.keys(FE[feel]).forEach(function (k) { art.style.setProperty(k, FE[feel][k]); });
+    // v3.70 CC-131: colors come from the picked look picture (its main color), so the sketch matches it
+    var pickedImg = null, lkEl = document.querySelector('input[name="likes"]:checked');
+    if (lkEl && lkEl.parentNode) pickedImg = lkEl.parentNode.querySelector('img');
+    var fromPic = false;
+    if (pickedImg && pickedImg.complete && pickedImg.naturalWidth) {
+      try {
+        var cv = document.createElement('canvas'); cv.width = 40; cv.height = 40; var cx = cv.getContext('2d'); cx.drawImage(pickedImg, 0, 0, 40, 40);
+        var dd = cx.getImageData(0, 0, 40, 40).data, X = 0, Y = 0, W = 0;
+        for (var q = 0; q < dd.length; q += 4) {
+          var r = dd[q] / 255, g = dd[q + 1] / 255, b = dd[q + 2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), sat = mx ? (mx - mn) / mx : 0, wt = sat * mx;
+          if (wt < .08) continue;
+          var hh = mx === r ? ((g - b) / (mx - mn) + 6) % 6 : mx === g ? (b - r) / (mx - mn) + 2 : (r - g) / (mx - mn) + 4; hh *= 60 * Math.PI / 180;
+          X += Math.cos(hh) * wt; Y += Math.sin(hh) * wt; W += wt;
+        }
+        if (W > 0) {
+          var H = Math.round(((Math.atan2(Y, X) * 180 / Math.PI) + 360) % 360);
+          var hs = function (sa, li) { return 'hsl(' + H + ',' + sa + '%,' + li + '%)'; };
+          [['--bg1', hs(48, 92)], ['--bg2', hs(42, 78)], ['--ink', hs(55, 14)], ['--acc', hs(60, 30)], ['--bd', hs(70, 42)], ['--sub', hs(60, 30)]].forEach(function (c) { art.style.setProperty(c[0], c[1]); });
+          fromPic = true;
+        }
+      } catch (e) { /* ok: falls back to kind and feel colors */ }
+    }
+    if (!fromPic && FE[feel]) Object.keys(FE[feel]).forEach(function (k) { art.style.setProperty(k, FE[feel][k]); });
     var lks = [].map.call(document.querySelectorAll('input[name="likes"]:checked'), function (i) { return i.value; });
     var picked = [what, feel].concat(lks.length ? ['looks: ' + lks.join(', ')] : []).filter(Boolean);
-    $('skNote').textContent = 'Rough sketch. Slanted words are examples; type your own to replace them. ' + (picked.length ? 'Built from what you picked: ' + picked.join(' · ') + '. ' : '') + 'Your real graphic is checked and made by us.';
+    $('skNote').textContent = 'Rough sketch. Slanted words are examples; type your own to replace them. ' + (picked.length ? 'Built from what you picked: ' + picked.join(' · ') + (fromPic ? ' (colors from your picture)' : '') + '. ' : '') + 'Your real graphic is checked and made by us.';
     var put = function (el, v, d) { el.textContent = v || d; el.className = v ? '' : 'ex'; };
     var exw = function (id, d) { return $(id).placeholder || d; };   // this business type's own example words
     put($('skT'), $('ttl').value.trim(), exw('ttl', 'Your title'));
