@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CPMG Sample Work by Business Type</title>
+<!-- CPMG Portfolio v1.1-TEST (Nov 14, 2026, 1:15 PM): added Real Estate card first (10 samples). v1.0 (Nov 14, 2026, 5:05 AM): 15 business-type cards, 2 per row, tap a card to see its 6 samples. Embedded in the CPMG website. -->
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7efdc;color:#3a2a14;font:18px/1.35 system-ui,Segoe UI,sans-serif}
+h1{margin:0;padding:14px 12px 4px;font-size:26px;color:#2f5a3f}p.sub{margin:0;padding:0 12px 10px;color:#6a5a40;font-size:17px}
+#grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 12px 20px;max-width:980px;margin:auto}
+.card{background:#fffaf0;border:3px solid #d9c9a6;border-radius:18px;padding:8px;text-align:center;cursor:pointer;font:inherit;color:inherit}
+.card:hover,.card.on{border-color:#2f5a3f}
+.card img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:14px;display:block;max-height:420px}
+.card b{display:block;font-size:20px;margin-top:8px}.card span{display:block;color:#2f5a3f;font-weight:700;font-size:16px;margin-top:2px}
+.panel{grid-column:1/-1;background:#2f5a3f;border-radius:18px;padding:12px;color:#fbf3e0}
+.panel h2{margin:0 0 8px;font-size:22px}
+.row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.row img{height:420px;width:auto;border-radius:14px;scroll-snap-align:start;flex:none;background:#000}
+.row img.tv{height:236px;align-self:center}
+.close{display:block;width:100%;margin-top:8px;min-height:50px;border:0;border-radius:12px;background:#fbf3e0;color:#2f5a3f;font:800 18px system-ui;cursor:pointer;border-bottom:4px solid #c4a65a}
+@media(min-width:760px){#grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:480px){.row img{height:340px}.row img.tv{height:190px}.card b{font-size:18px}}
+</style></head><body>
+<h1>Sample work by business type</h1>
+<p class="sub">Tap a business type to see 6 samples. Slide sideways to see them all.</p>
+<div id="grid"></div>
+<script>
+var D=[{"name": "Real Estate", "imgs": ["img/real-estate-1.jpg", "img/real-estate-2.jpg", "img/real-estate-3.jpg", "img/real-estate-4.jpg", "img/real-estate-5.jpg", "img/real-estate-6.jpg", "img/real-estate-7.jpg", "img/real-estate-8.jpg", "img/real-estate-9.jpg", "img/real-estate-10.jpg"]}, {"name": "Barbecue", "imgs": ["img/barbecue-1.jpg", "img/barbecue-2.jpg", "img/barbecue-3.jpg", "img/barbecue-4.jpg", "img/barbecue-5.jpg", "img/barbecue-6.jpg"]}, {"name": "Chinese", "imgs": ["img/chinese-1.jpg", "img/chinese-2.jpg", "img/chinese-3.jpg", "img/chinese-4.jpg", "img/chinese-5.jpg", "img/chinese-6.jpg"]}, {"name": "Cocktail bar", "imgs": ["img/cocktail-bar-1.jpg", "img/cocktail-bar-2.jpg", "img/cocktail-bar-3.jpg", "img/cocktail-bar-4.jpg", "img/cocktail-bar-5.jpg", "img/cocktail-bar-6.jpg"]}, {"name": "Diner", "imgs": ["img/diner-1.jpg", "img/diner-2.jpg", "img/diner-3.jpg", "img/diner-4.jpg", "img/diner-5.jpg", "img/diner-6.jpg"]}, {"name": "Dive bar", "imgs": ["img/dive-bar-1.jpg", "img/dive-bar-2.jpg", "img/dive-bar-3.jpg", "img/dive-bar-4.jpg", "img/dive-bar-5.jpg", "img/dive-bar-6.jpg"]}, {"name": "Hotel and lodge", "imgs": ["img/hotel-and-lodge-1.jpg", "img/hotel-and-lodge-2.jpg", "img/hotel-and-lodge-3.jpg", "img/hotel-and-lodge-4.jpg", "img/hotel-and-lodge-5.jpg", "img/hotel-and-lodge-6.jpg"]}, {"name": "Italian", "imgs": ["img/italian-1.jpg", "img/italian-2.jpg", "img/italian-3.jpg", "img/italian-4.jpg", "img/italian-5.jpg", "img/italian-6.jpg"]}, {"name": "Mexican", "imgs": ["img/mexican-1.jpg", "img/mexican-2.jpg", "img/mexican-3.jpg", "img/mexican-4.jpg", "img/mexican-5.jpg", "img/mexican-6.jpg"]}, {"name": "Pizza", "imgs": ["img/pizza-1.jpg", "img/pizza-2.jpg", "img/pizza-3.jpg", "img/pizza-4.jpg", "img/pizza-5.jpg", "img/pizza-6.jpg"]}, {"name": "Seafood", "imgs": ["img/seafood-1.jpg", "img/seafood-2.jpg", "img/seafood-3.jpg", "img/seafood-4.jpg", "img/seafood-5.jpg", "img/seafood-6.jpg"]}, {"name": "Sports bar", "imgs": ["img/sports-bar-1.jpg", "img/sports-bar-2.jpg", "img/sports-bar-3.jpg", "img/sports-bar-4.jpg", "img/sports-bar-5.jpg", "img/sports-bar-6.jpg"]}, {"name": "Steakhouse", "imgs": ["img/steakhouse-1.jpg", "img/steakhouse-2.jpg", "img/steakhouse-3.jpg", "img/steakhouse-4.jpg", "img/steakhouse-5.jpg", "img/steakhouse-6.jpg"]}, {"name": "Tiki bar", "imgs": ["img/tiki-bar-1.jpg", "img/tiki-bar-2.jpg", "img/tiki-bar-3.jpg", "img/tiki-bar-4.jpg", "img/tiki-bar-5.jpg", "img/tiki-bar-6.jpg"]}, {"name": "Upscale restaurant", "imgs": ["img/upscale-restaurant-1.jpg", "img/upscale-restaurant-2.jpg", "img/upscale-restaurant-3.jpg", "img/upscale-restaurant-4.jpg", "img/upscale-restaurant-5.jpg", "img/upscale-restaurant-6.jpg"]}, {"name": "Wine bar", "imgs": ["img/wine-bar-1.jpg", "img/wine-bar-2.jpg", "img/wine-bar-3.jpg", "img/wine-bar-4.jpg", "img/wine-bar-5.jpg", "img/wine-bar-6.jpg"]}];
+var grid=document.getElementById('grid'),cols=function(){return window.innerWidth>=760?4:2};
+D.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='card';b.setAttribute('aria-label',t.name+' samples');
+b.innerHTML='<img loading="lazy" src="img/'+t.imgs[0].split('/').pop()+'" alt="'+t.name+' sample"><b>'+t.name+'</b><span>Tap to see samples</span>';
+b.onclick=function(){open_(i,b)};grid.appendChild(b)});
+function close_(){var p=document.querySelector('.panel');if(p)p.remove();[].forEach.call(document.querySelectorAll('.card.on'),function(c){c.classList.remove('on')})}
+function open_(i,b){var same=b.classList.contains('on');close_();if(same)return;b.classList.add('on');
+var t=D[i],c=cols(),end=Math.min(D.length-1,Math.floor(i/c)*c+c-1),p=document.createElement('div');p.className='panel';
+p.innerHTML='<h2>'+t.name+' samples</h2><div class="row">'+t.imgs.map(function(s,k){return '<img loading="lazy" class="'+(t.name!='Real Estate'&&k==5?'tv':'')+'" src="img/'+s.split('/').pop()+'" alt="'+t.name+' sample '+(k+1)+'">'}).join('')+'</div><button class="close" type="button">Close</button>';
+p.querySelector('.close').onclick=close_;var cards=grid.querySelectorAll('.card');cards[end].after(p);p.scrollIntoView({behavior:'smooth',block:'nearest'})}
+</script></body></html>
