@@ -1,4 +1,5 @@
-# CPMG industry packs v2.5-TEST (Nov 14, 2026, 1:00 PM)
+# CPMG industry packs v2.6-TEST (Nov 14, 2026, 4:30 PM)
+# v2.6-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin pack (cabins, vacation rentals, lodging managers). Test form only; Casual and Upscale chosen inside the form.
 # v2.5-TEST (Nov 14, 2026, 1:00 PM) CC-141: new outfitter pack (guided tours, rafting, snowmobile, ATV, bike rentals, adventure outfitters). Test form only; Casual and Upscale chosen inside the form.
 # v2.4-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe pack (cafe, coffee shop, bakery). Test form only; Casual and Upscale chosen inside the form.
 # v2.3-TEST (Nov 14, 2026) CC-141: new brewery pack (brewery, cidery, distillery, winery). Test form only; Casual and Upscale chosen inside the form.
@@ -279,6 +280,27 @@ PACKS['outfitter'] = _clone('cpa',
         'Group or private trips':['Private Group Trips','Family, Friends or Your Team',['Book a week ahead','Guides and gear included','Lunch available'],'Call to book'],
         'Hours':['Holiday Hours','Smith Mountain Adventures',['Open daily at 8 AM','Early close Christmas Eve','Closed Christmas Day'],'Check before you go'],
         'Something else':['Thank You','From our crew to you',['We appreciate you','See you on the trail'],'Call us anytime']})
+
+PACKS['cabin'] = _clone('cpa',
+    name='Cabin, vacation rental or lodging',
+    title='Order a graphic for your cabins, vacation rentals or lodge',
+    foot='CPMG Cabin Order',
+    who='Cabin owners, vacation rental managers and small lodges',
+    uses='open dates, holiday weeks, hot tubs and fireplaces, snow and road updates, check-in info, gift cards and hours',
+    what='cabin or rental',
+    photos='your cabin, your view, your hot tub, or your logo',
+    kinds=[['Open dates or special','tag'],['Holiday weeks','calendar-due'],['Snow or road update','clock'],['Check-in info','building'],['Gift cards','gift'],['Something else','pencil']],
+    extra={'label':'What do you rent? (if you want)','hint':'A few words, like log cabins, mountain chalets or a small lodge.','ph':'Log cabins with hot tubs','need':'','key':'placeType','note':'What we rent'},
+    biz='Smith Mountain Cabins',
+    photo1=['Cabin photo','Big background, like your cabin, your view or your hot tub. Your words go on top.','Cabin photo','Cabin'],
+    scene='a cozy log cabin living room with a stone fireplace and a window showing fresh snow',
+    ex={'':['Winter Cabin Stays','Smith Mountain Cabins',['Hot tub and fireplace','Stays from $249 a night','Minutes from the lifts'],'Book your stay'],
+        'Open dates or special':['Last Minute Openings','Cabins Open This Weekend',['Call for a special rate','Hot tub included','Sleeps 2 to 12'],'Call to book'],
+        'Holiday weeks':['Holiday Week Openings','A Few Dates Are Still Open',['Book your holiday stay','Hot tub and fireplace','Minutes from the lifts'],'Check dates'],
+        'Snow or road update':['Snow Day Notice','Roads May Be Slow',['Check in is still on','Call us if you need help','Drive safe'],'Call before you drive'],
+        'Check-in info':['Check In Info','Smith Mountain Cabins',['Check in at 4 PM','Check out at 10 AM','Door code sent the day before'],'Call with questions'],
+        'Gift cards':['Give a Mountain Getaway','Cabin Gift Cards',['Any amount','Ready to print or send','Never expires'],'Call to order'],
+        'Something else':['Thank You','From our cabins to you',['We appreciate you','See you again soon'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:

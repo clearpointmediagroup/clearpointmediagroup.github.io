@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Standard Order Form — test/order/index.html
-  v3.97-TEST (Nov 14, 2026, 1:05 PM)
+  v3.98-TEST (Nov 14, 2026, 4:30 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.98-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin form (?for=cabin, built to test/order/cabin/). Cabin, vacation rental or lodging; asks Casual or Upscale inside the form, sent as Template: Cabin, vacation rental or lodging, Casual. Brewery, cafe, outfitter and others unchanged.
     v3.97-TEST (Nov 14, 2026, 1:05 PM) CC-141: new outfitter form (?for=outfitter, built to test/order/outfitter/). Outfitter, tours or adventure rentals; asks Casual or Upscale inside the form, sent as Template: Outfitter, tours or adventure rentals, Casual. Brewery, cafe and others unchanged.
     v3.96-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe form (?for=cafe, built to test/order/cafe/). Cafe, coffee shop or bakery; asks Casual or Upscale inside the form, sent as Template: Cafe, coffee shop or bakery, Casual. Brewery and others unchanged.
     v3.95-TEST (Nov 14, 2026, 11:00 AM) CC-141: new brewery form (?for=brewery, built to test/order/brewery/). Brewery, cidery, distillery or winery; it asks Casual or Upscale inside the form (same bar as the restaurant form), sent in the order notes as Template: Brewery, cidery, distillery or winery, Casual. Other industries: unchanged.
@@ -3965,6 +3966,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "cabin": {
+  "industry": "Cabin, vacation rental or lodging",
+  "form": "Cabin, vacation rental or lodging",
+  "title": "Order a graphic for your cabins, vacation rentals or lodge",
+  "foot": "CPMG Cabin Order",
+  "about": "We make professional graphics for local businesses, fast. Cabin owners, vacation rental managers and small lodges use us for open dates, holiday weeks, hot tubs and fireplaces, snow and road updates, check-in info, gift cards and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your cabin or rental. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your cabin, your view, your hot tub, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Open dates or special",
+    "tag"
+   ],
+   [
+    "Holiday weeks",
+    "calendar-due"
+   ],
+   [
+    "Snow or road update",
+    "clock"
+   ],
+   [
+    "Check-in info",
+    "building"
+   ],
+   [
+    "Gift cards",
+    "gift"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "What do you rent? (if you want)",
+   "hint": "A few words, like log cabins, mountain chalets or a small lodge.",
+   "ph": "Log cabins with hot tubs",
+   "need": "",
+   "key": "placeType",
+   "note": "What we rent",
+   "store": "cpmgExtra_cabin"
+  },
+  "biz": "Smith Mountain Cabins",
+  "photo1": [
+   "Cabin photo",
+   "Big background, like your cabin, your view or your hot tub. Your words go on top.",
+   "Cabin photo",
+   "Cabin"
+  ],
+  "ex": {
+   "": [
+    "Winter Cabin Stays",
+    "Smith Mountain Cabins",
+    [
+     "Hot tub and fireplace",
+     "Stays from $249 a night",
+     "Minutes from the lifts"
+    ],
+    "Book your stay"
+   ],
+   "Open dates or special": [
+    "Last Minute Openings",
+    "Cabins Open This Weekend",
+    [
+     "Call for a special rate",
+     "Hot tub included",
+     "Sleeps 2 to 12"
+    ],
+    "Call to book"
+   ],
+   "Holiday weeks": [
+    "Holiday Week Openings",
+    "A Few Dates Are Still Open",
+    [
+     "Book your holiday stay",
+     "Hot tub and fireplace",
+     "Minutes from the lifts"
+    ],
+    "Check dates"
+   ],
+   "Snow or road update": [
+    "Snow Day Notice",
+    "Roads May Be Slow",
+    [
+     "Check in is still on",
+     "Call us if you need help",
+     "Drive safe"
+    ],
+    "Call before you drive"
+   ],
+   "Check-in info": [
+    "Check In Info",
+    "Smith Mountain Cabins",
+    [
+     "Check in at 4 PM",
+     "Check out at 10 AM",
+     "Door code sent the day before"
+    ],
+    "Call with questions"
+   ],
+   "Gift cards": [
+    "Give a Mountain Getaway",
+    "Cabin Gift Cards",
+    [
+     "Any amount",
+     "Ready to print or send",
+     "Never expires"
+    ],
+    "Call to order"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our cabins to you",
+    [
+     "We appreciate you",
+     "See you again soon"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -4027,7 +4189,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.97-TEST (Nov 14, 2026, 1:05 PM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.98-TEST (Nov 14, 2026, 4:30 PM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -4299,7 +4461,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   var TEMPLATE = '';
   (function () {
     try {
-      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
       if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';
