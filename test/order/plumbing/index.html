@@ -2,13 +2,14 @@
 <!--
   CPMG Plumbing Order — test/order/plumbing/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.60-TEST (Nov 14, 2026, 12:50 AM)
+  v3.61-TEST (Nov 14, 2026, 1:05 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.61-TEST (Nov 14, 2026, 1:05 AM) CC-127: tap anywhere on a look picture to open it big, with Use this look and Pick a different look. The small See big button stays as a cue.
     v3.60-TEST (Nov 14, 2026, 12:50 AM) CC-130: the Send bar no longer floats over the form. It sits at the end of the form as a white bar with the same green button, so it never covers a button.
     v3.59-TEST (Nov 13, 2026, 8:59 AM) CC-128 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
     v3.58-TEST (Nov 13, 2026, 8:48 AM) CC-126: under Call me, Text me, Email me: Randy Turner, ClearPoint Media Group, phone, email, and Call or text me anytime.
@@ -727,7 +728,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.60-TEST (Nov 14, 2026, 12:50 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.61-TEST (Nov 14, 2026, 1:05 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3278,7 +3279,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.60-TEST (Nov 14, 2026, 12:50 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.61-TEST (Nov 14, 2026, 1:05 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3369,13 +3370,14 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     var lk = document.getElementById('lookTaps'), lookFs = lk.closest('fieldset');
     lk.hidden = true; document.getElementById('likeLbl').hidden = true;
     lookFs.insertBefore(lt, lk); lookFs.insertBefore(document.getElementById('chooseTap'), lk);
-    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Tap up to 3. Tap See big to look closer. Not sure? Tap You choose.'; lh.className = 'hint liteHint'; }
+    var lh = lookFs.querySelector('.hint'); if (lh) { lh.textContent = 'Tap a picture to see it big, then tap Use this look (pick up to 3). Not sure? Tap You choose.'; lh.className = 'hint liteHint'; }
     [].forEach.call(lt.querySelectorAll('label.opt'), function (lab) {
       var nm = lab.querySelector('input').value;
       if (!lab.querySelector('img')) return;
-      var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'See big'; zb.setAttribute('aria-label', 'See the ' + nm + ' picture big');
+      var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zm'; zb.textContent = 'Tap to see big'; zb.setAttribute('aria-label', 'See the ' + nm + ' picture big');
       zb.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); if (window.cpmgShowTile) window.cpmgShowTile(nm); });
       lab.appendChild(zb);
+      lab.addEventListener('click', function (e) { e.preventDefault(); if (window.cpmgShowTile) window.cpmgShowTile(nm); });   // v3.61 CC-127: the whole picture opens big
     });
     function syncLook() {
       var first = document.querySelector('input[name="likes"]:checked'), v = first ? first.value : 'You pick for me';
@@ -3504,8 +3506,15 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     try { $('lookOk').focus(); } catch (e) { /* ok */ }
   }
   var tileView = false, okText = $('lookOk').textContent;
-  window.cpmgShowTile = function (v) { tileView = true; $('lookNo').hidden = true; $('lookOk').textContent = 'Close'; showLook(v); };   // v3.55 CC-123: See big on a picture tile
+  var tilePick = null;
+  window.cpmgShowTile = function (v) { tilePick = v; tileView = false; showLook(v); };   // v3.61 CC-127: tap a picture, see it big, then Use this look   // v3.55 CC-123: See big on a picture tile
   function closeLook(keep) {
+    if (tilePick) {
+      var tn = tilePick; tilePick = null;
+      $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = '';
+      [].forEach.call(document.querySelectorAll('input[name="likes"]'), function (i) { if (i.value === tn && i.checked !== !!keep) { i.checked = !!keep; i.dispatchEvent(new Event('change', { bubbles: true })); } });
+      return;
+    }
     if (tileView) { tileView = false; $('lookNo').hidden = false; $('lookOk').textContent = okText; $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = ''; return; }
     $('lookPop').hidden = true; document.body.style.overflow = ''; $('sendBar').style.visibility = '';
     if (!keep) {
