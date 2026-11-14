@@ -1,9 +1,10 @@
 <!doctype html>
 <!--
-  CPMG order picker - v1.3-TEST (Nov 14, 2026, 7:35 AM)   CC-136, CC-138
+  CPMG order picker - v1.4-TEST (Nov 14, 2026, 7:55 AM)   CC-136, CC-138, CC-139
   The ONE order link for website, Facebook, Instagram, emails and QR codes will be /order/.
   This test copy shows 3 big buttons. Each opens that business type's order form.
   REVISION LOG
+    v1.4-TEST (Nov 14, 2026, 7:55 AM) CC-139: Randy: the 30 restaurant buttons come off. One "Restaurant or bar" button; the restaurant form asks the kind of place and Casual or Upscale. Other business types below it.
     v1.3-TEST (Nov 14, 2026, 7:35 AM) CC-138: second section "Not a restaurant or bar?" with 5 buttons (cabin and rental managers, ski shop and rentals, real estate, insurance agent, any other business).
     v1.1-TEST (Nov 14, 2026, 6:40 AM) Randy: list all 30 Colorado templates (15 business types x Casual / Upscale) instead of 3 buttons. Links pass ?template=<type>-<look>.
     v1.0-TEST (Nov 14, 2026, 6:30 AM) CC-136: first version. Test copy only; live /order/ still opens the restaurant form (v3.59).
@@ -24,29 +25,14 @@ p{margin:0 0 22px;color:#b8cfc2}
 .row{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px;align-items:center;margin:0 0 12px}.nm{text-align:left;font-weight:700;font-size:21px;color:#fff}
 a.btn{display:block;padding:14px 8px;border:3px solid #5fc48c;border-radius:14px;background:#10301d;color:#fff;font-weight:700;font-size:19px;text-decoration:none}
 a.btn:hover,a.btn:focus-visible{background:#1a4a2d;outline:none}
-h2{font-size:24px;margin:30px 0 14px;color:#fff}a.btn.wide{margin:0 0 12px;padding:16px 10px;font-size:21px}.foot{font-size:16px;color:#8fa89b;margin-top:26px}
+h2{font-size:24px;margin:30px 0 14px;color:#fff}a.btn.wide{margin:0 0 14px;padding:18px 10px;font-size:23px}a.btn small{display:block;font-weight:400;font-size:16px;color:#b8cfc2;margin-top:3px}.foot{font-size:16px;color:#8fa89b;margin-top:26px}
 </style>
 </head>
 <body>
 <main>
-<h1>Pick your business and look</h1>
-<p>Tap one. It opens your order form with that look. $25 a graphic. Proof back in about 5 hours.</p>
-<div class="row"><div class="nm">Barbecue</div><a class="btn" href="../order/restaurant/?template=barbecue-casual">Casual</a><a class="btn" href="../order/restaurant/?template=barbecue-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Chinese</div><a class="btn" href="../order/restaurant/?template=chinese-casual">Casual</a><a class="btn" href="../order/restaurant/?template=chinese-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Cocktail bar</div><a class="btn" href="../order/restaurant/?template=cocktail-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=cocktail-bar-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Diner</div><a class="btn" href="../order/restaurant/?template=diner-casual">Casual</a><a class="btn" href="../order/restaurant/?template=diner-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Dive bar</div><a class="btn" href="../order/restaurant/?template=dive-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=dive-bar-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Hotel and lodge</div><a class="btn" href="../order/restaurant/?template=hotel-and-lodge-casual">Casual</a><a class="btn" href="../order/restaurant/?template=hotel-and-lodge-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Italian</div><a class="btn" href="../order/restaurant/?template=italian-casual">Casual</a><a class="btn" href="../order/restaurant/?template=italian-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Mexican</div><a class="btn" href="../order/restaurant/?template=mexican-casual">Casual</a><a class="btn" href="../order/restaurant/?template=mexican-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Pizza</div><a class="btn" href="../order/restaurant/?template=pizza-casual">Casual</a><a class="btn" href="../order/restaurant/?template=pizza-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Seafood</div><a class="btn" href="../order/restaurant/?template=seafood-casual">Casual</a><a class="btn" href="../order/restaurant/?template=seafood-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Sports bar</div><a class="btn" href="../order/restaurant/?template=sports-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=sports-bar-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Steakhouse</div><a class="btn" href="../order/restaurant/?template=steakhouse-casual">Casual</a><a class="btn" href="../order/restaurant/?template=steakhouse-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Tiki bar</div><a class="btn" href="../order/restaurant/?template=tiki-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=tiki-bar-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Restaurant</div><a class="btn" href="../order/restaurant/?template=upscale-restaurant-casual">Casual</a><a class="btn" href="../order/restaurant/?template=upscale-restaurant-upscale">Upscale</a></div>
-<div class="row"><div class="nm">Wine bar</div><a class="btn" href="../order/restaurant/?template=wine-bar-casual">Casual</a><a class="btn" href="../order/restaurant/?template=wine-bar-upscale">Upscale</a></div>
-<h2>Not a restaurant or bar?</h2>
+<h1>What kind of business?</h1>
+<p>Tap yours. It opens the right order form. $25 a graphic. Proof back in about 5 hours.</p>
+<a class="btn wide" href="../order/restaurant/">Restaurant or bar<small>Pizza, steakhouse, diner, lodge and more</small></a>
 <a class="btn wide" href="../order/mountain-cabin/">Cabin and rental managers</a>
 <a class="btn wide" href="../order/ski-shop/">Ski shop and rentals</a>
 <a class="btn wide" href="../order/real-estate/">Real estate</a>
