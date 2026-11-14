@@ -2,13 +2,14 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.59-TEST (Nov 13, 2026, 8:59 AM)
+  v3.60-TEST (Nov 14, 2026, 12:50 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.60-TEST (Nov 14, 2026, 12:50 AM) CC-130: the Send bar no longer floats over the form. It sits at the end of the form as a white bar with the same green button, so it never covers a button.
     v3.59-TEST (Nov 13, 2026, 8:59 AM) CC-128 big print: one big readable column on laptops too (no shrunk 4-column layout), bigger words and boxes, More choices stays closed.
     v3.58-TEST (Nov 13, 2026, 8:48 AM) CC-126: under Call me, Text me, Email me: Randy Turner, ClearPoint Media Group, phone, email, and Call or text me anytime.
     v3.57-TEST (Nov 13, 2026, 8:44 AM) CC-125: Text me button is back (first line filled in), the line says Call or text me anytime, footer says Call or text.
@@ -717,11 +718,16 @@ body.lite #f>*{grid-column:auto!important;grid-row:auto!important}
 body.lite .wrap.narrow>.top h1#pkTitle{font-size:30px!important}
 body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
 }
+/* v3.60 CC-130: Send bar is part of the page (not floating), white, same green button as the top */
+body.lite .bar,body.lite .bar.narrow{position:static!important;display:block;background:#fff;border:2px solid var(--line);border-radius:16px;max-width:760px;margin:8px auto 28px;padding:16px 20px;box-sizing:border-box;text-align:center}
+body.lite .bar #barTot,body.lite .bar.narrow #barTot{display:block;width:100%;max-width:none;margin:0 0 10px!important;font-size:20px;text-align:center;color:var(--green)}
+body.lite .bar .big,body.lite .bar.narrow .big{display:block;width:100%;max-width:none;min-width:0;margin:0;padding:16px;font-size:24px;border-radius:14px;background:var(--green);color:#fff}
+body.lite .wrap.narrow{padding-bottom:16px!important}
 </style>
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.59-TEST (Nov 13, 2026, 8:59 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.60-TEST (Nov 14, 2026, 12:50 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3272,7 +3278,7 @@ body.lite .fsbtn,body.lite .fsbtn.show{display:none!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.59-TEST (Nov 13, 2026, 8:59 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.60-TEST (Nov 14, 2026, 12:50 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
