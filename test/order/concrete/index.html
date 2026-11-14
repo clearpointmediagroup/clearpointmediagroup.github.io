@@ -2,13 +2,14 @@
 <!--
   CPMG Concrete Order — test/order/concrete/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.84-TEST (Nov 14, 2026, 10:05 AM)
+  v3.85-TEST (Nov 14, 2026, 10:40 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.85-TEST (Nov 14, 2026, 10:40 AM) CC-131: on a laptop the three sample pictures at the top are small (72 px wide, beside the words) so the form itself shows on the first screen.
     v3.84-TEST (Nov 14, 2026, 10:05 AM) CC-131: the three sample pictures at the top load right away (no blank boxes while waiting).
     v3.83-TEST (Nov 14, 2026, 9:50 AM) CC-131: Randy approved four finish items: (1) hours wording uses 8 a.m. to 5:30 p.m. Eastern, and orders after 5:30 p.m. and on weekends are ready the next business morning (top line and thank-you screen); (2) a trust line and three sample pictures near the top of the restaurant and bar form; (3) look pictures are smaller so step 3 scrolls less on a phone; (4) change cards updated separately.
     v3.82-TEST (Nov 14, 2026, 9:20 AM) CC-131: the sketch now fits on one screen: the picture shrinks to whatever room there is, the Close and keep typing button always shows under it (never off the bottom), and there is a round X at the top too.
@@ -405,6 +406,7 @@ body.lite .wrap.narrow>.top .verTag{order:3;flex:0 0 100%;margin:0;font-size:11p
 .trustBox .tr{display:flex;gap:8px}
 .trustBox .tr a{flex:1;display:block}
 .trustBox .tr img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+@media (min-width:700px){.trustBox{display:flex;align-items:center;gap:14px}.trustBox p{flex:1;margin:0}.trustBox .tr{flex:none;width:auto}.trustBox .tr a{flex:none;width:72px}}   /* v3.85: small samples on a laptop so the form stays on the first screen */
 #likeTiles .pk{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:44px;margin-top:2px;border:2px solid #1f7a4a;border-radius:10px;background:#fff;color:#1f7a4a;font:800 15px var(--display);cursor:pointer}
 #likeTiles .opt:has(input:checked) .pk{background:#1f7a4a;color:#fff}
 #likeTiles .opt:has(input:checked){border-color:#1f7a4a;box-shadow:0 0 0 3px rgba(31,122,74,.35)}
@@ -802,7 +804,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.84-TEST (Nov 14, 2026, 10:05 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.85-TEST (Nov 14, 2026, 10:40 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -3357,7 +3359,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.84-TEST (Nov 14, 2026, 10:05 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.85-TEST (Nov 14, 2026, 10:40 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
