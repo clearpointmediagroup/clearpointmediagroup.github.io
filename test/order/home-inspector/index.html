@@ -2,13 +2,14 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.81-TEST (Nov 14, 2026, 9:00 AM)
+  v3.82-TEST (Nov 14, 2026, 9:20 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v3.82-TEST (Nov 14, 2026, 9:20 AM) CC-131: the sketch now fits on one screen: the picture shrinks to whatever room there is, the Close and keep typing button always shows under it (never off the bottom), and there is a round X at the top too.
     v3.81-TEST (Nov 14, 2026, 9:00 AM) CC-131: Randy approved changes 2, 3, 5, 6 from the form review: pictures are labeled as style examples, one plain way to pick (tap picture, Pick this look; skip and we pick), the You choose box is gone, About 3 minutes, and See how my words will fit.
     v3.80-TEST (Nov 14, 2026, 8:25 AM) CC-131: no more hidden More choices box at all. The Bottom of the graphic choices (business name, phone, social) now show in plain view right after Where will you show it?, so nothing is tucked away.
     v3.79-TEST (Nov 14, 2026, 8:05 AM) CC-131: Add photos and Where will you show it? (phone, TV, social) are no longer behind More choices; they sit in plain view right under What should it say? Only the bottom-of-graphic choices stay behind More choices.
@@ -337,6 +338,13 @@
 #skWrap{position:fixed;inset:0;z-index:9999;background:rgba(10,20,40,.85);display:none;overflow:auto;padding:14px}
 #skWrap.on{display:block}
 #skBox{max-width:420px;margin:0 auto}
+/* v3.82: whole sketch + button fit on one screen */
+#skWrap.on{display:flex;align-items:center;justify-content:center;padding:8px}
+#skBox{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-height:100dvh;max-height:100svh}
+#skArt{height:calc(100svh - 120px);max-height:calc(100svh - 120px);width:auto!important;max-width:100%;aspect-ratio:9/14;flex:none}
+#skNote{font-size:12px!important;line-height:1.25;margin:0!important;max-width:420px;color:#fff;text-align:center}
+#skX{flex:none;width:100%;max-width:420px;min-height:46px}
+#skTop{position:absolute;top:8px;right:8px;z-index:3;width:44px;height:44px;border-radius:50%;border:2px solid #fff;background:rgba(0,0,0,.65);color:#fff;font:800 22px/1 system-ui,sans-serif;cursor:pointer}
 #skArt{position:relative;aspect-ratio:9/14;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#ff5e62 0%,#ff9966 38%,#ffd452 70%,#2ec4b6 100%);color:#fff;text-align:center;padding:9% 7% 8%;display:flex;flex-direction:column;justify-content:flex-start;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 #skArt:before,#skArt:after{content:"";position:absolute;border-radius:50%;opacity:.22;background:#fff}
 #skArt:before{width:70%;aspect-ratio:1;left:-22%;top:-12%}
@@ -784,7 +792,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 </head>
 <body class="lean lite">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.81-TEST (Nov 14, 2026, 9:00 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.82-TEST (Nov 14, 2026, 9:20 AM)</span></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
   <p id="cbarNote"><b>Randy Turner</b>, ClearPoint Media Group<br><a href="tel:+18433219518" style="color:inherit">(843) 321-9518</a> · <a href="mailto:randy.turner@cpmgdata.com" style="color:inherit">randy.turner@cpmgdata.com</a><br>Call or text me anytime.</p>
@@ -882,7 +890,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
       <input type="text" id="cta" autocomplete="off">
       <p class="err" id="eCta" hidden></p>
       <button type="button" id="skBtn">See how my words will fit</button>
-      <div id="skWrap" role="dialog" aria-label="Quick sketch"><div id="skBox"><div id="skArt"><div class="skS"><i class="skL">1 · TITLE</i><div id="skT"></div></div><div class="skS"><i class="skL">2 · SUBJECT</i><div id="skH"></div></div><div class="skS skG"><i class="skL">3 · DETAILS</i><ul id="skB"></ul></div><div class="skS"><i class="skL">4 · WHAT TO DO</i><div id="skC"></div></div></div><p id="skNote">Rough sketch. Slanted words are examples; type your own to replace them. Your real graphic is checked and made by us.</p><button type="button" id="skX">Close and keep typing</button></div></div>
+      <div id="skWrap" role="dialog" aria-label="Quick sketch"><div id="skBox"><div id="skArt"><div class="skS"><i class="skL">1 · TITLE</i><div id="skT"></div></div><div class="skS"><i class="skL">2 · SUBJECT</i><div id="skH"></div></div><div class="skS skG"><i class="skL">3 · DETAILS</i><ul id="skB"></ul></div><div class="skS"><i class="skL">4 · WHAT TO DO</i><div id="skC"></div></div></div><button type="button" id="skTop" aria-label="Close the sketch">✕</button><p id="skNote">Rough sketch. Slanted words are examples; type your own to replace them. Your real graphic is checked and made by us.</p><button type="button" id="skX">Close and keep typing</button></div></div>
     </div>
 
     <div class="field gbwrap">
@@ -3339,7 +3347,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.81-TEST (Nov 14, 2026, 9:00 AM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v3.82-TEST (Nov 14, 2026, 9:20 AM) · ' + PACK_NAME;
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -3710,6 +3718,7 @@ var BP = {"m":[["Cocktail bar","Casual","New Menu"],["Dive bar","Upscale","New M
 (function () {
   var $ = function (i) { return document.getElementById(i); };
   function esc(t) { return t; }
+  $('skTop').addEventListener('click', function () { $('skX').click(); });
   $('skBtn').addEventListener('click', function () {
     var ph = function (id, d) { var v = $(id).value.trim(); return v || d; };
     var TH = [[/happy hour/i, ['#fde7b8','#f4b860','#4f2208','#7b1e3c','#c9791a','#7b1e3c']],
