@@ -1,4 +1,5 @@
-# CPMG industry packs v2.4-TEST (Nov 14, 2026, 12:50 PM)
+# CPMG industry packs v2.5-TEST (Nov 14, 2026, 1:00 PM)
+# v2.5-TEST (Nov 14, 2026, 1:00 PM) CC-141: new outfitter pack (guided tours, rafting, snowmobile, ATV, bike rentals, adventure outfitters). Test form only; Casual and Upscale chosen inside the form.
 # v2.4-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe pack (cafe, coffee shop, bakery). Test form only; Casual and Upscale chosen inside the form.
 # v2.3-TEST (Nov 14, 2026) CC-141: new brewery pack (brewery, cidery, distillery, winery). Test form only; Casual and Upscale chosen inside the form.
 # v2.2 (Nov 14, 2026, 7:30 AM) CC-138: new ski-shop pack (ski shops, rental shops, outdoor stores). Test form only.
@@ -257,6 +258,27 @@ PACKS['cafe'] = _clone('cpa',
         'Catering or cakes':['Cakes and Catering','Birthday Cakes and Party Trays',['Order a week ahead','Cookies by the dozen','Pickup or delivery'],'Call to order'],
         'Hours':['Holiday Hours','Smith Street Cafe',['Open daily at 7 AM','Early close Christmas Eve','Closed Christmas Day'],'Check before you go'],
         'Something else':['Thank You','From our cafe to you',['We appreciate you','See you soon'],'Call us anytime']})
+
+PACKS['outfitter'] = _clone('cpa',
+    name='Outfitter, tours or adventure rentals',
+    title='Order a graphic for your outfitter, tour company or rental shop',
+    foot='CPMG Outfitter Order',
+    who='Outfitters, tour companies and adventure rental shops',
+    uses='tour times, rafting and snowmobile trips, bike rentals, weather updates, gift cards and hours',
+    what='outfitter',
+    photos='your gear, your trailhead, your shop, or your logo',
+    kinds=[['Tour or trip','gift'],['Rentals','tag'],['Weather update','clock'],['Group or private trips','calendar-due'],['Hours','building'],['Something else','pencil']],
+    extra={'label':'What do you offer? (if you want)','hint':'A few words, like snowmobile tours, rafting, bike rentals or fishing.','ph':'Snowmobile tours and bike rentals','need':'','key':'placeType','note':'What we offer'},
+    biz='Smith Mountain Adventures',
+    photo1=['Outfitter photo','Big background, like your gear, your trailhead or your shop. Your words go on top.','Outfitter photo','Outfitter'],
+    scene='a friendly mountain outfitter shop with wood walls, racks of helmets and skis, and snow outside the window',
+    ex={'':['Snowmobile Tours','Smith Mountain Adventures',['Guided rides through fresh powder','Tours from $149','Gear included'],'Book your ride'],
+        'Tour or trip':['Snowmobile Tours','Guided Rides Through Fresh Powder',['Tours from $149','Gear included','Ages 6 and up'],'Book your ride'],
+        'Rentals':['Bike Rentals','Mountain Bikes and E-Bikes',['From $45 a day','Helmets included','Open daily at 8 AM'],'Rent a bike'],
+        'Weather update':['Tour Canceled for Weather','We Will Call You to Reschedule',['Thank you for understanding','Stay warm and safe'],'Call to reschedule'],
+        'Group or private trips':['Private Group Trips','Family, Friends or Your Team',['Book a week ahead','Guides and gear included','Lunch available'],'Call to book'],
+        'Hours':['Holiday Hours','Smith Mountain Adventures',['Open daily at 8 AM','Early close Christmas Eve','Closed Christmas Day'],'Check before you go'],
+        'Something else':['Thank You','From our crew to you',['We appreciate you','See you on the trail'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
