@@ -1,4 +1,5 @@
-# CPMG industry packs v2.7-TEST (Nov 14, 2026, 8:15 PM)
+# CPMG industry packs v2.8-TEST (Nov 14, 2026, 8:45 PM)
+# v2.8-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa pack (day spas, massage, hair and nail salons). Test form only; Casual and Upscale chosen inside the form.
 # v2.7-TEST (Nov 14, 2026, 8:15 PM) CC-141: new gift pack (gift shops, boutiques, souvenir and craft shops). Test form only; Casual and Upscale chosen inside the form.
 # v2.6-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin pack (cabins, vacation rentals, lodging managers). Test form only; Casual and Upscale chosen inside the form.
 # v2.5-TEST (Nov 14, 2026, 1:00 PM) CC-141: new outfitter pack (guided tours, rafting, snowmobile, ATV, bike rentals, adventure outfitters). Test form only; Casual and Upscale chosen inside the form.
@@ -323,6 +324,27 @@ PACKS['gift'] = _clone('cpa',
         'Gift wrap or gift cards':['Free Gift Wrap','Gift Cards Too',['We wrap it while you wait','Gift cards in any amount','Perfect for last minute gifts'],'Call or stop in'],
         'Snow day notice':['Snow Day Notice','We Are Still Open',['Roads may be slow','Warm up with us inside','Call before you drive'],'Call before you drive'],
         'Something else':['Thank You','From our shop to you',['We appreciate you','See you again soon'],'Call us anytime']})
+
+PACKS['spa'] = _clone('cpa',
+    name='Spa, massage or salon',
+    title='Order a graphic for your spa or salon',
+    foot='CPMG Spa and Salon Order',
+    who='Day spas, massage studios, hair salons and nail salons',
+    uses='appointment openings, massage and spa specials, holiday hours, gift certificates, new services and snow day notices',
+    what='spa or salon',
+    photos='your treatment room, your salon chairs, your products, or your logo',
+    kinds=[['Special or new service','tag'],['Holiday hours','clock'],['Massage or spa day','gift'],['Hair or nail openings','calendar-due'],['Gift certificates','gift'],['Something else','pencil']],
+    extra={'label':'What do you offer? (if you want)','hint':'A few words, like massage, facials, hair and nails.','ph':'Massage, facials, hair and nails','need':'','key':'placeType','note':'What we offer'},
+    biz='Smith Mountain Spa',
+    photo1=['Spa or salon photo','Big background, like your treatment room, your salon chairs or your hot tub. Your words go on top.','Spa photo','Spa'],
+    scene='a cozy day spa massage room with candles, white towels and a window showing fresh snow',
+    ex={'':['Relax After the Slopes','Smith Mountain Spa',['Massages for sore ski legs','60 minute massage from $99','Warm stones and quiet'],'Book your massage'],
+        'Special or new service':['New Services','New Treatments This Week',['Hot stone massage','Add hot stones for $25','Come see what is new'],'Book today'],
+        'Holiday hours':['Holiday Hours','Smith Mountain Spa',['Open extra days for the holidays','Mon to Sat 9 to 7','Sun 10 to 5'],'Book today'],
+        'Massage or spa day':['Spa Day Special','Robes, Towels and Quiet',['Spa day packages from $149','Steam, soak and massage','Book a friend too'],'Book your spa day'],
+        'Hair or nail openings':['Fresh Look for the Holidays','Hair and Nails',['Cuts, color and holiday styles','Mani and pedi from $65','Walk ins welcome'],'Call or stop in'],
+        'Gift certificates':['Give a Gift Certificate','Spa Gift Certificates',['Any amount','Ready to wrap','Perfect for last minute gifts'],'Call to order'],
+        'Something else':['Thank You','From our spa to you',['We appreciate you','See you again soon'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:

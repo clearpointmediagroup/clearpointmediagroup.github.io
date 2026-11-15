@@ -2,13 +2,14 @@
 <!--
   CPMG Home inspector Order — test/order/home-inspector/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.99-TEST (Nov 14, 2026, 8:15 PM)
+  v4.00-TEST (Nov 14, 2026, 8:45 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.00-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa form (?for=spa, built to test/order/spa/). Spa, massage or salon; asks Casual or Upscale inside the form, sent as Template: Spa, massage or salon, Casual. Gift shop, cabin and others unchanged.
     v3.98-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin form (?for=cabin, built to test/order/cabin/). Cabin, vacation rental or lodging; asks Casual or Upscale inside the form, sent as Template: Cabin, vacation rental or lodging, Casual. Brewery, cafe, outfitter and others unchanged.
     v3.97-TEST (Nov 14, 2026, 1:05 PM) CC-141: new outfitter form (?for=outfitter, built to test/order/outfitter/). Outfitter, tours or adventure rentals; asks Casual or Upscale inside the form, sent as Template: Outfitter, tours or adventure rentals, Casual. Brewery, cafe and others unchanged.
     v3.96-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe form (?for=cafe, built to test/order/cafe/). Cafe, coffee shop or bakery; asks Casual or Upscale inside the form, sent as Template: Cafe, coffee shop or bakery, Casual. Brewery and others unchanged.
@@ -4289,6 +4290,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "spa": {
+  "industry": "Spa, massage or salon",
+  "form": "Spa, massage or salon",
+  "title": "Order a graphic for your spa or salon",
+  "foot": "CPMG Spa and Salon Order",
+  "about": "We make professional graphics for local businesses, fast. Day spas, massage studios, hair salons and nail salons use us for appointment openings, massage and spa specials, holiday hours, gift certificates, new services and snow day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your spa or salon. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your treatment room, your salon chairs, your products, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Special or new service",
+    "tag"
+   ],
+   [
+    "Holiday hours",
+    "clock"
+   ],
+   [
+    "Massage or spa day",
+    "gift"
+   ],
+   [
+    "Hair or nail openings",
+    "calendar-due"
+   ],
+   [
+    "Gift certificates",
+    "gift"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "What do you offer? (if you want)",
+   "hint": "A few words, like massage, facials, hair and nails.",
+   "ph": "Massage, facials, hair and nails",
+   "need": "",
+   "key": "placeType",
+   "note": "What we offer",
+   "store": "cpmgExtra_spa"
+  },
+  "biz": "Smith Mountain Spa",
+  "photo1": [
+   "Spa or salon photo",
+   "Big background, like your treatment room, your salon chairs or your hot tub. Your words go on top.",
+   "Spa photo",
+   "Spa"
+  ],
+  "ex": {
+   "": [
+    "Relax After the Slopes",
+    "Smith Mountain Spa",
+    [
+     "Massages for sore ski legs",
+     "60 minute massage from $99",
+     "Warm stones and quiet"
+    ],
+    "Book your massage"
+   ],
+   "Special or new service": [
+    "New Services",
+    "New Treatments This Week",
+    [
+     "Hot stone massage",
+     "Add hot stones for $25",
+     "Come see what is new"
+    ],
+    "Book today"
+   ],
+   "Holiday hours": [
+    "Holiday Hours",
+    "Smith Mountain Spa",
+    [
+     "Open extra days for the holidays",
+     "Mon to Sat 9 to 7",
+     "Sun 10 to 5"
+    ],
+    "Book today"
+   ],
+   "Massage or spa day": [
+    "Spa Day Special",
+    "Robes, Towels and Quiet",
+    [
+     "Spa day packages from $149",
+     "Steam, soak and massage",
+     "Book a friend too"
+    ],
+    "Book your spa day"
+   ],
+   "Hair or nail openings": [
+    "Fresh Look for the Holidays",
+    "Hair and Nails",
+    [
+     "Cuts, color and holiday styles",
+     "Mani and pedi from $65",
+     "Walk ins welcome"
+    ],
+    "Call or stop in"
+   ],
+   "Gift certificates": [
+    "Give a Gift Certificate",
+    "Spa Gift Certificates",
+    [
+     "Any amount",
+     "Ready to wrap",
+     "Perfect for last minute gifts"
+    ],
+    "Call to order"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our spa to you",
+    [
+     "We appreciate you",
+     "See you again soon"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -4623,7 +4785,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   var TEMPLATE = '';
   (function () {
     try {
-      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'], spa: ['spa', 'Spa, massage or salon'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
       if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';
