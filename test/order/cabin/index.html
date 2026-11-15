@@ -2,7 +2,7 @@
 <!--
   CPMG Cabin, vacation rental or lodging Order — test/order/cabin/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v3.98-TEST (Nov 14, 2026, 4:30 PM)
+  v3.99-TEST (Nov 14, 2026, 8:15 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
@@ -4128,6 +4128,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "gift": {
+  "industry": "Gift shop or retail",
+  "form": "Gift shop or retail",
+  "title": "Order a graphic for your gift shop or boutique",
+  "foot": "CPMG Gift Shop Order",
+  "about": "We make professional graphics for local businesses, fast. Gift shops, boutiques, souvenir shops and craft stores use us for holiday hours, new arrivals, local crafts, gift wrapping, gift cards, sales and snow day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shelves, your window display, your best sellers, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "New arrivals or sale",
+    "tag"
+   ],
+   [
+    "Holiday hours",
+    "clock"
+   ],
+   [
+    "Local crafts or best sellers",
+    "gift"
+   ],
+   [
+    "Gift wrap or gift cards",
+    "gift"
+   ],
+   [
+    "Snow day notice",
+    "calendar-due"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "What do you sell? (if you want)",
+   "hint": "A few words, like local crafts, candles and souvenirs.",
+   "ph": "Local crafts, candles and souvenirs",
+   "need": "",
+   "key": "placeType",
+   "note": "What we sell",
+   "store": "cpmgExtra_gift"
+  },
+  "biz": "Smith Mountain Gifts",
+  "photo1": [
+   "Shop photo",
+   "Big background, like your shelves, your window or your best sellers. Your words go on top.",
+   "Shop photo",
+   "Shop"
+  ],
+  "ex": {
+   "": [
+    "Holiday Gift Shop",
+    "Smith Mountain Gifts",
+    [
+     "Local crafts, candles and ornaments",
+     "Stocking stuffers from $5",
+     "Free gift wrap"
+    ],
+    "Stop in today"
+   ],
+   "New arrivals or sale": [
+    "New Arrivals",
+    "Fresh Gifts This Week",
+    [
+     "Local crafts and candles",
+     "Stocking stuffers from $5",
+     "Come see what is new"
+    ],
+    "Stop in today"
+   ],
+   "Holiday hours": [
+    "Holiday Hours",
+    "Smith Mountain Gifts",
+    [
+     "Open late for holiday shopping",
+     "Mon to Sat 10 to 8",
+     "Sun 11 to 6"
+    ],
+    "Stop in today"
+   ],
+   "Local crafts or best sellers": [
+    "Made in Colorado",
+    "Local Crafts and Treats",
+    [
+     "Handmade by local makers",
+     "Candles, mugs and more",
+     "Gift sets from $19"
+    ],
+    "Come shop local"
+   ],
+   "Gift wrap or gift cards": [
+    "Free Gift Wrap",
+    "Gift Cards Too",
+    [
+     "We wrap it while you wait",
+     "Gift cards in any amount",
+     "Perfect for last minute gifts"
+    ],
+    "Call or stop in"
+   ],
+   "Snow day notice": [
+    "Snow Day Notice",
+    "We Are Still Open",
+    [
+     "Roads may be slow",
+     "Warm up with us inside",
+     "Call before you drive"
+    ],
+    "Call before you drive"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our shop to you",
+    [
+     "We appreciate you",
+     "See you again soon"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -4462,7 +4623,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   var TEMPLATE = '';
   (function () {
     try {
-      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
       if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';

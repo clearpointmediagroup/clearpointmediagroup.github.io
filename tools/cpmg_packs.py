@@ -1,4 +1,5 @@
-# CPMG industry packs v2.6-TEST (Nov 14, 2026, 4:30 PM)
+# CPMG industry packs v2.7-TEST (Nov 14, 2026, 8:15 PM)
+# v2.7-TEST (Nov 14, 2026, 8:15 PM) CC-141: new gift pack (gift shops, boutiques, souvenir and craft shops). Test form only; Casual and Upscale chosen inside the form.
 # v2.6-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin pack (cabins, vacation rentals, lodging managers). Test form only; Casual and Upscale chosen inside the form.
 # v2.5-TEST (Nov 14, 2026, 1:00 PM) CC-141: new outfitter pack (guided tours, rafting, snowmobile, ATV, bike rentals, adventure outfitters). Test form only; Casual and Upscale chosen inside the form.
 # v2.4-TEST (Nov 14, 2026, 12:50 PM) CC-141: new cafe pack (cafe, coffee shop, bakery). Test form only; Casual and Upscale chosen inside the form.
@@ -301,6 +302,27 @@ PACKS['cabin'] = _clone('cpa',
         'Check-in info':['Check In Info','Smith Mountain Cabins',['Check in at 4 PM','Check out at 10 AM','Door code sent the day before'],'Call with questions'],
         'Gift cards':['Give a Mountain Getaway','Cabin Gift Cards',['Any amount','Ready to print or send','Never expires'],'Call to order'],
         'Something else':['Thank You','From our cabins to you',['We appreciate you','See you again soon'],'Call us anytime']})
+
+PACKS['gift'] = _clone('cpa',
+    name='Gift shop or retail',
+    title='Order a graphic for your gift shop or boutique',
+    foot='CPMG Gift Shop Order',
+    who='Gift shops, boutiques, souvenir shops and craft stores',
+    uses='holiday hours, new arrivals, local crafts, gift wrapping, gift cards, sales and snow day notices',
+    what='shop',
+    photos='your shelves, your window display, your best sellers, or your logo',
+    kinds=[['New arrivals or sale','tag'],['Holiday hours','clock'],['Local crafts or best sellers','gift'],['Gift wrap or gift cards','gift'],['Snow day notice','calendar-due'],['Something else','pencil']],
+    extra={'label':'What do you sell? (if you want)','hint':'A few words, like local crafts, candles and souvenirs.','ph':'Local crafts, candles and souvenirs','need':'','key':'placeType','note':'What we sell'},
+    biz='Smith Mountain Gifts',
+    photo1=['Shop photo','Big background, like your shelves, your window or your best sellers. Your words go on top.','Shop photo','Shop'],
+    scene='a cozy gift shop with wood shelves of candles, mugs and wrapped gifts and a window showing fresh snow',
+    ex={'':['Holiday Gift Shop','Smith Mountain Gifts',['Local crafts, candles and ornaments','Stocking stuffers from $5','Free gift wrap'],'Stop in today'],
+        'New arrivals or sale':['New Arrivals','Fresh Gifts This Week',['Local crafts and candles','Stocking stuffers from $5','Come see what is new'],'Stop in today'],
+        'Holiday hours':['Holiday Hours','Smith Mountain Gifts',['Open late for holiday shopping','Mon to Sat 10 to 8','Sun 11 to 6'],'Stop in today'],
+        'Local crafts or best sellers':['Made in Colorado','Local Crafts and Treats',['Handmade by local makers','Candles, mugs and more','Gift sets from $19'],'Come shop local'],
+        'Gift wrap or gift cards':['Free Gift Wrap','Gift Cards Too',['We wrap it while you wait','Gift cards in any amount','Perfect for last minute gifts'],'Call or stop in'],
+        'Snow day notice':['Snow Day Notice','We Are Still Open',['Roads may be slow','Warm up with us inside','Call before you drive'],'Call before you drive'],
+        'Something else':['Thank You','From our shop to you',['We appreciate you','See you again soon'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
