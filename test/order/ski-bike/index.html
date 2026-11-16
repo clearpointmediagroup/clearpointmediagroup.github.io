@@ -2,13 +2,14 @@
 <!--
   CPMG Ski and bike shop Order — test/order/ski-bike/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v4.05-TEST (Nov 15, 2026, 11:46 PM)
+  v4.06-TEST (Nov 16, 2026, 2:25 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.06-TEST (Nov 16, 2026, 2:25 AM) CC-152: Randy approved (Nov 16, by 2:21 AM) $25 for one picture, $40 for a phone + TV pair, first picture free ($25 off, so a first pair is $15). Puts back the v4.05-TEST CC-148 change (commit e78c97b): pair 25 -> 40 and the $40 pair comment. Price box: new client one picture $0, new client pair $15, returning one picture $25, returning pair $40. Social media stays its own $25 picture. Short form (simple packs) unchanged: no price box. CC-148 closed.
     v4.05-TEST (Nov 15, 2026, 11:46 PM) CC-148: $25 covers phone + TV; first order $0. Randy approved ONE price: $25 per order, every order is a phone picture AND a TV picture (was $40 pair), and a new client's first order is free ($0, was $15). Social media stays its own $25 graphic. New client = no saved record on this phone, kept as before; the order system still takes the free first one off.
     v4.04-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: Randy approved a SHORT 3-step form for the Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant), turned on by pack flag simple=True (body class "simple"); other packs unchanged. Header: Order a picture for your ..., First one is free · Proof in about 5 hours, the hours line, version label. Step 1 What do you need? (one tap: 4 holiday choices first, then 4 everyday ones, each with its own gray example). Step 2 What should it say? (one big box, + Add a photo opens the one photo spot). Step 3 How do we reach you? (business name, your name, email or phone). Send, You pay nothing now, and 3 lines (phone and TV picture, we match the email look, call or text me anytime). Gone from what owners see: Casual/Upscale, Pick a look, screen sizes, bottom of graphic, price box, Call/Text/Email buttons, What do you make?, long Help. Sent the same way as before: sizes Phone + Big-screen TV, bottom shows business name and phone, look from ?look=casual or ?look=upscale (else Match the email sample), restaurant kind of place from ?place=Pizza (else one What kind of place? row), title = first line of the box, details = the rest, their exact words and Contact by (Email) in the notes. Spam box, first-one-free, double-send guard and thank-you screen kept. Version label now shows this version (it said v3.94-TEST).
     v4.03-TEST (Nov 15, 2026, 10:15 PM) CC-142: Randy approved new hours wording: open 7 days, 8 a.m. to 5:30 p.m. Eastern (6 to 3:30 Mountain), closed Thanksgiving Day; order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, later orders ready the next morning. Time line, thank-you line and every pack's intro.
@@ -882,7 +883,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 </head>
 <body class="lean lite simple">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.05-TEST (Nov 15, 2026, 11:46 PM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.06-TEST (Nov 16, 2026, 2:25 AM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -5271,7 +5272,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.05-TEST (Nov 15, 2026, 11:46 PM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.06-TEST (Nov 16, 2026, 2:25 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -5604,7 +5605,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   examples(''); sExample('');
   setTimeout(function () { try { showPrice(); } catch (e) { /* ok */ } }, 0);
 
-  // v2.4: more than one place. Phone + (TV or Website) = one $25 order (CC-148, was $40); TV and Website share one wide graphic;
+  // v2.4: more than one place. Phone + (TV or Website) = one $40 pair; TV and Website share one wide graphic;
   // Social media is its own $25 graphic. Prices stay the order system's (first one free is taken off there).
   // v2.16: the look they picked (Holiday adds which holiday)
   function lookText() {
@@ -5725,7 +5726,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   function groups(p) {
     var tall = p.indexOf('Phone') > -1, wide = p.filter(function (v) { return v === 'TV' || v === 'Website'; }), out = [];
     var wideName = wide.map(function (v) { return SHOWN[v]; }).join(' + ');
-    var one = 25, pair = 25;   // v4.05 CC-148: one price, $25 covers phone + TV (was $40 pair); first order free = $0
+    var one = 25, pair = 40;   // CC-152: $25 one picture, $40 phone + TV pair; first picture free ($25 off)
     if (tall && wide.length) out.push({ use: 'both', shown: 'Phone + ' + wideName, size: 'Phone + Wide', price: pair });
     else if (tall) out.push({ use: 'phone', shown: 'Phone', size: SIZE.Phone, price: one });
     else if (wide.length) out.push({ use: 'tv', shown: wideName, size: 'Wide 16:9', price: one });
