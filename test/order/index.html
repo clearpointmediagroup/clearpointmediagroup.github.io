@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
   CPMG Standard Order Form — test/order/index.html
-  v4.08-TEST (Nov 16, 2026, 3:27 AM)
+  v4.09-TEST (Nov 16, 2026, 3:38 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.09-TEST (Nov 16, 2026, 3:38 AM) CC-144 fix: the short form's words always fit the order system's limits (headline 10 words, lines 10 words, 5 lines, notes 50 words); found by practice order 1 at about 3:32 AM (and its rerun at about 3:33 AM). Short form only. Headline: the owner's first line when they typed 2 or more lines and it is 10 words or fewer; otherwise the step 1 pick ("Something else" becomes "Our news"). Lines: the rest of the words keep their line breaks and wrap at 10 words a line; if that makes more than 5 lines, short lines are put together (a comma where a line ended), then the words flow 10 to a line. More than 50 words for the lines: the form does not send and says under the box "Please keep it to about 50 words. We'll call or email if we need more." (also while typing). Notes on each picture (the order system counts every word of them, 50 at most): kept Kind of graphic, Size, Look (with Template), Kind of place (restaurant), Photos ("1 photo" or "None"), Bottom of graphic; dropped Form, Order link, Where shown (the size column has it), the 5 picture questions that are always None on the short form, Contact by (always Email) and Their words (the words are in the lines). Worst case now 42 words. A kind of place from a link that is not on the list is kept to 4 words. Long forms: version label only.
     v4.08-TEST (Nov 16, 2026, 3:27 AM) CC-144 fix (Randy, Nov 16, 3:25 AM, tap: Ask for email and phone): two boxes, Email and Phone; the order system needs both. A practice order failed because the short form had ONE "Email or phone" box and the order system (CPMG_OrderReceiver v2.3-TEST) needs an email AND a 10-digit phone. Step 3 of the short form now shows 4 boxes: Business name, Your name, Email, Phone (the form's own email box, type email, "Email (your preview comes here)", and phone box, type tel, "Phone"). Both are required, with the long form's checks and words ("Type your email, like you@yourbusiness.com." / "That email looks wrong. It needs an @ and an ending like .com." / "Type your phone number." / "Your phone needs 10 numbers, like 843 555 1212."). Sent the same way the long form sends them (customer.email, customer.phone); Contact by is now always Email, and the thank-you line always says by email. Returning clients get both boxes filled in. Everything else on the short form is unchanged (3 steps, Phone/TV/Both, price line, "You pay nothing now."). Long forms: version label only.
     v4.07-TEST (Nov 16, 2026, 2:45 AM) CC-152, Randy picked "Let them pick" (Nov 16, per main about 2:37 AM): the short form (simple packs) asks Phone, TV or both? with three equal buttons in one row above Send: Phone $25, TV $25, Both $40. None picked to start; Send waits for a pick ("Pick phone, TV or both."). A price line under the buttons follows the pick with the same first-order rule as the long form (first picture free, $25 off): new client Phone or TV = Free, Both = $15; later orders $25 / $25 / $40. "You pay nothing now." stays. Sent as graphics[].use phone / tv / both, the same field and values Quick Order and Detail Order send (the order system maps them with USE_TO_SIZE to Phone (portrait) / Wide (TV or website) / Phone + Wide), with more.Size in those same words; the order system needs no change. Words: the header line is now "$25 a picture · $40 for phone + TV · First picture free" (every form; the short form said "First one is free · Proof in about 5 hours"; no-break spaces keep each part together, so a phone breaks the line only after a dot); the short form note is now "Pick phone, TV or both. Both is $40." (was "Every order comes as a phone picture and a TV picture.").
     v4.06-TEST (Nov 16, 2026, 2:25 AM) CC-152: Randy approved (Nov 16, by 2:21 AM) $25 for one picture, $40 for a phone + TV pair, first picture free ($25 off, so a first pair is $15). Puts back the v4.05-TEST CC-148 change (commit e78c97b): pair 25 -> 40 and the $40 pair comment. Price box: new client one picture $0, new client pair $15, returning one picture $25, returning pair $40. Social media stays its own $25 picture. Short form (simple packs) unchanged: no price box. CC-148 closed.
@@ -893,7 +894,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 </head>
 <body>
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.08-TEST (Nov 16, 2026, 3:27 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.09-TEST (Nov 16, 2026, 3:38 AM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -5290,7 +5291,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.08-TEST (Nov 16, 2026, 3:27 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.09-TEST (Nov 16, 2026, 3:38 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -5480,7 +5481,38 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   });
 
   // v4.04-TEST CC-144: the short form. Same order shape the order system already takes, with fixed choices filled in for the owner.
-  var sayIn = $('sayAll'); if (sayIn) sayIn.addEventListener('input', function () { err('eSay', ''); });
+  // v4.09-TEST CC-144 fix: the words always fit the order system's limits (CPMG_OrderSystem v5.2-TEST: headline 10 words, 5 lines of 10 words, notes 50 words).
+  // Words are counted the way the order system counts them: split on spaces.
+  var S_TOO_LONG = 'Please keep it to about 50 words. We’ll call or email if we need more.';
+  function sWords(s) { s = String(s || '').trim(); return s ? s.split(/\s+/).filter(String) : []; }
+  function sJoin(a, b, comma) {   // a + b; when b starts a new line of theirs, a comma goes after a's last word (unless it already ends with a mark)
+    a = a.slice();
+    if (a.length && comma && !/[.,;:!?)\]…]$/.test(a[a.length - 1])) a[a.length - 1] += ',';
+    return a.concat(b);
+  }
+  function sSplit(say, what) {   // -> { ttl, lines, ok, words }: a headline of up to 10 words and up to 5 lines of up to 10 words
+    var rows = String(say || '').replace(/\r/g, '').split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    var ttl = '', body = rows;
+    if (rows.length > 1 && sWords(rows[0]).length <= 10) { ttl = rows[0]; body = rows.slice(1); }   // 2 or more lines and a short first line: it is the headline
+    if (!ttl) ttl = (!what || what === 'Something else') ? 'Our news' : what;                         // otherwise the step 1 pick
+    var wl = body.map(sWords).filter(function (x) { return x.length; });
+    var total = wl.reduce(function (n, x) { return n + x.length; }, 0);
+    if (total > 50) return { ttl: ttl, lines: [], ok: false, words: total };
+    var units = [];   // their lines, a long line cut every 10 words (start = the piece begins one of their lines)
+    wl.forEach(function (x) { for (var i = 0; i < x.length; i += 10) units.push({ w: x.slice(i, i + 10), start: i === 0 }); });
+    var out = units.map(function (u) { return u.w; });   // 1) their line breaks kept
+    if (out.length > 5) {   // 2) put short lines together, a comma where a line ended
+      out = []; var cur = [];
+      units.forEach(function (u) { if (cur.length && cur.length + u.w.length <= 10) cur = sJoin(cur, u.w, u.start); else { if (cur.length) out.push(cur); cur = u.w.slice(); } });
+      if (cur.length) out.push(cur);
+    }
+    if (out.length > 5) {   // 3) let the words flow, 10 to a line (still a comma where a line ended); 50 words always fit
+      var flat = []; wl.forEach(function (x) { flat = sJoin(flat, x, true); });
+      out = []; for (var j = 0; j < flat.length; j += 10) out.push(flat.slice(j, j + 10));
+    }
+    return { ttl: ttl, lines: out.map(function (x) { return x.join(' '); }), ok: true, words: total };
+  }
+  var sayIn = $('sayAll'); if (sayIn) sayIn.addEventListener('input', function () { err('eSay', sSplit(sayIn.value, '').ok ? '' : S_TOO_LONG); });   // v4.09-TEST: says so while typing when there are too many words
   // v4.07-TEST CC-152: Phone, TV or Both. Sent as graphics[].use phone / tv / both, the same field and values Quick Order and Detail Order send.
   var S_PICK = { Phone: ['Phone'], TV: ['TV'], Both: ['Phone', 'TV'] };
   var S_SIZE = { phone: 'Phone (portrait)', tv: 'Wide (TV or website)', both: 'Phone + Wide' };   // the Size words Quick Order sends
@@ -5496,10 +5528,11 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   function sendSimple() {
     var biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();   // v4.08-TEST CC-144 fix: two boxes, Email and Phone (the order system needs both)
     var say = ($('sayAll') ? $('sayAll').value : '').replace(/\r/g, '').trim().slice(0, 600);
-    var rows = say.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var sp = sSplit(say, what);   // v4.09-TEST CC-144 fix: headline and lines always fit the order system's limits
     var emOk = C.emailOk(em), phN = C.digits(ph).length;   // v4.08-TEST: the same checks as the long form
     var bad = [], fails = [];   // top to bottom, only the first problem shows
-    fails.push(['eSay', !rows.length, 'Type what your picture should say, like the gray example.', 'sayAll']);
+    fails.push(['eSay', !say || !sp.ok, !say ? 'Type what your picture should say, like the gray example.' : S_TOO_LONG, 'sayAll']);
     fails.push(['eBiz', !biz, 'Type your business name.', 'biz']);
     fails.push(['eNm', !nm, 'Type your name.', 'nm']);
     fails.push(['eEm', !emOk, em ? 'That email looks wrong. It needs an @ and an ending like .com.' : 'Type your email, like you@yourbusiness.com.', 'em']);   // v4.08-TEST: the long form's words
@@ -5507,10 +5540,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     fails.push(['eSz', !sPick(), 'Pick phone, TV or both.', 'sSzPhone']);   // v4.07-TEST CC-152: Send waits for a pick
     fails.forEach(function (c) { var show = c[1] && !bad.length; err(c[0], show ? c[2] : ''); if (show) bad.push(c[3]); });
     if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
-    var ttl = rows[0], bdy = rows.slice(1);   // title = first line, details = the rest (5 lines at most, like before)
-    if (bdy.length > 5) bdy = bdy.slice(0, 4).concat([bdy.slice(4).join(' · ')]);
-    if (!bdy.length) bdy = ['(Left for us to write)'];
-    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var ttl = sp.ttl, bdy = sp.lines.length ? sp.lines : ['(Left for us to write)'];   // v4.09-TEST: headline up to 10 words, up to 5 lines of up to 10 words
     var changed = !client || client.business !== biz || client.name !== nm || (client.email || '') !== em || C.digits(client.phone) !== C.digits(ph);
     var payload = {
       kind: 'quick',
@@ -5522,12 +5552,12 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
       rush: false,
       website: C.honeypot()
     };
-    payload.graphics.forEach(function (g) {
-      g.more['Bottom of graphic'] = 'Business name · Phone';
-      g.more['Size'] = S_SIZE[g.use] || g.more['Size'];   // v4.07-TEST CC-152: same Size words as Quick Order
-      if (PACK_NAME === 'restaurant') g.more[PACK.extra.note] = S_PLACE || 'Not picked';
-      g.more['Their words'] = say;
-      g.more['Contact by'] = 'Email';   // v4.08-TEST: every short-form order now has an email and a phone
+    payload.graphics.forEach(function (g) {   // v4.09-TEST CC-144 fix: only the notes Randy needs. The order system counts every word of them (50 at most; worst case here 42).
+      var m = { 'Kind of graphic': what, 'Size': S_SIZE[g.use] || g.more['Size'], 'Look': g.more['Look'] };   // v4.07-TEST CC-152: same Size words as Quick Order (Size is not counted)
+      if (PACK_NAME === 'restaurant') m[PACK.extra.note] = S_PLACE || 'Not picked';
+      m['Photos'] = photos.count() ? '1 photo' : 'None';
+      m['Bottom of graphic'] = 'Business name · Phone';
+      g.more = m;   // dropped: Form, Order link, Where shown (the size column has it), the 5 picture questions (always None here), Contact by (always Email), Their words (the words are in the lines)
     });
     sending = true; $('sendErr').hidden = true;
     C.busy($('sendBtn'), true, 'Sending…');
@@ -5658,7 +5688,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
         else if (PACK_NAME === 'restaurant') {
           var raw = (C.param('place') || (tp ? tp[1] : '')).trim(), want = raw.toLowerCase().replace(/[\s_]+/g, '-');
           TPL_TYPES.forEach(function (t) { if (want && (t[0] === want || t[1].toLowerCase().replace(/\s+/g, '-') === want)) S_PLACE = t[1]; });
-          if (!S_PLACE && raw) { var cl = raw.replace(/[-_]+/g, ' ').replace(/[^A-Za-z0-9 '&]/g, '').replace(/\s+/g, ' ').trim().slice(0, 40); if (cl) S_PLACE = cl.charAt(0).toUpperCase() + cl.slice(1); }   // a place not on the list is kept as written
+          if (!S_PLACE && raw) { var cl = raw.replace(/[-_]+/g, ' ').replace(/[^A-Za-z0-9 '&]/g, '').replace(/\s+/g, ' ').trim().slice(0, 40).split(' ').slice(0, 4).join(' ').trim(); if (cl) S_PLACE = cl.charAt(0).toUpperCase() + cl.slice(1); }   // a place not on the list is kept as written (v4.09-TEST: at most 4 words, so the notes stay short)
           var box = document.getElementById('sPlace');
           if (!S_PLACE && box) {   // no ?place= in the link: ONE compact row
             var plb = document.createElement('label'); plb.htmlFor = 'sPlaceSel'; plb.textContent = 'What kind of place?';
