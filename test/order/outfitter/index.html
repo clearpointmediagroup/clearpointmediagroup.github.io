@@ -2,13 +2,14 @@
 <!--
   CPMG Outfitter, tours or adventure rentals Order — test/order/outfitter/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v4.00-TEST (Nov 14, 2026, 8:45 PM)
+  v4.01-TEST (Nov 15, 2026, 9:15 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.01-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music venue form (?for=music, built to test/order/music/). Music venue; asks Casual or Upscale inside the form, sent as Template: Music venue, Casual. Spa, gift shop and others unchanged.
     v4.00-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa form (?for=spa, built to test/order/spa/). Spa, massage or salon; asks Casual or Upscale inside the form, sent as Template: Spa, massage or salon, Casual. Gift shop, cabin and others unchanged.
     v3.98-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin form (?for=cabin, built to test/order/cabin/). Cabin, vacation rental or lodging; asks Casual or Upscale inside the form, sent as Template: Cabin, vacation rental or lodging, Casual. Brewery, cafe, outfitter and others unchanged.
     v3.97-TEST (Nov 14, 2026, 1:05 PM) CC-141: new outfitter form (?for=outfitter, built to test/order/outfitter/). Outfitter, tours or adventure rentals; asks Casual or Upscale inside the form, sent as Template: Outfitter, tours or adventure rentals, Casual. Brewery, cafe and others unchanged.
@@ -4451,6 +4452,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "music": {
+  "industry": "Music venue",
+  "form": "Music venue",
+  "title": "Order a graphic for your music venue",
+  "foot": "CPMG Music Venue Order",
+  "about": "We make professional graphics for local businesses, fast. Live music venues, concert halls, listening rooms and music bars use us for this weekend's shows, tickets on sale, open mic nights, holiday shows, private events, gift cards and snow night notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your venue. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your stage, your room, a band photo, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Live music or new show",
+    "calendar-due"
+   ],
+   [
+    "Tickets on sale",
+    "tag"
+   ],
+   [
+    "Holiday hours or shows",
+    "clock"
+   ],
+   [
+    "Open mic or happy hour show",
+    "gift"
+   ],
+   [
+    "Private events",
+    "building"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "What kind of music? (if you want)",
+   "hint": "A few words, like country, jazz, rock or open mic.",
+   "ph": "Jazz, country and open mic",
+   "need": "",
+   "key": "placeType",
+   "note": "Kind of music",
+   "store": "cpmgExtra_music"
+  },
+  "biz": "Smith Mountain Music Hall",
+  "photo1": [
+   "Stage or venue photo",
+   "Big background, like your stage, your room or your bar. Your words go on top.",
+   "Venue photo",
+   "Venue"
+  ],
+  "ex": {
+   "": [
+    "Live Music This Weekend",
+    "Smith Mountain Music Hall",
+    [
+     "Local bands Friday and Saturday",
+     "Doors at 7, music at 8",
+     "Tickets at the door"
+    ],
+    "Call or text us"
+   ],
+   "Live music or new show": [
+    "New Show Added",
+    "Saturday Night Live",
+    [
+     "Local band on stage at 8",
+     "Doors at 7",
+     "Tickets from $15"
+    ],
+    "Get your tickets"
+   ],
+   "Tickets on sale": [
+    "Tickets on Sale",
+    "Winter Concert Series",
+    [
+     "Six shows this season",
+     "Reserved seats available",
+     "Season passes from $90"
+    ],
+    "Reserve your seats"
+   ],
+   "Holiday hours or shows": [
+    "Holiday Shows",
+    "Smith Mountain Music Hall",
+    [
+     "Music every night the week of Christmas",
+     "Doors at 6, music at 8",
+     "Hot cocoa at the bar"
+    ],
+    "Reserve your table"
+   ],
+   "Open mic or happy hour show": [
+    "Open Mic Night",
+    "Every Wednesday",
+    [
+     "Sign up at 7",
+     "Music starts at 8",
+     "Drink specials all night"
+    ],
+    "Come play or listen"
+   ],
+   "Private events": [
+    "Private Events",
+    "Book Our Room",
+    [
+     "Birthdays and company parties",
+     "Stage, sound and lights",
+     "Food and drinks available"
+    ],
+    "Call to book"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our stage to you",
+    [
+     "We appreciate you",
+     "See you at the next show"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -4785,7 +4947,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   var TEMPLATE = '';
   (function () {
     try {
-      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'], spa: ['spa', 'Spa, massage or salon'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'], spa: ['spa', 'Spa, massage or salon'], music: ['music', 'Music venue'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
       if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';

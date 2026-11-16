@@ -1,4 +1,5 @@
-# CPMG industry packs v2.8-TEST (Nov 14, 2026, 8:45 PM)
+# CPMG industry packs v2.9-TEST (Nov 15, 2026, 9:15 PM)
+# v2.9-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music pack (music venues, live music bars, concert halls). Test form only; Casual and Upscale chosen inside the form.
 # v2.8-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa pack (day spas, massage, hair and nail salons). Test form only; Casual and Upscale chosen inside the form.
 # v2.7-TEST (Nov 14, 2026, 8:15 PM) CC-141: new gift pack (gift shops, boutiques, souvenir and craft shops). Test form only; Casual and Upscale chosen inside the form.
 # v2.6-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin pack (cabins, vacation rentals, lodging managers). Test form only; Casual and Upscale chosen inside the form.
@@ -345,6 +346,27 @@ PACKS['spa'] = _clone('cpa',
         'Hair or nail openings':['Fresh Look for the Holidays','Hair and Nails',['Cuts, color and holiday styles','Mani and pedi from $65','Walk ins welcome'],'Call or stop in'],
         'Gift certificates':['Give a Gift Certificate','Spa Gift Certificates',['Any amount','Ready to wrap','Perfect for last minute gifts'],'Call to order'],
         'Something else':['Thank You','From our spa to you',['We appreciate you','See you again soon'],'Call us anytime']})
+
+PACKS['music'] = _clone('cpa',
+    name='Music venue',
+    title='Order a graphic for your music venue',
+    foot='CPMG Music Venue Order',
+    who='Live music venues, concert halls, listening rooms and music bars',
+    uses='this weekend\'s shows, tickets on sale, open mic nights, holiday shows, private events, gift cards and snow night notices',
+    what='venue',
+    photos='your stage, your room, a band photo, or your logo',
+    kinds=[['Live music or new show','calendar-due'],['Tickets on sale','tag'],['Holiday hours or shows','clock'],['Open mic or happy hour show','gift'],['Private events','building'],['Something else','pencil']],
+    extra={'label':'What kind of music? (if you want)','hint':'A few words, like country, jazz, rock or open mic.','ph':'Jazz, country and open mic','need':'','key':'placeType','note':'Kind of music'},
+    biz='Smith Mountain Music Hall',
+    photo1=['Stage or venue photo','Big background, like your stage, your room or your bar. Your words go on top.','Venue photo','Venue'],
+    scene='a cozy mountain music venue with a small stage, warm lights and a window showing fresh snow',
+    ex={'':['Live Music This Weekend','Smith Mountain Music Hall',['Local bands Friday and Saturday','Doors at 7, music at 8','Tickets at the door'],'Call or text us'],
+        'Live music or new show':['New Show Added','Saturday Night Live',['Local band on stage at 8','Doors at 7','Tickets from $15'],'Get your tickets'],
+        'Tickets on sale':['Tickets on Sale','Winter Concert Series',['Six shows this season','Reserved seats available','Season passes from $90'],'Reserve your seats'],
+        'Holiday hours or shows':['Holiday Shows','Smith Mountain Music Hall',['Music every night the week of Christmas','Doors at 6, music at 8','Hot cocoa at the bar'],'Reserve your table'],
+        'Open mic or happy hour show':['Open Mic Night','Every Wednesday',['Sign up at 7','Music starts at 8','Drink specials all night'],'Come play or listen'],
+        'Private events':['Private Events','Book Our Room',['Birthdays and company parties','Stage, sound and lights','Food and drinks available'],'Call to book'],
+        'Something else':['Thank You','From our stage to you',['We appreciate you','See you at the next show'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
