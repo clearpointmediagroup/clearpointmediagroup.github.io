@@ -2,13 +2,14 @@
 <!--
   CPMG Real estate Order — test/order/real-estate/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v4.01-TEST (Nov 15, 2026, 9:15 PM)
+  v4.02-TEST (Nov 15, 2026, 10:15 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.02-TEST (Nov 15, 2026, 10:15 PM) CC-141: new ski and bike shop form (?for=ski-bike, built to test/order/ski-bike/). Ski and bike shop; asks Casual or Upscale inside the form, sent as Template: Ski and bike shop, Casual. The older ski-shop form, music, spa and others unchanged.
     v4.01-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music venue form (?for=music, built to test/order/music/). Music venue; asks Casual or Upscale inside the form, sent as Template: Music venue, Casual. Spa, gift shop and others unchanged.
     v4.00-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa form (?for=spa, built to test/order/spa/). Spa, massage or salon; asks Casual or Upscale inside the form, sent as Template: Spa, massage or salon, Casual. Gift shop, cabin and others unchanged.
     v3.98-TEST (Nov 14, 2026, 4:30 PM) CC-141: new cabin form (?for=cabin, built to test/order/cabin/). Cabin, vacation rental or lodging; asks Casual or Upscale inside the form, sent as Template: Cabin, vacation rental or lodging, Casual. Brewery, cafe, outfitter and others unchanged.
@@ -4613,6 +4614,167 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
    ]
   },
   "vision": false
+ },
+ "ski-bike": {
+  "industry": "Ski and bike shop",
+  "form": "Ski and bike shop",
+  "title": "Order a graphic for your ski and bike shop",
+  "foot": "CPMG Ski and Bike Shop Order",
+  "about": "We make professional graphics for local businesses, fast. Ski and snowboard rental and tune shops, boot fitters and summer bike rental and repair shops use us for season rentals, tune-ups, boot fitting, demo days, kids rentals, summer bike rentals, gift cards, holiday hours and powder day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
+  "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shop, your rental racks, your workshop, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "kinds": [
+   [
+    "Rentals",
+    "calendar-due"
+   ],
+   [
+    "Tune-up or boot fitting",
+    "tag"
+   ],
+   [
+    "Demo day or event",
+    "building"
+   ],
+   [
+    "Summer bikes",
+    "user-plus"
+   ],
+   [
+    "Hours or powder day",
+    "clock"
+   ],
+   [
+    "Something else",
+    "pencil"
+   ]
+  ],
+  "looks": [
+   [
+    "Professional",
+    "briefcase",
+    "Clean and polished",
+    "professional"
+   ],
+   [
+    "Friendly",
+    "mood-smile",
+    "Warm and welcoming",
+    "friendly"
+   ],
+   [
+    "Modern",
+    "layout-grid",
+    "Simple and sleek",
+    "modern"
+   ],
+   [
+    "Classic",
+    "building-bank",
+    "Traditional and trusted",
+    "classic"
+   ],
+   [
+    "3D poster",
+    "cube",
+    "Bold, professional 3D",
+    "3d-poster"
+   ],
+   [
+    "Holiday",
+    "gift",
+    "Tell us which one",
+    "holiday"
+   ]
+  ],
+  "places": [],
+  "extra": {
+   "label": "What do you rent or fix? (if you want)",
+   "hint": "A few words, like skis, snowboards and bikes.",
+   "ph": "Skis, snowboards and bikes",
+   "need": "",
+   "key": "placeType",
+   "note": "What we offer",
+   "store": "cpmgExtra_ski-bike"
+  },
+  "biz": "Smith Mountain Ski and Bike",
+  "photo1": [
+   "Shop photo",
+   "Big background, like your rental racks, your workshop or your bikes. Your words go on top.",
+   "Shop photo",
+   "Shop"
+  ],
+  "ex": {
+   "": [
+    "Season Rentals",
+    "Smith Mountain Ski and Bike",
+    [
+     "Skis and snowboards all winter",
+     "Season rentals from $199",
+     "Reserve early"
+    ],
+    "Reserve your gear"
+   ],
+   "Rentals": [
+    "Season Rentals",
+    "Skis and Snowboards",
+    [
+     "Gear for the whole winter",
+     "Season rentals from $199",
+     "Kids rentals too"
+    ],
+    "Reserve your gear"
+   ],
+   "Tune-up or boot fitting": [
+    "Tune-Up Special",
+    "Sharp Edges, Fresh Wax",
+    [
+     "Tune-ups from $35",
+     "Ready the next day",
+     "Free boot fit check"
+    ],
+    "Drop off today"
+   ],
+   "Demo day or event": [
+    "Demo Day",
+    "Saturday at the Base",
+    [
+     "Try the new skis",
+     "Demos from $20",
+     "All ages welcome"
+    ],
+    "Save your spot"
+   ],
+   "Summer bikes": [
+    "Summer Bike Rentals",
+    "Mountain Bikes and Trail Maps",
+    [
+     "Bike rentals from $39 a day",
+     "Helmets included",
+     "Tune-ups from $59"
+    ],
+    "Reserve your bike"
+   ],
+   "Hours or powder day": [
+    "Powder Day",
+    "Fresh Snow on the Mountain",
+    [
+     "We open at 7 for rentals",
+     "Skis waxed and ready",
+     "Call ahead to reserve"
+    ],
+    "Come get your gear"
+   ],
+   "Something else": [
+    "Thank You",
+    "From our shop to you",
+    [
+     "We appreciate you",
+     "See you on the mountain"
+    ],
+    "Call us anytime"
+   ]
+  },
+  "vision": false
  }
 };
   // ===== PACKS END =====
@@ -4947,7 +5109,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   var TEMPLATE = '';
   (function () {
     try {
-      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'], spa: ['spa', 'Spa, massage or salon'], music: ['music', 'Music venue'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'], spa: ['spa', 'Spa, massage or salon'], music: ['music', 'Music venue'], 'ski-bike': ['ski-bike', 'Ski and bike shop'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
       if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';

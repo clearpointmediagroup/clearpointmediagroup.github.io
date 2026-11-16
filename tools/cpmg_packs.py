@@ -1,4 +1,5 @@
-# CPMG industry packs v2.9-TEST (Nov 15, 2026, 9:15 PM)
+# CPMG industry packs v2.10-TEST (Nov 15, 2026, 10:15 PM)
+# v2.10-TEST (Nov 15, 2026, 10:15 PM) CC-141: new ski-bike pack (ski and snowboard rental and tune shops in winter, bike rental and repair in summer). Test form only; Casual and Upscale chosen inside the form. The older ski-shop pack is not changed.
 # v2.9-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music pack (music venues, live music bars, concert halls). Test form only; Casual and Upscale chosen inside the form.
 # v2.8-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa pack (day spas, massage, hair and nail salons). Test form only; Casual and Upscale chosen inside the form.
 # v2.7-TEST (Nov 14, 2026, 8:15 PM) CC-141: new gift pack (gift shops, boutiques, souvenir and craft shops). Test form only; Casual and Upscale chosen inside the form.
@@ -367,6 +368,27 @@ PACKS['music'] = _clone('cpa',
         'Open mic or happy hour show':['Open Mic Night','Every Wednesday',['Sign up at 7','Music starts at 8','Drink specials all night'],'Come play or listen'],
         'Private events':['Private Events','Book Our Room',['Birthdays and company parties','Stage, sound and lights','Food and drinks available'],'Call to book'],
         'Something else':['Thank You','From our stage to you',['We appreciate you','See you at the next show'],'Call us anytime']})
+
+PACKS['ski-bike'] = _clone('cpa',
+    name='Ski and bike shop',
+    title='Order a graphic for your ski and bike shop',
+    foot='CPMG Ski and Bike Shop Order',
+    who='Ski and snowboard rental and tune shops, boot fitters and summer bike rental and repair shops',
+    uses='season rentals, tune-ups, boot fitting, demo days, kids rentals, summer bike rentals, gift cards, holiday hours and powder day notices',
+    what='shop',
+    photos='your shop, your rental racks, your workshop, or your logo',
+    kinds=[['Rentals','calendar-due'],['Tune-up or boot fitting','tag'],['Demo day or event','building'],['Summer bikes','user-plus'],['Hours or powder day','clock'],['Something else','pencil']],
+    extra={'label':'What do you rent or fix? (if you want)','hint':'A few words, like skis, snowboards and bikes.','ph':'Skis, snowboards and bikes','need':'','key':'placeType','note':'What we offer'},
+    biz='Smith Mountain Ski and Bike',
+    photo1=['Shop photo','Big background, like your rental racks, your workshop or your bikes. Your words go on top.','Shop photo','Shop'],
+    scene='a bright mountain ski and bike shop with racks of colorful skis and a window showing fresh snow',
+    ex={'':['Season Rentals','Smith Mountain Ski and Bike',['Skis and snowboards all winter','Season rentals from $199','Reserve early'],'Reserve your gear'],
+        'Rentals':['Season Rentals','Skis and Snowboards',['Gear for the whole winter','Season rentals from $199','Kids rentals too'],'Reserve your gear'],
+        'Tune-up or boot fitting':['Tune-Up Special','Sharp Edges, Fresh Wax',['Tune-ups from $35','Ready the next day','Free boot fit check'],'Drop off today'],
+        'Demo day or event':['Demo Day','Saturday at the Base',['Try the new skis','Demos from $20','All ages welcome'],'Save your spot'],
+        'Summer bikes':['Summer Bike Rentals','Mountain Bikes and Trail Maps',['Bike rentals from $39 a day','Helmets included','Tune-ups from $59'],'Reserve your bike'],
+        'Hours or powder day':['Powder Day','Fresh Snow on the Mountain',['We open at 7 for rentals','Skis waxed and ready','Call ahead to reserve'],'Come get your gear'],
+        'Something else':['Thank You','From our shop to you',['We appreciate you','See you on the mountain'],'Call us anytime']})
 
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
