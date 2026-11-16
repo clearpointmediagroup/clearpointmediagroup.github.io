@@ -1,8 +1,16 @@
 <!DOCTYPE html>
+<!-- CPMG Website v1.6 (Nov 16, 2026, 5:49 AM Eastern), LIVE at /site/. LIVE copy of the test website v1.6, made Nov 16, 2026, 5:58 AM ET for the go-live bundle v1.0 (it goes live only with Randy's go-live OK). Same page; only the TEST version tags are dropped. REVISION LOG
+  v1.6 (Nov 16, 2026, 5:49 AM) CC-157: hours line now says order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day proof; later orders are ready the next day (hours noon to 10 p.m. Eastern). Test copy only.
+  v1.5 (Nov 16, 2026, 3:25 AM) Go-live prep (audit v2.0 M8, CC-147, CC-150): the ORDER button is now /order/ (the live picker), so the live copy at /site/ needs no link change. On this test copy a small script points it at the test picker beside it (pick/ next to site/), as before; the script changes nothing on the live site. The Showcase sample pictures now load from /portfolio/img/ (the same pictures; the old ../../portfolio/img/ only worked because a browser stops at the top folder). Words and look unchanged.
+  v1.4 (Nov 16, 2026, 2:45 AM) CC-152: ORDER button line "Short form · Your first one is free" is now "Short form · Your first picture is free" (the short form now asks Phone, TV or Both). Same look.
+  v1.3 (Nov 16, 2026, 2:25 AM) CC-152: Randy approved $25 for one picture, $40 for a phone + TV pair, first picture free ($25 off). Price tiles: FREE Your first picture; $25 One picture, phone or TV (was "Each picture, phone + TV"); $40 Phone + TV pair (new tile); $99 5 pictures a month; $10 1-hour rush proof. Five tiles: FREE has its own row on phones, all 5 in one row on wide screens. Meta description no longer says $25 covers both sizes. How it works step 3 drops "phone and big-screen TV sizes included" (it said both sizes come with every order). Same look otherwise.
+  v1.2 (Nov 15, 2026, 11:58 PM) Price words match the approved email (Style A): "Your first picture", "Each picture, phone + TV", "5 pictures a month"; step 3 back to "phone and big-screen TV sizes included".
+  v1.1 (Nov 15, 2026, 11:56 PM) CC-147 test copy: hours, price, order button, pictures. Hours line now "Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day proof..."; prices say $25 per order (phone + TV picture), first one free; ORDER button points to test picker ../pick/ (live link at go-live stays /order/ once the picker is promoted there); pizza and steakhouse gold-frame pictures replaced with new holiday sample pictures; flagged -6 TV pictures hidden.
+  v1.0 (Nov 14, 2026, 1:45 PM): original live page. -->
 <!-- CPMG Website v1.0 (Nov 14, 2026, 1:45 PM): one-page site, order + call on top, prices, sample cards on the page (no scroll box), how it works, contact. Replaces the Google Sites layout. -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ClearPoint Media Group | Fast graphics for local businesses</title>
-<meta name="description" content="Fast, accurate graphics for local businesses. $25 per graphic, your first one is free. Proof in about 5 hours.">
+<meta name="description" content="Fast, accurate graphics for local businesses. $25 a picture, $40 for a phone + TV pair, your first picture is free. Proof in about 5 hours.">
 <link rel="icon" href="/assets/cpmg-icon.svg" type="image/svg+xml">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f7efdc;color:#2b2214;font:19px/1.4 system-ui,"Segoe UI",Roboto,sans-serif}
@@ -15,7 +23,7 @@ header h1{margin:0;font-size:28px}header p{margin:6px 0 0;font-size:19px;color:#
 .btn b{display:block;font-size:26px;letter-spacing:.5px}.btn span{font-size:17px}
 .call{background:linear-gradient(#2f5a3f,#234531);border-bottom-color:#18301f}
 h2{color:#1e4d33;font-size:26px;margin:26px 0 8px}
-.price{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.price{display:grid;grid-template-columns:1fr 1fr;gap:10px}.price .p1{grid-column:1/-1}
 .p{background:#fffaf0;border:3px solid #d9c9a6;border-radius:14px;padding:10px;text-align:center}
 .p b{display:block;font-size:26px;color:#1e4d33}.p span{font-size:16px}
 .note{font-size:17px;color:#5a4a30;margin:8px 0 0}
@@ -35,20 +43,21 @@ ol{padding-left:26px;margin:0}ol li{margin:6px 0}
 .social{display:flex;gap:14px;justify-content:center;margin:14px 0}
 .social a{display:inline-block;padding:12px 20px;border-radius:30px;color:#fff;text-decoration:none;font-weight:700}
 footer{text-align:center;color:#6a5a40;font-size:15px;padding:20px 10px 30px}
-@media(min-width:760px){.btns{grid-template-columns:1fr 1fr}.price{grid-template-columns:repeat(4,1fr)}#grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:760px){.btns{grid-template-columns:1fr 1fr}.price{grid-template-columns:repeat(5,1fr)}.price .p1{grid-column:auto}#grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:480px){.row img{height:360px}.row img.tv{height:190px}}
 </style></head><body>
 <header><img src="logo.jpg" alt="ClearPoint Media Group logo"><h1>ClearPoint Media Group</h1><p>Fast, accurate graphics for local businesses.<br>Specials, events, open houses, hours, hiring.</p></header>
 <div class="wrap">
 <div class="btns">
-<a class="btn" href="https://clearpointmediagroup.github.io/order/"><b>ORDER A GRAPHIC &#9654;</b><span>Short form &middot; Your first one is free</span></a>
+<a class="btn" id="orderBtn" href="/order/"><b>ORDER A GRAPHIC &#9654;</b><span>Short form &middot; Your first picture is free</span></a>
 <a class="btn call" href="tel:+18433219518"><b>CALL OR TEXT &#9654;</b><span>(843) 321-9518</span></a>
 </div>
 <h2>Prices</h2>
 <div class="price">
-<div class="p"><b>FREE</b><span>Your first graphic</span></div>
-<div class="p"><b>$25</b><span>Per graphic</span></div>
-<div class="p"><b>$99</b><span>5 graphics a month</span></div>
+<div class="p p1"><b>FREE</b><span>Your first picture</span></div>
+<div class="p"><b>$25</b><span>One picture, phone or TV</span></div>
+<div class="p"><b>$40</b><span>Phone + TV pair</span></div>
+<div class="p"><b>$99</b><span>5 pictures a month</span></div>
 <div class="p"><b>$10</b><span>1-hour rush proof</span></div>
 </div>
 <p class="note">You see a proof first. Pay only after you approve it, through a secure Square link. No contracts.</p>
@@ -56,22 +65,24 @@ footer{text-align:center;color:#6a5a40;font-size:15px;padding:20px 10px 30px}
 <p class="note" style="margin:0 0 10px">Tap a business type. Slide sideways to see all its samples.</p>
 <div id="grid"></div>
 <h2>How it works</h2>
-<ol><li>Fill out the short form, or call or text us your info.</li><li>We send your proof, most within 5 hours.</li><li>Approve it, pay, and it's yours: phone and big-screen TV sizes included.</li></ol>
-<p class="note">Times are Eastern. Orders after 5:30 p.m. or on weekends are ready the next business morning.</p>
+<ol><li>Fill out the short form, or call or text us your info.</li><li>We send your proof, most within 5 hours.</li><li>Approve it, pay, and it's yours.</li></ol>
+<p class="note">Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day proof. Later orders are ready the next day. Open 7 days, closed Thanksgiving Day.</p>
 <h2>Contact</h2>
 <p class="contact">Call or text: <a href="tel:+18433219518">(843) 321-9518</a><br>Email: <a href="mailto:randy.turner@cpmgdata.com">randy.turner@cpmgdata.com</a></p>
 <div class="social"><a style="background:#1877f2" href="https://www.facebook.com/profile.php?id=61595065748576">Facebook</a><a style="background:#d6246e" href="https://www.instagram.com/clearpointmediagroup/">Instagram</a></div>
 </div>
-<footer>&copy; 2026 ClearPoint Media Group &middot; Myrtle Beach, SC</footer>
+<footer>&copy; 2026 ClearPoint Media Group &middot; Myrtle Beach, SC<br>Website v1.6 &middot; Nov 16, 2026, 5:49 AM Eastern</footer>
 <script>
-var D=[{"name": "Real Estate", "imgs": ["img/real-estate-1.jpg", "img/real-estate-2.jpg", "img/real-estate-3.jpg", "img/real-estate-4.jpg", "img/real-estate-5.jpg", "img/real-estate-6.jpg", "img/real-estate-7.jpg", "img/real-estate-8.jpg", "img/real-estate-9.jpg", "img/real-estate-10.jpg"]}, {"name": "Barbecue", "imgs": ["img/barbecue-1.jpg", "img/barbecue-2.jpg", "img/barbecue-3.jpg", "img/barbecue-4.jpg", "img/barbecue-5.jpg", "img/barbecue-6.jpg"]}, {"name": "Chinese", "imgs": ["img/chinese-1.jpg", "img/chinese-2.jpg", "img/chinese-3.jpg", "img/chinese-4.jpg", "img/chinese-5.jpg", "img/chinese-6.jpg"]}, {"name": "Cocktail bar", "imgs": ["img/cocktail-bar-1.jpg", "img/cocktail-bar-2.jpg", "img/cocktail-bar-3.jpg", "img/cocktail-bar-4.jpg", "img/cocktail-bar-5.jpg", "img/cocktail-bar-6.jpg"]}, {"name": "Diner", "imgs": ["img/diner-1.jpg", "img/diner-2.jpg", "img/diner-3.jpg", "img/diner-4.jpg", "img/diner-5.jpg", "img/diner-6.jpg"]}, {"name": "Dive bar", "imgs": ["img/dive-bar-1.jpg", "img/dive-bar-2.jpg", "img/dive-bar-3.jpg", "img/dive-bar-4.jpg", "img/dive-bar-5.jpg", "img/dive-bar-6.jpg"]}, {"name": "Hotel and lodge", "imgs": ["img/hotel-and-lodge-1.jpg", "img/hotel-and-lodge-2.jpg", "img/hotel-and-lodge-3.jpg", "img/hotel-and-lodge-4.jpg", "img/hotel-and-lodge-5.jpg", "img/hotel-and-lodge-6.jpg"]}, {"name": "Italian", "imgs": ["img/italian-1.jpg", "img/italian-2.jpg", "img/italian-3.jpg", "img/italian-4.jpg", "img/italian-5.jpg", "img/italian-6.jpg"]}, {"name": "Mexican", "imgs": ["img/mexican-1.jpg", "img/mexican-2.jpg", "img/mexican-3.jpg", "img/mexican-4.jpg", "img/mexican-5.jpg", "img/mexican-6.jpg"]}, {"name": "Pizza", "imgs": ["img/pizza-1.jpg", "img/pizza-2.jpg", "img/pizza-3.jpg", "img/pizza-4.jpg", "img/pizza-5.jpg", "img/pizza-6.jpg"]}, {"name": "Seafood", "imgs": ["img/seafood-1.jpg", "img/seafood-2.jpg", "img/seafood-3.jpg", "img/seafood-4.jpg", "img/seafood-5.jpg", "img/seafood-6.jpg"]}, {"name": "Sports bar", "imgs": ["img/sports-bar-1.jpg", "img/sports-bar-2.jpg", "img/sports-bar-3.jpg", "img/sports-bar-4.jpg", "img/sports-bar-5.jpg", "img/sports-bar-6.jpg"]}, {"name": "Steakhouse", "imgs": ["img/steakhouse-1.jpg", "img/steakhouse-2.jpg", "img/steakhouse-3.jpg", "img/steakhouse-4.jpg", "img/steakhouse-5.jpg", "img/steakhouse-6.jpg"]}, {"name": "Tiki bar", "imgs": ["img/tiki-bar-1.jpg", "img/tiki-bar-2.jpg", "img/tiki-bar-3.jpg", "img/tiki-bar-4.jpg", "img/tiki-bar-5.jpg", "img/tiki-bar-6.jpg"]}, {"name": "Upscale restaurant", "imgs": ["img/upscale-restaurant-1.jpg", "img/upscale-restaurant-2.jpg", "img/upscale-restaurant-3.jpg", "img/upscale-restaurant-4.jpg", "img/upscale-restaurant-5.jpg", "img/upscale-restaurant-6.jpg"]}, {"name": "Wine bar", "imgs": ["img/wine-bar-1.jpg", "img/wine-bar-2.jpg", "img/wine-bar-3.jpg", "img/wine-bar-4.jpg", "img/wine-bar-5.jpg", "img/wine-bar-6.jpg"]}];
+(function(){var a=document.getElementById('orderBtn'),p=location.pathname,i=p.lastIndexOf('/site/');if(a&&i>0)a.href=p.slice(0,i+1)+'pick/';})();   // v1.5: on the live /site/ ORDER stays /order/; a copy in a sub-folder (the test copy) opens that folder's own picker
+var D=[{"name": "Real Estate", "imgs": ["img/real-estate-1.jpg", "img/real-estate-2.jpg", "img/real-estate-3.jpg", "img/real-estate-4.jpg", "img/real-estate-5.jpg", "img/real-estate-6.jpg", "img/real-estate-7.jpg", "img/real-estate-8.jpg", "img/real-estate-9.jpg", "img/real-estate-10.jpg"]}, {"name": "Barbecue", "imgs": ["img/barbecue-1.jpg", "img/barbecue-2.jpg", "img/barbecue-3.jpg", "img/barbecue-4.jpg", "img/barbecue-5.jpg"]}, {"name": "Chinese", "imgs": ["img/chinese-1.jpg", "img/chinese-2.jpg", "img/chinese-3.jpg", "img/chinese-4.jpg", "img/chinese-5.jpg"]}, {"name": "Cocktail bar", "imgs": ["img/cocktail-bar-1.jpg", "img/cocktail-bar-2.jpg", "img/cocktail-bar-3.jpg", "img/cocktail-bar-4.jpg", "img/cocktail-bar-5.jpg"]}, {"name": "Diner", "imgs": ["img/diner-1.jpg", "img/diner-2.jpg", "img/diner-3.jpg", "img/diner-4.jpg", "img/diner-5.jpg"]}, {"name": "Dive bar", "imgs": ["img/dive-bar-1.jpg", "img/dive-bar-2.jpg", "img/dive-bar-3.jpg", "img/dive-bar-4.jpg", "img/dive-bar-5.jpg"]}, {"name": "Hotel and lodge", "imgs": ["img/hotel-and-lodge-1.jpg", "img/hotel-and-lodge-2.jpg", "img/hotel-and-lodge-3.jpg", "img/hotel-and-lodge-4.jpg", "img/hotel-and-lodge-5.jpg"]}, {"name": "Italian", "imgs": ["img/italian-1.jpg", "img/italian-2.jpg", "img/italian-3.jpg", "img/italian-4.jpg", "img/italian-5.jpg", "img/italian-6.jpg"]}, {"name": "Mexican", "imgs": ["img/mexican-1.jpg", "img/mexican-2.jpg", "img/mexican-3.jpg", "img/mexican-4.jpg", "img/mexican-5.jpg"]}, {"name": "Pizza", "imgs": ["NEW/pizza-1.jpg", "NEW/pizza-2.jpg", "NEW/pizza-3.jpg", "NEW/pizza-4.jpg"]}, {"name": "Seafood", "imgs": ["img/seafood-1.jpg", "img/seafood-2.jpg", "img/seafood-3.jpg", "img/seafood-4.jpg", "img/seafood-5.jpg"]}, {"name": "Sports bar", "imgs": ["img/sports-bar-1.jpg", "img/sports-bar-2.jpg", "img/sports-bar-3.jpg", "img/sports-bar-4.jpg", "img/sports-bar-5.jpg"]}, {"name": "Steakhouse", "imgs": ["NEW/steakhouse-1.jpg", "NEW/steakhouse-2.jpg", "NEW/steakhouse-3.jpg", "NEW/steakhouse-4.jpg"]}, {"name": "Tiki bar", "imgs": ["img/tiki-bar-1.jpg", "img/tiki-bar-2.jpg", "img/tiki-bar-3.jpg", "img/tiki-bar-4.jpg", "img/tiki-bar-5.jpg"]}, {"name": "Upscale restaurant", "imgs": ["img/upscale-restaurant-1.jpg", "img/upscale-restaurant-2.jpg", "img/upscale-restaurant-3.jpg", "img/upscale-restaurant-4.jpg", "img/upscale-restaurant-5.jpg"]}, {"name": "Wine bar", "imgs": ["img/wine-bar-1.jpg", "img/wine-bar-2.jpg", "img/wine-bar-3.jpg", "img/wine-bar-4.jpg", "img/wine-bar-5.jpg"]}];
+function U(p){return p.indexOf('NEW/')==0?'img/'+p.slice(4):'/portfolio/img/'+p.split('/').pop()}
 var grid=document.getElementById('grid'),cols=function(){return window.innerWidth>=760?4:2};
 D.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='card';
-b.innerHTML='<img loading="lazy" src="/portfolio/img/'+t.imgs[0].split('/').pop()+'" alt="'+t.name+' sample"><b>'+t.name+'</b><span>Tap to see samples</span>';
+b.innerHTML='<img loading="lazy" src="'+U(t.imgs[0])+'" alt="'+t.name+' sample"><b>'+t.name+'</b><span>Tap to see samples</span>';
 b.onclick=function(){open_(i,b)};grid.appendChild(b)});
 function close_(){var p=document.querySelector('.panel');if(p)p.remove();[].forEach.call(document.querySelectorAll('.card.on'),function(c){c.classList.remove('on')})}
 function open_(i,b){var same=b.classList.contains('on');close_();if(same)return;b.classList.add('on');
 var t=D[i],c=cols(),end=Math.min(D.length-1,Math.floor(i/c)*c+c-1),p=document.createElement('div');p.className='panel';
-p.innerHTML='<h3>'+t.name+' samples</h3><div class="row">'+t.imgs.map(function(s,k){return '<img loading="lazy" class="'+(t.name!='Real Estate'&&k==5?'tv':'')+'" src="/portfolio/img/'+s.split('/').pop()+'" alt="'+t.name+' sample '+(k+1)+'">'}).join('')+'</div><button class="close" type="button">Close</button>';
+p.innerHTML='<h3>'+t.name+' samples</h3><div class="row">'+t.imgs.map(function(s,k){return '<img loading="lazy" class="'+(/-6\.jpg$/.test(s)&&t.name!='Real Estate'?'tv':'')+'" src="'+U(s)+'" alt="'+t.name+' sample '+(k+1)+'">'}).join('')+'</div><button class="close" type="button">Close</button>';
 p.querySelector('.close').onclick=function(){close_();b.scrollIntoView({block:'center'})};var cards=grid.querySelectorAll('.card');cards[end].after(p);p.scrollIntoView({behavior:'smooth',block:'nearest'})}
 </script></body></html>

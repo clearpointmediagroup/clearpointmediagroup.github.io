@@ -1,19 +1,33 @@
 <!doctype html>
 <!--
-  CPMG order picker - v1.4 (Nov 14, 2026, 6:55 AM)   CC-136, CC-138, CC-139
-  The ONE order link for website, Facebook, Instagram, emails and QR codes will be /order/.
-  This page shows 6 big buttons. Each opens that business type's order form.
+  CPMG order picker - v1.16 (Nov 16, 2026, 5:49 AM), LIVE at /order/   CC-136, CC-138, CC-139, CC-141, CC-157, CC-142
+  LIVE copy of the test picker v1.16, made Nov 16, 2026, 5:58 AM ET for the go-live bundle v1.0 (it goes live only with Randy's go-live OK).
+  The ONE order link for website, Facebook, Instagram, emails and QR codes is /order/ (this page). 12 big buttons, each opens that business type's order form:
+  the 9 Colorado short forms, Insurance agent and Any other business at /order/<type>/; Real estate keeps the live real estate form /real-estate/ (as in v1.4).
   REVISION LOG
-    v1.4 (Nov 14, 2026, 6:55 AM) CC-138, CC-139: LIVE. Randy go-live OK (chat, Nov 14, 6:47 AM). Buttons open the live forms (restaurant/ v3.94, ski-shop/, mountain-cabin/, insurance/, business/, real-estate/ unchanged). Rollback: v1.2 picker, restaurant v3.93 in git history.
-    v1.4-TEST (Nov 14, 2026, 7:55 AM) CC-139: Randy: the 30 restaurant buttons come off. One "Restaurant or bar" button; the restaurant form asks the kind of place and Casual or Upscale. Other business types below it.
-    v1.3-TEST (Nov 14, 2026, 7:35 AM) CC-138: second section "Not a restaurant or bar?" with 5 buttons (cabin and rental managers, ski shop and rentals, real estate, insurance agent, any other business).
-    v1.1-TEST (Nov 14, 2026, 6:40 AM) Randy: list all 30 Colorado templates (15 business types x Casual / Upscale) instead of 3 buttons. Links pass ?template=<type>-<look>.
-    v1.0-TEST (Nov 14, 2026, 6:30 AM) CC-136: first version. Test copy only; live /order/ still opens the restaurant form (v3.59).
+    v1.16 LIVE (Nov 16, 2026, 5:58 AM ET) Go-live copy of the test picker v1.16: same buttons and words. Two differences from the test copy: Real estate opens ../real-estate/ (the live real estate form, unchanged from v1.4), and the icon link is ../assets/. Rollback: picker v1.4 in git history.
+    v1.16 (Nov 16, 2026, 5:49 AM) CC-157: bottom line now says order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day (hours noon to 10 p.m. Eastern). Test copy only.
+    v1.15 (Nov 15, 2026, 10:15 PM) CC-142: bottom line now says order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, open 7 days, closed Thanksgiving Day. Test copy only.
+    v1.14 (Nov 15, 2026, 9:45 PM) CC-141: Randy approved removing the older duplicate "Cabin and rental managers" button; "Cabin, vacation rental or lodging" stays (12 buttons now). The test copy's order/mountain-cabin/ form itself is left in place. Test copy only; live /order/ is not touched.
+    v1.13 (Nov 15, 2026, 9:40 PM) CC-141: Randy approved removing the older duplicate "Ski shop and rentals" button; "Ski and bike shop" stays (13 buttons now). The test copy's order/ski-shop/ form itself is left in place. Test copy only; live /order/ is not touched.
+    v1.12 (Nov 15, 2026, 10:15 PM) CC-141: new button "Ski and bike shop" opens the test copy's order/ski-bike/ (14 buttons now). The older "Ski shop and rentals" button stays. Test copy only; live /order/ is not touched.
+    v1.11 (Nov 15, 2026, 9:15 PM) CC-141: new button "Music venue" opens the test copy's order/music/ (13 buttons now). Test copy only; live /order/ is not touched.
+    v1.10 (Nov 14, 2026, 8:45 PM) CC-141: new button "Spa, massage or salon" opens the test copy's order/spa/ (12 buttons now). Test copy only; live /order/ is not touched.
+    v1.9 (Nov 14, 2026, 8:15 PM) CC-141: new button "Gift shop or retail" opens the test copy's order/gift/ (11 buttons now). Test copy only; live /order/ is not touched.
+    v1.8 (Nov 14, 2026, 4:30 PM) CC-141: new button "Cabin, vacation rental or lodging" opens the test copy's order/cabin/ (10 buttons now). Test copy only; live /order/ is not touched.
+    v1.7 (Nov 14, 2026, 1:05 PM) CC-141: new button "Outfitter, tours or adventure rentals" opens the test copy's order/outfitter/ (9 buttons now). Test copy only; live /order/ is not touched.
+    v1.6 (Nov 14, 2026, 12:50 PM) CC-141: new button "Cafe, coffee shop or bakery" opens the test copy's order/cafe/ (8 buttons now). Test copy only; live /order/ is not touched.
+    v1.5 (Nov 14, 2026, 11:00 AM) CC-141: new button "Brewery, cidery, distillery or winery" opens the test copy's order/brewery/ (7 buttons now). Test copy only; live /order/ is not touched.
+    v1.4 (Nov 14, 2026, 7:55 AM) CC-139: Randy: the 30 restaurant buttons come off. One "Restaurant or bar" button; the restaurant form asks the kind of place and Casual or Upscale. Other business types below it.
+    v1.3 (Nov 14, 2026, 7:35 AM) CC-138: second section "Not a restaurant or bar?" with 5 buttons (cabin and rental managers, ski shop and rentals, real estate, insurance agent, any other business).
+    v1.1 (Nov 14, 2026, 6:40 AM) Randy: list all 30 Colorado templates (15 business types x Casual / Upscale) instead of 3 buttons. Links pass ?template=<type>-<look>.
+    v1.0 (Nov 14, 2026, 6:30 AM) CC-136: first version. Test copy only; live /order/ still opens the restaurant form (v3.59).
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
 <title>Order a graphic - ClearPoint Media Group</title>
 <link rel="icon" href="../assets/cpmg-icon.svg" type="image/svg+xml">
 <style>
@@ -32,13 +46,19 @@ h2{font-size:24px;margin:30px 0 14px;color:#fff}a.btn.wide{margin:0 0 14px;paddi
 <main>
 <h1>What kind of business?</h1>
 <p>Tap yours. It opens the right order form. $25 a graphic. Proof back in about 5 hours.</p>
-<a class="btn wide" href="../restaurant/">Restaurant or bar<small>Pizza, steakhouse, diner, lodge and more</small></a>
-<a class="btn wide" href="../mountain-cabin/">Cabin and rental managers</a>
-<a class="btn wide" href="../ski-shop/">Ski shop and rentals</a>
+<a class="btn wide" href="../order/restaurant/">Restaurant or bar<small>Pizza, steakhouse, diner, lodge and more</small></a>
+<a class="btn wide" href="../order/brewery/">Brewery, cidery, distillery or winery</a>
+<a class="btn wide" href="../order/cafe/">Cafe, coffee shop or bakery</a>
+<a class="btn wide" href="../order/outfitter/">Outfitter, tours or adventure rentals</a>
+<a class="btn wide" href="../order/cabin/">Cabin, vacation rental or lodging</a>
+<a class="btn wide" href="../order/gift/">Gift shop or retail</a>
+<a class="btn wide" href="../order/spa/">Spa, massage or salon</a>
+<a class="btn wide" href="../order/music/">Music venue</a>
+<a class="btn wide" href="../order/ski-bike/">Ski and bike shop</a>
 <a class="btn wide" href="../real-estate/">Real estate</a>
-<a class="btn wide" href="../insurance/">Insurance agent</a>
-<a class="btn wide" href="../business/">Any other business</a>
-<div class="foot">Orders in by 5:30 p.m. Eastern. Later orders are ready the next business morning.</div>
+<a class="btn wide" href="../order/insurance/">Insurance agent</a>
+<a class="btn wide" href="../order/business/">Any other business</a>
+<div class="foot">Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview. Later orders are ready the next day. Open 7 days, closed Thanksgiving Day.</div>
 </main>
 </body>
 </html>

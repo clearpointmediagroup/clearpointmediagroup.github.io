@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- CPMG click page (LIVE, /t/) v1.1 (Nov 16, 2026, 1:20 AM ET) - CC-150: adds the holiday email's two links, "form" (the short order form with place and look) and "site" (More samples). -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -6,11 +7,15 @@
 <meta name="robots" content="noindex">
 <title>ClearPoint Media Group</title>
 <!--
-  CPMG click page for the CRM Call Tracker emails - v1.0 (Nov 6, 2026)
+  CPMG click page for the CRM Call Tracker emails - v1.1 (Nov 16, 2026, 1:20 AM ET)
   A link in a CPMG tracker email opens this page. It quietly tells the sender script which email and which link,
-  then opens the real page right away. The places it can open are fixed below (DEST), so nobody can use it to
-  send people anywhere else. (The mail merge keeps its own page, /go/. This one is separate on purpose.)
+  then opens the real page right away. The places it can open are fixed below (DEST and the FORM lists), so nobody
+  can use it to send people anywhere else. (The mail merge keeps its own page, /go/. This one is separate on purpose.)
+  LIVE version, staged for go-live (CC-150 step 6c). FORM_BASE must be the LIVE short form path that CC-144 puts live; check it before publishing.
   REVISION LOG
+    v1.1 (Nov 16, 2026, 1:20 AM ET) CC-150: new keys "form" and "site". form opens the short order form:
+                       restaurant/?place=<Place>&look=<casual|upscale> when p is one of PLACES, or <pack>/?look=<look> when pk is one
+                       of PACKS; anything else opens the plain form. site opens the More samples page. The old keys are unchanged.
     v1.0 (Nov 6, 2026) First version: web, order, instagram, facebook. Also sends a few robot clues (browser
                        says it is automated, screen size) so the tracker can tell robot clicks from people.
 -->
@@ -21,25 +26,37 @@ a{display:inline-block;background:#1f7a43;color:#ffffff;padding:14px 26px;border
 </head>
 <body>
 <p style="font-size:18px">Opening ClearPoint Media Group...</p>
-<p><a id="go" href="https://clearpointmediagroup.github.io/order/">Tap here to continue</a></p>
+<p><a id="go" href="https://clearpointmediagroup.github.io/order/restaurant/">Tap here to continue</a></p>
 <script>
 (function () {
+  var FORM_BASE = 'https://clearpointmediagroup.github.io/order/';
   var DEST = {
     web: 'https://sites.google.com/cpmgdata.com/cpmg',
     order: 'https://clearpointmediagroup.github.io/order/',
     instagram: 'https://www.instagram.com/clearpointmediagroup/',
-    facebook: 'https://www.facebook.com/profile.php?id=61595065748576'
+    facebook: 'https://www.facebook.com/profile.php?id=61595065748576',
+    site: 'https://clearpointmediagroup.github.io/site/',
+    form: FORM_BASE + 'restaurant/'
   };
+  var PLACES = ['Pizza', 'Mexican', 'Italian', 'Chinese', 'Barbecue', 'Steakhouse', 'Seafood', 'Diner', 'Restaurant', 'Sports bar',
+                'Dive bar', 'Cocktail bar', 'Tiki bar', 'Wine bar', 'Hotel and lodge'];
+  var PACKS = ['brewery', 'cafe', 'outfitter', 'cabin', 'gift', 'spa', 'music', 'ski-bike'];
   var EXEC = 'https://script.google.com/macros/s/AKfycbxWwbF0eQa_ebYCedk1xFJjxl_oKPHLng6CJLI0ZejFHACcOQ5Qy2AjKzsqwgj60sYb/exec';
   var q = new URLSearchParams(location.search);
   var k = q.get('k') || 'order';
   var dest = DEST[k] || DEST.order;
+  if (k === 'form') {
+    var look = q.get('l') === 'upscale' ? 'upscale' : (q.get('l') === 'casual' ? 'casual' : '');
+    var p = q.get('p') || '', pk = q.get('pk') || '';
+    if (PLACES.indexOf(p) !== -1) dest = FORM_BASE + 'restaurant/?place=' + encodeURIComponent(p) + (look ? '&look=' + look : '');
+    else if (PACKS.indexOf(pk) !== -1) dest = FORM_BASE + pk + '/' + (look ? '?look=' + look : '');
+  }
   document.getElementById('go').href = dest;
   var gone = false;
   function go() { if (gone) return; gone = true; location.replace(dest); }
   try {
     var i = q.get('i');
-    if (i && window.fetch && EXEC.indexOf('http') === 0) {
+    if (i && window.fetch && EXEC.indexOf('https://script.google.com/') === 0) {
       var ua = navigator.userAgent || '';
       var bot = /Headless|PhantomJS|bot\b|crawl|spider|preview|Slurp|Lighthouse/i.test(ua) ? '1' : '0';
       var u = EXEC + '?x=1&i=' + encodeURIComponent(i) + '&lk=' + encodeURIComponent(k) +
@@ -53,6 +70,6 @@ a{display:inline-block;background:#1f7a43;color:#ffffff;padding:14px 26px;border
   go();
 })();
 </script>
-<noscript><p><a href="https://clearpointmediagroup.github.io/order/">Tap here to continue</a></p></noscript>
+<noscript><p><a href="https://clearpointmediagroup.github.io/order/restaurant/">Tap here to continue</a></p></noscript>
 </body>
 </html>
