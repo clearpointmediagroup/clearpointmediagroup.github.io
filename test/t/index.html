@@ -1,0 +1,78 @@
+<!-- CPMG click page (TEST copy, /test/t/) v1.2-TEST (Nov 16, 2026, 2:08 AM ET) - CC-150: EXEC is the TEST sender's /exec (CPMG_TrackerSender_TEST, deployment Version 1, Nov 16, 2:03 AM). Earlier: v1.1-TEST (1:20 AM ET) added the holiday email's "form" and "site" links. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ClearPoint Media Group</title>
+<!--
+  CPMG click page for the CRM Call Tracker emails - v1.2-TEST (Nov 16, 2026, 2:08 AM ET)
+  A link in a CPMG tracker email opens this page. It quietly tells the sender script which email and which link,
+  then opens the real page right away. The places it can open are fixed below (DEST and the FORM lists), so nobody
+  can use it to send people anywhere else. (The mail merge keeps its own page, /go/. This one is separate on purpose.)
+  TEST COPY for CC-150: EXEC is the TEST sender (separate Apps Script project); form opens the TEST short form; site opens the TEST site.
+  EXEC is the TEST sender's /exec address (Apps Script project CPMG_TrackerSender_TEST, CPMGDATA account, deployment Version 1).
+  REVISION LOG
+    v1.2-TEST (Nov 16, 2026, 2:08 AM ET) CC-150: EXEC filled in with the TEST sender's /exec (deployed Nov 16, 2:03 AM).
+                       The version line moved to line 1 (before the doctype). No other change.
+    v1.1-TEST (Nov 16, 2026, 1:20 AM ET) CC-150: new keys "form" and "site". form opens the short order form:
+                       restaurant/?place=<Place>&look=<casual|upscale> when p is one of PLACES, or <pack>/?look=<look> when pk is one
+                       of PACKS; anything else opens the plain form. site opens the More samples page. The old keys are unchanged.
+    v1.0 (Nov 6, 2026) First version: web, order, instagram, facebook. Also sends a few robot clues (browser
+                       says it is automated, screen size) so the tracker can tell robot clicks from people.
+-->
+<style>
+body{font-family:Arial,Helvetica,sans-serif;text-align:center;padding:48px 16px;color:#1d2733;background:#f2f7f3}
+a{display:inline-block;background:#1f7a43;color:#ffffff;padding:14px 26px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:18px}
+</style>
+</head>
+<body>
+<p style="font-size:18px">Opening ClearPoint Media Group...</p>
+<p><a id="go" href="https://clearpointmediagroup.github.io/test/order/restaurant/">Tap here to continue</a></p>
+<script>
+(function () {
+  var FORM_BASE = 'https://clearpointmediagroup.github.io/test/order/';
+  var DEST = {
+    web: 'https://sites.google.com/cpmgdata.com/cpmg',
+    order: 'https://clearpointmediagroup.github.io/order/',
+    instagram: 'https://www.instagram.com/clearpointmediagroup/',
+    facebook: 'https://www.facebook.com/profile.php?id=61595065748576',
+    site: 'https://clearpointmediagroup.github.io/test/site/',
+    form: FORM_BASE + 'restaurant/'
+  };
+  var PLACES = ['Pizza', 'Mexican', 'Italian', 'Chinese', 'Barbecue', 'Steakhouse', 'Seafood', 'Diner', 'Restaurant', 'Sports bar',
+                'Dive bar', 'Cocktail bar', 'Tiki bar', 'Wine bar', 'Hotel and lodge'];
+  var PACKS = ['brewery', 'cafe', 'outfitter', 'cabin', 'gift', 'spa', 'music', 'ski-bike'];
+  var EXEC = 'https://script.google.com/macros/s/AKfycby1sgsECqO3fla7LrgqeSomFV2tjRiolXtBFAFJ0s89ibp2cj0_MlJAGZ6QrWVKFb-Z/exec';
+  var q = new URLSearchParams(location.search);
+  var k = q.get('k') || 'order';
+  var dest = DEST[k] || DEST.order;
+  if (k === 'form') {
+    var look = q.get('l') === 'upscale' ? 'upscale' : (q.get('l') === 'casual' ? 'casual' : '');
+    var p = q.get('p') || '', pk = q.get('pk') || '';
+    if (PLACES.indexOf(p) !== -1) dest = FORM_BASE + 'restaurant/?place=' + encodeURIComponent(p) + (look ? '&look=' + look : '');
+    else if (PACKS.indexOf(pk) !== -1) dest = FORM_BASE + pk + '/' + (look ? '?look=' + look : '');
+  }
+  document.getElementById('go').href = dest;
+  var gone = false;
+  function go() { if (gone) return; gone = true; location.replace(dest); }
+  try {
+    var i = q.get('i');
+    if (i && window.fetch && EXEC.indexOf('https://script.google.com/') === 0) {
+      var ua = navigator.userAgent || '';
+      var bot = /Headless|PhantomJS|bot\b|crawl|spider|preview|Slurp|Lighthouse/i.test(ua) ? '1' : '0';
+      var u = EXEC + '?x=1&i=' + encodeURIComponent(i) + '&lk=' + encodeURIComponent(k) +
+              '&wd=' + (navigator.webdriver ? '1' : '0') + '&bt=' + bot +
+              '&w=' + (screen.width || 0) + '&h=' + (screen.height || 0);
+      fetch(u, { mode: 'no-cors', credentials: 'omit', keepalive: true }).then(go, go);
+      setTimeout(go, 1500);
+      return;
+    }
+  } catch (e) { /* counting failed; still open the page */ }
+  go();
+})();
+</script>
+<noscript><p><a href="https://clearpointmediagroup.github.io/test/order/restaurant/">Tap here to continue</a></p></noscript>
+</body>
+</html>
