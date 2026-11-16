@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""build-order-forms.py v1.3 (Nov 10, 2026, 12:35 AM)
+"""build-order-forms.py v1.4 (Nov 15, 2026, 11:07 PM)
 Builds every industry order form from ONE master form.
   master: test/order/index.html  (works with ?for=<industry>)
   output: test/order/<industry>/index.html  (one page per industry, same code, words from tools/cpmg_packs.py)
 Run after ANY change to the master form or the packs:  python3 tools/build-order-forms.py
 REVISION LOG
+  v1.4 (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: a pack with simple=True (the 9 Colorado packs) is built as the SHORT 3-step form: <body class="lean lite simple">, and its step 1 choices (skinds) and restaurant place examples (splace) go into the page. Other packs: unchanged.
   v1.3 (Nov 10, 2026, 12:35 AM) CC-071: packs may list places (kind of place first, then only the graphic buttons that fit).
   v1.2 (Nov 3, 2026) Lean pages are also built with the light 3-step look (body class "lean lite").
   v1.1 (Nov 3, 2026) A pack with lean=True gets <body class="lean"> (fewer boxes: see tools/cpmg_packs.py).
@@ -24,6 +25,7 @@ def js_packs():
                       about=ABOUT.format(who=p['who'], uses=p['uses']), how=HOW.format(what=p['what'], photos=p['photos']),
                       kinds=[list(x) for x in p['kinds']], looks=[list(x) for x in p['looks']],
                       places=[[x[0], x[1], list(x[2])] for x in p.get('places', [])], extra=dict(p['extra'], store='cpmgExtra_' + k), biz=p['biz'], photo1=list(p['photo1']), ex=p['ex'], vision=bool(p.get('vision')))
+        if p.get('simple'): out[k].update(simple=True, skinds=[list(x) for x in p['skinds']], splace=dict(p.get('splace', {})))   # v1.4 CC-144
     return '  var PACKS = ' + json.dumps(out, ensure_ascii=False, indent=1) + ';\n'
 
 s = open(MASTER).read()
@@ -34,7 +36,7 @@ for k in PACKS:
     d = os.path.join(ROOT, 'test', 'order', k); os.makedirs(os.path.join(d, 'looks'), exist_ok=True)
     page = s.replace("var PACK_FIXED = '';", "var PACK_FIXED = '" + k + "';")
     page = re.sub(r'(src|href)="\.\./', r'\1="../../', page)
-    if PACKS[k].get('lean'): page = page.replace('<body>', '<body class="lean lite">', 1)
+    if PACKS[k].get('lean'): page = page.replace('<body>', '<body class="lean lite' + (' simple' if PACKS[k].get('simple') else '') + '">', 1)   # v1.4 CC-144: simple = short 3-step form
     page = page.replace('CPMG Standard Order Form — test/order/index.html', 'CPMG ' + PACKS[k]['name'] + ' Order — test/order/' + k + '/index.html\n  BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.')
     open(os.path.join(d, 'index.html'), 'w').write(page)
     print('built', k)

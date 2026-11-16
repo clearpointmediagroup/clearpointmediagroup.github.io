@@ -2,13 +2,14 @@
 <!--
   CPMG Outfitter, tours or adventure rentals Order — test/order/outfitter/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v4.03-TEST (Nov 15, 2026, 10:15 PM)
+  v4.04-TEST (Nov 15, 2026, 11:07 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.04-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: Randy approved a SHORT 3-step form for the Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant), turned on by pack flag simple=True (body class "simple"); other packs unchanged. Header: Order a picture for your ..., First one is free · Proof in about 5 hours, the hours line, version label. Step 1 What do you need? (one tap: 4 holiday choices first, then 4 everyday ones, each with its own gray example). Step 2 What should it say? (one big box, + Add a photo opens the one photo spot). Step 3 How do we reach you? (business name, your name, email or phone). Send, You pay nothing now, and 3 lines (phone and TV picture, we match the email look, call or text me anytime). Gone from what owners see: Casual/Upscale, Pick a look, screen sizes, bottom of graphic, price box, Call/Text/Email buttons, What do you make?, long Help. Sent the same way as before: sizes Phone + Big-screen TV, bottom shows business name and phone, look from ?look=casual or ?look=upscale (else Match the email sample), restaurant kind of place from ?place=Pizza (else one What kind of place? row), title = first line of the box, details = the rest, their exact words and Contact by (Email) in the notes. Spam box, first-one-free, double-send guard and thank-you screen kept. Version label now shows this version (it said v3.94-TEST).
     v4.03-TEST (Nov 15, 2026, 10:15 PM) CC-142: Randy approved new hours wording: open 7 days, 8 a.m. to 5:30 p.m. Eastern (6 to 3:30 Mountain), closed Thanksgiving Day; order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, later orders ready the next morning. Time line, thank-you line and every pack's intro.
     v4.02-TEST (Nov 15, 2026, 10:15 PM) CC-141: new ski and bike shop form (?for=ski-bike, built to test/order/ski-bike/). Ski and bike shop; asks Casual or Upscale inside the form, sent as Template: Ski and bike shop, Casual. The older ski-shop form, music, spa and others unchanged.
     v4.01-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music venue form (?for=music, built to test/order/music/). Music venue; asks Casual or Upscale inside the form, sent as Template: Music venue, Casual. Spa, gift shop and others unchanged.
@@ -829,11 +830,58 @@ body.lite .bar,body.lite .bar.narrow{position:static!important;display:block;bac
 body.lite .bar #barTot,body.lite .bar.narrow #barTot{display:block;width:100%;max-width:none;margin:0 0 10px!important;font-size:20px;text-align:center;color:var(--green)}
 body.lite .bar .big,body.lite .bar.narrow .big{display:block;width:100%;max-width:none;min-width:0;margin:0;padding:16px;font-size:24px;border-radius:14px;background:var(--green);color:#fff}
 body.lite .wrap.narrow{padding-bottom:16px!important}
+/* ===== v4.04-TEST (Nov 15, 2026, 11:07 PM) CC-144 SHORT FORM. Only on pages built with simple=True (body class "simple", the Colorado packs).
+   Header, 3 steps (What do you need? / What should it say? / How do we reach you?), Send. Light, centered, big tap targets. Other packs: unchanged. ===== */
+body.simple{font-size:18px}
+body.simple.lite .wrap.narrow{max-width:560px!important;padding:14px 14px 6px!important;gap:12px;margin:0 auto!important}
+body.simple #tplBar,body.simple #cbar,body.simple #cbarNote,body.simple #helpBox,body.simple details.intro,body.simple .foot,body.simple .liteline,body.simple .fsbtn,body.simple #trustBox,body.simple #pzStart{display:none!important}
+body.simple #f>*:not(.s-step):not(.welcome2):not(.hp):not(.problem){display:none!important}
+body.simple.lite #f.stack{display:flex!important;flex-direction:column;align-items:stretch!important;gap:12px}
+body.simple .welcome2{margin:0}
+/* header: centered and balanced */
+body.simple.lite .wrap.narrow>.top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;margin:0;flex-wrap:nowrap}
+body.simple .top .logo{width:38px;height:38px;font-size:13px}
+body.simple.lite .wrap.narrow>.top h1#pkTitle{font-size:24px!important;line-height:1.2;margin:4px 0 2px}
+body.simple.lite .wrap.narrow>.top .sub{font-size:17px;font-weight:700;color:var(--green);margin:0}
+body.simple.lite .wrap.narrow>.top .tzLine{display:block;font-size:15px;font-weight:400;color:var(--muted);margin:2px 0 0!important;line-height:1.35}
+body.simple.lite .wrap.narrow>.top .verTag{order:0;flex:none;margin:4px 0 0;align-self:center;font-size:11px;color:#6b776f;white-space:normal}
+/* the 3 steps */
+body.simple.lite #f>.s-step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 14px 16px;margin:0;box-shadow:0 1px 3px rgba(0,0,0,.06);gap:8px}
+body.simple .s-step .ql{font-size:22px;margin:0 0 2px}
+body.simple .s-step .qn{width:30px;height:30px;font-size:17px}
+body.simple .s-step .sl{font-size:17px;margin:4px 0 0}
+body.simple .s-step .s-hint{font-size:16px;margin:0}
+body.simple #whatTaps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+body.simple.lite #whatTaps .opt{min-height:62px;font-size:17px;line-height:1.2;padding:8px 10px;border-radius:12px;font-weight:700}
+body.simple.lite #whatTaps .opt.s-hol{background:#fdf6ea;border-color:#d8c29c}
+body.simple.lite #whatTaps .opt.on{background:var(--deep);border:3px solid var(--green)}
+body.simple.lite #whatTaps .opt.on::after{top:3px;right:7px;font-size:17px}
+body.simple #whatTaps .s-gap{grid-column:1/-1;height:0;border-top:1px dashed #c9d3cc;margin:2px 4px}
+body.simple .s-place{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+body.simple .s-place[hidden]{display:none}
+body.simple .s-place label{flex:none;font-size:17px;font-weight:700}
+body.simple .s-place select{flex:1;min-width:0;min-height:48px;font:inherit;font-size:18px;padding:6px 10px;border:2px solid #b7c3ba;border-radius:12px;background:#fff;color:var(--fg)}
+body.simple #sayAll{display:block;width:100%;box-sizing:border-box;min-height:118px;font:inherit;font-size:19px;line-height:1.35;padding:12px 14px;border:2px solid #b7c3ba;border-radius:12px;background:#fff;color:var(--fg);resize:vertical}
+body.simple #sayAll::placeholder{color:#7d8a82;opacity:1}
+body.simple #sayAll:focus,body.simple .s-place select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(31,122,77,.18)}
+body.simple .s-add{display:block;width:100%;min-height:50px;margin:2px 0 0;border:2px dashed var(--green);border-radius:12px;background:#fff;color:var(--green);font:700 18px var(--display);cursor:pointer}
+body.simple .s-add[hidden],body.simple .s-slot[hidden]{display:none!important}
+body.simple .s-slot{margin:0!important;padding:10px 12px}
+body.simple.lite .s-step input[type=text],body.simple.lite .s-step input[type=email],body.simple.lite .s-step input[type=tel]{min-height:50px;font-size:19px;padding:10px 14px;margin:0}
+body.simple .s-step .err{font-size:16px}
+/* Send: the button, You pay nothing now, then 3 short lines */
+body.simple.lite .bar.narrow{width:calc(100% - 28px);max-width:532px;margin:0 auto 22px;padding:14px 14px 12px;border:1px solid var(--line);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+body.simple.lite .bar.narrow .big{min-height:60px;font-size:24px;padding:14px}
+body.simple.lite .bar.narrow #barTot{margin:8px 0 0!important;font-size:18px;font-weight:700;color:var(--green);text-align:center}
+body.simple .s-notes{margin:10px 0 0;padding:10px 0 0;border-top:1px solid var(--line);text-align:center}
+body.simple .s-notes p{margin:0 0 4px;font-size:16px;line-height:1.35;color:var(--fg)}
+body.simple .s-notes a{color:var(--green);font-weight:700;white-space:nowrap}
+body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .s-notes p{text-wrap:balance}   /* even line breaks (newer phones; others ignore it) */
 </style>
 </head>
-<body class="lean lite">
+<body class="lean lite simple">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v3.94-TEST (Nov 14, 2026, 7:50 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25 · Your first one is free · Preview in about 5 hours</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.04-TEST (Nov 15, 2026, 11:07 PM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -1034,7 +1082,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   <div id="ok" class="card g done" hidden role="status">
     <div class="ck" aria-hidden="true">&#10003;</div>
     <h3>Got it, thank you!</h3>
-    <p>Most previews come back by email within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. Open 7 days, closed Thanksgiving Day.</p>
+    <p id="okLine">Most previews come back by email within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. Open 7 days, closed Thanksgiving Day.</p>
     <p class="sub tzLine"></p>
     <p class="sub" id="codeLbl">Your order number</p>
     <div class="code" id="orderCode"></div>
@@ -1048,6 +1096,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
 /* CPMG lite layout v1.0-TEST (Nov 3, 2026): only runs when <body class="lite">. Moves the same boxes (same ids) into 3 steps + "More choices". */
 (function () {
   var b = document.body; if (!b.classList.contains('lite')) return;
+  if (b.classList.contains('simple')) return;   // v4.04-TEST CC-144: the short form has its own layout (next script)
   var f = document.getElementById('f'); if (!f) return;
   function up(id, sel) { var e = document.getElementById(id); return e && e.closest(sel); }
   var look = up('lookTaps', 'fieldset'), size = up('sizeTaps', 'fieldset'), photos = up('btHouse', '.field'), gbw = up('showBiz', '.field.gbwrap') || up('showBiz', '.field');
@@ -1104,6 +1153,42 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   function hint(field, txt) { if (!field) return; var h = document.createElement('p'); h.className = 'hint liteHint'; h.textContent = txt; var l = field.querySelector('.ql'); if (l && l.nextSibling) l.parentNode.insertBefore(h, l.nextSibling); }
   hint(what, 'Tap one.'); hint(look, 'Tap one. Not sure? We will pick for you.'); hint(say, 'Only the title is needed. Leave the rest empty and we write it for you.');
   if (look) { var lq = look.querySelector('.ql'); if (lq) lq.lastChild.nodeValue = 'Pick a look'; }
+})();
+</script>
+<script>
+/* CPMG short form layout v1.0-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: only runs on pages built with body class "simple" (the Colorado packs).
+   Three steps: 1 What do you need? (one tap), 2 What should it say? (one big box, + Add a photo), 3 How do we reach you?
+   It MOVES the same boxes (same ids) into the steps, so the order code and the order system do not change. CSS hides the rest. */
+(function () {
+  var b = document.body; if (!b.classList.contains('simple')) return;
+  var f = document.getElementById('f'); if (!f) return;
+  function $(id) { return document.getElementById(id); }
+  function mk(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+  function step(n, title) { var s = mk('div', 'field s-step'), q = mk('p', 'ql'); q.appendChild(mk('span', 'qn', String(n))); q.appendChild(document.createTextNode(title)); s.appendChild(q); return s; }
+  function lab(forId, txt) { var l = mk('label', 'sl', txt); l.htmlFor = forId; return l; }
+  try {
+    var sub = document.querySelector('.top .sub'); if (sub) sub.textContent = 'First one is free · Proof in about 5 hours';
+    var s1 = step(1, 'What do you need?'), s2 = step(2, 'What should it say?'), s3 = step(3, 'How do we reach you?');
+    // 1: one tap (the main script makes the buttons from the pack's list)
+    var pl = mk('div', 's-place'); pl.id = 'sPlace'; pl.hidden = true; s1.appendChild(pl);   // restaurant only, when the link has no ?place=
+    s1.appendChild($('whatTaps')); s1.appendChild($('eWhat'));
+    // 2: one big box, and the one photo spot behind a button
+    s2.appendChild(mk('p', 'hint liteHint s-hint', 'A few words is fine. We do the rest.'));
+    var ta = mk('textarea'); ta.id = 'sayAll'; ta.rows = 4; ta.maxLength = 600; ta.setAttribute('autocomplete', 'off'); ta.setAttribute('aria-label', 'What should it say?'); s2.appendChild(ta);
+    var es = mk('p', 'err'); es.id = 'eSay'; es.hidden = true; s2.appendChild(es);
+    var add = mk('button', 's-add', '+ Add a photo (if you want)'); add.type = 'button'; add.id = 'addPhoto'; s2.appendChild(add);
+    var slot = $('pvHouse').closest('.gbox'); slot.classList.add('s-slot'); slot.hidden = true; s2.appendChild(slot); s2.appendChild($('ePic'));
+    add.addEventListener('click', function () { slot.hidden = false; add.hidden = true; });
+    // 3: business name, your name, email or phone
+    s3.appendChild(lab('biz', 'Business name')); s3.appendChild($('biz')); s3.appendChild($('eBiz'));
+    var nm = $('nm'); nm.style.marginBottom = '0'; s3.appendChild(lab('nm', 'Your name')); s3.appendChild(nm); s3.appendChild($('eNm'));
+    var em = $('em'); em.type = 'text'; em.style.marginBottom = '0'; em.setAttribute('inputmode', 'email'); em.placeholder = 'Your email or phone number'; em.setAttribute('aria-label', 'Email or phone');
+    s3.appendChild(lab('em', 'Email or phone')); s3.appendChild(em); s3.appendChild($('eEm'));
+    var wl = $('welcome'); f.insertBefore(s1, wl.nextSibling); f.insertBefore(s2, s1.nextSibling); f.insertBefore(s3, s2.nextSibling);
+    // Send: the button, then "You pay nothing now.", then 3 short lines
+    var bar = $('sendBar'), btn = $('sendBtn'), tot = $('barTot'); btn.textContent = 'Send'; tot.textContent = 'You pay nothing now.'; tot.removeAttribute('style'); bar.appendChild(tot);
+    var nt = mk('div', 's-notes'); nt.innerHTML = '<p>Every order comes as a phone picture and a TV picture.</p><p>We match the look you saw in the email.</p><p>Call or text me anytime: <a href="tel:+18433219518">(843)&nbsp;321-9518</a></p>'; bar.appendChild(nt);
+  } catch (e) { b.classList.remove('simple'); }   // if anything here fails, the page falls back to the old form
 })();
 </script>
 <script>
@@ -1531,7 +1616,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
  "restaurant": {
   "industry": "Restaurant",
   "form": "Restaurant",
-  "title": "Order a graphic for your restaurant or bar",
+  "title": "Order a picture for your restaurant or bar",
   "foot": "CPMG Restaurant and Bar Order",
   "about": "We make professional graphics for local businesses, fast. Restaurants and bars use us for daily specials, happy hours, live music and events that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your restaurant or bar. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your food, your bar or dining room, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -1774,7 +1859,59 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Stop in today"
    ]
   },
-  "vision": true
+  "vision": true,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri 11 to 9."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: shop local, then eat with us. Open 11 to 10."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards in any amount. Stop in or call."
+   ],
+   [
+    "Holiday event",
+    "Holiday party Sat Dec 12 at 7. Live music, no cover."
+   ],
+   [
+    "Hours",
+    "Winter hours: open daily 11 to 10. Kitchen open till 9."
+   ],
+   [
+    "Special",
+    "Tonight's special: green chile burger and fries, $15."
+   ],
+   [
+    "Event",
+    "Trivia night every Tuesday at 7. Prizes for the top 3."
+   ],
+   [
+    "Something else",
+    "Now open for lunch, Monday to Friday, 11 to 2."
+   ]
+  ],
+  "splace": {
+   "Barbecue": "Brisket plate with 2 sides, $16. Today only.",
+   "Chinese": "Lunch special: any entree with rice and an egg roll, $10.",
+   "Cocktail bar": "Happy hour 4 to 6: $8 house cocktails.",
+   "Diner": "Meatloaf dinner with 2 sides, $13. Tonight only.",
+   "Dive bar": "$3 drafts and $5 burgers all night.",
+   "Hotel and lodge": "Fireside dinner for two, $79. Fridays and Saturdays.",
+   "Italian": "Lasagna and a glass of wine, $22. Tonight only.",
+   "Mexican": "Taco Tuesday: 3 tacos for $9.",
+   "Pizza": "2 large pizzas for $25. Pickup or delivery.",
+   "Seafood": "Fish tacos, $14. Today only.",
+   "Sports bar": "Game day: wings and a pitcher, $25.",
+   "Steakhouse": "Prime rib night, $34. Fridays and Saturdays.",
+   "Tiki bar": "Rum punch, $7 all day Sunday.",
+   "Restaurant": "Chef's special tonight: pan-seared trout, $29.",
+   "Wine bar": "Wine flight: 3 pours for $15."
+  }
  },
  "plumbing": {
   "industry": "Plumbing",
@@ -3493,7 +3630,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
  "brewery": {
   "industry": "Brewery, cidery, distillery or winery",
   "form": "Brewery, cidery, distillery or winery",
-  "title": "Order a graphic for your brewery, cidery, distillery or winery",
+  "title": "Order a picture for your brewery, cidery, distillery or winery",
   "foot": "CPMG Brewery Order",
   "about": "We make professional graphics for local businesses, fast. Breweries, cideries, distilleries and wineries use us for new releases, tasting flights, happy hours, tours, live music and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your taproom. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your taproom, your tanks or barrels, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -3649,12 +3786,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri noon to 10."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: 15% off merch and gift packs."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards in any amount. Stop in or call."
+   ],
+   [
+    "Holiday event",
+    "Ugly sweater party Sat Dec 12 at 6. Live music, no cover."
+   ],
+   [
+    "Hours",
+    "Winter hours: open daily noon to 10."
+   ],
+   [
+    "Happy hour",
+    "Happy hour 3 to 6 every day. $2 off every pour."
+   ],
+   [
+    "Live music or event",
+    "Live music Friday at 7. No cover."
+   ],
+   [
+    "Something else",
+    "Our winter release is out. Come try it."
+   ]
+  ],
+  "splace": {}
  },
  "cafe": {
   "industry": "Cafe, coffee shop or bakery",
   "form": "Cafe, coffee shop or bakery",
-  "title": "Order a graphic for your cafe, coffee shop or bakery",
+  "title": "Order a picture for your cafe, coffee shop or bakery",
   "foot": "CPMG Cafe Order",
   "about": "We make professional graphics for local businesses, fast. Cafes, coffee shops and bakeries use us for daily specials, fresh bakes, holiday hours, catering and cake orders that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your cafe. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your counter, your pastry case, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -3810,12 +3983,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri 7 to 3."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: free cookie with any coffee."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards in any amount. Stop in or call."
+   ],
+   [
+    "Holiday event",
+    "Cookie decorating for kids Sat Dec 12 at 10."
+   ],
+   [
+    "Hours",
+    "Winter hours: open daily 7 a.m. to 3 p.m."
+   ],
+   [
+    "Daily special",
+    "Soup and half a sandwich, $11. Until 2 p.m."
+   ],
+   [
+    "Event",
+    "Story time for kids Saturday at 10. Free cocoa."
+   ],
+   [
+    "Something else",
+    "Holiday pie orders are open. Call to order yours."
+   ]
+  ],
+  "splace": {}
  },
  "outfitter": {
   "industry": "Outfitter, tours or adventure rentals",
   "form": "Outfitter, tours or adventure rentals",
-  "title": "Order a graphic for your outfitter, tour company or rental shop",
+  "title": "Order a picture for your outfitter, tour company or rental shop",
   "foot": "CPMG Outfitter Order",
   "about": "We make professional graphics for local businesses, fast. Outfitters, tour companies and adventure rental shops use us for tour times, rafting and snowmobile trips, bike rentals, weather updates, gift cards and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your outfitter. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your gear, your trailhead, your shop, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -3970,12 +4179,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Tours run again Fri at 9."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: 20% off all rentals."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards for tours and rentals. Any amount."
+   ],
+   [
+    "Holiday event",
+    "Holiday lights snowmobile tour Sat Dec 19 at 5."
+   ],
+   [
+    "Hours",
+    "Winter hours: open daily 8 to 5."
+   ],
+   [
+    "Special",
+    "Snowmobile tours from $149. Gear included."
+   ],
+   [
+    "Event",
+    "Moonlight snowshoe hike Friday at 7. $45."
+   ],
+   [
+    "Something else",
+    "Tour canceled for weather. We will call you to reschedule."
+   ]
+  ],
+  "splace": {}
  },
  "cabin": {
   "industry": "Cabin, vacation rental or lodging",
   "form": "Cabin, vacation rental or lodging",
-  "title": "Order a graphic for your cabins, vacation rentals or lodge",
+  "title": "Order a picture for your cabins, vacation rentals or lodge",
   "foot": "CPMG Cabin Order",
   "about": "We make professional graphics for local businesses, fast. Cabin owners, vacation rental managers and small lodges use us for open dates, holiday weeks, hot tubs and fireplaces, snow and road updates, check-in info, gift cards and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your cabin or rental. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your cabin, your view, your hot tub, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -4131,12 +4376,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week open dates",
+    "Thanksgiving week: 2 cabins still open, Nov 25 to 29."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: book a winter stay and save 15%."
+   ],
+   [
+    "Holiday gift cards",
+    "Give a mountain getaway. Gift cards in any amount."
+   ],
+   [
+    "Holiday event",
+    "Holiday lights weekend Dec 12 and 13. Hot cocoa on the porch."
+   ],
+   [
+    "Open dates",
+    "Christmas week open: Dec 20 to 27. Sleeps 6."
+   ],
+   [
+    "Special",
+    "Stay 3 nights, save 15%. Through Dec 30."
+   ],
+   [
+    "Event",
+    "Guided snowshoe walk for guests Saturday at 10. Free."
+   ],
+   [
+    "Something else",
+    "Snow day: roads may be slow. Check-in is still on."
+   ]
+  ],
+  "splace": {}
  },
  "gift": {
   "industry": "Gift shop or retail",
   "form": "Gift shop or retail",
-  "title": "Order a graphic for your gift shop or boutique",
+  "title": "Order a picture for your gift shop or boutique",
   "foot": "CPMG Gift Shop Order",
   "about": "We make professional graphics for local businesses, fast. Gift shops, boutiques, souvenir shops and craft stores use us for holiday hours, new arrivals, local crafts, gift wrapping, gift cards, sales and snow day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shelves, your window display, your best sellers, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -4292,12 +4573,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri 8 a.m. to 8 p.m."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: 20% off storewide. Shop local!"
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards in any amount. Free gift wrap too."
+   ],
+   [
+    "Holiday event",
+    "Holiday open house Sat Dec 5, 10 to 4. Cider and cookies."
+   ],
+   [
+    "Hours",
+    "Holiday hours: Mon to Sat 10 to 8, Sun 11 to 6."
+   ],
+   [
+    "Special",
+    "Ornaments, 2 for $20. This week only."
+   ],
+   [
+    "Event",
+    "Meet a local artist Saturday, 1 to 3."
+   ],
+   [
+    "Something else",
+    "Snow day: we are still open. Call before you drive."
+   ]
+  ],
+  "splace": {}
  },
  "spa": {
   "industry": "Spa, massage or salon",
   "form": "Spa, massage or salon",
-  "title": "Order a graphic for your spa or salon",
+  "title": "Order a picture for your spa or salon",
   "foot": "CPMG Spa and Salon Order",
   "about": "We make professional graphics for local businesses, fast. Day spas, massage studios, hair salons and nail salons use us for appointment openings, massage and spa specials, holiday hours, gift certificates, new services and snow day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your spa or salon. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your treatment room, your salon chairs, your products, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -4453,12 +4770,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri 9 to 7."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: 20% off all massages."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards for massages and spa days. Any amount."
+   ],
+   [
+    "Holiday event",
+    "Holiday spa night Thu Dec 10, 5 to 8. Treats and mini facials."
+   ],
+   [
+    "Hours",
+    "Holiday hours: Mon to Sat 9 to 7, Sun 10 to 5."
+   ],
+   [
+    "Special",
+    "60-minute massage, $79. This week only."
+   ],
+   [
+    "Event",
+    "Tea and wellness talk Saturday at 2. Free."
+   ],
+   [
+    "Something else",
+    "Openings this Saturday for cuts and color. Call to book."
+   ]
+  ],
+  "splace": {}
  },
  "music": {
   "industry": "Music venue",
   "form": "Music venue",
-  "title": "Order a graphic for your music venue",
+  "title": "Order a picture for your music venue",
   "foot": "CPMG Music Venue Order",
   "about": "We make professional graphics for local businesses, fast. Live music venues, concert halls, listening rooms and music bars use us for this weekend's shows, tickets on sale, open mic nights, holiday shows, private events, gift cards and snow night notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your venue. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your stage, your room, a band photo, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -4614,12 +4967,48 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Doors open Fri at 7."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: $5 off tickets for December shows."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards for shows and drinks. Any amount."
+   ],
+   [
+    "Holiday event",
+    "New Year's Eve show. Doors at 8. Tickets on sale now."
+   ],
+   [
+    "Hours",
+    "Doors open Wed to Sun at 7. Box office opens at noon."
+   ],
+   [
+    "Tickets on sale",
+    "Winter concert series: 6 shows. Season pass $90."
+   ],
+   [
+    "Live music",
+    "Local band Saturday. Doors at 7, music at 8. $15."
+   ],
+   [
+    "Something else",
+    "Open mic every Wednesday. Sign up at 7."
+   ]
+  ],
+  "splace": {}
  },
  "ski-bike": {
   "industry": "Ski and bike shop",
   "form": "Ski and bike shop",
-  "title": "Order a graphic for your ski and bike shop",
+  "title": "Order a picture for your ski and bike shop",
   "foot": "CPMG Ski and Bike Shop Order",
   "about": "We make professional graphics for local businesses, fast. Ski and snowboard rental and tune shops, boot fitters and summer bike rental and repair shops use us for season rentals, tune-ups, boot fitting, demo days, kids rentals, summer bike rentals, gift cards, holiday hours and powder day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
   "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shop, your rental racks, your workshop, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
@@ -4775,7 +5164,43 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri at 7 for rentals."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: 25% off tune-ups."
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards for rentals, tune-ups and gear. Any amount."
+   ],
+   [
+    "Holiday event",
+    "Holiday ski swap Sat Dec 5, 9 to 3. Buy, sell or trade."
+   ],
+   [
+    "Hours or powder day",
+    "Powder day! We open at 7. Skis waxed and ready."
+   ],
+   [
+    "Special",
+    "Tune-up special: wax and edges, $35. Ready the next day."
+   ],
+   [
+    "Demo day or event",
+    "Demo day Saturday at the base. Try the new skis."
+   ],
+   [
+    "Something else",
+    "Now hiring: rental shop help for the winter. Stop in."
+   ]
+  ],
+  "splace": {}
  }
 };
   // ===== PACKS END =====
@@ -4784,6 +5209,8 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
   var LOOK_BASE = PACK_FIXED ? 'looks/' : PACK_NAME + '/looks/';
   if (!PACKS[PACK_NAME]) PACK_NAME = 'business';
   var PACK = PACKS[PACK_NAME];
+  var SIMPLE = document.body.classList.contains('simple');   // v4.04-TEST CC-144: the short 3-step form (built with body class "simple")
+  var SKINDS = SIMPLE ? (PACK.skinds || PACK.kinds.map(function (k) { return [k[0], '']; })) : [];
   (function applyPack() {
     function el(id) { return document.getElementById(id); }
     document.title = PACK.title + ' · CPMG';
@@ -4801,8 +5228,13 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
       if (sub) { var z = document.createElement('span'); z.className = 'szn'; z.textContent = sub; lb.appendChild(z); }
       return lb;
     }
-    PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
-    if (PACK.vision) {   // v3.41-TEST CC-114: Something else opens a typing box right under the buttons
+    if (SIMPLE) {   // v4.04-TEST CC-144 + CC-143: 8 one-tap choices, the 4 holiday ones first, then the everyday ones
+      SKINDS.forEach(function (k, i) {
+        var lb = tap('what', k[0], 'pencil', '', false); if (i < 4) lb.classList.add('s-hol'); el('whatTaps').appendChild(lb);
+        if (i === 3 && SKINDS.length > 4) { var gp = document.createElement('div'); gp.className = 's-gap'; gp.setAttribute('aria-hidden', 'true'); el('whatTaps').appendChild(gp); }
+      });
+    } else PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
+    if (PACK.vision && !SIMPLE) {   // v3.41-TEST CC-114: Something else opens a typing box right under the buttons
       var wt = el('whatTaps'), ob = document.createElement('div'); ob.id = 'whatOther'; ob.hidden = true; ob.className = 'whatOther';
       ob.innerHTML = '<label class="sl" for="whatOtherTxt">Tell us what it\u2019s for (a few words)</label><input type="text" id="whatOtherTxt" autocomplete="off" maxlength="80" placeholder="Example: Grand opening">';
       wt.parentNode.insertBefore(ob, wt.nextSibling);
@@ -4811,7 +5243,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
       });
     }
     // v3.37 CC-071: some packs ask the kind of place first (Bar / Restaurant / Both) and show only the graphic buttons that fit
-    if (PACK.places && PACK.places.length) {
+    if (PACK.places && PACK.places.length && !SIMPLE) {   // v4.04-TEST CC-144: the short form asks the kind of place its own way (one row, only when the link has no ?place=)
       el('placeBox').style.display = '';
       setTimeout(function () { var bx = el('placeBox'), fs = bx.parentNode, lh = fs.querySelector('.liteHint'); if (lh) fs.insertBefore(lh, bx.nextSibling); }, 0);   // "Tap one." sits under the place buttons, above the graphic buttons
       PACK.places.forEach(function (p) { el('placeTaps').appendChild(tap('place', p[0], p[1], '', false)); });
@@ -4838,7 +5270,7 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.03-TEST (Nov 15, 2026, 10:15 PM) · ' + PACK_NAME;
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.04-TEST (Nov 15, 2026, 11:07 PM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
@@ -4894,12 +5326,13 @@ body.lite .wrap.narrow{padding-bottom:16px!important}
     if (PACK.extra.key === 'brokerage' && c.brokerage) $('brok').value = c.brokerage;
     if (PACK.extra.key === 'businessType' && c.businessType) $('brok').value = c.businessType;
     $('em').value = c.email || ''; $('ph').value = C.fmtPhone(c.phone || '');
+    if (SIMPLE && !c.email && c.phone) $('em').value = C.fmtPhone(c.phone);   // v4.04-TEST CC-144: one Email or phone box
     $('welcome').textContent = 'Welcome back' + (c.name ? ', ' + String(c.name).split(' ')[0] : '') + '! Your info is filled in.';
     $('welcome').hidden = false;
   }
   var BROK_STORE = PACK.extra.store;
-  if (PACK.vision) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111
-  if (PACK.vision) {   // v3.42-TEST CC-115: tap-a-picture tiles, up to 3, plus You choose
+  if (PACK.vision && !SIMPLE) { var vb = document.getElementById('visionBox'); if (vb) vb.hidden = false; }   // v3.39-TEST CC-111 (v4.04 CC-144: not on the short form)
+  if (PACK.vision && !SIMPLE) {   // v3.42-TEST CC-115: tap-a-picture tiles, up to 3, plus You choose (v4.04 CC-144: not on the short form)
     var MOOD = { Warm: ['linear-gradient(180deg,#f3dcb0,#e3ae7e,#c98a6a)', 'Warm: cozy and friendly, like golden sunset light.'],
       Bold: ['linear-gradient(135deg,#e9c9a6,#c9885a 55%,#8f3a24)', 'Bold: strong, confident colors that stand out.'],
       Calm: ['linear-gradient(180deg,#dcebe7,#bcd5d1,#9bbab7)', 'Calm: soft, quiet and clean.'],
@@ -5017,7 +5450,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     $('looking').hidden = false;
     C.lookupClient(key).then(function (c) {
       $('looking').hidden = true;
-      if (c && (c.email || c.business)) { client = c; fill(c); C.keyInLink(key); try { showPrice(); } catch (e) { /* ok */ } }
+      if (c && (c.email || c.business)) { client = c; fill(c); if (SIMPLE) sKeyInLink(key); else C.keyInLink(key); try { showPrice(); } catch (e) { /* ok */ } }
       else if (c === false) { C.forgetKey(); key = ''; }
     });
   }
@@ -5027,9 +5460,74 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     $(id).addEventListener('input', function () { err(/^b\d$/.test(id) ? 'eBdy' : 'e' + id.charAt(0).toUpperCase() + id.slice(1), ''); });
   });
 
+  // v4.04-TEST CC-144: the short form. Same order shape the order system already takes, with fixed choices filled in for the owner.
+  var sayIn = $('sayAll'); if (sayIn) sayIn.addEventListener('input', function () { err('eSay', ''); });
+  function sendSimple() {
+    var biz = $('biz').value.trim(), nm = $('nm').value.trim(), reach = $('em').value.trim();
+    var say = ($('sayAll') ? $('sayAll').value : '').replace(/\r/g, '').trim().slice(0, 600);
+    var rows = say.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    var hasAt = reach.indexOf('@') > -1, em = hasAt ? reach : '', phD = hasAt ? '' : C.digits(reach);
+    if (phD.length === 11 && phD.charAt(0) === '1') phD = phD.slice(1);
+    var bad = [], fails = [];   // top to bottom, only the first problem shows
+    fails.push(['eSay', !rows.length, 'Type what your picture should say, like the gray example.', 'sayAll']);
+    fails.push(['eBiz', !biz, 'Type your business name.', 'biz']);
+    fails.push(['eNm', !nm, 'Type your name.', 'nm']);
+    fails.push(['eEm', !reach || (hasAt ? !C.emailOk(em) : phD.length !== 10), !reach ? 'Type your email or your phone number.' : hasAt ? 'That email looks wrong. It needs an @ and an ending like .com.' : 'Your phone number needs 10 numbers, with the area code.', 'em']);
+    fails.forEach(function (c) { var show = c[1] && !bad.length; err(c[0], show ? c[2] : ''); if (show) bad.push(c[3]); });
+    if (bad.length) { try { $(bad[0]).focus(); } catch (e) { /* old phone */ } return; }
+    var ph = hasAt ? '' : C.fmtPhone(phD);
+    var ttl = rows[0], bdy = rows.slice(1);   // title = first line, details = the rest (5 lines at most, like before)
+    if (bdy.length > 5) bdy = bdy.slice(0, 4).concat([bdy.slice(4).join(' · ')]);
+    if (!bdy.length) bdy = ['(Left for us to write)'];
+    var w = document.querySelector('input[name="what"]:checked'), what = w ? w.value : 'Something else';
+    var changed = !client || client.business !== biz || client.name !== nm || (client.email || '') !== em || C.digits(client.phone) !== C.digits(ph);
+    var payload = {
+      kind: 'quick',
+      formVersion: FORM_VERSION,
+      clientKey: client ? key : '',
+      customer: { name: nm, business: biz, brokerage: '', businessType: '', email: em, phone: ph, industry: PACK.industry, edited: !!client && changed,
+        more: { showPhone: true, showBusiness: true, website: '', site: '', facebook: '', instagram: '' } },
+      graphics: graphicsFor(['Phone', 'TV'], { look: lookText(), promo: false, ttl: ttl, bdy: bdy, cta: '(We choose)', brok: '', what: what, hdg: '' }),
+      rush: false,
+      website: C.honeypot()
+    };
+    payload.graphics.forEach(function (g) {
+      g.more['Bottom of graphic'] = 'Business name · Phone';
+      if (PACK_NAME === 'restaurant') g.more[PACK.extra.note] = S_PLACE || 'Not picked';
+      g.more['Their words'] = say;
+      g.more['Contact by'] = hasAt ? 'Email' : 'Phone or text (no email given)';
+    });
+    sending = true; $('sendErr').hidden = true;
+    C.busy($('sendBtn'), true, 'Sending…');
+    C.sendOrder(payload).then(function (res) {
+      sending = false;
+      if (res && res.ok) {
+        C.busy($('sendBtn'), false, 'Send');
+        if (res.clientKey) { key = res.clientKey; C.rememberKey(key); sKeyInLink(key); }
+        client = { name: nm, business: biz, email: em, phone: ph };
+        $('orderCode').textContent = res.orderCode || '';
+        $('orderCode').hidden = $('codeLbl').hidden = !res.orderCode;
+        var ol = $('okLine'); if (ol) { if (!ol.dataset.t) ol.dataset.t = ol.textContent; ol.textContent = hasAt ? ol.dataset.t : ol.dataset.t.replace('by email', 'by text'); }
+        $('f').hidden = true; $('sendBar').hidden = true; $('ok').hidden = false; window.scrollTo(0, 0);
+      } else {
+        C.busy($('sendBtn'), false, 'Try sending again');
+        $('sendErrText').textContent = C.failText(res); $('sendErr').hidden = false;
+        try { $('sendErr').scrollIntoView({ block: 'center' }); } catch (e) { /* old phone */ }
+      }
+    });
+  }
+  function sKeyInLink(k) {   // like C.keyInLink, but keeps ?place= and ?look= so a saved link still matches their email
+    if (TEST_NEW) return;
+    var q = (k ? '?k=' + encodeURIComponent(k) : '');
+    if (S_PLACE) q += (q ? '&' : '?') + 'place=' + encodeURIComponent(S_PLACE);
+    if (S_LOOK) q += (q ? '&' : '?') + 'look=' + S_LOOK.toLowerCase();
+    try { window.history.replaceState(null, '', location.pathname + q); } catch (e) { /* old phone */ }
+  }
+
   $('f').addEventListener('submit', function (ev) {
     ev.preventDefault();
     if (sending) return;
+    if (SIMPLE) { sendSimple(); return; }   // v4.04-TEST CC-144
     var brok = $('brok').value.trim(), biz = $('biz').value.trim(), nm = $('nm').value.trim(), em = $('em').value.trim(), ph = $('ph').value.trim();
     var ttl = $('ttl').value.trim(), hdg = $('hdg').value.trim(), bdy = ['b1', 'b2', 'b3', 'b4', 'b5'].map(function (id) { return $(id).value.trim(); }).filter(Boolean), cta = $('cta').value.trim();
     var bad = [], fails = [], emOk = C.emailOk(em), phN = C.digits(ph).length;
@@ -5093,24 +5591,56 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     'Something else': ['Happy Thanksgiving', 'From my family to yours', ['Wishing you the best', 'Thank you for your trust', 'Free home value check', 'Serving our neighborhood', 'Ready when you are'], 'Call me anytime']
   };
   if (PACK.ex) EX = PACK.ex;
+  function sExample(k) {   // v4.04-TEST CC-144: the gray example in the one big box follows the step 1 choice (and the kind of place for Special)
+    if (!SIMPLE || !$('sayAll')) return;
+    var ex = '';
+    SKINDS.forEach(function (x) { if (x[0] === k) ex = x[1]; });
+    if (k === 'Special' && PACK.splace && S_PLACE && PACK.splace[S_PLACE]) ex = PACK.splace[S_PLACE];
+    if (!ex && SKINDS.length) ex = SKINDS[0][1];
+    $('sayAll').placeholder = ex ? 'Example: ' + ex : '';
+  }
   function examples(k) { var e = EX[k] || EX['']; $('ttl').placeholder = e[0]; $('hdg').placeholder = e[1]; for (var i = 0; i < 5; i++) $('b' + (i + 1)).placeholder = e[2][i] || ''; $('cta').placeholder = e[3]; $('xTtl').textContent = '"' + e[0] + '"'; $('xHdg').textContent = '"' + e[1] + '"'; $('xBdy').textContent = '"' + e[2][0] + '" or "' + e[2][1] + '"'; $('xCta').textContent = '"' + e[3] + '"'; }
-  examples('');
+  examples(''); sExample('');
   setTimeout(function () { try { showPrice(); } catch (e) { /* ok */ } }, 0);
 
   // v2.4: more than one place. Phone + (TV or Website) = one $40 pair; TV and Website share one wide graphic;
   // Social media is its own $25 graphic. Prices stay the order system's (first one free is taken off there).
   // v2.16: the look they picked (Holiday adds which holiday)
   function lookText() {
+    if (SIMPLE) return (S_LOOK || 'Match the email sample') + (TEMPLATE ? ' | Template: ' + TEMPLATE : '');   // v4.04-TEST CC-144: look comes from the email link
     var l = document.querySelector('input[name="look"]:checked'), v = l ? l.value : 'You pick for me', h = $('holiday').value.trim();
     return (v === 'Holiday' && h ? 'Holiday: ' + h : v) + (TEMPLATE ? ' | Template: ' + TEMPLATE : '');
   }
   // v3.94 CC-139: the restaurant form asks the kind of place and Casual or Upscale itself (no 30 buttons on the picker).
   // ?template=pizza-upscale still works and preselects both.
   var TPL_TYPES = [['barbecue','Barbecue'],['chinese','Chinese'],['cocktail-bar','Cocktail bar'],['diner','Diner'],['dive-bar','Dive bar'],['hotel-and-lodge','Hotel and lodge'],['italian','Italian'],['mexican','Mexican'],['pizza','Pizza'],['seafood','Seafood'],['sports-bar','Sports bar'],['steakhouse','Steakhouse'],['tiki-bar','Tiki bar'],['upscale-restaurant','Restaurant'],['wine-bar','Wine bar']];
-  var TEMPLATE = '';
+  var TEMPLATE = '', S_LOOK = '', S_PLACE = '';   // v4.04-TEST CC-144: S_LOOK = Casual or Upscale from the link, S_PLACE = kind of place
   (function () {
     try {
       var ONE_TYPE = { brewery: ['brewery', 'Brewery, cidery, distillery or winery'], cafe: ['cafe', 'Cafe, coffee shop or bakery'], outfitter: ['outfitter', 'Outfitter, tours or adventure rentals'], cabin: ['cabin', 'Cabin, vacation rental or lodging'], gift: ['gift', 'Gift shop or retail'], spa: ['spa', 'Spa, massage or salon'], music: ['music', 'Music venue'], 'ski-bike': ['ski-bike', 'Ski and bike shop'] };   // v3.96-TEST CC-141: one-type forms ask only Casual or Upscale
+      if (SIMPLE) {   // v4.04-TEST CC-144: no look question. The email link says it: ?look=casual or ?look=upscale, and for restaurants ?place=Pizza. Old ?template=pizza-casual links still work.
+        var tp = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), lk = (C.param('look') || '').trim().toLowerCase();
+        if (!/^(casual|upscale)$/.test(lk)) lk = tp ? tp[2] : '';
+        S_LOOK = lk === 'upscale' ? 'Upscale' : lk === 'casual' ? 'Casual' : '';
+        var setT = function () { TEMPLATE = S_PLACE ? S_PLACE + (S_LOOK ? ', ' + S_LOOK : '') : ''; };
+        if (ONE_TYPE[PACK_NAME]) S_PLACE = ONE_TYPE[PACK_NAME][1];
+        else if (PACK_NAME === 'restaurant') {
+          var raw = (C.param('place') || (tp ? tp[1] : '')).trim(), want = raw.toLowerCase().replace(/[\s_]+/g, '-');
+          TPL_TYPES.forEach(function (t) { if (want && (t[0] === want || t[1].toLowerCase().replace(/\s+/g, '-') === want)) S_PLACE = t[1]; });
+          if (!S_PLACE && raw) { var cl = raw.replace(/[-_]+/g, ' ').replace(/[^A-Za-z0-9 '&]/g, '').replace(/\s+/g, ' ').trim().slice(0, 40); if (cl) S_PLACE = cl.charAt(0).toUpperCase() + cl.slice(1); }   // a place not on the list is kept as written
+          var box = document.getElementById('sPlace');
+          if (!S_PLACE && box) {   // no ?place= in the link: ONE compact row
+            var plb = document.createElement('label'); plb.htmlFor = 'sPlaceSel'; plb.textContent = 'What kind of place?';
+            var psel = document.createElement('select'); psel.id = 'sPlaceSel';
+            var po = document.createElement('option'); po.value = ''; po.textContent = 'Pick one'; psel.appendChild(po);
+            TPL_TYPES.map(function (t) { return t[1]; }).sort().forEach(function (n) { var o = document.createElement('option'); o.value = n; o.textContent = n; psel.appendChild(o); });
+            psel.addEventListener('change', function () { S_PLACE = psel.value; setT(); var wk = document.querySelector('input[name="what"]:checked'); sExample(wk ? wk.value : ''); });
+            box.appendChild(plb); box.appendChild(psel); box.hidden = false;
+          }
+        }
+        setT();
+        return;
+      }
       if (PACK_NAME !== 'restaurant' && !ONE_TYPE[PACK_NAME]) return;   // v3.95-TEST CC-141: the brewery form also asks Casual or Upscale
       var tb = document.getElementById('tplBar'); if (!tb) return;
       var m = /[?&]template=([a-z-]+)-(casual|upscale)\b/.exec(location.search), selType = m ? m[1] : '', selLook = m ? m[2] : '';
@@ -5184,7 +5714,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('lookPop').hidden) closeLook(tilePick ? 'close' : true); });
   document.addEventListener('change', function (e) { if (e.target && e.target.name === 'look') { $('holidayBox').hidden = e.target.value !== 'Holiday'; if (e.isTrusted) showLook(e.target.value); } });
   function visionNote(k) {   // v3.39-TEST CC-111: what the client pictures. Empty = None.
-    if (!PACK.vision) return 'None';
+    if (!PACK.vision || SIMPLE) return 'None';   // v4.04-TEST CC-144: the short form has no picture question
     if (k === 'likes') { var lv = [].map.call(document.querySelectorAll('input[name="likes"]:checked'), function (i) { return i.value; }); return lv.length ? lv.join(', ') : 'None'; }
     if (k === 'choose') { var yc2 = document.querySelector('input[name="youchoose"]'); return yc2 && yc2.checked ? 'Yes' : 'None'; }
     if (k === 'feel') { var v = [].map.call(document.querySelectorAll('input[name="feel"]:checked'), function (i) { return i.value; }); return v.length ? v.join(', ') : 'None'; }
@@ -5217,6 +5747,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     return out.join(' · ');
   }
   function showPrice() {
+    if (SIMPLE) { $('barTot').textContent = 'You pay nothing now.'; return; }   // v4.04-TEST CC-144: no price box on the short form
     var g = groups(places()), rush = $('rush').checked ? 10 : 0, rows = [];
     $('priceBox').hidden = false;
     if (!g.length) {
@@ -5241,10 +5772,14 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     });
   }
   document.addEventListener('change', function (e) { if (e.target && (e.target.name === 'size' || e.target.id === 'rush')) { err('eSize', ''); showPrice(); } });
-  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); } });
+  document.addEventListener('change', function (e) { if (e.target && e.target.name === 'what') { err('eWhat', ''); examples(e.target.value); sExample(e.target.value); } });
 
   $('again').addEventListener('click', function () {
     $('ttl').value = $('hdg').value = $('cta').value = ''; ['b1', 'b2', 'b3', 'b4', 'b5'].forEach(function (id) { $(id).value = ''; }); photos.clear();
+    if (SIMPLE) {   // v4.04-TEST CC-144: clear the short form for the next order
+      $('sayAll').value = ''; [].forEach.call(document.querySelectorAll('input[name="what"]'), function (i) { i.checked = false; }); C.syncOpts(document); sExample('');
+      var sl = document.querySelector('.s-slot'), ad = $('addPhoto'); if (sl) sl.hidden = true; if (ad) ad.hidden = false;
+    }
     if (client) fill(client);
     $('ok').hidden = true; $('f').hidden = false; $('sendBar').hidden = false; window.scrollTo(0, 0);
   });
@@ -5342,7 +5877,7 @@ var BP = {"m":[["Cocktail bar","Casual","Happy Hour"],["Barbecue","Casual","New 
     if (busy) return; busy = true;
     try {
       var w = document.querySelector('.wrap.narrow'), de = document.documentElement;
-      if (!w || !document.body.classList.contains('lite')) return;
+      if (!w || !document.body.classList.contains('lite') || document.body.classList.contains('simple')) return;   // v4.04-TEST CC-144: not for the short form
       if (!window.matchMedia('(min-width:1100px)').matches) { w.style.zoom = ''; w.style.paddingBottom = ''; return; }
       var bar = document.getElementById('sendBar'), barH = (bar && !bar.hidden) ? bar.offsetHeight : 0;
       function ok(z) { w.style.zoom = z; w.style.paddingBottom = Math.ceil((barH + 8) / z) + 'px'; return de.scrollHeight <= window.innerHeight + 1 && de.scrollWidth <= window.innerWidth + 1; }

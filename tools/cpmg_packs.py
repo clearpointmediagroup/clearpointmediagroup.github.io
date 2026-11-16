@@ -1,4 +1,5 @@
-# CPMG industry packs v2.11-TEST (Nov 15, 2026, 10:15 PM)
+# CPMG industry packs v2.12-TEST (Nov 15, 2026, 11:07 PM)
+# v2.12-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: the 9 Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant) get simple=True: the SHORT 3-step form (body class "simple"). Title says "Order a picture for your ...". New skinds = the 8 one-tap choices for step 1 "What do you need?": the 4 holiday choices first (CC-143: Thanksgiving week hours, Black Friday / Small Business Saturday, Holiday gift cards, Holiday event), then 4 everyday ones (Hours, Special, Event, Something else; cabin says Open dates; a pack keeps its own better words, like brewery Happy hour). Each choice has a short gray example for the step 2 box. Restaurant splace = the Special example by kind of place (?place=Pizza). Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28. Other packs unchanged.
 # v2.11-TEST (Nov 15, 2026, 10:15 PM) CC-142: intro promise now says order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, later orders ready the next morning, open 7 days, closed Thanksgiving Day.
 # v2.10-TEST (Nov 15, 2026, 10:15 PM) CC-141: new ski-bike pack (ski and snowboard rental and tune shops in winter, bike rental and repair in summer). Test form only; Casual and Upscale chosen inside the form. The older ski-shop pack is not changed.
 # v2.9-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music pack (music venues, live music bars, concert halls). Test form only; Casual and Upscale chosen inside the form.
@@ -394,3 +395,111 @@ PACKS['ski-bike'] = _clone('cpa',
 # v1.7 (Nov 8, 2026): every industry form uses the light, simple look (lean + lite). No dark forms.
 for _k in PACKS:
     PACKS[_k]['lean'] = True
+
+# ---- v2.12-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: SHORT 3-step form for the Colorado packs ----
+# simple=True: tools/build-order-forms.py (v1.4) builds the page with <body class="lean lite simple">.
+# skinds: step 1 "What do you need?" buttons, in order: [button words, gray example for the step 2 box].
+#         The 4 holiday choices come first (CC-143), then the 4 everyday ones.
+# splace: restaurant only. The gray example for Special, by kind of place (from ?place= or the What kind of place? row).
+# Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28 (2026).
+HOL_TG, HOL_BF, HOL_GC, HOL_EV = 'Thanksgiving week hours', 'Black Friday / Small Business Saturday', 'Holiday gift cards', 'Holiday event'
+def _simple(k, title, kinds, **more):
+    assert len(kinds) == 8, k
+    PACKS[k].update(simple=True, title=title, skinds=[list(x) for x in kinds], **more)
+
+_simple('brewery', 'Order a picture for your brewery, cidery, distillery or winery', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri noon to 10.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 15% off merch and gift packs.'),
+    (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
+    (HOL_EV, 'Ugly sweater party Sat Dec 12 at 6. Live music, no cover.'),
+    ('Hours', 'Winter hours: open daily noon to 10.'),
+    ('Happy hour', 'Happy hour 3 to 6 every day. $2 off every pour.'),
+    ('Live music or event', 'Live music Friday at 7. No cover.'),
+    ('Something else', 'Our winter release is out. Come try it.')])
+_simple('cafe', 'Order a picture for your cafe, coffee shop or bakery', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri 7 to 3.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: free cookie with any coffee.'),
+    (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
+    (HOL_EV, 'Cookie decorating for kids Sat Dec 12 at 10.'),
+    ('Hours', 'Winter hours: open daily 7 a.m. to 3 p.m.'),
+    ('Daily special', 'Soup and half a sandwich, $11. Until 2 p.m.'),
+    ('Event', 'Story time for kids Saturday at 10. Free cocoa.'),
+    ('Something else', 'Holiday pie orders are open. Call to order yours.')])
+_simple('outfitter', 'Order a picture for your outfitter, tour company or rental shop', [
+    (HOL_TG, 'Closed Thu Nov 26. Tours run again Fri at 9.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off all rentals.'),
+    (HOL_GC, 'Gift cards for tours and rentals. Any amount.'),
+    (HOL_EV, 'Holiday lights snowmobile tour Sat Dec 19 at 5.'),
+    ('Hours', 'Winter hours: open daily 8 to 5.'),
+    ('Special', 'Snowmobile tours from $149. Gear included.'),
+    ('Event', 'Moonlight snowshoe hike Friday at 7. $45.'),
+    ('Something else', 'Tour canceled for weather. We will call you to reschedule.')])
+_simple('cabin', 'Order a picture for your cabins, vacation rentals or lodge', [
+    ('Thanksgiving week open dates', 'Thanksgiving week: 2 cabins still open, Nov 25 to 29.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: book a winter stay and save 15%.'),
+    (HOL_GC, 'Give a mountain getaway. Gift cards in any amount.'),
+    (HOL_EV, 'Holiday lights weekend Dec 12 and 13. Hot cocoa on the porch.'),
+    ('Open dates', 'Christmas week open: Dec 20 to 27. Sleeps 6.'),
+    ('Special', 'Stay 3 nights, save 15%. Through Dec 30.'),
+    ('Event', 'Guided snowshoe walk for guests Saturday at 10. Free.'),
+    ('Something else', 'Snow day: roads may be slow. Check-in is still on.')])
+_simple('gift', 'Order a picture for your gift shop or boutique', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri 8 a.m. to 8 p.m.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off storewide. Shop local!'),
+    (HOL_GC, 'Gift cards in any amount. Free gift wrap too.'),
+    (HOL_EV, 'Holiday open house Sat Dec 5, 10 to 4. Cider and cookies.'),
+    ('Hours', 'Holiday hours: Mon to Sat 10 to 8, Sun 11 to 6.'),
+    ('Special', 'Ornaments, 2 for $20. This week only.'),
+    ('Event', 'Meet a local artist Saturday, 1 to 3.'),
+    ('Something else', 'Snow day: we are still open. Call before you drive.')])
+_simple('spa', 'Order a picture for your spa or salon', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri 9 to 7.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off all massages.'),
+    (HOL_GC, 'Gift cards for massages and spa days. Any amount.'),
+    (HOL_EV, 'Holiday spa night Thu Dec 10, 5 to 8. Treats and mini facials.'),
+    ('Hours', 'Holiday hours: Mon to Sat 9 to 7, Sun 10 to 5.'),
+    ('Special', '60-minute massage, $79. This week only.'),
+    ('Event', 'Tea and wellness talk Saturday at 2. Free.'),
+    ('Something else', 'Openings this Saturday for cuts and color. Call to book.')])
+_simple('music', 'Order a picture for your music venue', [
+    (HOL_TG, 'Closed Thu Nov 26. Doors open Fri at 7.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: $5 off tickets for December shows.'),
+    (HOL_GC, 'Gift cards for shows and drinks. Any amount.'),
+    (HOL_EV, "New Year's Eve show. Doors at 8. Tickets on sale now."),
+    ('Hours', 'Doors open Wed to Sun at 7. Box office opens at noon.'),
+    ('Tickets on sale', 'Winter concert series: 6 shows. Season pass $90.'),
+    ('Live music', 'Local band Saturday. Doors at 7, music at 8. $15.'),
+    ('Something else', 'Open mic every Wednesday. Sign up at 7.')])
+_simple('ski-bike', 'Order a picture for your ski and bike shop', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri at 7 for rentals.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 25% off tune-ups.'),
+    (HOL_GC, 'Gift cards for rentals, tune-ups and gear. Any amount.'),
+    (HOL_EV, 'Holiday ski swap Sat Dec 5, 9 to 3. Buy, sell or trade.'),
+    ('Hours or powder day', 'Powder day! We open at 7. Skis waxed and ready.'),
+    ('Special', 'Tune-up special: wax and edges, $35. Ready the next day.'),
+    ('Demo day or event', 'Demo day Saturday at the base. Try the new skis.'),
+    ('Something else', 'Now hiring: rental shop help for the winter. Stop in.')])
+_simple('restaurant', 'Order a picture for your restaurant or bar', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri 11 to 9.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: shop local, then eat with us. Open 11 to 10.'),
+    (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
+    (HOL_EV, 'Holiday party Sat Dec 12 at 7. Live music, no cover.'),
+    ('Hours', 'Winter hours: open daily 11 to 10. Kitchen open till 9.'),
+    ('Special', "Tonight's special: green chile burger and fries, $15."),
+    ('Event', 'Trivia night every Tuesday at 7. Prizes for the top 3.'),
+    ('Something else', 'Now open for lunch, Monday to Friday, 11 to 2.')],
+    splace={'Barbecue': 'Brisket plate with 2 sides, $16. Today only.',
+            'Chinese': 'Lunch special: any entree with rice and an egg roll, $10.',
+            'Cocktail bar': 'Happy hour 4 to 6: $8 house cocktails.',
+            'Diner': 'Meatloaf dinner with 2 sides, $13. Tonight only.',
+            'Dive bar': '$3 drafts and $5 burgers all night.',
+            'Hotel and lodge': 'Fireside dinner for two, $79. Fridays and Saturdays.',
+            'Italian': 'Lasagna and a glass of wine, $22. Tonight only.',
+            'Mexican': 'Taco Tuesday: 3 tacos for $9.',
+            'Pizza': '2 large pizzas for $25. Pickup or delivery.',
+            'Seafood': 'Fish tacos, $14. Today only.',
+            'Sports bar': 'Game day: wings and a pitcher, $25.',
+            'Steakhouse': 'Prime rib night, $34. Fridays and Saturdays.',
+            'Tiki bar': 'Rum punch, $7 all day Sunday.',
+            'Restaurant': "Chef's special tonight: pan-seared trout, $29.",
+            'Wine bar': 'Wine flight: 3 pours for $15.'})
