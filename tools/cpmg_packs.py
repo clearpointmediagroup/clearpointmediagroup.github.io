@@ -1,4 +1,5 @@
-# CPMG industry packs v2.13-TEST (Nov 15, 2026, 11:46 PM)
+# CPMG industry packs v2.14-TEST (Nov 16, 2026, 5:49 AM)
+# v2.14-TEST (Nov 16, 2026, 5:49 AM) CC-157 (Randy approved by 5:12 AM): hours are noon to 10 p.m. Eastern (10 a.m. to 8 p.m. Mountain). Intro promise now says: order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day.
 # v2.13-TEST (Nov 15, 2026, 11:46 PM) CC-148: $25 covers phone + TV; first order $0. Price math is in test/order/index.html; pack wording already says $25 each and first one free.
 # v2.12-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: the 9 Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant) get simple=True: the SHORT 3-step form (body class "simple"). Title says "Order a picture for your ...". New skinds = the 8 one-tap choices for step 1 "What do you need?": the 4 holiday choices first (CC-143: Thanksgiving week hours, Black Friday / Small Business Saturday, Holiday gift cards, Holiday event), then 4 everyday ones (Hours, Special, Event, Something else; cabin says Open dates; a pack keeps its own better words, like brewery Happy hour). Each choice has a short gray example for the step 2 box. Restaurant splace = the Special example by kind of place (?place=Pizza). Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28. Other packs unchanged.
 # v2.11-TEST (Nov 15, 2026, 10:15 PM) CC-142: intro promise now says order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, later orders ready the next morning, open 7 days, closed Thanksgiving Day.
@@ -29,7 +30,7 @@
 # To add an industry: copy one entry, change the words, run: python3 tools/build-order-forms.py
 HOW = ("Get a ready-to-post graphic for your {what}. Tap the kind of graphic you need, type a few words for each part, "
        "and add photos if you want, like {photos}. Then pick where you'll show it: phone, big-screen TV, social media or your website. "
-       "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. "
+       "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. "
        "Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.")
 ABOUT = ("We make professional graphics for local businesses, fast. {who} use us for {uses} that look sharp on a phone, a big-screen TV, "
          "social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. "
