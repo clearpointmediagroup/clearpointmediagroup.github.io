@@ -2,13 +2,14 @@
 <!--
   CPMG Music venue Order — test/order/music/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v4.10-TEST (Nov 16, 2026, 5:49 AM)
+  v4.11-TEST (Nov 16, 2026, 4:03 PM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.11-TEST (Nov 16, 2026, 4:03 PM) CC-163 (audit 3, D3; Randy: fix it all, 2:52 PM): the raw page (tab title, description, About and How this works) now starts with this form's own words, not the real estate words, so it reads right before the script runs and in link previews. Nothing else changed.
     v4.10-TEST (Nov 16, 2026, 5:49 AM) CC-157 (Randy approved by 5:12 AM): hours are noon to 10 p.m. Eastern (10 a.m. to 8 p.m. Mountain), 7 days, closed Thanksgiving Day. The top hours line, the intro (pkHow and every pack, from tools/cpmg_packs.py v2.14-TEST) and the thank-you line now say: order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. Test copy only.
     v4.09-TEST (Nov 16, 2026, 3:38 AM) CC-144 fix: the short form's words always fit the order system's limits (headline 10 words, lines 10 words, 5 lines, notes 50 words); found by practice order 1 at about 3:32 AM (and its rerun at about 3:33 AM). Short form only. Headline: the owner's first line when they typed 2 or more lines and it is 10 words or fewer; otherwise the step 1 pick ("Something else" becomes "Our news"). Lines: the rest of the words keep their line breaks and wrap at 10 words a line; if that makes more than 5 lines, short lines are put together (a comma where a line ended), then the words flow 10 to a line. More than 50 words for the lines: the form does not send and says under the box "Please keep it to about 50 words. We'll call or email if we need more." (also while typing). Notes on each picture (the order system counts every word of them, 50 at most): kept Kind of graphic, Size, Look (with Template), Kind of place (restaurant), Photos ("1 photo" or "None"), Bottom of graphic; dropped Form, Order link, Where shown (the size column has it), the 5 picture questions that are always None on the short form, Contact by (always Email) and Their words (the words are in the lines). Worst case now 42 words. A kind of place from a link that is not on the list is kept to 4 words. Long forms: version label only.
     v4.08-TEST (Nov 16, 2026, 3:27 AM) CC-144 fix (Randy, Nov 16, 3:25 AM, tap: Ask for email and phone): two boxes, Email and Phone; the order system needs both. A practice order failed because the short form had ONE "Email or phone" box and the order system (CPMG_OrderReceiver v2.3-TEST) needs an email AND a 10-digit phone. Step 3 of the short form now shows 4 boxes: Business name, Your name, Email, Phone (the form's own email box, type email, "Email (your preview comes here)", and phone box, type tel, "Phone"). Both are required, with the long form's checks and words ("Type your email, like you@yourbusiness.com." / "That email looks wrong. It needs an @ and an ending like .com." / "Type your phone number." / "Your phone needs 10 numbers, like 843 555 1212."). Sent the same way the long form sends them (customer.email, customer.phone); Contact by is now always Email, and the thank-you line always says by email. Returning clients get both boxes filled in. Everything else on the short form is unchanged (3 steps, Phone/TV/Both, price line, "You pay nothing now."). Long forms: version label only.
@@ -277,8 +278,8 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0f1712">
 <meta name="color-scheme" content="dark">
-<title>CPMG Real Estate Order</title>
-<meta name="description" content="Order a real estate graphic from ClearPoint Media Group. Most proofs within 5 hours.">
+<title>Order a picture for your music venue · CPMG</title>
+<meta name="description" content="Order a picture for your music venue from ClearPoint Media Group. Most previews come back within 5 hours.">
 <link rel="icon" href="../../../assets/cpmg-icon.svg" type="image/svg+xml">
 <link rel="icon" href="../../../assets/cpmg-icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="../../../assets/cpmg-icon-180.png">
@@ -896,7 +897,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 </head>
 <body class="lean lite simple">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.10-TEST (Nov 16, 2026, 5:49 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.11-TEST (Nov 16, 2026, 4:03 PM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -916,12 +917,12 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 
   <details class="intro">
     <summary class="ih">About ClearPoint Media Group</summary>
-    <p id="pkAbout">We make professional graphics for local businesses, fast. Real estate agents use us for just listed, open house, price drop and just sold posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.</p>
+    <p id="pkAbout">We make professional graphics for local businesses, fast. Live music venues, concert halls, listening rooms and music bars use us for this weekend's shows, tickets on sale, open mic nights, holiday shows, private events, gift cards and snow night notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.</p>
   </details>
 
   <details class="intro">
     <summary class="ih">How this works</summary>
-    <p id="pkHow">Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
+    <p id="pkHow">Get a ready-to-post graphic for your venue. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your stage, your room, a band photo, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
   </details>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -5293,7 +5294,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.10-TEST (Nov 16, 2026, 5:49 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.11-TEST (Nov 16, 2026, 4:03 PM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
