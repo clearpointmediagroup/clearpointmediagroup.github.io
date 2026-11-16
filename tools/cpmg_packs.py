@@ -1,4 +1,5 @@
-# CPMG industry packs v2.10-TEST (Nov 15, 2026, 10:15 PM)
+# CPMG industry packs v2.11-TEST (Nov 15, 2026, 10:15 PM)
+# v2.11-TEST (Nov 15, 2026, 10:15 PM) CC-142: intro promise now says order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, later orders ready the next morning, open 7 days, closed Thanksgiving Day.
 # v2.10-TEST (Nov 15, 2026, 10:15 PM) CC-141: new ski-bike pack (ski and snowboard rental and tune shops in winter, bike rental and repair in summer). Test form only; Casual and Upscale chosen inside the form. The older ski-shop pack is not changed.
 # v2.9-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music pack (music venues, live music bars, concert halls). Test form only; Casual and Upscale chosen inside the form.
 # v2.8-TEST (Nov 14, 2026, 8:45 PM) CC-141: new spa pack (day spas, massage, hair and nail salons). Test form only; Casual and Upscale chosen inside the form.
@@ -26,8 +27,8 @@
 # To add an industry: copy one entry, change the words, run: python3 tools/build-order-forms.py
 HOW = ("Get a ready-to-post graphic for your {what}. Tap the kind of graphic you need, type a few words for each part, "
        "and add photos if you want, like {photos}. Then pick where you'll show it: phone, big-screen TV, social media or your website. "
-       "We design it and email you a preview to check. Most previews come back within 5 hours. Late-night and weekend orders are "
-       "ready the next business morning. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.")
+       "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview; later orders are ready the next morning. We're open 7 days a week, closed Thanksgiving Day. "
+       "Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.")
 ABOUT = ("We make professional graphics for local businesses, fast. {who} use us for {uses} that look sharp on a phone, a big-screen TV, "
          "social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. "
          "No contracts and no design work on your end. Just tell us what to say.")
