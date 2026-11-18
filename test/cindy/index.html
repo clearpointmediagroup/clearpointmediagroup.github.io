@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <!--
   Cindy's Call Page (CC-183) - index.html
-  v1.1-TEST (Nov 18, 2026, 2:04 AM ET)
+  v1.2-TEST (Nov 18, 2026, 2:06 AM ET)
   REVISION LOG
+    v1.2-TEST (Nov 18, 2026, 2:06 AM ET) Randy 2:05-2:06 AM: "Who did you talk to?" name box plus tap buttons for the
+              title (Owner, Manager, Admin / office, Other); phone box now "Decision maker's phone (or another number)";
+              tapping Call logs the date and time she called (shown on the row and on Done, sent as calledAt).
     v1.1-TEST (Nov 18, 2026, 2:04 AM ET) Randy 2:04 AM: added a box for the manager's phone or another phone number
               (under the email box); shown on Done and sent to the script as extraPhone.
     v1.0-TEST (Nov 18, 2026, 1:52 AM ET) First version. PIN screen; To call / Done lists; Call button (tel: link);
@@ -58,6 +61,10 @@ a.callbtn{display:flex;align-items:center;justify-content:center;gap:10px;font:8
 .msg.ok{color:var(--green)}.msg.bad{color:var(--err)}
 .donebox{font-size:16px;color:var(--fg);background:var(--deep);border-radius:10px;padding:10px 12px;line-height:1.5}
 .empty{text-align:center;color:var(--muted);font-size:18px;padding:20px 0}
+.taps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.taps button{font:700 18px var(--body);background:var(--bg);color:var(--fg);border:2px solid var(--line);border-radius:12px;padding:12px 6px;min-height:52px;cursor:pointer}
+.taps button.on{border:3px solid var(--green);background:var(--deep);color:var(--green)}
+.called{font-size:16px;color:var(--green);font-weight:700;margin:0}
 .foot{font-size:14px;color:var(--muted);text-align:center}
 </style>
 </head>
@@ -82,7 +89,7 @@ a.callbtn{display:flex;align-items:center;justify-content:center;gap:10px;font:8
     <div id="doneList" class="stack" style="margin-top:12px" hidden></div>
   </div>
 
-  <div class="foot">Cindy's Call Page v1.1-TEST · Nov 18, 2026, 2:04 AM Eastern</div>
+  <div class="foot">Cindy's Call Page v1.2-TEST · Nov 18, 2026, 2:06 AM Eastern</div>
 </div>
 
 <script>
@@ -144,7 +151,13 @@ function render(){
   el('nTo').textContent=DATA.toCall.length; el('nDone').textContent=DATA.done.length;
   el('toList').innerHTML = DATA.toCall.length ? DATA.toCall.map(rowHtml).join('') : '<div class="empty">Nobody left to call. Nice work!</div>';
   el('doneList').innerHTML = DATA.done.length ? DATA.done.map(doneHtml).join('') : '<div class="empty">No calls saved yet.</div>';
-  DATA.toCall.forEach(function(r){ var b=el('save_'+r.id); if(b) b.onclick=function(){save(r)} });
+  DATA.toCall.forEach(function(r){
+    var b=el('save_'+r.id); if(b) b.onclick=function(){save(r)};
+    var c=el('call_'+r.id); if(c) c.addEventListener('click',function(){ r.calledAt=nowET(); el('cd_'+r.id).textContent='Called '+r.calledAt; });
+    var tt=el('tt_'+r.id); if(tt) tt.addEventListener('click',function(e){ var t=e.target.closest('button'); if(!t) return;
+      var on=!t.classList.contains('on'); [].forEach.call(tt.querySelectorAll('button'),function(x){x.classList.remove('on')});
+      if(on) t.classList.add('on'); r.title=on?t.getAttribute('data-t'):''; });
+  });
 }
 function rowHtml(r){
   var id=esc(r.id);
@@ -154,19 +167,22 @@ function rowHtml(r){
     '<span class="meta">'+esc(r.town)+' · '+esc(r.phone)+'</span>'+
     (r.detail?'<span class="meta">'+esc(r.detail)+'</span>':'')+
     (r.theirTime?'<span class="meta">Their time: '+esc(r.theirTime)+'</span>':'')+'</div>'+
-    '<a class="callbtn" href="'+esc(telHref(r.phone))+'">&#128222; Call</a>'+
-    '<div class="field"><label for="nm_'+id+'">Owner or manager name</label><input type="text" id="nm_'+id+'" autocomplete="off"></div>'+
+    '<a class="callbtn" id="call_'+id+'" href="'+esc(telHref(r.phone))+'">&#128222; Call</a>'+
+    '<p class="called" id="cd_'+id+'">'+(r.calledAt?'Called '+esc(r.calledAt):'')+'</p>'+
+    '<div class="field"><label for="nm_'+id+'">Who did you talk to?</label><input type="text" id="nm_'+id+'" autocomplete="off" placeholder="Their name"></div>'+
+    '<div class="field"><span style="font-weight:700;font-size:17px">Their title (tap one)</span><div class="taps" id="tt_'+id+'">'+
+      ['Owner','Manager','Admin / office','Other'].map(function(t){return '<button type="button" data-t="'+t+'">'+t+'</button>'}).join('')+'</div></div>'+
     '<div class="field"><label for="em_'+id+'">Their direct email</label><input type="email" id="em_'+id+'" autocomplete="off" inputmode="email"></div>'+
-    '<div class="field"><label for="ph_'+id+'">Manager or other phone number</label><input type="tel" id="ph_'+id+'" autocomplete="off" inputmode="tel" placeholder="(555) 555-1234"></div>'+
+    '<div class="field"><label for="ph_'+id+'">Decision maker\'s phone (or another number)</label><input type="tel" id="ph_'+id+'" autocomplete="off" inputmode="tel" placeholder="(555) 555-1234"></div>'+
     '<div class="field"><label for="bt_'+id+'">Best time to call</label><input type="text" id="bt_'+id+'" autocomplete="off" placeholder="Example: weekdays after 2"></div>'+
     '<div class="field"><label for="nt_'+id+'">Note</label><textarea id="nt_'+id+'"></textarea></div>'+
     '<button class="savebtn" type="button" id="save_'+id+'">Save this call</button>'+
     '<p class="msg" id="msg_'+id+'"></p></div>';
 }
 function doneHtml(r){
-  return '<div class="card"><div class="who"><span class="nm">'+esc(r.business)+'</span><span class="meta">Saved '+esc(r.savedAt)+'</span></div>'+
+  return '<div class="card"><div class="who"><span class="nm">'+esc(r.business)+'</span>'+(r.calledAt?'<span class="meta">Called '+esc(r.calledAt)+'</span>':'')+'<span class="meta">Saved '+esc(r.savedAt)+'</span></div>'+
     '<div class="donebox">'+
-    (r.contactName?'<b>Name:</b> '+esc(r.contactName)+'<br>':'')+
+    (r.contactName||r.contactTitle?'<b>Talked to:</b> '+esc(r.contactName)+(r.contactTitle?' ('+esc(r.contactTitle)+')':'')+'<br>':'')+
     (r.contactEmail?'<b>Email:</b> '+esc(r.contactEmail)+'<br>':'')+
     (r.extraPhone?'<b>Other phone:</b> '+esc(r.extraPhone)+'<br>':'')+
     (r.bestTime?'<b>Best time:</b> '+esc(r.bestTime)+'<br>':'')+
@@ -175,12 +191,12 @@ function doneHtml(r){
 
 /* ===== Save ===== */
 function save(r){
-  var f={contactName:el('nm_'+r.id).value.trim(), contactEmail:el('em_'+r.id).value.trim(), extraPhone:el('ph_'+r.id).value.trim(),
+  var f={calledAt:r.calledAt||'', contactTitle:r.title||'', contactName:el('nm_'+r.id).value.trim(), contactEmail:el('em_'+r.id).value.trim(), extraPhone:el('ph_'+r.id).value.trim(),
          bestTime:el('bt_'+r.id).value.trim(), note:el('nt_'+r.id).value.trim()};
   var m=el('msg_'+r.id); m.className='msg';
   if(!okEmail(f.contactEmail)){m.className='msg bad';m.textContent='That email does not look right. Check it and tap Save again.';return}
   if(f.extraPhone && String(f.extraPhone).replace(/\D/g,'').length<10){m.className='msg bad';m.textContent='That phone number looks short. It needs 10 digits.';return}
-  if(!f.contactName && !f.contactEmail && !f.extraPhone && !f.bestTime && !f.note){m.className='msg bad';m.textContent='Fill in at least one box first.';return}
+  if(!f.contactName && !f.contactTitle && !f.contactEmail && !f.extraPhone && !f.bestTime && !f.note){m.className='msg bad';m.textContent='Fill in at least one box first.';return}
   var b=el('save_'+r.id); b.disabled=true; b.textContent='Saving...';
   var done=function(savedAt){
     DATA.toCall=DATA.toCall.filter(function(x){return x.id!==r.id});
