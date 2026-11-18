@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <!--
   Cindy's Call Page (CC-183) - index.html
-  v1.2-TEST (Nov 18, 2026, 2:06 AM ET)
+  v1.3-TEST (Nov 18, 2026, 2:14 AM ET)
   REVISION LOG
+    v1.3-TEST (Nov 18, 2026, 2:14 AM ET) Randy 2:14 AM: title is now a drop-down with more titles (Owner, Co-owner,
+              General manager, Manager, Social media / marketing, Admin / office, Front desk / staff, Other).
     v1.2-TEST (Nov 18, 2026, 2:06 AM ET) Randy 2:05-2:06 AM: "Who did you talk to?" name box plus tap buttons for the
               title (Owner, Manager, Admin / office, Other); phone box now "Decision maker's phone (or another number)";
               tapping Call logs the date and time she called (shown on the row and on Done, sent as calledAt).
@@ -42,6 +44,8 @@ h1{font:800 24px var(--display);margin:0;color:var(--fg)}
 label{font-weight:700;font-size:17px}
 input[type=text],input[type=email],input[type=tel],textarea{font:inherit;font-size:18px;color:var(--fg);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;-webkit-appearance:none;appearance:none}
 textarea{min-height:90px;resize:vertical}
+select{font:inherit;font-size:18px;color:var(--fg);background-color:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 40px 12px 14px;width:100%;-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,#5fc48c 50%),linear-gradient(135deg,#5fc48c 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+select:focus{outline:none;border-color:var(--green)}
 input:focus,textarea:focus{outline:none;border-color:var(--green)}
 .big{display:flex;align-items:center;justify-content:center;width:100%;font:800 22px var(--display);background:var(--green);color:var(--ink);border:0;border-radius:14px;padding:16px;cursor:pointer;min-height:56px}
 .big[disabled]{opacity:.75;cursor:wait}
@@ -89,7 +93,7 @@ a.callbtn{display:flex;align-items:center;justify-content:center;gap:10px;font:8
     <div id="doneList" class="stack" style="margin-top:12px" hidden></div>
   </div>
 
-  <div class="foot">Cindy's Call Page v1.2-TEST · Nov 18, 2026, 2:06 AM Eastern</div>
+  <div class="foot">Cindy's Call Page v1.3-TEST · Nov 18, 2026, 2:14 AM Eastern</div>
 </div>
 
 <script>
@@ -97,6 +101,7 @@ a.callbtn{display:flex;align-items:center;justify-content:center;gap:10px;font:8
 var SCRIPT_URL = '';   // TEST Apps Script web app address goes here (CPMG_CindyCalls.gs). Empty = demo only.
 var DEMO = /[?&]demo=1/.test(location.search) || !SCRIPT_URL;
 
+var TITLES = ['Owner','Co-owner','General manager','Manager','Social media / marketing','Admin / office','Front desk / staff','Other'];
 var PIN = '', DATA = {asOf:'', toCall:[], done:[]};
 
 function el(id){return document.getElementById(id)}
@@ -154,9 +159,6 @@ function render(){
   DATA.toCall.forEach(function(r){
     var b=el('save_'+r.id); if(b) b.onclick=function(){save(r)};
     var c=el('call_'+r.id); if(c) c.addEventListener('click',function(){ r.calledAt=nowET(); el('cd_'+r.id).textContent='Called '+r.calledAt; });
-    var tt=el('tt_'+r.id); if(tt) tt.addEventListener('click',function(e){ var t=e.target.closest('button'); if(!t) return;
-      var on=!t.classList.contains('on'); [].forEach.call(tt.querySelectorAll('button'),function(x){x.classList.remove('on')});
-      if(on) t.classList.add('on'); r.title=on?t.getAttribute('data-t'):''; });
   });
 }
 function rowHtml(r){
@@ -170,8 +172,8 @@ function rowHtml(r){
     '<a class="callbtn" id="call_'+id+'" href="'+esc(telHref(r.phone))+'">&#128222; Call</a>'+
     '<p class="called" id="cd_'+id+'">'+(r.calledAt?'Called '+esc(r.calledAt):'')+'</p>'+
     '<div class="field"><label for="nm_'+id+'">Who did you talk to?</label><input type="text" id="nm_'+id+'" autocomplete="off" placeholder="Their name"></div>'+
-    '<div class="field"><span style="font-weight:700;font-size:17px">Their title (tap one)</span><div class="taps" id="tt_'+id+'">'+
-      ['Owner','Manager','Admin / office','Other'].map(function(t){return '<button type="button" data-t="'+t+'">'+t+'</button>'}).join('')+'</div></div>'+
+    '<div class="field"><label for="tt_'+id+'">Their title</label><select id="tt_'+id+'"><option value="">Pick one</option>'+
+      TITLES.map(function(t){return '<option>'+esc(t)+'</option>'}).join('')+'</select></div>'+
     '<div class="field"><label for="em_'+id+'">Their direct email</label><input type="email" id="em_'+id+'" autocomplete="off" inputmode="email"></div>'+
     '<div class="field"><label for="ph_'+id+'">Decision maker\'s phone (or another number)</label><input type="tel" id="ph_'+id+'" autocomplete="off" inputmode="tel" placeholder="(555) 555-1234"></div>'+
     '<div class="field"><label for="bt_'+id+'">Best time to call</label><input type="text" id="bt_'+id+'" autocomplete="off" placeholder="Example: weekdays after 2"></div>'+
@@ -191,7 +193,7 @@ function doneHtml(r){
 
 /* ===== Save ===== */
 function save(r){
-  var f={calledAt:r.calledAt||'', contactTitle:r.title||'', contactName:el('nm_'+r.id).value.trim(), contactEmail:el('em_'+r.id).value.trim(), extraPhone:el('ph_'+r.id).value.trim(),
+  var f={calledAt:r.calledAt||'', contactTitle:el('tt_'+r.id).value, contactName:el('nm_'+r.id).value.trim(), contactEmail:el('em_'+r.id).value.trim(), extraPhone:el('ph_'+r.id).value.trim(),
          bestTime:el('bt_'+r.id).value.trim(), note:el('nt_'+r.id).value.trim()};
   var m=el('msg_'+r.id); m.className='msg';
   if(!okEmail(f.contactEmail)){m.className='msg bad';m.textContent='That email does not look right. Check it and tap Save again.';return}
