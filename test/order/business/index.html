@@ -2,13 +2,14 @@
 <!--
   CPMG Small business Order — test/order/business/index.html
   BUILT FILE: made by tools/build-order-forms.py from test/order/index.html. Do not edit here.
-  v4.12-TEST (Nov 19, 2026, 5:50 AM)
+  v4.13-TEST (Nov 19, 2026, 6:05 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
+    v4.13-TEST (Nov 19, 2026, 6:05 AM) CC-203 step 5: the short form's note under Send says "We match the look you saw in the email." only when the link has ?look=, ?place= or ?template= (links from our emails); anyone else (website, Facebook, Instagram, the /order/ chooser) sees "We match your look." The hidden "How this works" text now describes the 3-step short form (tools/cpmg_packs.py HOW_SHORT). Nothing about how orders are sent changed.
     v4.12-TEST (Nov 19, 2026, 5:50 AM) CC-203 (Randy approved Nov 19, 2026): real estate, insurance and Any other business get the SHORT 3-step form too (simple=True in tools/cpmg_packs.py v2.15-TEST). A short pack may set sholn = how many of its step 1 choices are holiday ones (tan, first, then a dashed line); no sholn = 4 as before. Real estate: 0 (Just listed, Open house, Just sold, Price drop, Coming soon, Something else). Insurance: 2. Business: 4. Nothing about how orders are sent changed.
     v4.11-TEST (Nov 16, 2026, 4:03 PM) CC-163 (audit 3, D3; Randy: fix it all, 2:52 PM): the raw page (tab title, description, About and How this works) now starts with this form's own words, not the real estate words, so it reads right before the script runs and in link previews. Nothing else changed. (Done by the build; tools/build-order-forms.py v1.5 now does it every time.)
     v4.10-TEST (Nov 16, 2026, 5:49 AM) CC-157 (Randy approved by 5:12 AM): hours are noon to 10 p.m. Eastern (10 a.m. to 8 p.m. Mountain), 7 days, closed Thanksgiving Day. The top hours line, the intro (pkHow and every pack, from tools/cpmg_packs.py v2.14-TEST) and the thank-you line now say: order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. Test copy only.
@@ -898,7 +899,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 </head>
 <body class="lean lite simple">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.12-TEST (Nov 19, 2026, 5:50 AM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.13-TEST (Nov 19, 2026, 6:05 AM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -1212,7 +1213,8 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     var sze = mk('p', 'err s-szerr'); sze.id = 'eSz'; sze.hidden = true;
     var spr = mk('p', 's-price'); spr.id = 'sPrice'; spr.hidden = true; spr.setAttribute('aria-live', 'polite');
     [szq, sz, sze, spr].forEach(function (e) { bar.insertBefore(e, btn); });
-    var nt = mk('div', 's-notes'); nt.innerHTML = '<p>Pick phone, TV or both. Both is $40.</p><p>We match the look you saw in the email.</p><p>Call or text me anytime: <a href="tel:+18433219518">(843)&nbsp;321-9518</a></p>'; bar.appendChild(nt);
+    var fromEmail = /[?&](look|place|template)=[^&]/.test(location.search);   // v4.13-TEST CC-203: only links from our emails carry ?look=, ?place= or ?template=
+    var nt = mk('div', 's-notes'); nt.innerHTML = '<p>Pick phone, TV or both. Both is $40.</p><p>' + (fromEmail ? 'We match the look you saw in the email.' : 'We match your look.') + '</p><p>Call or text me anytime: <a href="tel:+18433219518">(843)&nbsp;321-9518</a></p>'; bar.appendChild(nt);
   } catch (e) { b.classList.remove('simple'); }   // if anything here fails, the page falls back to the old form
 })();
 </script>
@@ -5390,7 +5392,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.12-TEST (Nov 19, 2026, 5:50 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.13-TEST (Nov 19, 2026, 6:05 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
