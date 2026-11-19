@@ -1,17 +1,19 @@
 <!doctype html>
 <!--
   CPMG Cabin, vacation rental or lodging Order — order/cabin/index.html (LIVE)
-  LIVE copy of the test form v4.11 (Nov 16, 2026, 4:03 PM), same code, made Nov 16, 2026, 5:58 AM ET for the go-live bundle v1.0 (it goes live only with Randy's go-live OK).
+  LIVE copy of the test form v4.13 (Nov 19, 2026, 6:05 AM), same code, made Nov 19, 2026, 6:20 AM ET for CC-203 (it goes live only with Randy's go-live OK).
   It loads the LIVE order system (../../assets/cpmg-order-config.js) and the live helper (../../assets/cpmg-order.js); look examples come from /looks2/.
   To change it: change the test copy, rebuild it, then copy it here again with the rules in the bundle's COPY_MAP.md.
-  v4.11 (Nov 16, 2026, 4:03 PM)
+  v4.13 (Nov 19, 2026, 6:05 AM)
   ONE form for every industry. The industry comes from the link: ?for=real-estate or ?for=business
   (no ?for = business). Everything that changes by industry lives in the PACKS block at the top of the
   script: title, intro, kinds of graphic, looks (and their example pictures), gray examples, the extra
   question (Brokerage / What kind of business?), the first photo spot, and the footer.
   To add an industry: copy one PACKS entry, give it a new name, change its words. Nothing else to build.
   STANDARD REVISION LOG
-    v4.11 (Nov 16, 2026, 4:03 PM) CC-163 (audit 3, D3; Randy: fix it all, 2:52 PM): the raw page (tab title, description, About and How this works) now starts with this form's own words, not the real estate words, so it reads right before the script runs and in link previews. Nothing else changed.
+    v4.13 (Nov 19, 2026, 6:05 AM) CC-203 step 5: the short form's note under Send says "We match the look you saw in the email." only when the link has ?look=, ?place= or ?template= (links from our emails); anyone else (website, Facebook, Instagram, the /order/ chooser) sees "We match your look." The hidden "How this works" text now describes the 3-step short form (tools/cpmg_packs.py HOW_SHORT). Nothing about how orders are sent changed.
+    v4.12 (Nov 19, 2026, 5:50 AM) CC-203 (Randy approved Nov 19, 2026): real estate, insurance and Any other business get the SHORT 3-step form too (simple=True in tools/cpmg_packs.py v2.15). A short pack may set sholn = how many of its step 1 choices are holiday ones (tan, first, then a dashed line); no sholn = 4 as before. Real estate: 0 (Just listed, Open house, Just sold, Price drop, Coming soon, Something else). Insurance: 2. Business: 4. Nothing about how orders are sent changed.
+    v4.11 (Nov 16, 2026, 4:03 PM) CC-163 (audit 3, D3; Randy: fix it all, 2:52 PM): the raw page (tab title, description, About and How this works) now starts with this form's own words, not the real estate words, so it reads right before the script runs and in link previews. Nothing else changed. (Done by the build; tools/build-order-forms.py v1.5 now does it every time.)
     v4.10 (Nov 16, 2026, 5:49 AM) CC-157 (Randy approved by 5:12 AM): hours are noon to 10 p.m. Eastern (10 a.m. to 8 p.m. Mountain), 7 days, closed Thanksgiving Day. The top hours line, the intro (pkHow and every pack, from tools/cpmg_packs.py v2.14) and the thank-you line now say: order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. Test copy only.
     v4.09 (Nov 16, 2026, 3:38 AM) CC-144 fix: the short form's words always fit the order system's limits (headline 10 words, lines 10 words, 5 lines, notes 50 words); found by practice order 1 at about 3:32 AM (and its rerun at about 3:33 AM). Short form only. Headline: the owner's first line when they typed 2 or more lines and it is 10 words or fewer; otherwise the step 1 pick ("Something else" becomes "Our news"). Lines: the rest of the words keep their line breaks and wrap at 10 words a line; if that makes more than 5 lines, short lines are put together (a comma where a line ended), then the words flow 10 to a line. More than 50 words for the lines: the form does not send and says under the box "Please keep it to about 50 words. We'll call or email if we need more." (also while typing). Notes on each picture (the order system counts every word of them, 50 at most): kept Kind of graphic, Size, Look (with Template), Kind of place (restaurant), Photos ("1 photo" or "None"), Bottom of graphic; dropped Form, Order link, Where shown (the size column has it), the 5 picture questions that are always None on the short form, Contact by (always Email) and Their words (the words are in the lines). Worst case now 42 words. A kind of place from a link that is not on the list is kept to 4 words. Long forms: version label only.
     v4.08 (Nov 16, 2026, 3:27 AM) CC-144 fix (Randy, Nov 16, 3:25 AM, tap: Ask for email and phone): two boxes, Email and Phone; the order system needs both. A practice order failed because the short form had ONE "Email or phone" box and the order system (CPMG_OrderReceiver v2.3) needs an email AND a 10-digit phone. Step 3 of the short form now shows 4 boxes: Business name, Your name, Email, Phone (the form's own email box, type email, "Email (your preview comes here)", and phone box, type tel, "Phone"). Both are required, with the long form's checks and words ("Type your email, like you@yourbusiness.com." / "That email looks wrong. It needs an @ and an ending like .com." / "Type your phone number." / "Your phone needs 10 numbers, like 843 555 1212."). Sent the same way the long form sends them (customer.email, customer.phone); Contact by is now always Email, and the thank-you line always says by email. Returning clients get both boxes filled in. Everything else on the short form is unchanged (3 steps, Phone/TV/Both, price line, "You pay nothing now."). Long forms: version label only.
@@ -278,8 +280,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#0f1712">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#f7f5ef">
+<meta name="color-scheme" content="light">
 <title>Order a picture for your cabins, vacation rentals or lodge · CPMG</title>
 <meta name="description" content="Order a picture for your cabins, vacation rentals or lodge from ClearPoint Media Group. Most previews come back within 5 hours.">
 <link rel="icon" href="../../assets/cpmg-icon.svg" type="image/svg+xml">
@@ -899,7 +901,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 </head>
 <body class="lean lite simple">
 <div class="wrap narrow">
-  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.11 (Nov 16, 2026, 4:03 PM)</span></div>
+  <div class="top"><div class="logo" aria-hidden="true">CP</div><div><h1 id="pkTitle">Order a graphic</h1><p class="sub">$25&nbsp;a&nbsp;picture&nbsp;· $40&nbsp;for&nbsp;phone&nbsp;+&nbsp;TV&nbsp;· First&nbsp;picture&nbsp;free</p><p class="sub tzLine" style="margin-top:4px"></p></div><span class="verTag">v4.13 (Nov 19, 2026, 6:05 AM)</span></div>
   <div id="tplBar" hidden style="margin:8px 0;padding:10px 14px;border:2px solid #5fc48c;border-radius:12px;background:#10301d;color:#fff;font-weight:700"></div>
 
   <div id="cbar"><a href="tel:+18433219518" aria-label="Call Randy">Call me</a><a href="sms:+18433219518?body=Hi%2C%20I%27m%20interested%20in%20a%20graphic%20from%20ClearPoint%20Media%20Group." aria-label="Text Randy">Text me</a><a href="mailto:randy.turner@cpmgdata.com" aria-label="Email Randy">Email me</a></div>
@@ -924,7 +926,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
 
   <details class="intro">
     <summary class="ih">How this works</summary>
-    <p id="pkHow">Get a ready-to-post graphic for your cabin or rental. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your cabin, your view, your hot tub, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.</p>
+    <p id="pkHow">Get a ready-to-post picture for your cabin or rental in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.</p>
   </details>
 
   <div class="loading" id="looking" hidden><span class="spin lt" aria-hidden="true"></span><span>Finding your info…</span></div>
@@ -1213,7 +1215,8 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     var sze = mk('p', 'err s-szerr'); sze.id = 'eSz'; sze.hidden = true;
     var spr = mk('p', 's-price'); spr.id = 'sPrice'; spr.hidden = true; spr.setAttribute('aria-live', 'polite');
     [szq, sz, sze, spr].forEach(function (e) { bar.insertBefore(e, btn); });
-    var nt = mk('div', 's-notes'); nt.innerHTML = '<p>Pick phone, TV or both. Both is $40.</p><p>We match the look you saw in the email.</p><p>Call or text me anytime: <a href="tel:+18433219518">(843)&nbsp;321-9518</a></p>'; bar.appendChild(nt);
+    var fromEmail = /[?&](look|place|template)=[^&]/.test(location.search);   // v4.13 CC-203: only links from our emails carry ?look=, ?place= or ?template=
+    var nt = mk('div', 's-notes'); nt.innerHTML = '<p>Pick phone, TV or both. Both is $40.</p><p>' + (fromEmail ? 'We match the look you saw in the email.' : 'We match your look.') + '</p><p>Call or text me anytime: <a href="tel:+18433219518">(843)&nbsp;321-9518</a></p>'; bar.appendChild(nt);
   } catch (e) { b.classList.remove('simple'); }   // if anything here fails, the page falls back to the old form
 })();
 </script>
@@ -1448,10 +1451,10 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
  "real-estate": {
   "industry": "Real estate",
   "form": "Real estate",
-  "title": "Order a real estate graphic",
+  "title": "Order a real estate picture",
   "foot": "CPMG Real Estate Order",
   "about": "We make professional graphics for local businesses, fast. Real estate agents use us for just listed, open house, price drop and just sold posts that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your listing. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like the house, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your real estate business in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Just listed",
@@ -1637,7 +1640,36 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     "Call me anytime"
    ]
   },
-  "vision": true
+  "vision": true,
+  "simple": true,
+  "skinds": [
+   [
+    "Just listed",
+    "Just listed: 123 Oak Street. 3 beds, 2 baths, $425,000. Main Street Realty."
+   ],
+   [
+    "Open house",
+    "Open house Sunday 1 to 4. 123 Oak Street. Stop by and say hi."
+   ],
+   [
+    "Just sold",
+    "Just sold: 123 Oak Street. Sold in 9 days. Thinking of selling? Call me."
+   ],
+   [
+    "Price drop",
+    "New price: 123 Oak Street, now $399,000. Book a showing today."
+   ],
+   [
+    "Coming soon",
+    "Coming soon: 456 Maple Lane. 4 beds, 3 baths. Call for early access."
+   ],
+   [
+    "Something else",
+    "Happy Thanksgiving from my family to yours."
+   ]
+  ],
+  "splace": {},
+  "sholn": 0
  },
  "restaurant": {
   "industry": "Restaurant",
@@ -1645,7 +1677,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your restaurant or bar",
   "foot": "CPMG Restaurant and Bar Order",
   "about": "We make professional graphics for local businesses, fast. Restaurants and bars use us for daily specials, happy hours, live music and events that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your restaurant or bar. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your food, your bar or dining room, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your restaurant or bar in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Daily special",
@@ -2998,10 +3030,10 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
  "business": {
   "industry": "Small business",
   "form": "Small business",
-  "title": "Order a graphic for your business",
+  "title": "Order a picture for your business",
   "foot": "CPMG Business Order",
   "about": "We make professional graphics for local businesses, fast. Shops, offices, salons and restaurants use us for specials, events, announcements and holiday hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your business. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shop, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your business in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Special or sale",
@@ -3169,15 +3201,51 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26. Open Fri 9 to 5."
+   ],
+   [
+    "Black Friday / Small Business Saturday",
+    "Fri Nov 27 and Sat Nov 28: 20% off. Shop local!"
+   ],
+   [
+    "Holiday gift cards",
+    "Gift cards in any amount. Stop in or call."
+   ],
+   [
+    "Holiday event",
+    "Holiday open house Sat Dec 5, 10 to 2. Treats for everyone."
+   ],
+   [
+    "Hours",
+    "Winter hours: Mon to Fri 9 to 5, Sat 10 to 2."
+   ],
+   [
+    "Special",
+    "20% off all services this week. Walk-ins welcome."
+   ],
+   [
+    "Event",
+    "Customer thank-you day Saturday 2 to 5. Free snacks."
+   ],
+   [
+    "Something else",
+    "Now hiring: part-time front desk help. Call to apply."
+   ]
+  ],
+  "splace": {}
  },
  "insurance": {
   "industry": "Insurance agent",
   "form": "Insurance agent",
-  "title": "Order a graphic for your insurance agency",
+  "title": "Order a picture for your insurance agency",
   "foot": "CPMG Insurance Order",
   "about": "We make professional graphics for local businesses, fast. Independent insurance agents use us for open enrollment, free quotes and reminders that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your agency. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your office, your headshot or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your agency in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Open enrollment",
@@ -3329,7 +3397,36 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     "Call us anytime"
    ]
   },
-  "vision": false
+  "vision": false,
+  "simple": true,
+  "skinds": [
+   [
+    "Thanksgiving week hours",
+    "Closed Thu Nov 26 and Fri Nov 27. Back Monday at 9."
+   ],
+   [
+    "Holiday greeting",
+    "Happy Thanksgiving from all of us at Smith Insurance."
+   ],
+   [
+    "Open enrollment",
+    "Open enrollment ends Dec 15. Call for a free review."
+   ],
+   [
+    "Free quote",
+    "Free home and auto quote. Takes about 10 minutes."
+   ],
+   [
+    "Renewal reminder",
+    "Policy renewing soon? Call us to review your coverage."
+   ],
+   [
+    "Something else",
+    "Winter storm coming. Check your home policy today."
+   ]
+  ],
+  "splace": {},
+  "sholn": 2
  },
  "mountain-cabin": {
   "industry": "Mountain cabin",
@@ -3659,7 +3756,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your brewery, cidery, distillery or winery",
   "foot": "CPMG Brewery Order",
   "about": "We make professional graphics for local businesses, fast. Breweries, cideries, distilleries and wineries use us for new releases, tasting flights, happy hours, tours, live music and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your taproom. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your taproom, your tanks or barrels, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your taproom in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Tasting flight",
@@ -3856,7 +3953,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your cafe, coffee shop or bakery",
   "foot": "CPMG Cafe Order",
   "about": "We make professional graphics for local businesses, fast. Cafes, coffee shops and bakeries use us for daily specials, fresh bakes, holiday hours, catering and cake orders that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your cafe. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your counter, your pastry case, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your cafe in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Daily special",
@@ -4053,7 +4150,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your outfitter, tour company or rental shop",
   "foot": "CPMG Outfitter Order",
   "about": "We make professional graphics for local businesses, fast. Outfitters, tour companies and adventure rental shops use us for tour times, rafting and snowmobile trips, bike rentals, weather updates, gift cards and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your outfitter. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your gear, your trailhead, your shop, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your outfitter in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Tour or trip",
@@ -4249,7 +4346,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your cabins, vacation rentals or lodge",
   "foot": "CPMG Cabin Order",
   "about": "We make professional graphics for local businesses, fast. Cabin owners, vacation rental managers and small lodges use us for open dates, holiday weeks, hot tubs and fireplaces, snow and road updates, check-in info, gift cards and hours that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your cabin or rental. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your cabin, your view, your hot tub, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your cabin or rental in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Open dates or special",
@@ -4446,7 +4543,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your gift shop or boutique",
   "foot": "CPMG Gift Shop Order",
   "about": "We make professional graphics for local businesses, fast. Gift shops, boutiques, souvenir shops and craft stores use us for holiday hours, new arrivals, local crafts, gift wrapping, gift cards, sales and snow day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shelves, your window display, your best sellers, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your shop in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "New arrivals or sale",
@@ -4643,7 +4740,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your spa or salon",
   "foot": "CPMG Spa and Salon Order",
   "about": "We make professional graphics for local businesses, fast. Day spas, massage studios, hair salons and nail salons use us for appointment openings, massage and spa specials, holiday hours, gift certificates, new services and snow day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your spa or salon. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your treatment room, your salon chairs, your products, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your spa or salon in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Special or new service",
@@ -4840,7 +4937,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your music venue",
   "foot": "CPMG Music Venue Order",
   "about": "We make professional graphics for local businesses, fast. Live music venues, concert halls, listening rooms and music bars use us for this weekend's shows, tickets on sale, open mic nights, holiday shows, private events, gift cards and snow night notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your venue. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your stage, your room, a band photo, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your venue in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Live music or new show",
@@ -5037,7 +5134,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
   "title": "Order a picture for your ski and bike shop",
   "foot": "CPMG Ski and Bike Shop Order",
   "about": "We make professional graphics for local businesses, fast. Ski and snowboard rental and tune shops, boot fitters and summer bike rental and repair shops use us for season rentals, tune-ups, boot fitting, demo days, kids rentals, summer bike rentals, gift cards, holiday hours and powder day notices that look sharp on a phone, a big-screen TV, social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. No contracts and no design work on your end. Just tell us what to say.",
-  "how": "Get a ready-to-post graphic for your shop. Tap the kind of graphic you need, type a few words for each part, and add photos if you want, like your shop, your rental racks, your workshop, or your logo. Then pick where you'll show it: phone, big-screen TV, social media or your website. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.",
+  "how": "Get a ready-to-post picture for your shop in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. 3: tell us how to reach you. Then pick phone, TV or both and tap Send. We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.",
   "kinds": [
    [
     "Rentals",
@@ -5255,9 +5352,10 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
       return lb;
     }
     if (SIMPLE) {   // v4.04 CC-144 + CC-143: 8 one-tap choices, the 4 holiday ones first, then the everyday ones
+      var HOLN = typeof PACK.sholn === 'number' ? PACK.sholn : 4;
       SKINDS.forEach(function (k, i) {
-        var lb = tap('what', k[0], 'pencil', '', false); if (i < 4) lb.classList.add('s-hol'); el('whatTaps').appendChild(lb);
-        if (i === 3 && SKINDS.length > 4) { var gp = document.createElement('div'); gp.className = 's-gap'; gp.setAttribute('aria-hidden', 'true'); el('whatTaps').appendChild(gp); }
+        var lb = tap('what', k[0], 'pencil', '', false); if (i < HOLN) lb.classList.add('s-hol'); el('whatTaps').appendChild(lb);   // v4.12 CC-203: sholn holiday choices (default 4)
+        if (HOLN > 0 && i === HOLN - 1 && SKINDS.length > HOLN) { var gp = document.createElement('div'); gp.className = 's-gap'; gp.setAttribute('aria-hidden', 'true'); el('whatTaps').appendChild(gp); }
       });
     } else PACK.kinds.forEach(function (k) { el('whatTaps').appendChild(tap('what', k[0], k[1], '', false)); });
     if (PACK.vision && !SIMPLE) {   // v3.41 CC-114: Something else opens a typing box right under the buttons
@@ -5296,7 +5394,7 @@ body.simple .top h1,body.simple .top .sub,body.simple .top .tzLine,body.simple .
     } catch (e) { /* old phone: plain line */ }
     [].forEach.call(document.querySelectorAll('.tzLine'), function (p) { p.textContent = tz; });
   })();
-  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.11 (Nov 16, 2026, 4:03 PM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
+  var C = CPMG, $ = C.$, FORM_VERSION = 'CPMG Standard Order v4.13 (Nov 19, 2026, 6:05 AM) · ' + PACK_NAME + (SIMPLE ? ' · short form' : '');
   var USE = { Phone: 'phone', TV: 'tv', Social: 'social', Website: 'tv' };
   var SHOWN = { Phone: 'Phone', TV: 'Big-screen TV', Social: 'Social media', Website: 'Website' };
   var SIZE = { Phone: 'Phone (portrait)', TV: 'Big-screen TV (16:9 wide)', Social: 'Social post (4:5)', Website: 'Website (16:9 wide)' };
