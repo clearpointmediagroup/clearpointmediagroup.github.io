@@ -1,4 +1,5 @@
-# CPMG industry packs v2.14-TEST (Nov 16, 2026, 5:49 AM)
+# CPMG industry packs v2.15-TEST (Nov 19, 2026, 5:50 AM)
+# v2.15-TEST (Nov 19, 2026, 5:50 AM) CC-203 (Randy approved Nov 19, 2026): real estate, insurance and business (Any other business) get the SHORT 3-step form (simple=True), so every business type on the /order/ chooser opens a short form. New pack key sholn = how many step 1 choices are holiday ones (default 4). Real estate: 6 choices of its own, no holiday block (Just listed, Open house, Just sold, Price drop, Coming soon, Something else). Insurance: 2 holiday + 4 everyday. Business: the 4 holiday + Hours, Special, Event, Something else. New HOW_SHORT: the "How this works" words for short forms (3 steps; Phone, TV or both). Long-form packs keep HOW. Prices, hours and how orders are sent: unchanged.
 # v2.14-TEST (Nov 16, 2026, 5:49 AM) CC-157 (Randy approved by 5:12 AM): hours are noon to 10 p.m. Eastern (10 a.m. to 8 p.m. Mountain). Intro promise now says: order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day.
 # v2.13-TEST (Nov 15, 2026, 11:46 PM) CC-148: $25 covers phone + TV; first order $0. Price math is in test/order/index.html; pack wording already says $25 each and first one free.
 # v2.12-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: the 9 Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant) get simple=True: the SHORT 3-step form (body class "simple"). Title says "Order a picture for your ...". New skinds = the 8 one-tap choices for step 1 "What do you need?": the 4 holiday choices first (CC-143: Thanksgiving week hours, Black Friday / Small Business Saturday, Holiday gift cards, Holiday event), then 4 everyday ones (Hours, Special, Event, Something else; cabin says Open dates; a pack keeps its own better words, like brewery Happy hour). Each choice has a short gray example for the step 2 box. Restaurant splace = the Special example by kind of place (?place=Pizza). Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28. Other packs unchanged.
@@ -32,6 +33,10 @@ HOW = ("Get a ready-to-post graphic for your {what}. Tap the kind of graphic you
        "and add photos if you want, like {photos}. Then pick where you'll show it: phone, big-screen TV, social media or your website. "
        "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. "
        "Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.")
+HOW_SHORT = ("Get a ready-to-post picture for your {what} in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. "
+             "3: tell us how to reach you. Then pick phone, TV or both and tap Send. "
+             "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. "
+             "Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.")   # v2.15-TEST CC-203: short forms
 ABOUT = ("We make professional graphics for local businesses, fast. {who} use us for {uses} that look sharp on a phone, a big-screen TV, "
          "social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. "
          "No contracts and no design work on your end. Just tell us what to say.")
@@ -406,7 +411,7 @@ for _k in PACKS:
 # Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28 (2026).
 HOL_TG, HOL_BF, HOL_GC, HOL_EV = 'Thanksgiving week hours', 'Black Friday / Small Business Saturday', 'Holiday gift cards', 'Holiday event'
 def _simple(k, title, kinds, **more):
-    assert len(kinds) == 8, k
+    assert len(kinds) == 8 or 'sholn' in more, k   # v2.15-TEST CC-203: a pack with its own sholn may have another count
     PACKS[k].update(simple=True, title=title, skinds=[list(x) for x in kinds], **more)
 
 _simple('brewery', 'Order a picture for your brewery, cidery, distillery or winery', [
@@ -505,3 +510,30 @@ _simple('restaurant', 'Order a picture for your restaurant or bar', [
             'Tiki bar': 'Rum punch, $7 all day Sunday.',
             'Restaurant': "Chef's special tonight: pan-seared trout, $29.",
             'Wine bar': 'Wine flight: 3 pours for $15.'})
+
+# ---- v2.15-TEST (Nov 19, 2026, 5:50 AM) CC-203: real estate, insurance and business go SHORT too ----
+# sholn = how many of the step 1 choices are holiday ones (tan, first, then a dashed line). No sholn = 4.
+PACKS['real-estate']['what'] = 'real estate business'
+_simple('real-estate', 'Order a real estate picture', [
+    ('Just listed', 'Just listed: 123 Oak Street. 3 beds, 2 baths, $425,000. Main Street Realty.'),
+    ('Open house', 'Open house Sunday 1 to 4. 123 Oak Street. Stop by and say hi.'),
+    ('Just sold', 'Just sold: 123 Oak Street. Sold in 9 days. Thinking of selling? Call me.'),
+    ('Price drop', 'New price: 123 Oak Street, now $399,000. Book a showing today.'),
+    ('Coming soon', 'Coming soon: 456 Maple Lane. 4 beds, 3 baths. Call for early access.'),
+    ('Something else', 'Happy Thanksgiving from my family to yours.')], sholn=0)
+_simple('insurance', 'Order a picture for your insurance agency', [
+    (HOL_TG, 'Closed Thu Nov 26 and Fri Nov 27. Back Monday at 9.'),
+    ('Holiday greeting', 'Happy Thanksgiving from all of us at Smith Insurance.'),
+    ('Open enrollment', 'Open enrollment ends Dec 15. Call for a free review.'),
+    ('Free quote', 'Free home and auto quote. Takes about 10 minutes.'),
+    ('Renewal reminder', 'Policy renewing soon? Call us to review your coverage.'),
+    ('Something else', 'Winter storm coming. Check your home policy today.')], sholn=2)
+_simple('business', 'Order a picture for your business', [
+    (HOL_TG, 'Closed Thu Nov 26. Open Fri 9 to 5.'),
+    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off. Shop local!'),
+    (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
+    (HOL_EV, 'Holiday open house Sat Dec 5, 10 to 2. Treats for everyone.'),
+    ('Hours', 'Winter hours: Mon to Fri 9 to 5, Sat 10 to 2.'),
+    ('Special', '20% off all services this week. Walk-ins welcome.'),
+    ('Event', 'Customer thank-you day Saturday 2 to 5. Free snacks.'),
+    ('Something else', 'Now hiring: part-time front desk help. Call to apply.')])
