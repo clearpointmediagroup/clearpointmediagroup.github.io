@@ -14,6 +14,7 @@
    COLOUR and TYPE: CPMG navy + green industrial, gold = needs you; Saira headings, Plex body
    LAYOUT: fixed 16:9 stage (1600x900) scaled to fit any phone or TV, letterboxed
    Demo v1.1 (Nov 23, 2026, 4:50 AM ET): soundtrack (made in the page), call recording + Gemini scene, 11 scenes
+   v1.3 (Nov 23, 2026, 5:08 AM ET): map scene rebuilt to match Randy's live map (other states, names-arriving screen, day pails, numbers bar)
    v1.2 (Nov 23, 2026, 4:58 AM ET): real recorded song, 7 s scenes, first tap shows the buttons, Pause also stops the music
    v1.0 (Nov 23, 2026, 4:34 AM ET): first version, 10 scenes */
 :root{color-scheme:dark;--bg:#050b18;--panel:#0d1a30;--panel2:#11223d;--edge:#1f3b5e;--g:#3ee07f;--g2:#1fa85a;--gd:#0f4a2c;--ink:#dff5e8;--dim:#8fb3a2;--gold:#f2c14e;--blue:#4aa3ff;--red:#ff6b6b}
@@ -67,7 +68,17 @@ h1,h2,h3,.big{font-family:"Saira Semi Condensed",sans-serif;font-weight:700;lett
 .cog{position:absolute;right:22px;top:20px;width:52px;height:52px;animation:spin 4s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* map */
-#map{position:absolute;left:40px;right:40px;top:120px;bottom:70px}
+#map{position:absolute;left:40px;right:40px;top:110px;bottom:150px}
+.mscreen{position:absolute;left:1185px;top:470px;width:380px;height:190px;background:#06130c;border:3px solid var(--g);border-radius:10px;box-shadow:0 0 26px rgba(62,224,127,.45);padding:8px 12px;overflow:hidden;z-index:2}
+.msh{font:700 19px "Saira Semi Condensed",sans-serif;color:var(--g);border-bottom:1px solid var(--g2);margin-bottom:4px}
+#feed div{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:fin .5s}
+#feed div:first-child{color:var(--gold);font-weight:600}
+.pails{position:absolute;left:1120px;top:672px;display:flex;gap:8px;z-index:2}
+.pails span{display:flex;flex-direction:column;align-items:center;font-size:15px;color:var(--dim);border:2px solid var(--g2);border-radius:8px;padding:3px 9px;background:var(--panel)}
+.pails b{font:700 19px "Saira Semi Condensed",sans-serif;color:var(--ink)}.pails .off{border-style:dashed;opacity:.7}.pails .ptank{border-color:var(--blue)}
+.mbar{position:absolute;left:70px;right:70px;bottom:92px;display:flex;gap:30px;white-space:nowrap;align-items:baseline;border-top:2px solid var(--g2);padding-top:10px;font-size:21px;color:var(--dim)}
+.slegend{position:absolute;left:80px;top:130px;display:flex;flex-direction:column;gap:4px;font:600 19px "Saira Semi Condensed",sans-serif;z-index:2}.slegend em{font-size:15px;color:var(--dim);font-style:normal}
+.mbar b{font:700 28px "Saira Semi Condensed",sans-serif;color:var(--ink);margin-left:6px}.mbar em{margin-left:auto;font-size:15px;font-style:normal}
 #map svg{width:100%;height:100%}
 .maplegend{position:absolute;right:80px;top:150px;width:330px;padding:20px 22px}
 .maplegend h3{font-size:26px;color:var(--g);margin-bottom:8px}
@@ -231,11 +242,12 @@ tr.hl td{background:rgba(62,224,127,.1)}
 
 <!-- 3 MAP -->
 <section class="scene" id="s3" data-t="Live map">
-<div class="top"><h2>Live map</h2><span class="sub">names found in Colorado streak home to Myrtle Beach</span><span class="live"><span class="dot"></span>Live</span></div>
+<div class="top"><h2>Live map</h2><span class="sub">names found in Colorado fly home to Myrtle Beach · more states fly in as the finder moves</span><span class="live"><span class="dot"></span>Live</span></div>
 <div id="map"><svg viewBox="0 0 1500 700" id="mapsvg"></svg></div>
-<div class="panel maplegend"><h3>Today so far</h3>
-<div>Businesses checked <b>2,754</b></div><div>Good finds <b>342</b></div><div>Added to tracker <b>229</b></div><div>Added all time <b>903</b></div></div>
-<div class="panel feed" id="feed"></div>
+<div class="mscreen" id="mscreen"><div class="msh">Email Tracker · names arriving</div><div id="feed"></div></div>
+<div class="pails"><span>Mon<b>50/50</b></span><span>Tue<b>50/50</b></span><span>Wed<b>50/50</b></span><span class="off">Thu<b>Closed</b></span><span class="off">Fri<b>Off</b></span><span class="ptank">Tank<b>647</b></span></div>
+<div class="slegend"><span style="color:#3ee07f">● Colorado: real names</span><span style="color:#f2c14e">● Utah</span><span style="color:#4aa3ff">● Idaho</span><span style="color:#ff9f6b">● New Mexico</span><span style="color:#c58cff">● California</span><em>other states = test records</em></div>
+<div class="mbar"><span>Flying now <b>3</b></span><span>Added today <b>45</b></span><span>Per hour <b>18</b></span><span>Ask done <b>16%</b></span><span>In the tank <b>647</b></span><span>Next send <b>Mon 50/50</b></span><em>live map numbers, 4:45 AM</em></div>
 </section>
 
 <!-- 4 AGENT TRACKER -->
@@ -325,7 +337,7 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <h1>One man. A whole control room.</h1>
 <div class="tag" style="font-size:32px;margin-top:14px">Retired engineer + Claude = a business that runs while he sleeps.</div>
 <div class="list"><div class="panel">Email Tracker</div><div class="panel">Live Map</div><div class="panel">Agent Tracker</div><div class="panel">Call Tracker</div><div class="panel">Call recording</div><div class="panel">Finish Times</div></div>
-<div style="color:var(--dim);font-size:22px;margin-top:40px">ClearPoint Media Group · Myrtle Beach, SC · Demo v1.2, Nov 23, 2026 · Music: "Hypnotic Chill" by cynicmusic (CC0)</div>
+<div style="color:var(--dim);font-size:22px;margin-top:40px">ClearPoint Media Group · Myrtle Beach, SC · Demo v1.3, Nov 23, 2026 · Music: "Hypnotic Chill" by cynicmusic (CC0)</div>
 </div></section>
 
 <div id="start"><div><button id="goMusic">▶ Start the show with music</button><button class="alt" id="goQuiet">Start without music</button></div></div>
@@ -374,19 +386,23 @@ $('jobs').innerHTML=JB.map(j=>`<div class="panel job"><div><h3>${j[0]}</h3><p>${
 const W=1500,H=700,P=(lo,la)=>[(lo+125)/58*W*0.97+10,(50-la)/26*H*0.95+15];
 const US=[[-124.7,48.4],[-123,46.2],[-124.1,43],[-124.2,40.3],[-122.4,37.2],[-120.6,34.6],[-117.1,32.5],[-114.7,32.7],[-111,31.3],[-108.2,31.3],[-106.5,31.8],[-104.5,29.6],[-103,29],[-101.4,29.8],[-99.5,27.5],[-97.4,25.9],[-97.2,27.8],[-94.7,29.4],[-91,29.2],[-89.4,29],[-89.6,30.2],[-87.6,30.3],[-85.4,29.7],[-84,30.1],[-82.7,28],[-81.8,26.1],[-80.4,25.2],[-80,26.8],[-81.3,30.4],[-81.2,31.7],[-79.9,32.7],[-78.5,33.9],[-75.5,35.2],[-76,37],[-75.2,38.4],[-74,39.7],[-73.9,40.6],[-71.9,41.3],[-70,41.7],[-70.6,42.7],[-70.2,43.7],[-67,44.8],[-67.8,47.1],[-69.2,47.4],[-71.5,45],[-74.9,45],[-76.8,43.6],[-79,43.3],[-82.5,41.7],[-83.1,42.1],[-82.4,43],[-82.5,45.3],[-84.6,46.5],[-88.4,48.3],[-89.6,48],[-95.2,49],[-123.1,49],[-122.8,48.1]];
 const CO=[[-109.05,41],[-102.05,41],[-102.05,37],[-109.05,37]];
-const TW=[["Denver",-104.99,39.74,"B"],["Boulder",-105.27,40.01,"B"],["Fort Collins",-105.08,40.59,"C"],["Greeley",-104.71,40.42,"C"],["Grand Junction",-108.55,39.06,"C"],["Durango",-107.88,37.27,"C"],["Breckenridge",-106.04,39.48,"D"],["Vail",-106.37,39.64,"D"],["Aspen",-106.82,39.19,"D"],["Steamboat",-106.83,40.48,"D"],["Colorado Springs",-104.82,38.83,"A"],["Pueblo",-104.6,38.25,"A"]];
+const ST=[["California",[[-124.2,42],[-120,42],[-120,39],[-114.6,35],[-114.7,32.7],[-117.1,32.5],[-120.6,34.6],[-122.4,37.2],[-124.2,40.3]],-120.5,37.3],["Utah",[[-114.05,42],[-111.05,42],[-111.05,41],[-109.05,41],[-109.05,37],[-114.05,37]],-111.6,39.4],["New Mexico",[[-109.05,37],[-103,37],[-103,32],[-106.6,32],[-106.5,31.8],[-108.2,31.8],[-108.2,31.3],[-109.05,31.3]],-106,34.4],["Idaho",[[-117,49],[-116,49],[-116,47.5],[-114.5,46.5],[-114,45.5],[-111.05,44.5],[-111.05,42],[-117,42],[-116.9,45.5],[-117,46.5]],-114.6,43.6]];
+const TW=[["Denver",-104.99,39.74,"B"],["Boulder",-105.27,40.01,"B"],["Fort Collins",-105.08,40.59,"C"],["Greeley",-104.71,40.42,"C"],["Grand Junction",-108.55,39.06,"C"],["Durango",-107.88,37.27,"C"],["Breckenridge",-106.04,39.48,"D"],["Vail",-106.37,39.64,"D"],["Aspen",-106.82,39.19,"D"],["Steamboat",-106.83,40.48,"D"],["Colorado Springs",-104.82,38.83,"A"],["Pueblo",-104.6,38.25,"A"],["Park City",-111.5,40.65,"UT"],["Moab",-109.55,38.57,"UT"],["Sun Valley",-114.35,43.7,"ID"],["Boise",-116.2,43.6,"ID"],["Taos",-105.57,36.4,"NM"],["Santa Fe",-105.94,35.69,"NM"],["South Lake Tahoe",-119.98,38.94,"CA"]];
+const SCOL={UT:"#f2c14e",ID:"#4aa3ff",NM:"#ff9f6b",CA:"#c58cff"};
 const MB=P(-78.89,33.69);
 const poly=a=>a.map(p=>P(p[0],p[1]).map(n=>n.toFixed(1)).join(',')).join(' ');
 let svg=`<defs><radialGradient id="glow"><stop offset="0" stop-color="#3ee07f" stop-opacity=".9"/><stop offset="1" stop-color="#3ee07f" stop-opacity="0"/></radialGradient></defs>
 <polygon points="${poly(US)}" fill="#0f2140" stroke="#2c5a8a" stroke-width="3"/><polygon points="${poly(CO)}" fill="#123a2a" stroke="#3ee07f" stroke-width="2.5"/>`;
-TW.forEach((t,i)=>{const [x,y]=P(t[1],t[2]);const cx=(x+MB[0])/2,cy=Math.min(y,MB[1])-230-(i%4)*25;svg+=`<path id="arc${i}" d="M${x},${y} Q${cx},${cy} ${MB[0]},${MB[1]}" fill="none" stroke="#3ee07f" stroke-opacity=".18" stroke-width="2"/><circle cx="${x}" cy="${y}" r="6" fill="#3ee07f"/>`});
-svg+=`<circle cx="${MB[0]}" cy="${MB[1]}" r="46" fill="url(#glow)"><animate attributeName="r" values="34;54;34" dur="2s" repeatCount="indefinite"/></circle><rect x="${MB[0]-16}" y="${MB[1]-13}" width="32" height="26" rx="4" fill="#0d1a30" stroke="#3ee07f" stroke-width="3"/><text x="${MB[0]-10}" y="${MB[1]+50}" fill="#dff5e8" font-size="24" font-family="Saira Semi Condensed" text-anchor="end">Myrtle Beach · home base</text><text x="${P(-108.5,41.6)[0]}" y="${P(-108.5,41.6)[1]}" fill="#3ee07f" font-size="24" font-family="Saira Semi Condensed">Colorado</text><g id="sparks"></g>`;
+ST.forEach(st=>{const [lx,ly]=P(st[2],st[3]);svg+=`<polygon points="${poly(st[1])}" fill="#14305a" stroke="#9fc4ec" stroke-width="2" stroke-dasharray="6 5"/><text x="${lx}" y="${ly}" fill="#dfeaf7" font-size="19" font-weight="600" text-anchor="middle" font-family="Saira Semi Condensed,sans-serif">${st[0]}</text>`});
+[["Gatlinburg TN",-83.5,35.7],["Atlanta",-84.4,33.75]].forEach(c=>{const [x,y]=P(c[1],c[2]);svg+=`<circle cx="${x}" cy="${y}" r="5" fill="none" stroke="#9fc4ec" stroke-width="2" stroke-dasharray="3 2"/><text x="${x-10}" y="${y+5}" fill="#9fc4ec" font-size="16" text-anchor="end" font-family="Saira Semi Condensed,sans-serif">${c[0]}</text>`});
+TW.forEach((t,i)=>{const [x,y]=P(t[1],t[2]);const cx=(x+MB[0])/2,cy=Math.min(y,MB[1])-230-(i%4)*25;const col=SCOL[t[3]]||"#3ee07f";svg+=`<path id="arc${i}" d="M${x},${y} Q${cx},${cy} ${MB[0]},${MB[1]}" fill="none" stroke="${col}" stroke-opacity=".2" stroke-width="2"/><circle cx="${x}" cy="${y}" r="6" fill="${col}"/>`});
+svg+=`<circle cx="${MB[0]}" cy="${MB[1]}" r="46" fill="url(#glow)"><animate attributeName="r" values="34;54;34" dur="2s" repeatCount="indefinite"/></circle><rect x="${MB[0]-16}" y="${MB[1]-13}" width="32" height="26" rx="4" fill="#0d1a30" stroke="#3ee07f" stroke-width="3"/><text x="${P(-108.5,41.6)[0]}" y="${P(-108.5,41.6)[1]}" fill="#3ee07f" font-size="24" font-family="Saira Semi Condensed">Colorado</text><g id="sparks"></g>`;
 $('mapsvg').innerHTML=svg;
 const sparks=$('sparks'),feed=$('feed');
-const FINDS=[["Cork & Cask","Colorado Springs","B"],["Courtyard Social","Castle Rock","C"],["Seed & Spirit","Fort Collins","C"],["Gable House B&B","Durango","B"],["Durango Fly Fishing","Durango","B"],["Zoe's Cafe","Greeley","C"],["Blue Corn Tacos","Denver","B"],["Cavegirl Coffeehouse","Denver","B"],["Bavarian Bakery","Denver","C"],["The Roost","Grand Junction","B"]];
+const FINDS=[["Two Rivers Brewpub","Edwards"],["High Country Coffee Vail","Vail"],["Canyon Creek BBQ","Eagle"],["Frontier Noodle House","Eagle"],["Peak Brewing","Avon"],["Black Diamond Bar","Eagle"],["Alpine Grill Copper","Copper Mountain"]];
 let fi=0,sparkT;
-function launch(){const i=Math.floor(Math.random()*TW.length),p=$('arc'+i),L=p.getTotalLength();const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r',7);c.setAttribute('fill','#7dffb0');c.style.filter='drop-shadow(0 0 8px #3ee07f)';sparks.appendChild(c);const st=performance.now();(function mv(n){const k=Math.min(1,(n-st)/2200),pt=p.getPointAtLength(L*k);c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);if(k<1)requestAnimationFrame(mv);else c.remove()})(st);
-if(Math.random()<.45){const f=FINDS[fi++%FINDS.length];const d=document.createElement('div');d.textContent=`✓ ${f[0]} · ${f[1]} · tier ${f[2]}`;feed.prepend(d);while(feed.children.length>4)feed.lastChild.remove()}}
+const NCO=12;function launch(){const co=Math.random()<.5;const i=co?Math.floor(Math.random()*NCO):NCO+Math.floor(Math.random()*(TW.length-NCO)),p=$('arc'+i),L=p.getTotalLength();const col=SCOL[TW[i][3]]||'#7dffb0';const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r',7);c.setAttribute('fill',col);c.style.filter='drop-shadow(0 0 8px #3ee07f)';sparks.appendChild(c);const st=performance.now();(function mv(n){const k=Math.min(1,(n-st)/2200),pt=p.getPointAtLength(L*k);c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);if(k<1)requestAnimationFrame(mv);else c.remove()})(st);
+if(Math.random()<.6){const d=document.createElement('div');if(co){const f=FINDS[fi++%FINDS.length];d.textContent=`↻ ${f[0]} · ${f[1]}`}else{d.textContent=`↻ TEST record · ${TW[i][0]}, ${TW[i][3]}`;d.style.color=col}feed.prepend(d);while(feed.children.length>7)feed.lastChild.remove()}}
 
 /* scene enter effects */
 function enter(i){
