@@ -13,7 +13,8 @@
    PICTURE: the moving thing on each screen (map streaks, agent bars, tank, gauges)
    COLOUR and TYPE: CPMG navy + green industrial, gold = needs you; Saira headings, Plex body
    LAYOUT: fixed 16:9 stage (1600x900) scaled to fit any phone or TV, letterboxed
-   Demo v1.0 (Nov 23, 2026, 4:40 AM ET) */
+   Demo v1.1 (Nov 23, 2026, 4:50 AM ET): soundtrack (made in the page), call recording + Gemini scene, 11 scenes
+   v1.0 (Nov 23, 2026, 4:34 AM ET): first version, 10 scenes */
 :root{color-scheme:dark;--bg:#050b18;--panel:#0d1a30;--panel2:#11223d;--edge:#1f3b5e;--g:#3ee07f;--g2:#1fa85a;--gd:#0f4a2c;--ink:#dff5e8;--dim:#8fb3a2;--gold:#f2c14e;--blue:#4aa3ff;--red:#ff6b6b}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#000;overflow:hidden}
@@ -142,6 +143,36 @@ tr.hl td{background:rgba(62,224,127,.1)}
 #s9 h1{font-size:80px;color:var(--g)}
 #s9 .list{display:flex;gap:20px;justify-content:center;margin-top:36px}
 #s9 .list .panel{padding:18px 26px;font-size:24px}
+
+/* v1.1 call recording scene */
+.rec3{display:grid;grid-template-columns:330px 1fr 470px;gap:22px;height:560px}
+.rec3>.panel{padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.rec3 h3{font-size:28px;color:var(--g)}
+.recdot{display:inline-flex;align-items:center;gap:10px;font:700 26px "Saira Semi Condensed",sans-serif;color:var(--red)}
+.recdot i{width:18px;height:18px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red);animation:blink 1s infinite}
+.wave{display:flex;align-items:center;gap:5px;height:120px}
+.wave b{flex:1;border-radius:4px;background:var(--g2);height:10%;transition:height .15s}
+.wave b.o{background:var(--blue)}
+.tline{font-size:21px;line-height:1.35;opacity:0;transform:translateY(8px);transition:.4s}
+.tline.on{opacity:1;transform:none}
+.tline em{font-style:normal;font-weight:600;color:var(--g)}.tline.ow em{color:var(--blue)}
+.bad{background:rgba(255,107,107,.18);border-bottom:2px solid var(--red);padding:0 3px}
+.gem{border:2px solid var(--edge);border-radius:12px;padding:12px 16px;font:600 22px "Saira Semi Condensed",sans-serif;text-align:center;transition:.4s}
+.gem.go{border-color:var(--gold);color:var(--gold);animation:blink .8s infinite}
+.gem.ok{border-color:var(--g);color:var(--g);animation:none}
+.gout{opacity:0;transition:opacity .8s;font-size:20px;display:grid;gap:8px}
+.gout.on{opacity:1}
+.gout div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--edge);padding:4px 0}
+.gout b{color:var(--g);font-weight:600}
+.recflow{display:flex;justify-content:center;align-items:center;gap:0;margin-top:22px;font:600 21px "Saira Semi Condensed",sans-serif}
+.recflow span{border:2px solid var(--edge);border-radius:10px;padding:8px 14px;background:var(--panel)}
+.recflow .arr{width:40px}
+/* start overlay */
+#start{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:rgba(3,8,18,.82)}
+#start div{display:flex;flex-direction:column;gap:20px;align-items:center}
+#start button{font:700 40px "Saira Semi Condensed",sans-serif;color:#04170c;background:var(--g);border:0;border-radius:18px;padding:22px 54px;cursor:pointer;box-shadow:0 0 30px rgba(62,224,127,.5)}
+#start button.alt{font-size:26px;background:none;color:var(--dim);border:2px solid var(--edge);box-shadow:none;padding:12px 30px}
+#start[hidden]{display:none}
 /* controls */
 #prog{position:absolute;left:0;top:0;height:6px;background:var(--g);box-shadow:0 0 10px var(--g);width:0;z-index:5}
 #ctl{position:absolute;left:0;right:0;bottom:0;height:74px;display:flex;align-items:center;gap:14px;padding:0 30px;background:linear-gradient(transparent,rgba(0,0,0,.85));z-index:6;transition:opacity .5s}
@@ -246,6 +277,24 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <div class="note">Gauges and rows as the screen showed at 4:26 AM, Nov 23 (dots = not shown on that screen).</div>
 </section>
 
+
+<!-- 6b CALL RECORDING -->
+<section class="scene" id="s10" data-t="Call recording" data-d="22000">
+<div class="top"><h2>Every call, written down</h2><span class="sub">the Call Tracker records the call, types it out, and Gemini cleans it up</span></div>
+<div class="rec3">
+<div class="panel"><h3>Calling Sample Cafe</h3><div class="recdot"><i></i>REC <span id="rtime">0:00</span></div>
+<div class="wave" id="wave"></div>
+<div style="font-size:18px;color:var(--dim)"><span style="color:var(--g)">■</span> Randy &nbsp; <span style="color:var(--blue)">■</span> Owner<br>Both sides recorded on the laptop. Stops by itself when the call ends.</div></div>
+<div class="panel"><h3>Typed out live</h3><div id="tx" style="display:grid;gap:10px"></div></div>
+<div class="panel"><h3>Gemini clean-up</h3><div class="gem" id="gem">Waiting for the call to end</div>
+<div class="gout" id="gout">
+<p style="font-size:20px">Owner Dana is interested. Runs a <b>lunch</b> special on Fridays. Wants a free sample by email. Call back Thursday.</p>
+<div><span>Contact</span><b>Dana, owner</b></div><div><span>Email</span><b>owner@sample-cafe.com</b></div><div><span>Call back</span><b>Thursday</b></div><div><span>Spelling fixed</span><b>"hunch" → "lunch"</b></div></div></div>
+</div>
+<div class="recflow"><span>Record both sides</span><div class="arr"></div><span>Typed out on the laptop</span><div class="arr"></div><span>Gemini fixes spelling + sums up</span><div class="arr"></div><span>Note box</span><div class="arr"></div><span>Save call</span></div>
+<div class="note">Sample call made up for this demo.</div>
+</section>
+
 <!-- 7 FINISH TIMES -->
 <section class="scene" id="s7" data-t="Finish Times">
 <div class="top"><h2>Finish Times</h2><span class="sub">every big job, its stage and when it lands</span><span class="live"><span class="dot"></span>Live</span></div>
@@ -273,16 +322,18 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <section class="scene" id="s9" data-t="Thanks"><div>
 <h1>One man. A whole control room.</h1>
 <div class="tag" style="font-size:32px;margin-top:14px">Retired engineer + Claude = a business that runs while he sleeps.</div>
-<div class="list"><div class="panel">Email Tracker</div><div class="panel">Live Map</div><div class="panel">Agent Tracker</div><div class="panel">Call Tracker</div><div class="panel">Finish Times</div></div>
+<div class="list"><div class="panel">Email Tracker</div><div class="panel">Live Map</div><div class="panel">Agent Tracker</div><div class="panel">Call Tracker</div><div class="panel">Call recording</div><div class="panel">Finish Times</div></div>
 <div style="color:var(--dim);font-size:22px;margin-top:40px">ClearPoint Media Group · Myrtle Beach, SC · Demo v1.0, Nov 23, 2026</div>
 </div></section>
 
+<div id="start"><div><button id="goMusic">▶ Start the show with music</button><button class="alt" id="goQuiet">Start without music</button></div></div>
 <div id="ctl">
 <button id="bPrev" aria-label="Back">◀</button>
 <button id="bPlay" aria-label="Pause">❚❚</button>
 <button id="bNext" aria-label="Next">▶</button>
 <span id="label"></span>
 <div id="dots"></div>
+<button id="bMusic">♪ Music off</button>
 <button id="bFull">Full screen</button>
 </div>
 </div></div>
@@ -290,7 +341,7 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <script>
 {
 const stage=document.getElementById('stage'),scenes=[...document.querySelectorAll('.scene')];
-const DUR=12000;let cur=0,playing=true,t0=performance.now(),elapsed=0,hideT;
+const DUR0=12000;let DUR=DUR0;let cur=0,playing=true,t0=performance.now(),elapsed=0,hideT;
 const $=id=>document.getElementById(id);
 function fit(){const s=Math.min(innerWidth/1600,innerHeight/900);stage.style.transform='translate(-50%,-50%) scale('+s+')'}
 addEventListener('resize',fit);fit();
@@ -338,14 +389,15 @@ function enter(i){
  const s=scenes[i];
  s.querySelectorAll('[data-w]').forEach(e=>{e.style.width='0';setTimeout(()=>e.style.width=e.dataset.w+'%',150)});
  s.querySelectorAll('[data-h]').forEach(e=>{e.style.height='0';setTimeout(()=>e.style.height=e.dataset.h+'%',150)});
- if(i==1){const st=s.querySelectorAll('.step');st.forEach(e=>e.classList.remove('lit'));st.forEach((e,k)=>setTimeout(()=>e.classList.add('lit'),400+k*900))}
- if(i==8){const st=s.querySelectorAll('.qbox');st.forEach(e=>e.classList.remove('lit'));st.forEach((e,k)=>setTimeout(()=>e.classList.add('lit'),400+k*900))}
- clearInterval(sparkT);if(i==3){feed.innerHTML='';sparkT=setInterval(launch,450)}
- if(i==6){const b=[...s.querySelectorAll('#callbtns span')];b.forEach(e=>e.classList.remove('press'));setTimeout(()=>b[2].classList.add('press'),4000);setTimeout(()=>{s.querySelector('.gauge:nth-child(3) .v').textContent='1';s.querySelector('.gauge:nth-child(3) .tube i').style.height='12%'},4600)}
- if(i==6)s.querySelector('.gauge:nth-child(3) .v').textContent='·';
- if(i==7){s.querySelectorAll('.stages').forEach(g=>{const n=+g.dataset.n,t=+g.dataset.t,c=[...g.children];c.forEach(x=>x.className='');c.forEach((x,k)=>{if(k<n)setTimeout(()=>x.className='ok',300+k*350);else if(k==n)setTimeout(()=>x.className='now',300+k*350)})})}
+ if(s.id=='s1'){const st=s.querySelectorAll('.step');st.forEach(e=>e.classList.remove('lit'));st.forEach((e,k)=>setTimeout(()=>e.classList.add('lit'),400+k*900))}
+ if(s.id=='s8'){const st=s.querySelectorAll('.qbox');st.forEach(e=>e.classList.remove('lit'));st.forEach((e,k)=>setTimeout(()=>e.classList.add('lit'),400+k*900))}
+ clearInterval(sparkT);clearTimers();if(s.id=='s3'){feed.innerHTML='';sparkT=setInterval(launch,450)}
+ if(s.id=='s6'){const b=[...s.querySelectorAll('#callbtns span')];b.forEach(e=>e.classList.remove('press'));setTimeout(()=>b[2].classList.add('press'),4000);setTimeout(()=>{s.querySelector('.gauge:nth-child(3) .v').textContent='1';s.querySelector('.gauge:nth-child(3) .tube i').style.height='12%'},4600)}
+ if(s.id=='s6')s.querySelector('.gauge:nth-child(3) .v').textContent='·';
+ if(s.id=='s10')recScene();
+ if(s.id=='s7'){s.querySelectorAll('.stages').forEach(g=>{const n=+g.dataset.n,t=+g.dataset.t,c=[...g.children];c.forEach(x=>x.className='');c.forEach((x,k)=>{if(k<n)setTimeout(()=>x.className='ok',300+k*350);else if(k==n)setTimeout(()=>x.className='now',300+k*350)})})}
 }
-function show(i){cur=(i+scenes.length)%scenes.length;scenes.forEach((s,k)=>s.classList.toggle('on',k==cur));[...$('dots').children].forEach((d,k)=>d.classList.toggle('on',k==cur));$('label').textContent=(cur+1)+' / '+scenes.length+' · '+scenes[cur].dataset.t;elapsed=0;t0=performance.now();enter(cur)}
+function show(i){cur=(i+scenes.length)%scenes.length;scenes.forEach((s,k)=>s.classList.toggle('on',k==cur));[...$('dots').children].forEach((d,k)=>d.classList.toggle('on',k==cur));$('label').textContent=(cur+1)+' / '+scenes.length+' · '+scenes[cur].dataset.t;elapsed=0;t0=performance.now();DUR=+(scenes[cur].dataset.d||DUR0);enter(cur)}
 $('dots').innerHTML=scenes.map(()=>'<i></i>').join('');
 [...$('dots').children].forEach((d,k)=>d.onclick=e=>{e.stopPropagation();show(k);wake()});
 function tick(n){if(playing){elapsed=n-t0;if(elapsed>=DUR)show(cur+1)}$('prog').style.width=Math.min(100,elapsed/DUR*100)+'%';requestAnimationFrame(tick)}
@@ -359,7 +411,38 @@ $('ctl').onclick=e=>e.stopPropagation();
 $('wrap').onclick=e=>{const r=$('wrap').getBoundingClientRect();if(e.clientX<r.width*0.3)show(cur-1);else show(cur+1);wake()};
 addEventListener('keydown',e=>{if(e.key=='ArrowRight'||e.key==' ')show(cur+1);if(e.key=='ArrowLeft')show(cur-1);wake()});
 addEventListener('pointermove',wake);
-show(0);wake();requestAnimationFrame(tick);
+
+/* call recording scene */
+let TM=[];function later(f,ms){TM.push(setTimeout(f,ms))}function clearTimers(){TM.forEach(clearTimeout);TM=[];clearInterval(waveT)}
+let waveT;const wave=$('wave');wave.innerHTML=Array.from({length:22},(_,k)=>'<b></b>').join('');
+const TX=[["r","Randy","Hi, this is Randy with ClearPoint Media Group. Is this the owner?"],["o","Owner","Yes, this is Dana."],["r","Randy","I make quick pictures for your specials. $25 each, back in about 5 hours."],["o","Owner","We do a <span class='bad'>hunch</span> special on Fridays."],["r","Randy","I can send you a free sample. What's the best email?"],["o","Owner","owner at sample cafe dot com. Call me back Thursday."]];
+function recScene(){const tx=$('tx');tx.innerHTML=TX.map(t=>`<div class="tline ${t[0]=='o'?'ow':''}"><em>${t[1]}:</em> ${t[2]}</div>`).join('');
+ const g=$('gem'),go=$('gout');g.className='gem';g.textContent='Waiting for the call to end';go.classList.remove('on');
+ let sec=0,who='r';$('rtime').textContent='0:00';
+ waveT=setInterval(()=>{[...wave.children].forEach(b=>{b.className=who=='o'?'o':'';b.style.height=(10+Math.random()*90)+'%'});},160);
+ const ticker=setInterval(()=>{sec++;$('rtime').textContent='0:'+String(sec*4).padStart(2,'0')},1000);TM.push(setTimeout(()=>clearInterval(ticker),11000));
+ [...tx.children].forEach((l,k)=>later(()=>{l.classList.add('on');who=TX[k][0]},600+k*1700));
+ later(()=>{clearInterval(waveT);[...wave.children].forEach(b=>b.style.height='6%');g.className='gem go';g.textContent='Gemini is cleaning it up…'},11200);
+ later(()=>{g.className='gem ok';g.textContent='✓ Cleaned up and summed up';go.classList.add('on');const bad=tx.querySelector('.bad');if(bad){bad.textContent='lunch';bad.style.background='rgba(62,224,127,.2)';bad.style.borderColor='#3ee07f'}},13800);
+}
+/* soundtrack: original music made in the page (no outside files) */
+let AC=null,MUS=false,master,musT;
+const CH=[[57,60,64],[53,57,60],[48,52,55],[55,59,62]];const hz=m=>440*Math.pow(2,(m-69)/12);
+function note(f,t,d,type,vol,dest){const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+Math.min(.8,d/3));g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(dest);o.start(t);o.stop(t+d+.05)}
+let bar=0,nextT=0;
+function sched(){while(nextT<AC.currentTime+1.2){const c=CH[bar%4],t=nextT;
+ c.forEach(m=>{note(hz(m),t,4.2,'triangle',.05,master);note(hz(m)*1.003,t,4.2,'sine',.04,master)});
+ note(hz(c[0]-24),t,3.8,'sine',.12,master);
+ for(let k=0;k<8;k++)note(hz(c[k%3]+12+(k>3?12:0)),t+k*.5,.45,'sine',.035,master);
+ [0,1,2,3].forEach(k=>{const o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(110,t+k);o.frequency.exponentialRampToValueAtTime(40,t+k+.25);g.gain.setValueAtTime(.18,t+k);g.gain.exponentialRampToValueAtTime(.0001,t+k+.3);o.connect(g);g.connect(master);o.start(t+k);o.stop(t+k+.35)});
+ bar++;nextT+=4}}
+function music(on){try{if(on){if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();master=AC.createGain();const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;master.connect(lp);lp.connect(AC.destination);master.gain.value=.7}AC.resume();nextT=AC.currentTime+.1;sched();clearInterval(musT);musT=setInterval(sched,400);master.gain.setTargetAtTime(.7,AC.currentTime,.3)}else if(AC){clearInterval(musT);master.gain.setTargetAtTime(0,AC.currentTime,.2)}MUS=on;$('bMusic').textContent=on?'♪ Music on':'♪ Music off'}catch(x){$('bMusic').textContent='♪ No sound here'}}
+$('bMusic').onclick=e=>{e.stopPropagation();music(!MUS);wake()};
+function begin(withMusic){$('start').hidden=true;if(withMusic)music(true);show(0);setPlay(true);wake()}
+$('goMusic').onclick=e=>{e.stopPropagation();begin(true)};$('goQuiet').onclick=e=>{e.stopPropagation();begin(false)};
+$('start').onclick=e=>e.stopPropagation();
+show(0);setPlay(false);wake();requestAnimationFrame(tick);
+
 }
 </script>
 </body>
