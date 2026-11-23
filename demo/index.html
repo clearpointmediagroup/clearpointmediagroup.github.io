@@ -14,6 +14,8 @@
    COLOUR and TYPE: CPMG navy + green industrial, gold = needs you; Saira headings, Plex body
    LAYOUT: fixed 16:9 stage (1600x900) scaled to fit any phone or TV, letterboxed
    Demo v1.1 (Nov 23, 2026, 4:50 AM ET): soundtrack (made in the page), call recording + Gemini scene, 11 scenes
+   v1.5 (Nov 23, 2026, 5:16 AM ET): round 2 fixes (price chips, finder totals band, map scene 11 s)
+   v1.4 (Nov 23, 2026, 5:12 AM ET): round 1 fixes (bigger flow and quality scenes, Agent Tracker fits, live pictures in empty boxes)
    v1.3 (Nov 23, 2026, 5:08 AM ET): map scene rebuilt to match Randy's live map (other states, names-arriving screen, day pails, numbers bar)
    v1.2 (Nov 23, 2026, 4:58 AM ET): real recorded song, 7 s scenes, first tap shows the buttons, Pause also stops the music
    v1.0 (Nov 23, 2026, 4:34 AM ET): first version, 10 scenes */
@@ -43,16 +45,16 @@ h1,h2,h3,.big{font-family:"Saira Semi Condensed",sans-serif;font-weight:700;lett
 #s0 .tag{font-size:36px;margin-top:18px}
 #s0 .who{font-size:26px;color:var(--dim);margin-top:30px}
 /* flow */
-.flow{display:flex;align-items:center;justify-content:center;gap:0;margin-top:70px}
-.step{width:230px;height:250px;padding:24px 18px;text-align:center;opacity:.25;transform:translateY(20px);transition:.6s}
+.flow{display:flex;align-items:center;justify-content:center;gap:0;margin-top:90px}
+.step{width:262px;height:330px;padding:30px 20px;text-align:center;opacity:.25;transform:translateY(20px);transition:.6s}
 .step.lit{opacity:1;transform:none;border-color:var(--g)}
-.step .n{font:700 64px "Saira Semi Condensed",sans-serif;color:var(--g)}
-.step h3{font-size:30px;margin:6px 0}
-.step p{font-size:19px;color:var(--dim)}
+.step .n{font:700 84px "Saira Semi Condensed",sans-serif;color:var(--g)}
+.step h3{font-size:38px;margin:8px 0}
+.step p{font-size:23px;color:var(--dim)}
 .arr{width:62px;height:6px;background:var(--edge);position:relative;overflow:hidden;border-radius:3px}
 .arr::after{content:"";position:absolute;top:0;left:-40%;width:40%;height:100%;background:var(--g);box-shadow:0 0 10px var(--g);animation:run 1.4s linear infinite}
 @keyframes run{to{left:100%}}
-.flowcap{text-align:center;font-size:30px;margin-top:56px}
+.flowcap{text-align:center;font-size:38px;margin-top:70px;font-weight:600}
 /* email tracker */
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,300px);gap:22px}
 .tile{padding:22px 24px}
@@ -65,6 +67,11 @@ h1,h2,h3,.big{font-family:"Saira Semi Condensed",sans-serif;font-weight:700;lett
 .minibars{position:absolute;left:24px;right:24px;bottom:24px;display:flex;gap:12px;align-items:flex-end;height:110px}
 .minibars div{flex:1;background:var(--g2);border-radius:5px 5px 0 0;height:0;transition:height 2s;position:relative}
 .minibars span{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-size:17px;color:var(--dim)}
+.prices{position:absolute;left:24px;right:24px;bottom:24px;display:flex;gap:10px}.prices span{flex:1;text-align:center;font:700 34px "Saira Semi Condensed",sans-serif;color:var(--g);border:2px solid var(--g2);border-radius:10px;padding:6px 0;line-height:1}.prices small{display:block;font:500 15px "IBM Plex Sans",sans-serif;color:var(--dim);margin-top:4px}
+.ping{position:absolute;left:24px;bottom:22px;display:flex;align-items:center;gap:10px;font-size:48px}.ping i{width:16px;height:16px;border-radius:50%;background:var(--gold);animation:blink 1s infinite}.ping i:nth-child(3){animation-delay:.3s}.ping i:nth-child(4){animation-delay:.6s}
+.stations{position:absolute;left:24px;right:24px;bottom:30px;display:flex;gap:8px}.stations i{flex:1;height:26px;border-radius:6px;background:#071226;border:1px solid var(--edge);animation:stn 4s infinite}
+.stations i:nth-child(1){animation-delay:0.0s}.stations i:nth-child(2){animation-delay:0.4s}.stations i:nth-child(3){animation-delay:0.8s}.stations i:nth-child(4){animation-delay:1.2s}.stations i:nth-child(5){animation-delay:1.6s}.stations i:nth-child(6){animation-delay:2.0s}.stations i:nth-child(7){animation-delay:2.4s}.stations i:nth-child(8){animation-delay:2.8s}
+@keyframes stn{0%,10%{background:#071226}20%,60%{background:var(--g2)}80%,100%{background:#071226}}
 .cog{position:absolute;right:22px;top:20px;width:52px;height:52px;animation:spin 4s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* map */
@@ -93,7 +100,7 @@ h1,h2,h3,.big{font-family:"Saira Semi Condensed",sans-serif;font-weight:700;lett
 .stat .v{font:700 46px "Saira Semi Condensed",sans-serif;color:var(--g);line-height:1.1}
 .stat p{font-size:17px;color:var(--dim)}
 .agents{display:grid;margin-bottom:0;grid-template-columns:1fr 1fr;gap:10px 22px}
-.ag{display:grid;grid-template-columns:20px 110px 1fr 150px 92px;align-items:center;gap:14px;padding:9px 16px;font-size:19px}
+.ag{display:grid;grid-template-columns:20px 110px 1fr 150px 92px;align-items:center;gap:14px;padding:8px 16px;font-size:19px}
 .ag .nm{font-weight:600}
 .ag .jb{color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar{height:14px;background:#071226;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}
@@ -102,7 +109,7 @@ h1,h2,h3,.big{font-family:"Saira Semi Condensed",sans-serif;font-weight:700;lett
 .st.w{background:var(--gd);color:var(--g)}.st.d{background:#12305a;color:var(--blue)}
 /* lanes */
 .lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.lane{padding:22px;height:560px}
+.lane{padding:22px;height:470px}
 .lane h3{font-size:34px;color:var(--g)}
 .lane .area{font-size:19px;color:var(--dim);height:56px}
 .funnel{margin-top:18px;display:grid;gap:14px}
@@ -110,6 +117,7 @@ h1,h2,h3,.big{font-family:"Saira Semi Condensed",sans-serif;font-weight:700;lett
 .funnel i{position:absolute;inset:0 auto 0 0;width:0;transition:width 2.4s ease-out}
 .funnel b{position:relative;display:flex;justify-content:space-between;align-items:center;height:100%;padding:0 14px;font-size:20px}
 .funnel b em{font:700 30px "Saira Semi Condensed",sans-serif;font-style:normal}
+.fband{margin-top:22px;display:flex;align-items:baseline;gap:12px;font-size:24px;color:var(--dim);border:2px solid var(--g2);border-radius:12px;padding:14px 22px;background:var(--panel)}.fband span{color:var(--ink);font-weight:600;margin-right:8px}.fband b{font:700 38px "Saira Semi Condensed",sans-serif;color:var(--g)}.fband i{font-style:normal;color:var(--g2);font-size:30px}
 .crew{margin-top:20px;font-size:18px;color:var(--dim)}
 .crew strong{color:var(--ink);font-weight:500}
 /* call tracker */
@@ -141,15 +149,15 @@ tr.hl td{background:rgba(62,224,127,.1)}
 .stages i.ok{background:var(--g2)}.stages i.now{background:var(--gold);animation:blink 1s infinite}
 .job .state{font:600 24px "Saira Semi Condensed",sans-serif;text-align:right}
 /* quality */
-.line{display:flex;align-items:center;justify-content:center;margin-top:50px}
-.qbox{width:200px;padding:20px 14px;text-align:center;opacity:.25;transition:.5s}
+.line{display:flex;align-items:center;justify-content:center;margin-top:70px}
+.qbox{width:236px;padding:28px 14px;text-align:center;opacity:.25;transition:.5s}
 .qbox.lit{opacity:1;border-color:var(--g)}
-.qbox h3{font-size:26px;color:var(--g)}
-.qbox p{font-size:17px;color:var(--dim)}
-.qrow{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
-.qrow .panel{padding:22px 26px}
-.qrow h3{font-size:30px;color:var(--g)}
-.qrow p{font-size:20px;color:var(--dim)}
+.qbox h3{font-size:32px;color:var(--g)}
+.qbox p{font-size:21px;color:var(--dim)}
+.qrow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:80px}
+.qrow .panel{padding:30px 32px;min-height:200px}
+.qrow h3{font-size:36px;color:var(--g);margin-bottom:8px}
+.qrow p{font-size:25px;color:var(--dim)}
 /* close */
 #s9{display:grid;place-items:center;text-align:center}
 #s9 h1{font-size:80px;color:var(--g)}
@@ -183,7 +191,7 @@ tr.hl td{background:rgba(62,224,127,.1)}
 #start{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:rgba(3,8,18,.82)}
 #start div{display:flex;flex-direction:column;gap:20px;align-items:center}
 #start button{font:700 40px "Saira Semi Condensed",sans-serif;color:#04170c;background:var(--g);border:0;border-radius:18px;padding:22px 54px;cursor:pointer;box-shadow:0 0 30px rgba(62,224,127,.5)}
-#start button.alt{font-size:26px;background:none;color:var(--dim);border:2px solid var(--edge);box-shadow:none;padding:12px 30px}
+#start button.alt{font-size:34px;background:var(--panel2);color:var(--ink);border:3px solid var(--g2);box-shadow:none;padding:16px 44px}
 #start[hidden]{display:none}
 /* controls */
 #prog{position:absolute;left:0;top:0;height:6px;background:var(--g);box-shadow:0 0 10px var(--g);width:0;z-index:5}
@@ -230,10 +238,10 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <div class="grid4">
 <div class="panel tile"><h3>Sending today</h3><div class="v">50</div><p>emails a day, Monday to Friday mornings</p><svg class="cog" viewBox="0 0 40 40"><path fill="#1fa85a" d="M17 2h6l1 5 4 2 4-3 4 4-3 4 2 4 5 1v6l-5 1-2 4 3 4-4 4-4-3-4 2-1 5h-6l-1-5-4-2-4 3-4-4 3-4-2-4-5-1v-6l5-1 2-4-3-4 4-4 4 3 4-2z"/><circle cx="20" cy="20" r="6" fill="#0d1a30"/></svg></div>
 <div class="panel tile"><h3>Results this week</h3><p>sent, opened, clicked, replied</p><div class="minibars"><div data-h="95"><span>Sent</span></div><div data-h="62"><span>Opened</span></div><div data-h="24"><span>Clicked</span></div><div data-h="9"><span>Replied</span></div></div></div>
-<div class="panel tile"><h3>Replies</h3><p>Every reply pings Randy's phone, with the owner's number ready to call</p></div>
+<div class="panel tile"><h3>Replies</h3><p>Every reply pings Randy's phone, with the owner's number ready to call</p><div class="ping"><span>📱</span><i></i><i></i><i></i></div></div>
 <div class="panel tile"><h3>Names waiting</h3><div class="v">368</div><p>of 500 asked for</p><div class="tank"><i data-w="73.6"></i><b>Name tank · 132 to go</b></div></div>
-<div class="panel tile"><h3>Orders and money</h3><p>Paid orders and what each one brought in</p></div>
-<div class="panel tile"><h3>Orders in progress</h3><p>Each order moves through 8 stations: form, picture, proof, approval, paid, delivered</p></div>
+<div class="panel tile"><h3>Orders and money</h3><p>Paid orders and what each one brought in</p><div class="prices"><span>$25<small>picture</small></span><span>$40<small>phone + TV</small></span><span>$99<small>5 a month</small></span></div></div>
+<div class="panel tile"><h3>Orders in progress</h3><p>Each order moves through 8 stations: form, picture, proof, approval, paid, delivered</p><div class="stations"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
 <div class="panel tile"><h3>Is it working?</h3><p>Green when the tracker, the sender and the helpers all answer</p><svg class="cog" viewBox="0 0 40 40" style="animation-duration:2.5s"><path fill="#3ee07f" d="M17 2h6l1 5 4 2 4-3 4 4-3 4 2 4 5 1v6l-5 1-2 4 3 4-4 4-4-3-4 2-1 5h-6l-1-5-4-2-4 3-4-4 3-4-2-4-5-1v-6l5-1 2-4-3-4 4-4 4 3 4-2z"/><circle cx="20" cy="20" r="6" fill="#0d1a30"/></svg></div>
 <div class="panel tile"><h3>Towns</h3><div class="v">4</div><p>search lanes across Colorado, shown live on the map</p></div>
 </div>
@@ -241,7 +249,7 @@ tr.hl td{background:rgba(62,224,127,.1)}
 </section>
 
 <!-- 3 MAP -->
-<section class="scene" id="s3" data-t="Live map">
+<section class="scene" id="s3" data-t="Live map" data-d="11000">
 <div class="top"><h2>Live map</h2><span class="sub">names found in Colorado fly home to Myrtle Beach · more states fly in as the finder moves</span><span class="live"><span class="dot"></span>Live</span></div>
 <div id="map"><svg viewBox="0 0 1500 700" id="mapsvg"></svg></div>
 <div class="mscreen" id="mscreen"><div class="msh">Email Tracker · names arriving</div><div id="feed"></div></div>
@@ -269,6 +277,7 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <section class="scene" id="s5" data-t="Email Finder">
 <div class="top"><h2>Email Finder: 4 lanes, 6 scouts each</h2><span class="sub">last finished run per lane, early Nov 23</span></div>
 <div class="lanes" id="lanes"></div>
+<div class="fband"><span>Today, all 4 lanes:</span><b>2,754</b> checked <i>→</i><b>342</b> good finds <i>→</i><b>229</b> added <i>→</i><b>132</b> still needed of 500</div>
 <div class="note">Rules: owner-run, own website, real email that passes a mail-server check, active on Facebook. Chains and closed places are skipped.</div>
 </section>
 
@@ -337,7 +346,7 @@ tr.hl td{background:rgba(62,224,127,.1)}
 <h1>One man. A whole control room.</h1>
 <div class="tag" style="font-size:32px;margin-top:14px">Retired engineer + Claude = a business that runs while he sleeps.</div>
 <div class="list"><div class="panel">Email Tracker</div><div class="panel">Live Map</div><div class="panel">Agent Tracker</div><div class="panel">Call Tracker</div><div class="panel">Call recording</div><div class="panel">Finish Times</div></div>
-<div style="color:var(--dim);font-size:22px;margin-top:40px">ClearPoint Media Group · Myrtle Beach, SC · Demo v1.3, Nov 23, 2026 · Music: "Hypnotic Chill" by cynicmusic (CC0)</div>
+<div style="color:var(--dim);font-size:22px;margin-top:40px">ClearPoint Media Group · Myrtle Beach, SC · Demo v1.5, Nov 23, 2026 · 5:18 AM · Music: "Hypnotic Chill" by cynicmusic (CC0)</div>
 </div></section>
 
 <div id="start"><div><button id="goMusic">▶ Start the show with music</button><button class="alt" id="goQuiet">Start without music</button></div></div>
@@ -363,7 +372,7 @@ function fit(){const s=Math.min(innerWidth/1600,innerHeight/900);stage.style.tra
 addEventListener('resize',fit);fit();
 
 /* agents (real rows from the Agent Tracker, 4:24 AM) */
-const AG=[["Monitor v2.6","Watches every agent every minute","w",100],["Mo","Building the clean Live Map (CC-320)","w",80],["Gus","Lane A checker: Facebook looks + sends","w",60],["Don","Lane D checker: Facebook looks + sends","w",66],["Carl","Lane C checker: 23 added","d",100],["Bart","Lane B checker: 29 added","d",100],["Dot","Breckenridge, Frisco, Dillon: 7 found","d",100],["Dina","Aspen, Basalt, Glenwood: 7 found","d",100],["Duke","Steamboat, Winter Park: 6 found","d",100],["Drew","Salida, Buena Vista: 6 found","d",100],["Della","Crested Butte, Telluride: 5 found","d",100],["Coco","Montrose, Gunnison: 6 found","d",100],["Cy","Grand Junction, Fruita: 5 found","d",100],["Cleo","Loveland, Estes Park: 5 found","d",100],["Buck","Longmont, Broomfield: 10 found","d",100],["Bea","Denver: 10 found","d",100]];
+const AG=[["Monitor v2.6","Watches every agent every minute","w",100],["Mo","Building the clean Live Map (CC-320)","w",80],["Gus","Lane A checker: Facebook looks + sends","w",60],["Don","Lane D checker: Facebook looks + sends","w",66],["Carl","Lane C checker: 23 added","d",100],["Bart","Lane B checker: 29 added","d",100],["Dot","Breckenridge, Frisco, Dillon: 7 found","d",100],["Dina","Aspen, Basalt, Glenwood: 7 found","d",100],["Duke","Steamboat, Winter Park: 6 found","d",100],["Drew","Salida, Buena Vista: 6 found","d",100],["Della","Crested Butte, Telluride: 5 found","d",100],["Coco","Montrose, Gunnison: 6 found","d",100],["Cy","Grand Junction, Fruita: 5 found","d",100],["Cleo","Loveland, Estes Park: 5 found","d",100],];
 $('agents').innerHTML=AG.map(a=>`<div class="panel ag"><span class="dot" style="${a[2]=='d'?'background:#4aa3ff;box-shadow:none;animation:none':''}"></span><span class="nm">${a[0]}</span><span class="jb">${a[1]}</span><span class="bar"><i data-w="${a[3]}"></i></span><span class="st ${a[2]}">${a[2]=='w'?'Working':'Done'}</span></div>`).join('');
 
 /* lanes (last run per lane, from the Email Finder counter) */
