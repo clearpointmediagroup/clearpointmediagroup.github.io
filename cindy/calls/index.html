@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CPMG Cindy's Call List v1.1 (Nov 25, 2026, 12:49 AM ET). Revision log: v1.1 PIN screen added (Randy's 4-digit PIN; remembered on her phone after the first time). v1.0 (12:27 AM) first version: 5 warm prospects, tap-to-call, form after each call, answers saved on the phone, Send to Randy by email. -->
+<!-- CPMG Cindy's Call List v1.2 (Nov 25, 2026, 12:54 AM ET). Revision log: v1.2 every field and every tap saves on her phone as she goes (moving field to field, typing, or leaving the page); unfinished answers are kept and included in the email. v1.1 (12:49 AM) PIN screen added (Randy's 4-digit PIN; remembered on her phone after the first time). v1.0 (12:27 AM) first version: 5 warm prospects, tap-to-call, form after each call, answers saved on the phone, Send to Randy by email. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -52,6 +52,7 @@
   input:focus,textarea:focus{outline:3px solid var(--green);border-color:var(--green)}
   textarea{min-height:70px;resize:vertical}
   .warn{color:var(--amber);font-size:17px;margin:4px 0 0;min-height:0}
+  .auto{color:var(--soft);font-size:16px;margin:8px 0 0;text-align:center}
   .save{width:100%;min-height:58px;margin-top:14px;border-radius:14px;border:0;background:var(--green);color:var(--green-dark);font-size:22px;font-weight:bold;cursor:pointer}
   .result{display:none;margin-top:12px;background:var(--card2);border-radius:12px;padding:10px 12px}
   .place.done .result{display:block}
@@ -114,7 +115,7 @@
     <p class="sendnote">This opens your email with your answers filled in. Just tap Send.</p>
   </div>
 
-  <footer>v1.1 · Nov 25, 2026 · 12:49 AM ET</footer>
+  <footer>v1.2 · Nov 25, 2026 · 12:54 AM ET</footer>
 
 <script>
 (function(){
@@ -131,7 +132,7 @@
 
   function load(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
   function store(d){ try { localStorage.setItem(KEY, JSON.stringify(d)); return true; } catch(e){ return false; } }
-  var data = load(); if (!data.answers) data.answers = {};
+  var data = load(); if (!data.answers) data.answers = {}; if (!data.drafts) data.drafts = {};
 
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
   var phoneSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>';
@@ -156,13 +157,14 @@
         '<label>Phone <span>(only if they give one)</span><input type="tel" inputmode="tel" autocomplete="off" data-f="phone"></label>' +
         '<label>Notes <span>(optional)</span><textarea data-f="notes"></textarea></label>' +
         '<button type="button" class="save">Save</button>' +
+        '<p class="auto">Everything you type saves on this phone as you go.</p>' +
       '</div>';
     list.appendChild(el);
     fill(el, p.id);
   });
 
   function fill(el, id){
-    var a = data.answers[id] || {};
+    var a = Object.assign({}, data.answers[id] || {}, data.drafts[id] || {});
     el.querySelectorAll("[data-f]").forEach(function(inp){ inp.value = a[inp.getAttribute("data-f")] || ""; });
     el.querySelectorAll(".chip").forEach(function(c){ c.classList.toggle("on", c.getAttribute("data-r") === a.result); });
     showResult(el, id);
@@ -199,7 +201,7 @@
     var op = e.target.closest("[data-open]");
     if (op){ var el0 = document.getElementById("p-" + op.getAttribute("data-open")); if (el0.classList.contains("open")) el0.classList.remove("open"); else openForm(op.getAttribute("data-open"), false); return; }
     var chip = e.target.closest(".chip");
-    if (chip){ var box = chip.closest(".chips"); box.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("on"); }); chip.classList.add("on"); return; }
+    if (chip){ var box = chip.closest(".chips"); box.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("on"); }); chip.classList.add("on"); draft(chip.closest(".place").id.slice(2), "result", chip.getAttribute("data-r")); return; }
     var save = e.target.closest(".save");
     if (save){
       var el = save.closest(".place"); var id = el.id.slice(2);
@@ -211,7 +213,7 @@
       if (!a.result && !a.who && !a.email){ warn.textContent = "Tap what happened first."; return; }
       if (!a.result) a.result = "Got it";
       warn.textContent = "";
-      data.answers[id] = a; if (data.lastCalled === id) data.lastCalled = null;
+      data.answers[id] = a; delete data.drafts[id]; if (data.lastCalled === id) data.lastCalled = null;
       var ok = store(data);
       el.classList.remove("open"); showResult(el, id); update();
       if (!ok) alertBox("This phone could not save it. Tap Send my answers to Randy now so nothing is lost.");
@@ -220,6 +222,13 @@
       else document.getElementById("sendBtn").scrollIntoView({behavior:"smooth", block:"center"});
     }
   });
+
+  function draft(id, k, v){ if (!data.drafts[id]) data.drafts[id] = {}; if (data.drafts[id][k] === v) return; data.drafts[id][k] = v; store(data); update(); }
+  function fieldSave(e){ var f = e.target && e.target.getAttribute && e.target.getAttribute("data-f"); if (!f) return; draft(e.target.closest(".place").id.slice(2), f, e.target.value); }
+  list.addEventListener("input", fieldSave);
+  list.addEventListener("change", fieldSave);
+  list.addEventListener("focusout", fieldSave);
+  window.addEventListener("pagehide", function(){ var f = document.activeElement; if (f && f.getAttribute && f.getAttribute("data-f")) fieldSave({target:f}); });
 
   function alertBox(msg){ var w = document.createElement("p"); w.className = "warn"; w.style.textAlign = "center"; w.textContent = msg; document.getElementById("sendBtn").parentNode.appendChild(w); }
 
@@ -241,6 +250,13 @@
         if (a.email) lines.push("   Email: " + a.email);
         if (a.phone) lines.push("   Phone: " + a.phone);
         if (a.notes) lines.push("   Notes: " + a.notes);
+      } else if (data.drafts[p.id] && (data.drafts[p.id].result || data.drafts[p.id].who || data.drafts[p.id].email || data.drafts[p.id].phone || data.drafts[p.id].notes)) {
+        var d = data.drafts[p.id];
+        lines.push("   Not finished" + (d.result ? ": " + d.result : ""));
+        if (d.who)   lines.push("   Name: " + d.who);
+        if (d.email) lines.push("   Email: " + d.email);
+        if (d.phone) lines.push("   Phone: " + d.phone);
+        if (d.notes) lines.push("   Notes: " + d.notes);
       } else {
         lines.push("   Not called yet");
       }
