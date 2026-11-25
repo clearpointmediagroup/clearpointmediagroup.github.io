@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CPMG Cindy's Call List v1.2 (Nov 25, 2026, 12:54 AM ET). Revision log: v1.2 every field and every tap saves on her phone as she goes (moving field to field, typing, or leaving the page); unfinished answers are kept and included in the email. v1.1 (12:49 AM) PIN screen added (Randy's 4-digit PIN; remembered on her phone after the first time). v1.0 (12:27 AM) first version: 5 warm prospects, tap-to-call, form after each call, answers saved on the phone, Send to Randy by email. -->
+<!-- CPMG Cindy's Call List v2.0 (Nov 25, 2026, 1:37 AM ET), change card CC-386. Revision log: v2.0 working card list from the CPMG Cindy Calls Relay (Google Sheet): practice card, call backs for today, new calls, coming up; Save and close sends the answer to the relay (kept on the phone and re-sent if offline); No answer / Call back later schedules the next business day (or her day/time); email button removed. v1.2 (12:54 AM) autosave every field. v1.1 (12:49 AM) PIN screen. v1.0 (12:27 AM) first version. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -11,34 +11,36 @@
   :root{
     --bg:#0f2416; --card:#163220; --card2:#1c3d28; --line:#2f6a42;
     --text:#dff5e3; --soft:#a9d8b3; --green:#3cc163; --green-dark:#08210f;
-    --amber:#e2b54a; --red:#e07a6a; --input:#0b1d11;
+    --amber:#e2b54a; --input:#0b1d11;
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--text)}
   body{font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:1.45;padding:16px 16px 40px;max-width:640px;margin:0 auto}
   h1{font-size:30px;margin:4px 0 2px;color:var(--green)}
-  .sub{color:var(--soft);font-size:18px;margin:0 0 14px}
+  h2.sec{font-size:24px;color:var(--green);margin:22px 0 10px}
+  .sub{color:var(--soft);font-size:18px;margin:0 0 12px}
   .box{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 14px}
   .say h2{margin:0 0 8px;font-size:22px;color:var(--green)}
   .say ol{margin:0;padding-left:26px}
   .say li{margin:0 0 8px}
-  .say .small{font-size:17px;color:var(--soft);margin:8px 0 0}
+  .small{font-size:17px;color:var(--soft);margin:8px 0 0}
   details summary{cursor:pointer;font-weight:bold;color:var(--green);font-size:20px;list-style:none}
   details summary::-webkit-details-marker{display:none}
   details summary::before{content:"\25B8  "}
   details[open] summary::before{content:"\25BE  "}
   details ol{margin:10px 0 0;padding-left:26px}
-  .progress{display:flex;align-items:center;gap:12px;margin:0 0 14px}
-  .bar{flex:1;height:16px;background:var(--input);border:2px solid var(--line);border-radius:10px;overflow:hidden}
-  .bar i{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
-  .count{font-weight:bold;white-space:nowrap}
+  .count{font-weight:bold;font-size:22px;margin:0 0 6px}
+  #status{color:var(--amber);font-size:17px;min-height:0;margin:0 0 8px}
   .place{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 16px}
-  .place.done{border-color:var(--green)}
+  .place.test{border-style:dashed}
+  .place.callback{border-color:var(--amber)}
   .place h3{margin:0;font-size:23px}
-  .place .town{color:var(--soft);margin:2px 0 0}
-  .place .note{color:var(--amber);font-size:17px;margin:4px 0 10px}
-  .call{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;border-radius:14px;background:var(--green);color:var(--green-dark);font-weight:bold;font-size:23px;text-decoration:none;border:0}
+  .town{color:var(--soft);margin:2px 0 0}
+  .note{color:var(--amber);font-size:17px;margin:4px 0 0}
+  .tried{background:var(--card2);border-radius:10px;padding:8px 10px;margin:8px 0 0;font-size:18px}
+  .call{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;border-radius:14px;background:var(--green);color:var(--green-dark);font-weight:bold;font-size:23px;text-decoration:none;border:0;margin-top:10px}
   .call svg{width:26px;height:26px}
+  .tip{color:var(--soft);font-size:16px;margin:6px 0 0}
   .linkbtn{background:none;border:0;color:var(--soft);font-size:18px;text-decoration:underline;padding:10px 0 0;cursor:pointer}
   .form{display:none;margin-top:12px;border-top:2px dashed var(--line);padding-top:12px}
   .place.open .form{display:block}
@@ -46,25 +48,22 @@
   .chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
   .chip{min-height:54px;border-radius:12px;border:2px solid var(--line);background:var(--card2);color:var(--text);font-size:19px;font-weight:bold;cursor:pointer;padding:6px}
   .chip.on{background:var(--green);color:var(--green-dark);border-color:var(--green)}
+  .cb{display:none;background:var(--card2);border-radius:12px;padding:10px 12px;margin:0 0 6px}
+  .place.wantscb .cb{display:block}
   label{display:block;font-weight:bold;margin:10px 0 4px}
   label span{font-weight:normal;color:var(--soft);font-size:17px}
-  input,textarea{width:100%;font-size:20px;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--input);color:var(--text)}
+  input,textarea{width:100%;font-size:20px;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--input);color:var(--text);font-family:inherit}
+  input[type=date]{color-scheme:dark}
   input:focus,textarea:focus{outline:3px solid var(--green);border-color:var(--green)}
   textarea{min-height:70px;resize:vertical}
-  .warn{color:var(--amber);font-size:17px;margin:4px 0 0;min-height:0}
-  .auto{color:var(--soft);font-size:16px;margin:8px 0 0;text-align:center}
+  .warn{color:var(--amber);font-size:17px;margin:4px 0 0}
   .save{width:100%;min-height:58px;margin-top:14px;border-radius:14px;border:0;background:var(--green);color:var(--green-dark);font-size:22px;font-weight:bold;cursor:pointer}
-  .result{display:none;margin-top:12px;background:var(--card2);border-radius:12px;padding:10px 12px}
-  .place.done .result{display:block}
-  .place.done.open .result{display:none}
-  .result b{color:var(--green)}
-  .send{display:block;width:100%;min-height:66px;border-radius:16px;border:0;background:var(--green);color:var(--green-dark);font-size:24px;font-weight:bold;text-align:center;text-decoration:none;padding:18px 10px;cursor:pointer}
-  .sendnote{color:var(--soft);font-size:17px;margin:8px 0 0;text-align:center}
+  .auto{color:var(--soft);font-size:16px;margin:8px 0 0;text-align:center}
+  .empty{color:var(--soft);font-size:18px;margin:0 0 10px}
   footer{color:var(--soft);font-size:15px;text-align:center;margin-top:22px}
   body.locked > *:not(#lock){display:none!important}
   #lock{display:none;text-align:center;padding-top:12vh}
   body.locked #lock{display:block}
-  #lock h1{margin-bottom:6px}
   #pin{max-width:260px;margin:18px auto 0;display:block;text-align:center;font-size:34px;letter-spacing:10px}
   #pinGo{max-width:260px;margin:14px auto 0;display:block}
   #pinMsg{color:var(--amber);font-size:18px;min-height:26px;margin:10px 0 0}
@@ -77,22 +76,24 @@
     <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-label="PIN">
     <button id="pinGo" class="save" type="button">Open</button>
     <p id="pinMsg"></p>
+    <p class="small">Tip: in Chrome, tap the 3 dots, then "Add to Home screen," so this opens like an app.</p>
   </div>
 
   <h1>Cindy's Call List</h1>
-  <p class="sub">ClearPoint Media Group · 5 places to call</p>
+  <p class="count" id="count">Loading your list…</p>
+  <p id="status"></p>
 
   <div class="box">
     <details>
       <summary>How this page works</summary>
       <ol>
-        <li>Tap the green <b>Call</b> button. Your phone dials.</li>
-        <li>Say the 3 lines in the <b>Say this</b> box.</li>
-        <li>Hang up. Come back to this page. The form is open under that place.</li>
-        <li>Tap what happened, fill in the name and email, and tap <b>Save</b>.</li>
-        <li>When you're done, tap <b>Send my answers to Randy</b> at the bottom, then tap Send in your email.</li>
+        <li>Start at the top: call backs for today first, then new calls.</li>
+        <li>Tap <b>Call</b>. When you hang up, you come right back here and the form is open.</li>
+        <li>Tap what happened. Fill in the name and email if you got them. It saves as you type.</li>
+        <li>Tap <b>Save and close</b>. "Got it" and "No thanks" leave your list. "No answer" and "Call back later" come back at the top on the call-back day.</li>
+        <li>The practice card is a call to Randy. Saving it never removes it.</li>
       </ol>
-      <p class="sub" style="margin:10px 0 0">Your answers stay saved on this phone, even if you close the page.</p>
+      <p class="small">Tip: in Chrome, tap the 3 dots, then "Add to Home screen," so this opens like an app.</p>
     </details>
   </div>
 
@@ -103,175 +104,175 @@
       <li>"Can I get the name and email of whoever does your Facebook?"</li>
       <li>"Thank you!"</li>
     </ol>
-    <p class="small">If they say no: "OK, thanks!" · Voicemail: just hang up.<br>Best time: 4 to 6 PM our time (2 to 4 PM in Colorado). Skip Thanksgiving.</p>
+    <p class="small">If they say no: "OK, thanks!" · Voicemail: just hang up.<br>Best time: 4 to 6 PM our time (2 to 4 PM in Colorado).</p>
   </div>
-
-  <div class="progress"><div class="bar"><i id="barFill"></i></div><div class="count" id="count">0 of 5 done</div></div>
 
   <div id="list"></div>
 
-  <div class="box">
-    <a class="send" id="sendBtn" href="#">Send my answers to Randy</a>
-    <p class="sendnote">This opens your email with your answers filled in. Just tap Send.</p>
-  </div>
-
-  <footer>v1.2 · Nov 25, 2026 · 12:54 AM ET</footer>
+  <footer>v2.0 · Nov 25, 2026 · 1:37 AM ET</footer>
 
 <script>
 (function(){
-  var RANDY = "rt23952021@gmail.com";
-  var KEY = "cpmgCindyCalls.v1";
-  var PLACES = [
-    {id:"w2565",      name:"Warehouse25sixty-five Kitchen + Bar", town:"Grand Junction",   phone:"(970) 628-4321", tel:"+19706284321", note:"Opened the order form 4 times"},
-    {id:"latigo",     name:"Latigo Winery",                       town:"Colorado Springs", phone:"(719) 698-9854", tel:"+17196989854", note:"Opened the order form 4 times"},
-    {id:"highalpine", name:"High Alpine Brewing Company",         town:"Gunnison",         phone:"(970) 642-4500", tel:"+19706424500", note:"Looked at more samples 4 times"},
-    {id:"olddillon",  name:"The Old Dillon Inn",                  town:"Silverthorne",     phone:"(970) 485-6849", tel:"+19704856849", note:"Looked at more samples 3 times"},
-    {id:"99bar",      name:"99 Bar Saloon",                       town:"Longmont",         phone:"(720) 815-2875", tel:"+17208152875", note:"Looked at more samples 2 times"}
-  ];
-  var RESULTS = ["Got it","No thanks","Voicemail / no answer","Call back later"];
-
-  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
-  function store(d){ try { localStorage.setItem(KEY, JSON.stringify(d)); return true; } catch(e){ return false; } }
-  var data = load(); if (!data.answers) data.answers = {}; if (!data.drafts) data.drafts = {};
-
-  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  var RELAY = "https://script.google.com/macros/s/AKfycby0PTEO7t1uAM468vMgCg2_2xtnXlbgmR1q6ZXhMdS-5FMQl7r9stsXS6kK2EHNyhsghQ/exec";
+  var K = "aeec2fcd27fcd10651005209d0db55dd2a7d61ffe4ab7d8ea6c65a36fce950c1";
+  var STORE = "cpmgCindyCalls.v2";
+  var RESULTS = ["Got it", "No thanks", "No answer / voicemail", "Call back later"];
+  var CB = {"No answer / voicemail": true, "Call back later": true};
   var phoneSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>';
 
-  var list = document.getElementById("list");
-  PLACES.forEach(function(p, i){
-    var el = document.createElement("div");
-    el.className = "place"; el.id = "p-" + p.id;
-    el.innerHTML =
-      '<h3>' + (i+1) + '. ' + esc(p.name) + '</h3>' +
-      '<p class="town">' + esc(p.town) + ', Colorado</p>' +
-      '<p class="note">' + esc(p.note) + '</p>' +
-      '<a class="call" href="tel:' + p.tel + '" data-id="' + p.id + '">' + phoneSvg + 'Call ' + esc(p.phone) + '</a>' +
-      '<div class="result"></div>' +
-      '<button class="linkbtn" type="button" data-open="' + p.id + '">Fill in the form</button>' +
+  function load(){ try { return JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch(e){ return {}; } }
+  var st = load();
+  st.drafts = st.drafts || {}; st.outbox = st.outbox || []; st.list = st.list || null;
+  function save(){ try { localStorage.setItem(STORE, JSON.stringify(st)); } catch(e){} }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function setStatus(t){ document.getElementById("status").textContent = t || ""; }
+  function niceDay(ymd){ if (!ymd) return ""; var p = String(ymd).split("-").map(Number); var d = new Date(p[0], p[1]-1, p[2]); return d.toLocaleDateString("en-US", {weekday:"short", month:"short", day:"numeric"}); }
+
+  // Cards she already saved but the relay hasn't confirmed: keep them off "today" locally.
+  function pendingIds(){ var m = {}; st.outbox.forEach(function(o){ m[o.id] = o; }); return m; }
+
+  function render(){
+    var list = document.getElementById("list");
+    var data = st.list;
+    if (!data){ list.innerHTML = '<p class="empty">Loading…</p>'; return; }
+    var pend = pendingIds();
+    var groups = {test:[], callback:[], "new":[], later:[]};
+    data.cards.forEach(function(c){
+      var sec = c.section;
+      var p = pend[c.id];
+      if (p && !c.test){
+        if (CB[p.result]) sec = "later"; else return;   // closed locally, waiting to send
+      }
+      (groups[sec] || groups["new"]).push(c);
+    });
+    var nCb = groups.callback.length, nNew = groups["new"].length;
+    document.getElementById("count").textContent = "Today: " + nCb + " call back" + (nCb === 1 ? "" : "s") + ", " + nNew + " new";
+    var html = "";
+    if (groups.test.length) html += '<h2 class="sec">Practice card</h2>' + groups.test.map(card).join("");
+    html += '<h2 class="sec">Call backs for today</h2>' + (nCb ? groups.callback.map(card).join("") : '<p class="empty">No call backs today.</p>');
+    html += '<h2 class="sec">New calls</h2>' + (nNew ? groups["new"].map(card).join("") : '<p class="empty">No new calls right now.</p>');
+    if (groups.later.length) html += '<details class="box"><summary>Coming up (' + groups.later.length + ')</summary><div style="margin-top:12px">' + groups.later.map(card).join("") + '</div></details>';
+    list.innerHTML = html;
+    data.cards.forEach(function(c){ var el = document.getElementById("c-" + c.id); if (el) fill(el, c); });
+    if (st.openId) openForm(st.openId, false);
+  }
+
+  function card(c){
+    var tried = c.last_try ? '<div class="tried">Tried: ' + esc(c.last_try) + (c.callback_on ? '<br>Call back: ' + esc(niceDay(c.callback_on)) + (c.callback_time ? ', ' + esc(c.callback_time) : '') : '') + '</div>' : '';
+    var p = pendingIds()[c.id];
+    if (p && CB[p.result] && !c.test) tried = '<div class="tried">Saved on this phone: ' + esc(p.result) + ', call back ' + esc(niceDay(p.callbackOn)) + '</div>';
+    var tel = String(c.tel || "").replace(/[^0-9]/g, "");
+    return '<div class="place ' + esc(c.section) + '" id="c-' + esc(c.id) + '" data-id="' + esc(c.id) + '">' +
+      '<h3>' + esc(c.name) + '</h3>' +
+      '<p class="town">' + esc(c.town) + (c.test ? '' : ', Colorado') + '</p>' +
+      (c.why ? '<p class="note">' + esc(c.why) + '</p>' : '') +
+      (c.randy_note ? '<p class="note">Note from Randy: ' + esc(c.randy_note) + '</p>' : '') +
+      tried +
+      '<a class="call" href="tel:+' + tel + '" data-call="' + esc(c.id) + '">' + phoneSvg + 'Call ' + esc(c.phone) + '</a>' +
+      '<p class="tip">When you hang up, you\'ll come right back here. You can also tap Back during the call to fill this in while you talk.</p>' +
+      '<button class="linkbtn" type="button" data-open="' + esc(c.id) + '">Fill in the form</button>' +
       '<div class="form">' +
         '<p class="q">What happened?</p>' +
         '<div class="chips">' + RESULTS.map(function(r){ return '<button type="button" class="chip" data-r="' + esc(r) + '">' + esc(r) + '</button>'; }).join("") + '</div>' +
+        '<div class="cb"><label>Call back on<input type="date" data-f="callbackOn"></label><label>Time they said <span>(optional)</span><input type="text" data-f="callbackTime" placeholder="like: after 2 PM"></label></div>' +
         '<label>Name <span>(who does their Facebook)</span><input type="text" autocomplete="off" autocapitalize="words" data-f="who"></label>' +
         '<label>Email<input type="email" inputmode="email" autocomplete="off" autocapitalize="none" spellcheck="false" data-f="email"></label>' +
         '<p class="warn" data-warn></p>' +
         '<label>Phone <span>(only if they give one)</span><input type="tel" inputmode="tel" autocomplete="off" data-f="phone"></label>' +
         '<label>Notes <span>(optional)</span><textarea data-f="notes"></textarea></label>' +
-        '<button type="button" class="save">Save</button>' +
+        '<button type="button" class="save">Save and close</button>' +
         '<p class="auto">Everything you type saves on this phone as you go.</p>' +
-      '</div>';
-    list.appendChild(el);
-    fill(el, p.id);
-  });
-
-  function fill(el, id){
-    var a = Object.assign({}, data.answers[id] || {}, data.drafts[id] || {});
-    el.querySelectorAll("[data-f]").forEach(function(inp){ inp.value = a[inp.getAttribute("data-f")] || ""; });
-    el.querySelectorAll(".chip").forEach(function(c){ c.classList.toggle("on", c.getAttribute("data-r") === a.result); });
-    showResult(el, id);
+      '</div></div>';
   }
 
-  function showResult(el, id){
-    var a = data.answers[id];
-    var done = !!(a && a.saved);
-    el.classList.toggle("done", done);
-    var r = el.querySelector(".result");
-    if (done){
-      var bits = [];
-      if (a.who) bits.push(esc(a.who));
-      if (a.email) bits.push(esc(a.email));
-      if (a.phone) bits.push(esc(a.phone));
-      r.innerHTML = '<b>Saved: ' + esc(a.result || "Done") + '</b>' + (bits.length ? '<br>' + bits.join('<br>') : '');
-      el.querySelector("[data-open]").textContent = "Change my answer";
-    } else {
-      r.innerHTML = "";
-      el.querySelector("[data-open]").textContent = "Fill in the form";
-    }
+  function fill(el, c){
+    var d = st.drafts[c.id] || {};
+    var next = (st.list && st.list.nextBusinessDay) || "";
+    el.querySelectorAll("[data-f]").forEach(function(inp){
+      var f = inp.getAttribute("data-f");
+      inp.value = d[f] != null ? d[f] : (f === "callbackOn" ? next : "");
+      if (f === "callbackOn" && st.list && st.list.today) inp.min = st.list.today;
+    });
+    el.querySelectorAll(".chip").forEach(function(ch){ ch.classList.toggle("on", ch.getAttribute("data-r") === d.result); });
+    el.classList.toggle("wantscb", !!CB[d.result]);
   }
 
   function openForm(id, scroll){
-    var el = document.getElementById("p-" + id);
-    if (!el) return;
-    el.classList.add("open");
+    var el = document.getElementById("c-" + id); if (!el) return;
+    el.classList.add("open"); st.openId = id; save();
     if (scroll) el.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
-  list.addEventListener("click", function(e){
-    var call = e.target.closest(".call");
-    if (call){ data.lastCalled = call.getAttribute("data-id"); store(data); openForm(data.lastCalled, false); return; }
-    var op = e.target.closest("[data-open]");
-    if (op){ var el0 = document.getElementById("p-" + op.getAttribute("data-open")); if (el0.classList.contains("open")) el0.classList.remove("open"); else openForm(op.getAttribute("data-open"), false); return; }
-    var chip = e.target.closest(".chip");
-    if (chip){ var box = chip.closest(".chips"); box.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("on"); }); chip.classList.add("on"); draft(chip.closest(".place").id.slice(2), "result", chip.getAttribute("data-r")); return; }
-    var save = e.target.closest(".save");
-    if (save){
-      var el = save.closest(".place"); var id = el.id.slice(2);
-      var a = {saved:true, at:new Date().toISOString()};
-      var on = el.querySelector(".chip.on"); a.result = on ? on.getAttribute("data-r") : "";
-      el.querySelectorAll("[data-f]").forEach(function(inp){ a[inp.getAttribute("data-f")] = inp.value.trim(); });
-      var warn = el.querySelector("[data-warn]");
-      if (a.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)){ warn.textContent = "Check the email. It needs an @ and a dot, like name@place.com."; return; }
-      if (!a.result && !a.who && !a.email){ warn.textContent = "Tap what happened first."; return; }
-      if (!a.result) a.result = "Got it";
-      warn.textContent = "";
-      data.answers[id] = a; delete data.drafts[id]; if (data.lastCalled === id) data.lastCalled = null;
-      var ok = store(data);
-      el.classList.remove("open"); showResult(el, id); update();
-      if (!ok) alertBox("This phone could not save it. Tap Send my answers to Randy now so nothing is lost.");
-      var next = PLACES.find(function(p){ return !(data.answers[p.id] && data.answers[p.id].saved); });
-      if (next) document.getElementById("p-" + next.id).scrollIntoView({behavior:"smooth", block:"start"});
-      else document.getElementById("sendBtn").scrollIntoView({behavior:"smooth", block:"center"});
-    }
-  });
+  function draft(id, k, v){ if (!st.drafts[id]) st.drafts[id] = {}; if (st.drafts[id][k] === v) return; st.drafts[id][k] = v; save(); }
 
-  function draft(id, k, v){ if (!data.drafts[id]) data.drafts[id] = {}; if (data.drafts[id][k] === v) return; data.drafts[id][k] = v; store(data); update(); }
-  function fieldSave(e){ var f = e.target && e.target.getAttribute && e.target.getAttribute("data-f"); if (!f) return; draft(e.target.closest(".place").id.slice(2), f, e.target.value); }
+  var list = document.getElementById("list");
+  list.addEventListener("click", function(e){
+    var call = e.target.closest("[data-call]");
+    if (call){ st.lastCalled = call.getAttribute("data-call"); save(); openForm(st.lastCalled, false); return; }
+    var op = e.target.closest("[data-open]");
+    if (op){ var el0 = document.getElementById("c-" + op.getAttribute("data-open")); if (el0.classList.contains("open")){ el0.classList.remove("open"); st.openId = null; save(); } else openForm(op.getAttribute("data-open"), false); return; }
+    var chip = e.target.closest(".chip");
+    if (chip){
+      var el = chip.closest(".place"), id = el.getAttribute("data-id"), r = chip.getAttribute("data-r");
+      el.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("on"); }); chip.classList.add("on");
+      draft(id, "result", r); el.classList.toggle("wantscb", !!CB[r]); return;
+    }
+    var sv = e.target.closest(".save");
+    if (sv){ doSave(sv.closest(".place")); }
+  });
+  function fieldSave(e){ var f = e.target && e.target.getAttribute && e.target.getAttribute("data-f"); if (!f) return; var el = e.target.closest(".place"); if (el) draft(el.getAttribute("data-id"), f, e.target.value); }
   list.addEventListener("input", fieldSave);
   list.addEventListener("change", fieldSave);
   list.addEventListener("focusout", fieldSave);
   window.addEventListener("pagehide", function(){ var f = document.activeElement; if (f && f.getAttribute && f.getAttribute("data-f")) fieldSave({target:f}); });
 
-  function alertBox(msg){ var w = document.createElement("p"); w.className = "warn"; w.style.textAlign = "center"; w.textContent = msg; document.getElementById("sendBtn").parentNode.appendChild(w); }
-
-  function update(){
-    var n = PLACES.filter(function(p){ return data.answers[p.id] && data.answers[p.id].saved; }).length;
-    document.getElementById("count").textContent = n + " of " + PLACES.length + " done";
-    document.getElementById("barFill").style.width = Math.round(100 * n / PLACES.length) + "%";
-    document.getElementById("sendBtn").href = mailto();
+  function doSave(el){
+    var id = el.getAttribute("data-id"), d = st.drafts[id] || {};
+    el.querySelectorAll("[data-f]").forEach(function(inp){ d[inp.getAttribute("data-f")] = inp.value.trim(); });
+    var warn = el.querySelector("[data-warn]");
+    if (!d.result){ warn.textContent = "Tap what happened first."; return; }
+    if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){ warn.textContent = "Check the email. It needs an @ and a dot, like name@place.com."; return; }
+    warn.textContent = "";
+    var item = {action:"save", k:K, id:id, result:d.result, who:d.who || "", email:d.email || "", phone:d.phone || "", notes:d.notes || "",
+      callbackOn: CB[d.result] ? (d.callbackOn || st.list.nextBusinessDay || "") : "", callbackTime: CB[d.result] ? (d.callbackTime || "") : "", savedAt:new Date().toISOString()};
+    st.outbox.push(item); delete st.drafts[id]; st.openId = null; if (st.lastCalled === id) st.lastCalled = null; save();
+    setStatus("Saving…");
+    render(); flush();
   }
 
-  function mailto(){
-    var lines = ["Here's what I got from my calls:", ""];
-    PLACES.forEach(function(p, i){
-      var a = data.answers[p.id];
-      lines.push((i+1) + ". " + p.name + " (" + p.town + ")");
-      if (a && a.saved){
-        lines.push("   " + (a.result || "Done"));
-        if (a.who)   lines.push("   Name: " + a.who);
-        if (a.email) lines.push("   Email: " + a.email);
-        if (a.phone) lines.push("   Phone: " + a.phone);
-        if (a.notes) lines.push("   Notes: " + a.notes);
-      } else if (data.drafts[p.id] && (data.drafts[p.id].result || data.drafts[p.id].who || data.drafts[p.id].email || data.drafts[p.id].phone || data.drafts[p.id].notes)) {
-        var d = data.drafts[p.id];
-        lines.push("   Not finished" + (d.result ? ": " + d.result : ""));
-        if (d.who)   lines.push("   Name: " + d.who);
-        if (d.email) lines.push("   Email: " + d.email);
-        if (d.phone) lines.push("   Phone: " + d.phone);
-        if (d.notes) lines.push("   Notes: " + d.notes);
-      } else {
-        lines.push("   Not called yet");
-      }
-      lines.push("");
-    });
-    lines.push("Cindy");
-    return "mailto:" + RANDY + "?subject=" + encodeURIComponent("Cindy's call answers") + "&body=" + encodeURIComponent(lines.join("\n"));
+  var flushing = false;
+  function flush(){
+    if (flushing || !st.outbox.length) return;
+    flushing = true;
+    var item = st.outbox[0];
+    fetch(RELAY, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(item)})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        flushing = false;
+        if (j && j.ok){ st.outbox.shift(); save(); setStatus(st.outbox.length ? "Sending saved answers…" : "Saved."); if (st.outbox.length) flush(); else refresh(); }
+        else if (j && j.error === "card not found"){ st.outbox.shift(); save(); setStatus("That card was already gone from the list."); refresh(); }
+        else { setStatus("Saved on this phone. It will send when the list answers."); }
+      })
+      .catch(function(){ flushing = false; setStatus("Saved on this phone. It will send when you're back online."); });
+  }
+
+  function refresh(){
+    fetch(RELAY + "?action=list&k=" + K + "&t=" + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if (!j || !j.ok) throw new Error("bad");
+        st.list = j; save(); render();
+      })
+      .catch(function(){ if (st.list){ render(); setStatus("Can't reach the list right now. Showing your last copy."); } else { document.getElementById("count").textContent = "Can't reach the list right now."; setStatus("Check your internet and pull down to refresh."); } });
   }
 
   document.addEventListener("visibilitychange", function(){
-    if (document.visibilityState === "visible" && data.lastCalled) openForm(data.lastCalled, true);
+    if (document.visibilityState === "visible"){ if (st.lastCalled) openForm(st.lastCalled, true); flush(); }
   });
-  window.addEventListener("pageshow", function(){ if (data.lastCalled) openForm(data.lastCalled, true); });
+  window.addEventListener("online", flush);
+  setInterval(flush, 30000);
 
-  update();
+  render(); refresh(); flush();
 })();
 </script>
 <script>
