@@ -1,0 +1,247 @@
+<!doctype html>
+<!-- CPMG Cindy's Call List v1.0 (Nov 25, 2026, 12:27 AM ET). Revision log: v1.0 first version: 5 warm prospects, tap-to-call, form after each call, answers saved on the phone, Send to Randy by email. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f2416">
+<meta name="robots" content="noindex">
+<title>Cindy's Call List</title>
+<style>
+  :root{
+    --bg:#0f2416; --card:#163220; --card2:#1c3d28; --line:#2f6a42;
+    --text:#dff5e3; --soft:#a9d8b3; --green:#3cc163; --green-dark:#08210f;
+    --amber:#e2b54a; --red:#e07a6a; --input:#0b1d11;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text)}
+  body{font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:1.45;padding:16px 16px 40px;max-width:640px;margin:0 auto}
+  h1{font-size:30px;margin:4px 0 2px;color:var(--green)}
+  .sub{color:var(--soft);font-size:18px;margin:0 0 14px}
+  .box{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 14px}
+  .say h2{margin:0 0 8px;font-size:22px;color:var(--green)}
+  .say ol{margin:0;padding-left:26px}
+  .say li{margin:0 0 8px}
+  .say .small{font-size:17px;color:var(--soft);margin:8px 0 0}
+  details summary{cursor:pointer;font-weight:bold;color:var(--green);font-size:20px;list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  details ol{margin:10px 0 0;padding-left:26px}
+  .progress{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+  .bar{flex:1;height:16px;background:var(--input);border:2px solid var(--line);border-radius:10px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+  .count{font-weight:bold;white-space:nowrap}
+  .place{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 16px}
+  .place.done{border-color:var(--green)}
+  .place h3{margin:0;font-size:23px}
+  .place .town{color:var(--soft);margin:2px 0 0}
+  .place .note{color:var(--amber);font-size:17px;margin:4px 0 10px}
+  .call{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;border-radius:14px;background:var(--green);color:var(--green-dark);font-weight:bold;font-size:23px;text-decoration:none;border:0}
+  .call svg{width:26px;height:26px}
+  .linkbtn{background:none;border:0;color:var(--soft);font-size:18px;text-decoration:underline;padding:10px 0 0;cursor:pointer}
+  .form{display:none;margin-top:12px;border-top:2px dashed var(--line);padding-top:12px}
+  .place.open .form{display:block}
+  .q{font-weight:bold;margin:0 0 8px}
+  .chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+  .chip{min-height:54px;border-radius:12px;border:2px solid var(--line);background:var(--card2);color:var(--text);font-size:19px;font-weight:bold;cursor:pointer;padding:6px}
+  .chip.on{background:var(--green);color:var(--green-dark);border-color:var(--green)}
+  label{display:block;font-weight:bold;margin:10px 0 4px}
+  label span{font-weight:normal;color:var(--soft);font-size:17px}
+  input,textarea{width:100%;font-size:20px;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--input);color:var(--text)}
+  input:focus,textarea:focus{outline:3px solid var(--green);border-color:var(--green)}
+  textarea{min-height:70px;resize:vertical}
+  .warn{color:var(--amber);font-size:17px;margin:4px 0 0;min-height:0}
+  .save{width:100%;min-height:58px;margin-top:14px;border-radius:14px;border:0;background:var(--green);color:var(--green-dark);font-size:22px;font-weight:bold;cursor:pointer}
+  .result{display:none;margin-top:12px;background:var(--card2);border-radius:12px;padding:10px 12px}
+  .place.done .result{display:block}
+  .place.done.open .result{display:none}
+  .result b{color:var(--green)}
+  .send{display:block;width:100%;min-height:66px;border-radius:16px;border:0;background:var(--green);color:var(--green-dark);font-size:24px;font-weight:bold;text-align:center;text-decoration:none;padding:18px 10px;cursor:pointer}
+  .sendnote{color:var(--soft);font-size:17px;margin:8px 0 0;text-align:center}
+  footer{color:var(--soft);font-size:15px;text-align:center;margin-top:22px}
+</style>
+</head>
+<body>
+  <h1>Cindy's Call List</h1>
+  <p class="sub">ClearPoint Media Group · 5 places to call</p>
+
+  <div class="box">
+    <details>
+      <summary>How this page works</summary>
+      <ol>
+        <li>Tap the green <b>Call</b> button. Your phone dials.</li>
+        <li>Say the 3 lines in the <b>Say this</b> box.</li>
+        <li>Hang up. Come back to this page. The form is open under that place.</li>
+        <li>Tap what happened, fill in the name and email, and tap <b>Save</b>.</li>
+        <li>When you're done, tap <b>Send my answers to Randy</b> at the bottom, then tap Send in your email.</li>
+      </ol>
+      <p class="sub" style="margin:10px 0 0">Your answers stay saved on this phone, even if you close the page.</p>
+    </details>
+  </div>
+
+  <div class="box say">
+    <h2>Say this</h2>
+    <ol>
+      <li>"Hi, I'm Cindy with ClearPoint Media. Randy sent you some free pictures."</li>
+      <li>"Can I get the name and email of whoever does your Facebook?"</li>
+      <li>"Thank you!"</li>
+    </ol>
+    <p class="small">If they say no: "OK, thanks!" · Voicemail: just hang up.<br>Best time: 4 to 6 PM our time (2 to 4 PM in Colorado). Skip Thanksgiving.</p>
+  </div>
+
+  <div class="progress"><div class="bar"><i id="barFill"></i></div><div class="count" id="count">0 of 5 done</div></div>
+
+  <div id="list"></div>
+
+  <div class="box">
+    <a class="send" id="sendBtn" href="#">Send my answers to Randy</a>
+    <p class="sendnote">This opens your email with your answers filled in. Just tap Send.</p>
+  </div>
+
+  <footer>v1.0 · Nov 25, 2026 · 12:27 AM ET</footer>
+
+<script>
+(function(){
+  var RANDY = "rt23952021@gmail.com";
+  var KEY = "cpmgCindyCalls.v1";
+  var PLACES = [
+    {id:"w2565",      name:"Warehouse25sixty-five Kitchen + Bar", town:"Grand Junction",   phone:"(970) 628-4321", tel:"+19706284321", note:"Opened the order form 4 times"},
+    {id:"latigo",     name:"Latigo Winery",                       town:"Colorado Springs", phone:"(719) 698-9854", tel:"+17196989854", note:"Opened the order form 4 times"},
+    {id:"highalpine", name:"High Alpine Brewing Company",         town:"Gunnison",         phone:"(970) 642-4500", tel:"+19706424500", note:"Looked at more samples 4 times"},
+    {id:"olddillon",  name:"The Old Dillon Inn",                  town:"Silverthorne",     phone:"(970) 485-6849", tel:"+19704856849", note:"Looked at more samples 3 times"},
+    {id:"99bar",      name:"99 Bar Saloon",                       town:"Longmont",         phone:"(720) 815-2875", tel:"+17208152875", note:"Looked at more samples 2 times"}
+  ];
+  var RESULTS = ["Got it","No thanks","Voicemail / no answer","Call back later"];
+
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function store(d){ try { localStorage.setItem(KEY, JSON.stringify(d)); return true; } catch(e){ return false; } }
+  var data = load(); if (!data.answers) data.answers = {};
+
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  var phoneSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>';
+
+  var list = document.getElementById("list");
+  PLACES.forEach(function(p, i){
+    var el = document.createElement("div");
+    el.className = "place"; el.id = "p-" + p.id;
+    el.innerHTML =
+      '<h3>' + (i+1) + '. ' + esc(p.name) + '</h3>' +
+      '<p class="town">' + esc(p.town) + ', Colorado</p>' +
+      '<p class="note">' + esc(p.note) + '</p>' +
+      '<a class="call" href="tel:' + p.tel + '" data-id="' + p.id + '">' + phoneSvg + 'Call ' + esc(p.phone) + '</a>' +
+      '<div class="result"></div>' +
+      '<button class="linkbtn" type="button" data-open="' + p.id + '">Fill in the form</button>' +
+      '<div class="form">' +
+        '<p class="q">What happened?</p>' +
+        '<div class="chips">' + RESULTS.map(function(r){ return '<button type="button" class="chip" data-r="' + esc(r) + '">' + esc(r) + '</button>'; }).join("") + '</div>' +
+        '<label>Name <span>(who does their Facebook)</span><input type="text" autocomplete="off" autocapitalize="words" data-f="who"></label>' +
+        '<label>Email<input type="email" inputmode="email" autocomplete="off" autocapitalize="none" spellcheck="false" data-f="email"></label>' +
+        '<p class="warn" data-warn></p>' +
+        '<label>Phone <span>(only if they give one)</span><input type="tel" inputmode="tel" autocomplete="off" data-f="phone"></label>' +
+        '<label>Notes <span>(optional)</span><textarea data-f="notes"></textarea></label>' +
+        '<button type="button" class="save">Save</button>' +
+      '</div>';
+    list.appendChild(el);
+    fill(el, p.id);
+  });
+
+  function fill(el, id){
+    var a = data.answers[id] || {};
+    el.querySelectorAll("[data-f]").forEach(function(inp){ inp.value = a[inp.getAttribute("data-f")] || ""; });
+    el.querySelectorAll(".chip").forEach(function(c){ c.classList.toggle("on", c.getAttribute("data-r") === a.result); });
+    showResult(el, id);
+  }
+
+  function showResult(el, id){
+    var a = data.answers[id];
+    var done = !!(a && a.saved);
+    el.classList.toggle("done", done);
+    var r = el.querySelector(".result");
+    if (done){
+      var bits = [];
+      if (a.who) bits.push(esc(a.who));
+      if (a.email) bits.push(esc(a.email));
+      if (a.phone) bits.push(esc(a.phone));
+      r.innerHTML = '<b>Saved: ' + esc(a.result || "Done") + '</b>' + (bits.length ? '<br>' + bits.join('<br>') : '');
+      el.querySelector("[data-open]").textContent = "Change my answer";
+    } else {
+      r.innerHTML = "";
+      el.querySelector("[data-open]").textContent = "Fill in the form";
+    }
+  }
+
+  function openForm(id, scroll){
+    var el = document.getElementById("p-" + id);
+    if (!el) return;
+    el.classList.add("open");
+    if (scroll) el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  list.addEventListener("click", function(e){
+    var call = e.target.closest(".call");
+    if (call){ data.lastCalled = call.getAttribute("data-id"); store(data); openForm(data.lastCalled, false); return; }
+    var op = e.target.closest("[data-open]");
+    if (op){ var el0 = document.getElementById("p-" + op.getAttribute("data-open")); if (el0.classList.contains("open")) el0.classList.remove("open"); else openForm(op.getAttribute("data-open"), false); return; }
+    var chip = e.target.closest(".chip");
+    if (chip){ var box = chip.closest(".chips"); box.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("on"); }); chip.classList.add("on"); return; }
+    var save = e.target.closest(".save");
+    if (save){
+      var el = save.closest(".place"); var id = el.id.slice(2);
+      var a = {saved:true, at:new Date().toISOString()};
+      var on = el.querySelector(".chip.on"); a.result = on ? on.getAttribute("data-r") : "";
+      el.querySelectorAll("[data-f]").forEach(function(inp){ a[inp.getAttribute("data-f")] = inp.value.trim(); });
+      var warn = el.querySelector("[data-warn]");
+      if (a.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)){ warn.textContent = "Check the email. It needs an @ and a dot, like name@place.com."; return; }
+      if (!a.result && !a.who && !a.email){ warn.textContent = "Tap what happened first."; return; }
+      if (!a.result) a.result = "Got it";
+      warn.textContent = "";
+      data.answers[id] = a; if (data.lastCalled === id) data.lastCalled = null;
+      var ok = store(data);
+      el.classList.remove("open"); showResult(el, id); update();
+      if (!ok) alertBox("This phone could not save it. Tap Send my answers to Randy now so nothing is lost.");
+      var next = PLACES.find(function(p){ return !(data.answers[p.id] && data.answers[p.id].saved); });
+      if (next) document.getElementById("p-" + next.id).scrollIntoView({behavior:"smooth", block:"start"});
+      else document.getElementById("sendBtn").scrollIntoView({behavior:"smooth", block:"center"});
+    }
+  });
+
+  function alertBox(msg){ var w = document.createElement("p"); w.className = "warn"; w.style.textAlign = "center"; w.textContent = msg; document.getElementById("sendBtn").parentNode.appendChild(w); }
+
+  function update(){
+    var n = PLACES.filter(function(p){ return data.answers[p.id] && data.answers[p.id].saved; }).length;
+    document.getElementById("count").textContent = n + " of " + PLACES.length + " done";
+    document.getElementById("barFill").style.width = Math.round(100 * n / PLACES.length) + "%";
+    document.getElementById("sendBtn").href = mailto();
+  }
+
+  function mailto(){
+    var lines = ["Here's what I got from my calls:", ""];
+    PLACES.forEach(function(p, i){
+      var a = data.answers[p.id];
+      lines.push((i+1) + ". " + p.name + " (" + p.town + ")");
+      if (a && a.saved){
+        lines.push("   " + (a.result || "Done"));
+        if (a.who)   lines.push("   Name: " + a.who);
+        if (a.email) lines.push("   Email: " + a.email);
+        if (a.phone) lines.push("   Phone: " + a.phone);
+        if (a.notes) lines.push("   Notes: " + a.notes);
+      } else {
+        lines.push("   Not called yet");
+      }
+      lines.push("");
+    });
+    lines.push("Cindy");
+    return "mailto:" + RANDY + "?subject=" + encodeURIComponent("Cindy's call answers") + "&body=" + encodeURIComponent(lines.join("\n"));
+  }
+
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "visible" && data.lastCalled) openForm(data.lastCalled, true);
+  });
+  window.addEventListener("pageshow", function(){ if (data.lastCalled) openForm(data.lastCalled, true); });
+
+  update();
+})();
+</script>
+</body>
+</html>
