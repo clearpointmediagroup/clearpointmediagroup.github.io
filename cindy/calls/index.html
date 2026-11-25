@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CPMG Cindy's Call List v1.0 (Nov 25, 2026, 12:27 AM ET). Revision log: v1.0 first version: 5 warm prospects, tap-to-call, form after each call, answers saved on the phone, Send to Randy by email. -->
+<!-- CPMG Cindy's Call List v1.1 (Nov 25, 2026, 12:49 AM ET). Revision log: v1.1 PIN screen added (Randy's 4-digit PIN; remembered on her phone after the first time). v1.0 (12:27 AM) first version: 5 warm prospects, tap-to-call, form after each call, answers saved on the phone, Send to Randy by email. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -60,9 +60,24 @@
   .send{display:block;width:100%;min-height:66px;border-radius:16px;border:0;background:var(--green);color:var(--green-dark);font-size:24px;font-weight:bold;text-align:center;text-decoration:none;padding:18px 10px;cursor:pointer}
   .sendnote{color:var(--soft);font-size:17px;margin:8px 0 0;text-align:center}
   footer{color:var(--soft);font-size:15px;text-align:center;margin-top:22px}
+  body.locked > *:not(#lock){display:none!important}
+  #lock{display:none;text-align:center;padding-top:12vh}
+  body.locked #lock{display:block}
+  #lock h1{margin-bottom:6px}
+  #pin{max-width:260px;margin:18px auto 0;display:block;text-align:center;font-size:34px;letter-spacing:10px}
+  #pinGo{max-width:260px;margin:14px auto 0;display:block}
+  #pinMsg{color:var(--amber);font-size:18px;min-height:26px;margin:10px 0 0}
 </style>
 </head>
-<body>
+<body class="locked">
+  <div id="lock">
+    <h1>Cindy's Call List</h1>
+    <p class="sub">Enter the PIN to open</p>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-label="PIN">
+    <button id="pinGo" class="save" type="button">Open</button>
+    <p id="pinMsg"></p>
+  </div>
+
   <h1>Cindy's Call List</h1>
   <p class="sub">ClearPoint Media Group · 5 places to call</p>
 
@@ -99,7 +114,7 @@
     <p class="sendnote">This opens your email with your answers filled in. Just tap Send.</p>
   </div>
 
-  <footer>v1.0 · Nov 25, 2026 · 12:27 AM ET</footer>
+  <footer>v1.1 · Nov 25, 2026 · 12:49 AM ET</footer>
 
 <script>
 (function(){
@@ -241,6 +256,24 @@
   window.addEventListener("pageshow", function(){ if (data.lastCalled) openForm(data.lastCalled, true); });
 
   update();
+})();
+</script>
+<script>
+(function(){
+  var H = "aeec2fcd27fcd10651005209d0db55dd2a7d61ffe4ab7d8ea6c65a36fce950c1", K = "cpmgCindyCalls.pin";
+  function unlock(){ document.body.classList.remove("locked"); }
+  try { if (localStorage.getItem(K) === H) unlock(); } catch(e){}
+  var pin = document.getElementById("pin"), msg = document.getElementById("pinMsg");
+  function hex(buf){ return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2, "0"); }).join(""); }
+  function check(){
+    var v = pin.value.trim(); if (!v) return;
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(v)).then(function(d){
+      if (hex(d) === H){ try { localStorage.setItem(K, H); } catch(e){} msg.textContent = ""; unlock(); window.scrollTo(0, 0); }
+      else { msg.textContent = "That PIN isn't right. Try again."; pin.value = ""; pin.focus(); }
+    });
+  }
+  document.getElementById("pinGo").addEventListener("click", check);
+  pin.addEventListener("keydown", function(e){ if (e.key === "Enter") check(); });
 })();
 </script>
 </body>
