@@ -2,7 +2,7 @@
 # v2.15-TEST (Nov 19, 2026, 5:50 AM) CC-203 (Randy approved Nov 19, 2026): real estate, insurance and business (Any other business) get the SHORT 3-step form (simple=True), so every business type on the /order/ chooser opens a short form. New pack key sholn = how many step 1 choices are holiday ones (default 4). Real estate: 6 choices of its own, no holiday block (Just listed, Open house, Just sold, Price drop, Coming soon, Something else). Insurance: 2 holiday + 4 everyday. Business: the 4 holiday + Hours, Special, Event, Something else. New HOW_SHORT: the "How this works" words for short forms (3 steps; Phone, TV or both). Long-form packs keep HOW. Prices, hours and how orders are sent: unchanged.
 # v2.14-TEST (Nov 16, 2026, 5:49 AM) CC-157 (Randy approved by 5:12 AM): hours are noon to 10 p.m. Eastern (10 a.m. to 8 p.m. Mountain). Intro promise now says: order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day.
 # v2.13-TEST (Nov 15, 2026, 11:46 PM) CC-148: $25 covers phone + TV; first order $0. Price math is in test/order/index.html; pack wording already says $25 each and first one free.
-# v2.12-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: the 9 Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant) get simple=True: the SHORT 3-step form (body class "simple"). Title says "Order a picture for your ...". New skinds = the 8 one-tap choices for step 1 "What do you need?": the 4 holiday choices first (CC-143: Thanksgiving week hours, Black Friday / Small Business Saturday, Holiday gift cards, Holiday event), then 4 everyday ones (Hours, Special, Event, Something else; cabin says Open dates; a pack keeps its own better words, like brewery Happy hour). Each choice has a short gray example for the step 2 box. Restaurant splace = the Special example by kind of place (?place=Pizza). Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28. Other packs unchanged.
+# v2.12-TEST (Nov 15, 2026, 11:07 PM) CC-144 + CC-143: the 9 Colorado packs (brewery, cafe, outfitter, cabin, gift, spa, music, ski-bike, restaurant) get simple=True: the SHORT 3-step form (body class "simple"). Title says "Order a picture for your ...". New skinds = the 8 one-tap choices for step 1 "What do you need?": the 4 holiday choices first (CC-143: Christmas and New Year's hours, Christmas special, Holiday gift cards, Holiday event), then 4 everyday ones (Hours, Special, Event, Something else; cabin says Open dates; a pack keeps its own better words, like brewery Happy hour). Each choice has a short gray example for the step 2 box. Restaurant splace = the Special example by kind of place (?place=Pizza). Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28. Other packs unchanged.
 # v2.11-TEST (Nov 15, 2026, 10:15 PM) CC-142: intro promise now says order by 12:30 p.m. Eastern (10:30 a.m. Mountain) for a same-day preview, later orders ready the next morning, open 7 days, closed Thanksgiving Day.
 # v2.10-TEST (Nov 15, 2026, 10:15 PM) CC-141: new ski-bike pack (ski and snowboard rental and tune shops in winter, bike rental and repair in summer). Test form only; Casual and Upscale chosen inside the form. The older ski-shop pack is not changed.
 # v2.9-TEST (Nov 15, 2026, 9:15 PM) CC-141: new music pack (music venues, live music bars, concert halls). Test form only; Casual and Upscale chosen inside the form.
@@ -31,11 +31,11 @@
 # To add an industry: copy one entry, change the words, run: python3 tools/build-order-forms.py
 HOW = ("Get a ready-to-post graphic for your {what}. Tap the kind of graphic you need, type a few words for each part, "
        "and add photos if you want, like {photos}. Then pick where you'll show it: phone, big-screen TV, social media or your website. "
-       "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. "
+       "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week. "
        "Look it over, ask for changes, and pay only once you OK it. $25 each, and your first one is free.")
 HOW_SHORT = ("Get a ready-to-post picture for your {what} in 3 quick steps. 1: tap what you need. 2: type a few words for what it should say, and add a photo if you want. "
              "3: tell us how to reach you. Then pick phone, TV or both and tap Send. "
-             "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week, closed Thanksgiving Day. "
+             "We design it and email you a preview to check. Most previews come back within 5 hours. Order by 5 p.m. Eastern (3 p.m. Mountain) for a same-day preview; later orders are ready the next day. We're open 7 days a week. "
              "Look it over, ask for changes, and pay only once you OK it. $25 a picture, $40 for phone + TV, and your first picture is free.")   # v2.15-TEST CC-203: short forms
 ABOUT = ("We make professional graphics for local businesses, fast. {who} use us for {uses} that look sharp on a phone, a big-screen TV, "
          "social media or a website. Every graphic is checked word for word before you see it, so names, prices and phone numbers are right. "
@@ -54,7 +54,7 @@ PACKS = {
        'Just sold': E('Just Sold','123 Oak Street',['Sold in 9 days','Over asking price','3 beds, 2 baths'],'Thinking of selling? Call me'),
        'Price drop': E('New Price','123 Oak Street',['Now $399,000','Was $425,000','3 beds, 2 baths','Move-in ready'],'Book a showing today'),
        'Coming soon': E('Coming Soon','123 Oak Street',['3 beds, 2 baths','Big backyard','Quiet street'],'Call me for early access'),
-       'Something else': E('Happy Thanksgiving','From my family to yours',['Thank you for your trust','Wishing you a warm holiday'],'Call me anytime')}),
+       'Something else': E('Merry Christmas','From my family to yours',['Thank you for your trust','Wishing you a warm holiday'],'Call me anytime')}),
  'restaurant': dict(lean=True, vision=True, name='Restaurant', title='Order a graphic for your restaurant or bar', foot='CPMG Restaurant and Bar Order',
    who='Restaurants and bars', uses='daily specials, happy hours, live music and events', what='restaurant or bar', photos='your food, your bar or dining room, your headshot or your logo',
    kinds=[('Daily special','tools-kitchen-2'),('Happy hour','glass-full'),('Drink special','beer'),('Game day','ball-football'),('Live music','music'),('Event','calendar-event'),('Holiday hours','clock'),('Something else','pencil')],
@@ -71,7 +71,7 @@ PACKS = {
        'Game day': E('Game Day','Watch the big game here',['Every game on our TVs','$15 wing and beer combo','Doors open at noon'],'Grab your seat early'),
        'Live music': E('Live Music Tonight','The Tide Riders',['8 p.m. to 11 p.m.','No cover','Full dinner menu'],'Grab a table early'),
        'Event': E('Trivia Night','Every Tuesday at 7',['Prizes for the top 3 teams','Free to play','Kitchen open late'],'Bring your team'),
-       'Holiday hours': E('Holiday Hours','Thanksgiving Week',['Wednesday: open till 9','Thursday: closed','Friday: back to normal'],'Happy Thanksgiving!'),
+       'Holiday hours': E('Holiday Hours','Christmas Week',['Christmas Eve: open till 3','Christmas Day: closed','Dec 26: back to normal'],'Merry Christmas!'),
        'Something else': E('Now Open for Lunch','Monday to Friday',['11 a.m. to 2 p.m.','Fast and fresh','Call-in orders welcome'],'Stop in today')}),
  'plumbing': dict(name='Plumbing', title='Order a graphic for your plumbing business', foot='CPMG Plumbing Order',
    who='Plumbers', uses='freeze warnings, water heater specials and emergency service posts', what='plumbing business', photos='your truck or your work, your headshot or your logo',
@@ -123,7 +123,7 @@ PACKS = {
        'Deadline reminder': E("Don't Miss It",'Taxes Due April 15',['Need more time?','We can file an extension'],'Call us this week'),
        'New client special': E('New Clients','$25 Off Your Tax Return',['First visit only','Bring last year\'s return'],'Book today'),
        'Business services': E('Small Business Help','Bookkeeping and Payroll',['Monthly plans','Clear, simple reports','Local and friendly'],'Call for a free chat'),
-       'Holiday hours': E('Holiday Hours','Thanksgiving Week',['Wednesday: 9 a.m. to 3 p.m.','Thursday and Friday: closed','Back Monday at 9'],'Happy Thanksgiving!'),
+       'Holiday hours': E('Holiday Hours','Christmas Week',['Dec 23: 9 a.m. to 3 p.m.','Dec 24 and 25: closed','Back Monday at 9'],'Merry Christmas!'),
        'Something else': E('Thank You','From our office to you',['We appreciate your trust','Proudly serving our town'],'Call us anytime')}),
  'home-inspector': dict(name='Home inspector', title='Order a graphic for your home inspection business', foot='CPMG Home Inspector Order',
    who='Home inspectors', uses='book-an-inspection, pre-listing and special offer posts', what='inspection business', photos='a home you inspected, your truck, your headshot or your logo',
@@ -137,7 +137,7 @@ PACKS = {
        'Special offer': E('$50 Off','Your Home Inspection',['This month only','Mention this post'],'Book today'),
        'New service': E('Now Offering','Mold and Radon Testing',['Fast results','Peace of mind'],'Ask about it today'),
        'Thank you': E('Thank You','To all our agents and buyers',['We appreciate your trust','Proudly serving our town'],'Call us anytime'),
-       'Something else': E('Happy Thanksgiving','From our team to you',['Thank you for your trust','Wishing you a warm holiday'],'Call us anytime')}),
+       'Something else': E('Merry Christmas','From our team to you',['Thank you for your trust','Wishing you a warm holiday'],'Call us anytime')}),
  'concrete': dict(name='Concrete', title='Order a graphic for your concrete business', foot='CPMG Concrete Order',
    who='Concrete contractors', uses='driveway and patio specials, free estimates and job updates', what='concrete business', photos='a driveway or patio you poured, your truck, your headshot or your logo',
    kinds=[('Driveway special','road'),('Patio or sidewalk','layout-grid'),('Free estimate','calculator'),('New concrete care','info-circle'),('Now hiring','users'),('Something else','pencil')],
@@ -161,7 +161,7 @@ PACKS = {
        'Special or sale': E('Fall Special','20% Off All Services',['This week only','Ends Saturday','Walk-ins welcome'],'Call to book today'),
        'Event': E('Customer Thank-You Day','Saturday, Nov 8 · 2 to 5 p.m.',['Free snacks and drinks','Meet our team','Bring a friend'],'Stop by and say hi'),
        'Announcement': E('Now Open Saturdays','Starting November 1',['9 a.m. to 1 p.m.','Same friendly service'],'Call to make an appointment'),
-       'Holiday hours': E('Holiday Hours','Thanksgiving Week',['Wednesday: 9 a.m. to 3 p.m.','Thursday and Friday: closed','Back Monday at 9'],'Happy Thanksgiving!'),
+       'Holiday hours': E('Holiday Hours','Christmas Week',['Dec 23: 9 a.m. to 3 p.m.','Dec 24 and 25: closed','Back Monday at 9'],'Merry Christmas!'),
        'Now hiring': E('Now Hiring','Front Desk Help',['Part time, flexible hours','Friendly team','Apply in person or online'],'Call us to apply'),
        'Something else': E('Thank You','From our team to you',['We appreciate your business','Proudly serving our town'],'Call us anytime')}),
 }
@@ -409,14 +409,15 @@ for _k in PACKS:
 #         The 4 holiday choices come first (CC-143), then the 4 everyday ones.
 # splace: restaurant only. The gray example for Special, by kind of place (from ?place= or the What kind of place? row).
 # Dates: Thanksgiving Thu Nov 26, Black Friday Fri Nov 27, Small Business Saturday Sat Nov 28 (2026).
-HOL_TG, HOL_BF, HOL_GC, HOL_EV = 'Thanksgiving week hours', 'Black Friday / Small Business Saturday', 'Holiday gift cards', 'Holiday event'
+# v2.16 (Nov 26, 2026, CC-426, Randy 10:59 AM): the holiday choices and examples are now Christmas and New Year's.
+HOL_TG, HOL_BF, HOL_GC, HOL_EV = "Christmas and New Year's hours", 'Christmas special', 'Holiday gift cards', 'Holiday event'
 def _simple(k, title, kinds, **more):
     assert len(kinds) == 8 or 'sholn' in more, k   # v2.15-TEST CC-203: a pack with its own sholn may have another count
     PACKS[k].update(simple=True, title=title, skinds=[list(x) for x in kinds], **more)
 
 _simple('brewery', 'Order a picture for your brewery, cidery, distillery or winery', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri noon to 10.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 15% off merch and gift packs.'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 noon to 10.'),
+    (HOL_BF, 'Christmas week: 15% off merch and gift packs.'),
     (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
     (HOL_EV, 'Ugly sweater party Sat Dec 12 at 6. Live music, no cover.'),
     ('Hours', 'Winter hours: open daily noon to 10.'),
@@ -424,8 +425,8 @@ _simple('brewery', 'Order a picture for your brewery, cidery, distillery or wine
     ('Live music or event', 'Live music Friday at 7. No cover.'),
     ('Something else', 'Our winter release is out. Come try it.')])
 _simple('cafe', 'Order a picture for your cafe, coffee shop or bakery', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri 7 to 3.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: free cookie with any coffee.'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 7 to 3.'),
+    (HOL_BF, 'Christmas week: free cookie with any coffee.'),
     (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
     (HOL_EV, 'Cookie decorating for kids Sat Dec 12 at 10.'),
     ('Hours', 'Winter hours: open daily 7 a.m. to 3 p.m.'),
@@ -433,8 +434,8 @@ _simple('cafe', 'Order a picture for your cafe, coffee shop or bakery', [
     ('Event', 'Story time for kids Saturday at 10. Free cocoa.'),
     ('Something else', 'Holiday pie orders are open. Call to order yours.')])
 _simple('outfitter', 'Order a picture for your outfitter, tour company or rental shop', [
-    (HOL_TG, 'Closed Thu Nov 26. Tours run again Fri at 9.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off all rentals.'),
+    (HOL_TG, 'Closed Christmas Day. Tours run again Sat Dec 26 at 9.'),
+    (HOL_BF, 'Christmas week: 20% off all rentals.'),
     (HOL_GC, 'Gift cards for tours and rentals. Any amount.'),
     (HOL_EV, 'Holiday lights snowmobile tour Sat Dec 19 at 5.'),
     ('Hours', 'Winter hours: open daily 8 to 5.'),
@@ -442,8 +443,8 @@ _simple('outfitter', 'Order a picture for your outfitter, tour company or rental
     ('Event', 'Moonlight snowshoe hike Friday at 7. $45.'),
     ('Something else', 'Tour canceled for weather. We will call you to reschedule.')])
 _simple('cabin', 'Order a picture for your cabins, vacation rentals or lodge', [
-    ('Thanksgiving week open dates', 'Thanksgiving week: 2 cabins still open, Nov 25 to 29.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: book a winter stay and save 15%.'),
+    ("Christmas and New Year's open dates", "New Year's week: 2 cabins still open, Dec 28 to Jan 2."),
+    (HOL_BF, 'Christmas week: book a winter stay and save 15%.'),
     (HOL_GC, 'Give a mountain getaway. Gift cards in any amount.'),
     (HOL_EV, 'Holiday lights weekend Dec 12 and 13. Hot cocoa on the porch.'),
     ('Open dates', 'Christmas week open: Dec 20 to 27. Sleeps 6.'),
@@ -451,8 +452,8 @@ _simple('cabin', 'Order a picture for your cabins, vacation rentals or lodge', [
     ('Event', 'Guided snowshoe walk for guests Saturday at 10. Free.'),
     ('Something else', 'Snow day: roads may be slow. Check-in is still on.')])
 _simple('gift', 'Order a picture for your gift shop or boutique', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri 8 a.m. to 8 p.m.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off storewide. Shop local!'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 8 a.m. to 8 p.m.'),
+    (HOL_BF, 'Christmas week: 20% off storewide. Shop local!'),
     (HOL_GC, 'Gift cards in any amount. Free gift wrap too.'),
     (HOL_EV, 'Holiday open house Sat Dec 5, 10 to 4. Cider and cookies.'),
     ('Hours', 'Holiday hours: Mon to Sat 10 to 8, Sun 11 to 6.'),
@@ -460,8 +461,8 @@ _simple('gift', 'Order a picture for your gift shop or boutique', [
     ('Event', 'Meet a local artist Saturday, 1 to 3.'),
     ('Something else', 'Snow day: we are still open. Call before you drive.')])
 _simple('spa', 'Order a picture for your spa or salon', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri 9 to 7.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off all massages.'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 9 to 7.'),
+    (HOL_BF, 'Christmas week: 20% off all massages.'),
     (HOL_GC, 'Gift cards for massages and spa days. Any amount.'),
     (HOL_EV, 'Holiday spa night Thu Dec 10, 5 to 8. Treats and mini facials.'),
     ('Hours', 'Holiday hours: Mon to Sat 9 to 7, Sun 10 to 5.'),
@@ -469,8 +470,8 @@ _simple('spa', 'Order a picture for your spa or salon', [
     ('Event', 'Tea and wellness talk Saturday at 2. Free.'),
     ('Something else', 'Openings this Saturday for cuts and color. Call to book.')])
 _simple('music', 'Order a picture for your music venue', [
-    (HOL_TG, 'Closed Thu Nov 26. Doors open Fri at 7.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: $5 off tickets for December shows.'),
+    (HOL_TG, 'Closed Christmas Day. Doors open Sat Dec 26 at 7.'),
+    (HOL_BF, 'Christmas week: $5 off tickets for December shows.'),
     (HOL_GC, 'Gift cards for shows and drinks. Any amount.'),
     (HOL_EV, "New Year's Eve show. Doors at 8. Tickets on sale now."),
     ('Hours', 'Doors open Wed to Sun at 7. Box office opens at noon.'),
@@ -478,8 +479,8 @@ _simple('music', 'Order a picture for your music venue', [
     ('Live music', 'Local band Saturday. Doors at 7, music at 8. $15.'),
     ('Something else', 'Open mic every Wednesday. Sign up at 7.')])
 _simple('ski-bike', 'Order a picture for your ski and bike shop', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri at 7 for rentals.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 25% off tune-ups.'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 at 7 for rentals.'),
+    (HOL_BF, 'Christmas week: 25% off tune-ups.'),
     (HOL_GC, 'Gift cards for rentals, tune-ups and gear. Any amount.'),
     (HOL_EV, 'Holiday ski swap Sat Dec 5, 9 to 3. Buy, sell or trade.'),
     ('Hours or powder day', 'Powder day! We open at 7. Skis waxed and ready.'),
@@ -487,8 +488,8 @@ _simple('ski-bike', 'Order a picture for your ski and bike shop', [
     ('Demo day or event', 'Demo day Saturday at the base. Try the new skis.'),
     ('Something else', 'Now hiring: rental shop help for the winter. Stop in.')])
 _simple('restaurant', 'Order a picture for your restaurant or bar', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri 11 to 9.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: shop local, then eat with us. Open 11 to 10.'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 11 to 9.'),
+    (HOL_BF, 'Christmas week: shop local, then eat with us. Open 11 to 10.'),
     (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
     (HOL_EV, 'Holiday party Sat Dec 12 at 7. Live music, no cover.'),
     ('Hours', 'Winter hours: open daily 11 to 10. Kitchen open till 9.'),
@@ -520,17 +521,17 @@ _simple('real-estate', 'Order a real estate picture', [
     ('Just sold', 'Just sold: 123 Oak Street. Sold in 9 days. Thinking of selling? Call me.'),
     ('Price drop', 'New price: 123 Oak Street, now $399,000. Book a showing today.'),
     ('Coming soon', 'Coming soon: 456 Maple Lane. 4 beds, 3 baths. Call for early access.'),
-    ('Something else', 'Happy Thanksgiving from my family to yours.')], sholn=0)
+    ('Something else', 'Merry Christmas from my family to yours.')], sholn=0)
 _simple('insurance', 'Order a picture for your insurance agency', [
-    (HOL_TG, 'Closed Thu Nov 26 and Fri Nov 27. Back Monday at 9.'),
-    ('Holiday greeting', 'Happy Thanksgiving from all of us at Smith Insurance.'),
+    (HOL_TG, 'Closed Thu Dec 24 and Fri Dec 25. Back Monday at 9.'),
+    ('Holiday greeting', 'Merry Christmas from all of us at Smith Insurance.'),
     ('Open enrollment', 'Open enrollment ends Dec 15. Call for a free review.'),
     ('Free quote', 'Free home and auto quote. Takes about 10 minutes.'),
     ('Renewal reminder', 'Policy renewing soon? Call us to review your coverage.'),
     ('Something else', 'Winter storm coming. Check your home policy today.')], sholn=2)
 _simple('business', 'Order a picture for your business', [
-    (HOL_TG, 'Closed Thu Nov 26. Open Fri 9 to 5.'),
-    (HOL_BF, 'Fri Nov 27 and Sat Nov 28: 20% off. Shop local!'),
+    (HOL_TG, 'Closed Christmas Day. Open Sat Dec 26 9 to 5.'),
+    (HOL_BF, 'Christmas week: 20% off. Shop local!'),
     (HOL_GC, 'Gift cards in any amount. Stop in or call.'),
     (HOL_EV, 'Holiday open house Sat Dec 5, 10 to 2. Treats for everyone.'),
     ('Hours', 'Winter hours: Mon to Fri 9 to 5, Sat 10 to 2.'),
