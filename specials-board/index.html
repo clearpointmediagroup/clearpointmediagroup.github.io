@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- CPMG Specials Board demo v1.0 (Nov 28, 2026, 4:18 AM ET). CC-477.
+What it is: a TV board for a restaurant or bar. It rotates Today's Specials, Happy Hour, Tonight and Hours, with a ticker, a live clock and gentle sparkle.
+Data: built-in sample data for a made-up restaurant. Add ?csv=<published Google Sheet CSV link> to read a real Sheet (columns: section,title,detail,price).
+REVISION LOG
+  v1.0 (Nov 28, 2026, 4:18 AM ET): first demo. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specials Board Demo | ClearPoint Media Group</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{--bg1:#06263a;--bg2:#0b4a5e;--sand:#f6e7c8;--gold:#ffc857;--coral:#ff7a59;--sea:#3fd0c9;--text:#fffaf0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#000}
+  body{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--text)}
+  /* 16:9 stage that scales to any screen */
+  #stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;overflow:hidden;
+    background:radial-gradient(ellipse at 20% 0%,#127083 0%,transparent 55%),radial-gradient(ellipse at 100% 100%,#0e5a5a 0%,transparent 50%),linear-gradient(160deg,var(--bg1),var(--bg2))}
+  .waves{position:absolute;left:0;right:0;bottom:90px;height:160px;opacity:.18}
+  .waves svg{width:200%;height:100%;animation:drift 18s linear infinite}
+  @keyframes drift{to{transform:translateX(-50%)}}
+  header{position:absolute;top:0;left:0;right:0;height:150px;display:flex;align-items:center;justify-content:space-between;padding:0 70px}
+  .brand{display:flex;align-items:center;gap:26px}
+  .logo{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--gold),var(--coral));display:grid;place-items:center;font-size:54px;box-shadow:0 0 40px rgba(255,200,87,.45)}
+  .name{font-size:64px;font-weight:800;letter-spacing:1px;text-shadow:0 4px 18px rgba(0,0,0,.5)}
+  .name small{display:block;font-size:24px;font-weight:600;color:var(--sea);letter-spacing:6px;text-transform:uppercase}
+  .clock{text-align:right;font-size:58px;font-weight:800;color:var(--sand)}
+  .clock small{display:block;font-size:24px;color:var(--sea);font-weight:600;letter-spacing:3px;text-transform:uppercase}
+  main{position:absolute;top:170px;left:70px;right:70px;bottom:130px}
+  .panel{position:absolute;inset:0;opacity:0;transform:translateY(40px) scale(.98);transition:opacity .9s ease,transform .9s ease;pointer-events:none}
+  .panel.on{opacity:1;transform:none}
+  .title{font-size:92px;font-weight:900;color:var(--gold);text-shadow:0 6px 24px rgba(0,0,0,.45);margin-bottom:28px;display:flex;align-items:center;gap:22px}
+  .title .tag{font-size:30px;font-weight:800;color:#06263a;background:var(--sea);padding:10px 22px;border-radius:40px;letter-spacing:2px;text-transform:uppercase}
+  .items{display:grid;gap:22px}
+  .item{display:grid;grid-template-columns:1fr auto;align-items:center;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.14);border-radius:28px;padding:26px 40px;opacity:0;transform:translateX(-30px)}
+  .panel.on .item{animation:slidein .7s ease forwards}
+  .panel.on .item:nth-child(2){animation-delay:.25s}.panel.on .item:nth-child(3){animation-delay:.5s}.panel.on .item:nth-child(4){animation-delay:.75s}
+  @keyframes slidein{to{opacity:1;transform:none}}
+  .item h3{font-size:56px;font-weight:800}
+  .item p{font-size:32px;color:var(--sand);margin-top:6px}
+  .price{font-size:72px;font-weight:900;color:var(--gold);padding-left:30px;text-shadow:0 0 24px rgba(255,200,87,.5)}
+  .big{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center;height:calc(100% - 150px)}
+  .bigtext h3{font-size:110px;font-weight:900;line-height:1}
+  .bigtext p{font-size:44px;color:var(--sand);margin-top:24px;line-height:1.3}
+  .countbox{background:rgba(6,38,58,.6);border:3px solid var(--gold);border-radius:36px;padding:40px;text-align:center}
+  .countbox .lbl{font-size:32px;letter-spacing:4px;text-transform:uppercase;color:var(--sea);font-weight:700}
+  .countbox .cd{font-size:120px;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}
+  .hours{display:grid;grid-template-columns:1fr 1fr;gap:22px 60px;font-size:50px}
+  .hours div{display:flex;justify-content:space-between;border-bottom:2px dashed rgba(255,255,255,.2);padding:14px 0}
+  .hours b{color:var(--gold)}
+  .hours .today{color:var(--sea)}
+  footer{position:absolute;left:0;right:0;bottom:0;height:110px;background:rgba(0,0,0,.35);display:flex;align-items:center;overflow:hidden;border-top:3px solid var(--gold)}
+  .ticker{white-space:nowrap;font-size:42px;font-weight:700;animation:tick 40s linear infinite;padding-left:100%}
+  .ticker span{color:var(--gold);margin:0 30px}
+  @keyframes tick{to{transform:translateX(-100%)}}
+  .dots{position:absolute;right:70px;bottom:132px;display:flex;gap:14px}
+  .dots i{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .4s}
+  .dots i.on{background:var(--gold)}
+  .sparkle{position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 14px 4px rgba(255,236,170,.9);opacity:0;animation:tw 2.4s ease-in-out forwards;pointer-events:none}
+  @keyframes tw{30%{opacity:1;transform:scale(1.4)}100%{opacity:0;transform:scale(.2)}}
+  .cpmg{position:absolute;right:20px;top:8px;font-size:16px;color:rgba(255,255,255,.35);letter-spacing:1px}
+  .sample{position:absolute;left:70px;top:132px;font-size:20px;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="cpmg">Board by ClearPoint Media Group · demo v1.0</div>
+  <header>
+    <div class="brand"><div class="logo">🐚</div><div class="name" id="bizName">Shell &amp; Tide Grill<small id="bizTag">Dockside · Est. 1998</small></div></div>
+    <div class="clock"><span id="time">--:--</span><small id="date">-</small></div>
+  </header>
+  <div class="sample">Sample restaurant · demo board</div>
+  <main id="main"></main>
+  <div class="dots" id="dots"></div>
+  <div class="waves"><svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60 Q150 0 300 60 T600 60 T900 60 T1200 60 V120 H0Z" fill="#fff"/></svg></div>
+  <footer><div class="ticker" id="ticker"></div></footer>
+</div>
+<script>
+/* Sample data. A real board reads the same rows from a Google Sheet (section,title,detail,price). */
+const SAMPLE=[
+ ["name","Shell & Tide Grill","Dockside · Est. 1998",""],
+ ["special","Shrimp & Grits","Low-country style with andouille","$16"],
+ ["special","Blackened Mahi Tacos","Mango slaw, lime crema","$14"],
+ ["special","Calabash Platter","Shrimp, flounder, hushpuppies","$22"],
+ ["happyhour","Happy Hour","$3 drafts · $5 house margaritas · half-price oysters","16:00-18:00"],
+ ["tonight","Live Music Tonight","Jimmy Reed Band on the deck","7 PM"],
+ ["hours","Mon","11 AM - 10 PM",""],["hours","Tue","11 AM - 10 PM",""],["hours","Wed","11 AM - 10 PM",""],["hours","Thu","11 AM - 11 PM",""],
+ ["hours","Fri","11 AM - Midnight",""],["hours","Sat","10 AM - Midnight",""],["hours","Sun","10 AM - 9 PM",""],
+ ["ticker","Kids eat free Tuesdays",""," "],["ticker","Ask about private parties on the deck","",""],["ticker","Follow us on Facebook for daily specials","",""]
+];
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function parseCSV(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==','){r.push(f);f=""}else if(c=='\n'||c=='\r'){if(c=='\r'&&t[i+1]=='\n')i++;r.push(f);rows.push(r);r=[];f=""}else f+=c}if(f||r.length){r.push(f);rows.push(r)}return rows}
+async function loadData(){
+  const u=new URLSearchParams(location.search).get("csv");
+  if(u&&/^https:\/\/docs\.google\.com\//.test(u)){try{const t=await (await fetch(u)).text();const rows=parseCSV(t).filter(r=>r[0]&&r[0].toLowerCase()!=="section");if(rows.length)return rows}catch(e){console.log("[Board] sheet read failed, using sample",e)}}
+  return SAMPLE;
+}
+const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function fit(){const s=document.getElementById("stage");const k=Math.min(innerWidth/1920,innerHeight/1080);s.style.transform=`translate(-50%,-50%) scale(${k})`}
+addEventListener("resize",fit);fit();
+function tickClock(){const d=new Date();document.getElementById("time").textContent=d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString([], {weekday:"long",month:"long",day:"numeric"})}
+setInterval(tickClock,1000);tickClock();
+function sparkle(){const s=document.getElementById("stage");const e=document.createElement("div");e.className="sparkle";e.style.left=(80+Math.random()*1760)+"px";e.style.top=(160+Math.random()*760)+"px";s.appendChild(e);setTimeout(()=>e.remove(),2500)}
+setInterval(sparkle,450);
+function hhCountdown(range){const m=String(range).match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/);if(!m)return null;const n=new Date();const a=new Date(n),b=new Date(n);a.setHours(+m[1],+m[2],0,0);b.setHours(+m[3],+m[4],0,0);
+  const f=ms=>{const t=Math.max(0,Math.floor(ms/1000));const h=Math.floor(t/3600),mi=Math.floor(t%3600/60),s=t%60;return (h?h+":":"")+String(mi).padStart(2,"0")+":"+String(s).padStart(2,"0")};
+  const fmt=d=>d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+  if(n<a)return{lbl:"Starts in",cd:f(a-n),when:fmt(a)+" - "+fmt(b)};if(n<b)return{lbl:"Ends in",cd:f(b-n),when:"On now until "+fmt(b)};return{lbl:"Back tomorrow",cd:fmt(a),when:fmt(a)+" - "+fmt(b)}}
+(async()=>{
+  const rows=await loadData();const by=k=>rows.filter(r=>(r[0]||"").trim().toLowerCase()===k);
+  const nm=by("name")[0];if(nm){document.getElementById("bizName").firstChild.textContent=nm[1];document.getElementById("bizTag").textContent=nm[2]||""}
+  const panels=[];
+  const sp=by("special");if(sp.length)panels.push(`<div class="title">Today's Specials <span class="tag">Fresh</span></div><div class="items">${sp.slice(0,4).map(r=>`<div class="item"><div><h3>${esc(r[1])}</h3><p>${esc(r[2])}</p></div><div class="price">${esc(r[3])}</div></div>`).join("")}</div>`);
+  const hh=by("happyhour")[0];if(hh)panels.push(`<div class="title">${esc(hh[1])} <span class="tag">Daily</span></div><div class="big"><div class="bigtext"><h3>Cheers!</h3><p>${esc(hh[2])}</p></div><div class="countbox"><div class="lbl" data-hh="lbl">-</div><div class="cd" data-hh="cd">-</div><div class="lbl" data-hh="when" style="color:var(--sand)">-</div></div></div>`);
+  const tn=by("tonight")[0];if(tn)panels.push(`<div class="title">${esc(tn[1])} <span class="tag">${esc(tn[3])}</span></div><div class="big"><div class="bigtext"><h3>${esc(tn[2])}</h3><p>Grab a seat on the deck. No cover.</p></div><div class="countbox"><div class="lbl">Starts at</div><div class="cd">${esc(tn[3])}</div></div></div>`);
+  const hr=by("hours");if(hr.length){const today=DAYS[new Date().getDay()];panels.push(`<div class="title">Hours <span class="tag">Open 7 days</span></div><div class="hours">${hr.map(r=>`<div class="${r[1]===today?"today":""}"><b>${esc(r[1])}</b><span>${esc(r[2])}</span></div>`).join("")}</div>`)}
+  const main=document.getElementById("main"),dots=document.getElementById("dots");
+  panels.forEach((h,i)=>{const p=document.createElement("section");p.className="panel";p.innerHTML=h;main.appendChild(p);dots.appendChild(document.createElement("i"))});
+  const tk=by("ticker").map(r=>esc(r[1]));document.getElementById("ticker").innerHTML=(tk.length?tk:["Welcome!"]).map(t=>`<span>★</span>${t}`).join("")+"<span>★</span>";
+  let cur=-1;const ps=[...main.children],ds=[...dots.children];
+  function show(i){ps.forEach((p,j)=>p.classList.toggle("on",j===i));ds.forEach((d,j)=>d.classList.toggle("on",j===i));cur=i}
+  function upd(){if(!hh)return;const c=hhCountdown(hh[3]);document.querySelectorAll("[data-hh]").forEach(e=>{if(c)e.textContent=c[e.dataset.hh]})}
+  setInterval(upd,1000);upd();
+  show(0);setInterval(()=>show((cur+1)%ps.length),9000);
+  window.__board={panels:ps.length,show};
+})();
+</script>
+</body>
+</html>
